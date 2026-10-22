@@ -12,3 +12,5 @@ tools/compilecheck/**/obj/
 __pycache__/
 *.pyc
 .DS_Store
+tools/apidiff/bin/
+tools/apidiff/obj/

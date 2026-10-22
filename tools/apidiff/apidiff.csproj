@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Usage: dotnet run -p:UnityManaged=UNITY/Editor/Data/Managed, then pass the original game Managed folder and UNITY/Editor/Data/Managed/UnityEngine as arguments. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Unity.Cecil"><HintPath>$(UnityManaged)/Unity.Cecil.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

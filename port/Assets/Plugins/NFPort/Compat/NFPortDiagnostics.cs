@@ -45,8 +45,16 @@ public class NFPortDiagnostics : MonoBehaviour
             Write($"scene loaded: {scene.name} ({mode})");
             foreach (var cam in Camera.allCameras)
                 Write("  camera " + DescribeCamera(cam));
+            foreach (var name in GameShaders)
+            {
+                var shader = Shader.Find(name);
+                Write($"  shader '{name}' queue {(shader != null ? shader.renderQueue.ToString() : "not loaded")}");
+            }
         };
     }
+
+    // Overlay 4000, Background 1000, Transparent 3000; 2000 means the Queue tag was ignored.
+    static readonly string[] GameShaders = { "MenuSprite", "SimpleTexture", "FlatTexture", "ColorizedFlatTexture", "PremultipliedAlphaTexture" };
 
     static string DescribeCamera(Camera cam) =>
         $"'{HierarchyPath(cam.transform)}' tag={cam.tag} depth={cam.depth} clear={cam.clearFlags} " +

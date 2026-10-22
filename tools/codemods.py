@@ -111,6 +111,40 @@ def apply_api_rules(text):
     return fix_joint_springs(text)
 
 
+# The Android build read assets/GameResources straight out of the APK:
+#   new WWW("jar:file://" + Application.dataPath + "!/assets/" + path)  ... while (!w.isDone) {}
+# Route those reads through NFPortAssetFile (a synchronous, WWW-shaped reader
+# over the pack tools/nfport.py builds), which works on every platform.
+APK_READ = re.compile(r'new WWW\("jar:file://" \+ Application\.dataPath \+ "!/assets/')
+
+# The Android build hard-wired the touch input path; pick the Mac version's
+# mouse path (still present in the scenes) on desktop, web and in the editor.
+INPUT_RULES = [
+    # FingerGesturesInitializer: gesture prefab per platform.
+    (re.compile(r"\(\(!Application\.isEditor\) \? androidGestures : editorGestures\)"),
+     "(NFPortInput.UseTouch ? androidGestures : (Application.isEditor ? editorGestures : desktopGestures))"),
+    # GameManager: the cart controller (both live on the same GameObject).
+    (re.compile(r"(\w+)\.GetComponent<TouchScreenController>\(\) as Controller(?!\))"),
+     r"(NFPortInput.UseTouch ? \1.GetComponent<TouchScreenController>() as Controller : \1.GetComponent<KeyboardController>() as Controller)"),
+    # "tap to continue" checks that only looked at touches.
+    (re.compile(r"\(Input\.touchCount > 0 && Input\.GetTouch\(0\)\.phase == TouchPhase\.Ended\)"),
+     "NFPortInput.TapEnded()"),
+]
+
+
+def retarget_platform(text):
+    if APK_READ.search(text):
+        text = APK_READ.sub('NFPortAssetFile.Open("', text)
+        if "new WWW(" not in text:
+            # Every WWW in this file held an APK read; retype them all.
+            text = re.sub(r"(?<![\w.])WWW\b", "NFPortAssetFile", text)
+        else:
+            text = re.sub(r"\bWWW (\w+) = NFPortAssetFile\.Open\(", r"NFPortAssetFile \1 = NFPortAssetFile.Open(", text)
+    for pattern, repl in INPUT_RULES:
+        text = pattern.sub(repl, text)
+    return text
+
+
 def main(project):
     assets = pathlib.Path(project, "Assets")
     scripts = assets / "Scripts"
@@ -132,6 +166,7 @@ def main(project):
         new = rename_members_named_like_type(new, renames)
         new = fix_boo_enumerators(new)
         new = apply_api_rules(new)
+        new = retarget_platform(new)
         if new != text:
             path.write_text(new, encoding="utf-8")
             changed += 1

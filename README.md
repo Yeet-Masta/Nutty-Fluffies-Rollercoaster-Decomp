@@ -2,7 +2,8 @@
 
 Tooling that turns the original Android release of **Nutty Fluffies
 Rollercoaster 1.0.5** (RedLynx/Ubisoft, 2013, `com.UBI.A90.WW`) into a
-**Unity 2022.3 LTS** project that builds a **64-bit (arm64-v8a)** APK.
+**Unity 2022.3 LTS** project that builds a **64-bit (arm64-v8a)** APK, and
+also **Windows**, **Linux** and **web (WebGL)** builds.
 
 The original only ships `armeabi-v7a` Mono binaries from Unity 4.0, so it
 won't install on 64-bit-only devices. Unity can only target ARM64 on Android
@@ -59,14 +60,34 @@ regenerated from **your own copy of the APK** by `tools/nfport.py`.
    `AddComponent("Name")` (now resolved by name at runtime) and a few
    UnityScript-only constructs. It repeats until both assemblies compile with
    zero errors.
-6. **Android settings.** `NFPort > Apply Android ARM64 Player Settings`
-   runs automatically on first open and sets:
-   - IL2CPP, ARM64 + ARMv7
-   - min API 22, target API = highest installed
-   - .NET Standard 2.1, minimal stripping (plus `link.xml`)
-   - GLES3/Vulkan, landscape auto-rotate
-   - application id `com.UBI.A90.WW.arm64`, so it installs alongside the
-     original
+6. **Cross-platform file loading.** The Android build read its level, theme
+   and language files out of the APK with `jar:file://` URLs and waited on
+   each download in a loop. Those URLs only exist on Android, and in a browser
+   the loop never finishes. The port packs those files into
+   `Assets/Resources/NFPort/GameResources.bytes`, and a codemod points the
+   three reads at `NFPortAssetFile`, which reads them synchronously on every
+   platform.
+7. **Mouse input on desktop and web.** The Android build hard-wired the touch
+   controls. The mouse controls from the old Mac version are still in the
+   scenes (`KeyboardController` and the mouse FingerGestures prefab). The port
+   uses them on Windows, Linux, desktop browsers and in the editor, and keeps
+   touch on phones and phone browsers. "Tap to continue" screens also accept a
+   mouse click.
+8. **Player settings.** `NFPort > Apply Player Settings (all platforms)`
+   runs automatically on first open:
+   - **Android:**
+     - IL2CPP, ARM64 + ARMv7
+     - min API 22, target API = highest installed
+     - GLES3/Vulkan, landscape auto-rotate
+     - application id `com.UBI.A90.WW.arm64`, so it installs alongside the
+       original
+   - **Windows/Linux:** Mono, a 1280×720 resizable window or borderless
+     fullscreen (Alt+Enter toggles)
+   - **WebGL:** gzip with a decompression fallback, so it works on any host;
+     full exception support, so a stray null reference gets logged instead
+     of stopping the game
+   - **All platforms:** .NET Standard 2.1, minimal stripping (plus
+     `link.xml`)
 
 ## Requirements
 
@@ -75,8 +96,12 @@ regenerated from **your own copy of the APK** by `tools/nfport.py`.
 - [AssetRipper](https://github.com/AssetRipper/AssetRipper/releases)
   (verified with 2.0.0, `AssetRipper.GUI.Free`)
 - Unity **2022.3 LTS** (verified against 2022.3.62f3 engine assemblies) with
-  **Android Build Support**, including the OpenJDK and Android SDK & NDK
-  Tools modules
+  the Build Support module of each platform you want to build:
+  - **Android Build Support**, including the OpenJDK and Android SDK & NDK
+    Tools modules
+  - **Windows Build Support (Mono)**
+  - **Linux Build Support (Mono)**
+  - **WebGL Build Support**
 
 ## Usage
 
@@ -96,11 +121,29 @@ asset and IL2CPP compiles the game.
 
 You can also run the steps separately (`extract`, `rip`, `port`, `build`).
 Or stop after `port`: open `NuttyFluffiesPort/` in Unity 2022.3, accept the
-upgrade prompt, and use **NFPort > Build Android ARM64 APK**.
+upgrade prompt, and use the **NFPort** menu.
 
-Install with `adb install Builds/NuttyFluffies-arm64.apk`. The APK is
-signed with Unity's debug key. Add your own keystore under Player Settings
-if you want to distribute it.
+Other platforms: add `--target` to `build` (repeatable), or use the menu.
+
+| Target | Command | Menu | Output |
+|---|---|---|---|
+| Android | `--target android` (default) | NFPort > Build Android ARM64 APK | `Builds/NuttyFluffies-arm64.apk` |
+| Windows | `--target windows` | NFPort > Build Windows (64-bit) | `Builds/Windows/NuttyFluffies.exe` |
+| Linux | `--target linux` | NFPort > Build Linux (64-bit) | `Builds/Linux/NuttyFluffies.x86_64` |
+| Web | `--target webgl` | NFPort > Build WebGL | `Builds/WebGL/` |
+
+```powershell
+python tools\nfport.py build --unity "C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Unity.exe" --target windows --target webgl
+```
+
+- **Android:** install with `adb install Builds/NuttyFluffies-arm64.apk`.
+  The APK is signed with Unity's debug key. Add your own keystore under
+  Player Settings if you want to distribute it.
+- **Windows/Linux:** ship the whole output folder, not just the executable.
+- **Web:** browsers won't run a WebGL build from `file://`, so serve the
+  folder over HTTP. Locally, run `python -m http.server 8000` inside
+  `Builds/WebGL` and open <http://localhost:8000>. To publish, zip the
+  folder's contents and upload them to itch.io as an HTML game.
 
 ## Status and known gaps
 
@@ -116,6 +159,10 @@ if you want to distribute it.
     offset) first.
   - **Particles.** The legacy-particle shims approximate the old emitter,
     animator and renderer behaviour; colours and sizes may differ slightly.
+- **Desktop and web input** uses the old Mac version's mouse controls. That
+  code shipped in the APK but this Android build never ran it, so it's
+  untested. On the web, sound starts only after the first click (browser
+  rule), and progress is saved through PlayerPrefs in the browser's storage.
 - **Removed features:** in-app purchases (Google/Amazon), Facebook/Twitter
   sharing, leaderboards and achievements (Game Center), push notifications,
   ads/offer walls and analytics. Calls into them are no-ops, so for example

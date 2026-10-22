@@ -2,11 +2,12 @@
 """Nutty Fluffies Rollercoaster: Unity 4.0 (ARMv7/Mono) -> Unity 2022.3 (ARM64/IL2CPP).
 
 Turns the original APK into an upgraded Unity project, then optionally builds
-the ARM64 APK. Nothing from the game itself is stored in this repository; it
-is all regenerated from your own copy of the APK.
+it for Android (ARM64), Windows, Linux or the web (WebGL). Nothing from the
+game itself is stored in this repository; it is all regenerated from your own
+copy of the APK.
 
   python tools/nfport.py all   --apk NuttyFluffies.apk --assetripper <AssetRipper.GUI.Free> --unity <Unity 2022.3 editor>
-  python tools/nfport.py build --unity <Unity 2022.3 editor>
+  python tools/nfport.py build --unity <Unity 2022.3 editor> --target windows --target webgl
 
 Steps (each can be run on its own, in order):
   extract  unzip the APK into work/apk
@@ -14,15 +15,22 @@ Steps (each can be run on its own, in order):
   port     copy to the output project and apply every fix:
              * overlay port/Assets (IL2CPP-safe UnityScript runtime, legacy
                particle shims, Prime31 compat, editor build scripts, link.xml)
-             * level/theme packs -> Assets/StreamingAssets/GameResources
+             * level/theme/language files -> one pack in Assets/Resources,
+               read synchronously on every platform (incl. WebGL)
+             * desktop/web/editor use the game's mouse input path
              * legacy particle components -> shim MonoBehaviours
              * dead SDK bindings (Amazon, Twitter, Facebook, Flurry, ...) stubbed
              * decompiler fix-ups + compiler-driven Unity API updater, repeated
                until both script assemblies compile against Unity 2022.3
-  build    run Unity in batch mode to produce Builds/NuttyFluffies-arm64.apk
+  build    run Unity in batch mode for each --target (default: android):
+             android  Builds/NuttyFluffies-arm64.apk
+             windows  Builds/Windows/NuttyFluffies.exe
+             linux    Builds/Linux/NuttyFluffies.x86_64
+             webgl    Builds/WebGL/ (serve it over HTTP)
 
 Requirements: Python 3.8+, .NET SDK 8+ (`dotnet`), AssetRipper, Unity 2022.3 LTS
-with Android Build Support (incl. Android SDK/NDK and OpenJDK modules).
+with the Build Support module of each target (Android also needs its OpenJDK
+and Android SDK & NDK modules).
 """
 import argparse
 import os
@@ -30,6 +38,7 @@ import pathlib
 import platform
 import shutil
 import socket
+import struct
 import subprocess
 import sys
 import time
@@ -181,6 +190,30 @@ def compile_check(args, project, managed):
     return total, logs
 
 
+def pack_game_resources(root, src, dest):
+    """Pack every file under src into one blob that NFPortAssetFile reads.
+
+    Layout (little-endian): b"NFPK", uint32 version=1, uint32 count, then per
+    entry uint16 path length, UTF-8 path (relative to the APK's assets/
+    folder), uint32 offset, uint32 length; offsets are relative to the data
+    that follows the table.
+    """
+    files = sorted(p for p in src.rglob("*") if p.is_file())
+    table, blobs, offset = [], [], 0
+    for p in files:
+        name = p.relative_to(root).as_posix().encode("utf-8")
+        data = p.read_bytes()
+        table.append(struct.pack("<H", len(name)) + name + struct.pack("<II", offset, len(data)))
+        blobs.append(data)
+        offset += len(data)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    with open(dest, "wb") as f:
+        f.write(b"NFPK" + struct.pack("<II", 1, len(files)))
+        f.writelines(table)
+        f.writelines(blobs)
+    return len(files)
+
+
 def step_port(args):
     ripped = args.work / "ripped/ExportedProject"
     apk = args.work / "apk"
@@ -208,9 +241,10 @@ def step_port(args):
     shutil.copytree(OVERLAY, project / "Assets", dirs_exist_ok=True)
 
     resources = apk / "assets/GameResources"
-    if resources.is_dir():
-        shutil.copytree(resources, project / "Assets/StreamingAssets/GameResources", dirs_exist_ok=True)
-        log("copied level/theme packs to Assets/StreamingAssets/GameResources")
+    if not resources.is_dir():
+        fail("%s is missing; run the extract step first" % resources)
+    count = pack_game_resources(apk / "assets", resources, project / "Assets/Resources/NFPort/GameResources.bytes")
+    log("packed %d level/theme/language files into Assets/Resources/NFPort/GameResources.bytes" % count)
 
     py = [sys.executable, "-I"]
     run(py + [TOOLS / "convert_legacy_particles.py", project])
@@ -234,6 +268,16 @@ def step_port(args):
     else:
         fail("API update did not converge")
     log("scripts compile cleanly against Unity 2022.3")
+
+    leftovers = [p for p in (project / "Assets").rglob("*.cs")
+                 if "NFPort" not in p.parts and "jar:file://" in p.read_text(encoding="utf-8-sig")]
+    if leftovers:
+        fail("APK-only file reads left in: %s" % ", ".join(str(p.relative_to(project)) for p in leftovers))
+    expected = {"FingerGesturesInitializer.cs": "NFPortInput.UseTouch", "GameManager.cs": "NFPortInput.UseTouch"}
+    for name, marker in expected.items():
+        hits = list((project / "Assets").rglob(name))
+        if hits and marker not in hits[0].read_text(encoding="utf-8-sig"):
+            log("warning: %s was not switched to the mouse input path on desktop/web" % name)
     log("done: open %s with Unity 2022.3 (accept the upgrade prompt), then NFPort > Build Android ARM64 APK" % project)
 
 
@@ -250,17 +294,31 @@ def unity_executable(unity):
     return None
 
 
+# target -> (Unity -buildTarget, NFPortBuild method, default output)
+TARGETS = {
+    "android": ("Android", "AndroidArm64", "Builds/NuttyFluffies-arm64.apk"),
+    "windows": ("Win64", "Windows64", "Builds/Windows/NuttyFluffies.exe"),
+    "linux": ("Linux64", "Linux64", "Builds/Linux/NuttyFluffies.x86_64"),
+    "webgl": ("WebGL", "WebGL", "Builds/WebGL"),
+}
+
+
 def step_build(args):
     exe = unity_executable(args.unity)
     if exe is None:
         fail("pass --unity <Unity 2022.3 editor executable or install folder>")
-    output = pathlib.Path(args.output).resolve()
-    logfile = args.work / "unity-build.log"
-    log("building %s (log: %s)" % (output, logfile))
-    run([exe, "-batchmode", "-quit", "-projectPath", args.project.resolve(), "-buildTarget", "Android",
-         "-executeMethod", "NFPort.Editor.NFPortBuild.AndroidArm64", "-nfportOutput", output,
-         "-logFile", logfile])
-    log("built %s" % output)
+    targets = args.target or ["android"]
+    if args.output and len(targets) > 1:
+        fail("--output can only be used with a single --target")
+    for target in targets:
+        build_target, method, default_output = TARGETS[target]
+        output = pathlib.Path(args.output or REPO / default_output).resolve()
+        logfile = args.work / ("unity-build-%s.log" % target)
+        log("building %s -> %s (log: %s)" % (target, output, logfile))
+        run([exe, "-batchmode", "-quit", "-projectPath", args.project.resolve(), "-buildTarget", build_target,
+             "-executeMethod", "NFPort.Editor.NFPortBuild." + method, "-nfportOutput", output,
+             "-logFile", logfile])
+        log("built %s" % output)
 
 
 STEPS = {"extract": step_extract, "rip": step_rip, "port": step_port, "build": step_build}
@@ -276,7 +334,9 @@ def main():
     ap.add_argument("--work", type=pathlib.Path, default=REPO / "work", help="scratch folder (default: work/)")
     ap.add_argument("--project", type=pathlib.Path, default=REPO / "NuttyFluffiesPort",
                     help="upgraded Unity project (default: NuttyFluffiesPort/)")
-    ap.add_argument("--output", default=str(REPO / "Builds/NuttyFluffies-arm64.apk"), help="APK to build")
+    ap.add_argument("--target", action="append", choices=list(TARGETS),
+                    help="platform to build, repeatable (default: android)")
+    ap.add_argument("--output", help="build output path (single --target only; default under Builds/)")
     ap.add_argument("--force", action="store_true", help="replace an existing output project")
     args = ap.parse_args()
     args.work = args.work.resolve()

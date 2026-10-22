@@ -8,8 +8,9 @@ using UnityEngine;
 namespace NFPort.Editor
 {
     /// <summary>
-    /// Builds the ARM64 APK. From the command line:
-    ///   Unity -batchmode -quit -projectPath &lt;project&gt; -executeMethod NFPort.Editor.NFPortBuild.AndroidArm64 [-nfportOutput path.apk]
+    /// Builds the port for each platform. From the command line:
+    ///   Unity -batchmode -quit -projectPath &lt;project&gt; -buildTarget &lt;Android|Win64|Linux64|WebGL&gt;
+    ///         -executeMethod NFPort.Editor.NFPortBuild.&lt;AndroidArm64|Windows64|Linux64|WebGL&gt; [-nfportOutput path]
     /// </summary>
     public static class NFPortBuild
     {
@@ -24,33 +25,58 @@ namespace NFPort.Editor
         [MenuItem("NFPort/Build Android ARM64 APK")]
         public static void AndroidArm64()
         {
-            NFPortSetup.Apply();
-            if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.Android)
-                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
             EditorUserBuildSettings.buildAppBundle = false;
+            Build(BuildTargetGroup.Android, BuildTarget.Android, "Builds/NuttyFluffies-arm64.apk", "Android");
+        }
+
+        [MenuItem("NFPort/Build Windows (64-bit)")]
+        public static void Windows64() =>
+            Build(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64, "Builds/Windows/NuttyFluffies.exe", "Windows Build Support (Mono)");
+
+        [MenuItem("NFPort/Build Linux (64-bit)")]
+        public static void Linux64() =>
+            Build(BuildTargetGroup.Standalone, BuildTarget.StandaloneLinux64, "Builds/Linux/NuttyFluffies.x86_64", "Linux Build Support (Mono)");
+
+        [MenuItem("NFPort/Build WebGL")]
+        public static void WebGL() =>
+            Build(BuildTargetGroup.WebGL, BuildTarget.WebGL, "Builds/WebGL", "WebGL Build Support");
+
+        static void Build(BuildTargetGroup group, BuildTarget target, string defaultOutput, string module)
+        {
+            if (!BuildPipeline.IsBuildTargetSupported(group, target))
+                Fail($"NFPort: {target} is not installed. Add the \"{module}\" module to this Unity version in Unity Hub.");
+
+            NFPortSetup.Apply();
+            if (EditorUserBuildSettings.activeBuildTarget != target)
+                EditorUserBuildSettings.SwitchActiveBuildTarget(group, target);
 
             var scenes = EditorBuildSettings.scenes.Where(s => s.enabled && File.Exists(s.path)).Select(s => s.path).ToArray();
             if (scenes.Length == 0) scenes = FallbackScenes.Where(File.Exists).ToArray();
 
-            var output = ArgumentValue("-nfportOutput") ?? "Builds/NuttyFluffies-arm64.apk";
-            Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(output)));
+            var output = ArgumentValue("-nfportOutput") ?? defaultOutput;
+            var parent = target == BuildTarget.WebGL ? Path.GetFullPath(output) : Path.GetDirectoryName(Path.GetFullPath(output));
+            Directory.CreateDirectory(parent);
 
             var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
             {
                 scenes = scenes,
                 locationPathName = output,
-                target = BuildTarget.Android,
-                targetGroup = BuildTargetGroup.Android,
+                target = target,
+                targetGroup = group,
                 options = BuildOptions.None,
             });
 
             var summary = report.summary;
-            Debug.Log($"NFPort: build {summary.result}, {summary.totalErrors} errors, output {output}");
+            Debug.Log($"NFPort: {target} build {summary.result}, {summary.totalErrors} errors, output {output}");
             if (summary.result != BuildResult.Succeeded)
-            {
-                if (Application.isBatchMode) EditorApplication.Exit(1);
-                throw new Exception("NFPort: Android build failed, see the console for details.");
-            }
+                Fail($"NFPort: {target} build failed, see the console for details.");
+        }
+
+        static void Fail(string message)
+        {
+            Debug.LogError(message);
+            if (Application.isBatchMode) EditorApplication.Exit(1);
+            throw new Exception(message);
         }
 
         static string ArgumentValue(string name)

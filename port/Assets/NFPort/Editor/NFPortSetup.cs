@@ -15,7 +15,7 @@ namespace NFPort.Editor
     public static class NFPortSetup
     {
         const string Marker = "ProjectSettings/NFPortSetup.txt";
-        const int MarkerVersion = 2;
+        const int MarkerVersion = 3;
         public const string DefaultApplicationId = "com.UBI.A90.WW.arm64";
 
         static NFPortSetup()
@@ -50,6 +50,11 @@ namespace NFPort.Editor
             PlayerSettings.allowedAutorotateToLandscapeRight = true;
             PlayerSettings.allowedAutorotateToPortrait = false;
             PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
+
+            // The game's web services (news, version check, store data) are
+            // plain http. Unity 4 allowed that; 2022 throws from the WWW
+            // constructor unless it is enabled here.
+            PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
         }
 
         static void ApplyAndroid()

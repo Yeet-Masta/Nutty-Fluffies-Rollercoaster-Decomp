@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -39,8 +40,19 @@ public class NFPortDiagnostics : MonoBehaviour
         var go = new GameObject("NFPort Diagnostics");
         DontDestroyOnLoad(go);
         go.AddComponent<NFPortDiagnostics>();
-        SceneManager.sceneLoaded += (scene, mode) => Write($"scene loaded: {scene.name} ({mode})");
+        SceneManager.sceneLoaded += (scene, mode) =>
+        {
+            Write($"scene loaded: {scene.name} ({mode})");
+            foreach (var cam in Camera.allCameras)
+                Write("  camera " + DescribeCamera(cam));
+        };
     }
+
+    static string DescribeCamera(Camera cam) =>
+        $"'{HierarchyPath(cam.transform)}' tag={cam.tag} depth={cam.depth} clear={cam.clearFlags} " +
+        $"culling=0x{cam.cullingMask:X} events=0x{cam.eventMask:X} ortho={cam.orthographic} size={cam.orthographicSize} " +
+        $"near={cam.nearClipPlane} far={cam.farClipPlane} pos={cam.transform.position:F3} rect={cam.pixelRect} " +
+        $"sort={cam.transparencySortMode} rt={(cam.targetTexture != null ? cam.targetTexture.name : "-")}";
 
     static void OpenFile()
     {
@@ -104,8 +116,9 @@ public class NFPortDiagnostics : MonoBehaviour
         var text = $"({position.x:0},{position.y:0}) of {Screen.width}x{Screen.height}";
         var cam = Camera.main;
         if (cam == null) return text + ": no main camera";
-        var hits = Physics.RaycastAll(cam.ScreenPointToRay(position), 1000f);
-        if (hits.Length == 0) return text + ": hit nothing";
+        var ray = cam.ScreenPointToRay(position);
+        var hits = Physics.RaycastAll(ray, 1000f);
+        if (hits.Length == 0) return text + ": hit nothing" + DescribeMiss(cam, ray);
         Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
         var parts = new List<string>();
         for (var i = 0; i < hits.Length && i < 5; i++)
@@ -117,6 +130,62 @@ public class NFPortDiagnostics : MonoBehaviour
             parts.Add($"'{HierarchyPath(go.transform)}' d={hits[i].distance:0.00} [{string.Join(", ", scripts)}]");
         }
         return text + ": " + string.Join("  >  ", parts);
+    }
+
+    /// <summary>
+    /// Why did a tap hit nothing? Lists every collider whose transform says it
+    /// is under the pointer, with what physics actually has for it.
+    /// </summary>
+    static string DescribeMiss(Camera cam, Ray ray)
+    {
+        var sb = new StringBuilder();
+        sb.Append($"\n    camera {DescribeCamera(cam)}");
+        sb.Append($"\n    ray {ray.origin:F3} dir {ray.direction:F3}; autoSyncTransforms={Physics.autoSyncTransforms} " +
+                  $"timeScale={Time.timeScale} cameras={Camera.allCamerasCount}");
+        var anyLayer = Physics.RaycastAll(ray, 1000f, ~0, QueryTriggerInteraction.Collide);
+        if (anyLayer.Length > 0)
+            sb.Append($"\n    (all layers + triggers would hit '{HierarchyPath(anyLayer[0].collider.transform)}' layer {anyLayer[0].collider.gameObject.layer})");
+
+        var listed = 0;
+        foreach (var col in UnityEngine.Object.FindObjectsOfType<Collider>(true))
+        {
+            if (col is BoxCollider box)
+            {
+                if (!ExpectedBounds(box).IntersectRay(ray)) continue;
+            }
+            else if (!col.bounds.IntersectRay(ray)) continue;
+
+            if (++listed > 8) { sb.Append("\n    ..."); break; }
+            var go = col.gameObject;
+            var direct = col.enabled && go.activeInHierarchy && col.Raycast(ray, out _, 1000f);
+            sb.Append($"\n    under pointer: '{HierarchyPath(col.transform)}' activeSelf={go.activeSelf} " +
+                      $"activeInHierarchy={go.activeInHierarchy} enabled={col.enabled} trigger={col.isTrigger} " +
+                      $"layer={go.layer} lossyScale={col.transform.lossyScale:F3} physicsBounds={col.bounds.center:F3}+-{col.bounds.extents:F3} " +
+                      $"colliderRaycast={direct}");
+            if (col is BoxCollider b)
+            {
+                var e = ExpectedBounds(b);
+                sb.Append($" expectedBounds={e.center:F3}+-{e.extents:F3}");
+            }
+            for (var p = col.transform; p != null; p = p.parent)
+                if (!p.gameObject.activeSelf) { sb.Append($" inactiveParent='{p.name}'"); break; }
+        }
+        if (listed == 0) sb.Append("\n    no collider's transform puts it under the pointer");
+        return sb.ToString();
+    }
+
+    /// <summary>World AABB of a box collider computed from its transform alone.</summary>
+    static Bounds ExpectedBounds(BoxCollider box)
+    {
+        var t = box.transform;
+        var h = box.size * 0.5f;
+        var bounds = new Bounds(t.TransformPoint(box.center), Vector3.zero);
+        for (var i = 0; i < 8; i++)
+        {
+            var corner = box.center + new Vector3((i & 1) == 0 ? -h.x : h.x, (i & 2) == 0 ? -h.y : h.y, (i & 4) == 0 ? -h.z : h.z);
+            bounds.Encapsulate(t.TransformPoint(corner));
+        }
+        return bounds;
     }
 
     static string HierarchyPath(Transform t)

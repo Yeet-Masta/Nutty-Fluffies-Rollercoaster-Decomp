@@ -1,18 +1,28 @@
 #if !NFPORT_NO_DIAGNOSTICS
+using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
-/// On-screen error log for testing the port on devices without adb.
+/// Testing aid for the port.
 ///
-/// When the game logs an error or exception, a small red badge appears in
-/// the top-left corner; tap it (or press F12, or tap with four fingers) to
-/// open a panel with the recent errors and what the last tap/click hit.
-/// Define NFPORT_NO_DIAGNOSTICS in Player Settings to remove it.
+/// * Writes NFPort.log: every error/exception (with stack trace), every scene
+///   load, and for every click/tap all colliders under the pointer, nearest
+///   first. On Windows/Linux the file is next to the game executable, in the
+///   editor it is in the project folder, on phones in Application.persistentDataPath.
+/// * When an error is logged a red badge appears top-left; tap it (or press
+///   F12, or tap with four fingers) to see recent errors and the last tap.
+/// Define NFPORT_NO_DIAGNOSTICS in Player Settings to remove all of this.
 /// </summary>
 public class NFPortDiagnostics : MonoBehaviour
 {
     const int MaxEntries = 12;
+
+    static StreamWriter _file;
+    static readonly object FileLock = new object();
+    public static string LogPath { get; private set; }
 
     readonly List<string> _entries = new List<string>();
     readonly object _lock = new object();
@@ -25,9 +35,35 @@ public class NFPortDiagnostics : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void Install()
     {
+        OpenFile();
         var go = new GameObject("NFPort Diagnostics");
         DontDestroyOnLoad(go);
         go.AddComponent<NFPortDiagnostics>();
+        SceneManager.sceneLoaded += (scene, mode) => Write($"scene loaded: {scene.name} ({mode})");
+    }
+
+    static void OpenFile()
+    {
+        try
+        {
+            var dir = Application.isMobilePlatform || Application.platform == RuntimePlatform.WebGLPlayer
+                ? Application.persistentDataPath
+                : Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
+            LogPath = Path.Combine(dir, "NFPort.log");
+            _file = new StreamWriter(LogPath, false) { AutoFlush = true };
+            Write($"NFPort log, Unity {Application.unityVersion}, {Application.platform}, {SystemInfo.operatingSystem}, " +
+                  $"{SystemInfo.graphicsDeviceType}, screen {Screen.width}x{Screen.height}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("NFPort: could not open log file: " + e.Message);
+        }
+    }
+
+    public static void Write(string line)
+    {
+        lock (FileLock)
+            _file?.WriteLine($"[{DateTime.Now:HH:mm:ss.fff} f{Time.frameCount}] {line}");
     }
 
     void OnEnable() => Application.logMessageReceivedThreaded += OnLog;
@@ -35,7 +71,10 @@ public class NFPortDiagnostics : MonoBehaviour
 
     void OnLog(string message, string stackTrace, LogType type)
     {
-        if (type != LogType.Error && type != LogType.Exception && type != LogType.Assert) return;
+        var isError = type == LogType.Error || type == LogType.Exception || type == LogType.Assert;
+        Write(isError ? $"{type}: {message}\n{stackTrace}" : $"{type}: {message}");
+        if (!isError) return;
+
         var firstFrame = string.IsNullOrEmpty(stackTrace) ? "" : stackTrace.Split('\n')[0];
         var entry = $"[{type}] {message}\n    at {firstFrame}";
         lock (_lock)
@@ -52,7 +91,12 @@ public class NFPortDiagnostics : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F12) || Input.touchCount == 4 && Input.GetTouch(3).phase == TouchPhase.Began)
             _open = !_open;
 
-        if (Input.GetMouseButtonDown(0)) _lastTap = DescribeTap(Input.mousePosition);
+        if (Input.GetMouseButtonDown(0))
+        {
+            _lastTap = DescribeTap(Input.mousePosition);
+            Write("tap " + _lastTap);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)) Write("Escape pressed");
     }
 
     static string DescribeTap(Vector3 position)
@@ -60,13 +104,26 @@ public class NFPortDiagnostics : MonoBehaviour
         var text = $"({position.x:0},{position.y:0}) of {Screen.width}x{Screen.height}";
         var cam = Camera.main;
         if (cam == null) return text + ": no main camera";
-        var ray = cam.ScreenPointToRay(position);
-        if (!Physics.Raycast(ray, out var hit, 1000f)) return text + ": hit nothing";
-        var go = hit.collider.gameObject;
-        var scripts = new List<string>();
-        foreach (var mb in go.GetComponents<MonoBehaviour>())
-            if (mb != null) scripts.Add(mb.GetType().Name + (mb.enabled ? "" : " (disabled)"));
-        return $"{text}: hit '{go.name}' [{string.Join(", ", scripts)}]";
+        var hits = Physics.RaycastAll(cam.ScreenPointToRay(position), 1000f);
+        if (hits.Length == 0) return text + ": hit nothing";
+        Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+        var parts = new List<string>();
+        for (var i = 0; i < hits.Length && i < 5; i++)
+        {
+            var go = hits[i].collider.gameObject;
+            var scripts = new List<string>();
+            foreach (var mb in go.GetComponents<MonoBehaviour>())
+                if (mb != null) scripts.Add(mb.GetType().Name + (mb.enabled ? "" : " (disabled)"));
+            parts.Add($"'{HierarchyPath(go.transform)}' d={hits[i].distance:0.00} [{string.Join(", ", scripts)}]");
+        }
+        return text + ": " + string.Join("  >  ", parts);
+    }
+
+    static string HierarchyPath(Transform t)
+    {
+        var name = t.name;
+        for (var p = t.parent; p != null && name.Length < 80; p = p.parent) name = p.name + "/" + name;
+        return name;
     }
 
     void OnGUI()
@@ -97,6 +154,7 @@ public class NFPortDiagnostics : MonoBehaviour
         GUILayout.Label($"NFPort diagnostics: {count} error(s)", _label);
         if (GUILayout.Button("Close", GUILayout.Width(unit * 2), GUILayout.Height(unit * 0.6f))) _open = false;
         GUILayout.EndHorizontal();
+        GUILayout.Label("Log file: " + (LogPath ?? "(not available)"), _label);
         GUILayout.Label("Last tap " + _lastTap, _label);
         _scroll = GUILayout.BeginScrollView(_scroll);
         lock (_lock)

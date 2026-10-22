@@ -163,6 +163,11 @@ python tools\nfport.py build --unity "C:\Program Files\Unity\Hub\Editor\2022.3.6
   code shipped in the APK but this Android build never ran it, so it's
   untested. On the web, sound starts only after the first click (browser
   rule), and progress is saved through PlayerPrefs in the browser's storage.
+- **On-screen diagnostics** (for testing): when the game logs an error, a
+  red badge appears in the top-left corner. Tap it (or press F12, or tap
+  with four fingers) to see the recent errors and what the last tap hit.
+  Add `NFPORT_NO_DIAGNOSTICS` to Player Settings > Scripting Define Symbols
+  to remove it from release builds.
 - **Removed features:** in-app purchases (Google/Amazon), Facebook/Twitter
   sharing, leaderboards and achievements (Game Center), push notifications,
   ads/offer walls and analytics. Calls into them are no-ops, so for example

@@ -74,6 +74,9 @@ API_RULES = [
     # Only needed for the removed native ad SDK calling back into Java; the
     # Android JNI module isn't enabled (and doesn't exist off Android).
     (re.compile(r"(?m)^(\s*)AndroidJNI\.(?:Attach|Detach)CurrentThread\(\);"), r"\1// NFPort: AndroidJNI thread attach removed with the ad SDK"),
+    # SetResolution(w, h, false) meant "keep going" on Unity 4 Android; in
+    # Unity 2022 false switches to windowed mode. Keep the current mode.
+    (re.compile(r"\bScreen\.SetResolution\(([^;]*), false\)"), r"Screen.SetResolution(\1, Screen.fullScreenMode)"),
     # Cursor visibility.
     (re.compile(r"\bScreen\.(?:visible|showCursor)\b"), "Cursor.visible"),
     (re.compile(r"\bScreen\.lockCursor\s*=\s*true\b"), "Cursor.lockState = CursorLockMode.Locked"),
@@ -204,6 +207,16 @@ def main(project):
 
     renames = {}
     changed = 0
+
+    # The ripped Unity 4 shaders say "ZTest False" (depth test off). Modern
+    # ShaderLab only documents the comparison names; "Always" is equivalent.
+    for shader in assets.rglob("*.shader"):
+        text = shader.read_text(encoding="utf-8-sig")
+        new = re.sub(r"\bZTest False\b", "ZTest Always", text)
+        if new != text:
+            shader.write_text(new, encoding="utf-8")
+            changed += 1
+
     files = [p for p in assets.rglob("*.cs") if "NFPort" not in p.parts]
     for path in files:
         text = path.read_text(encoding="utf-8-sig")

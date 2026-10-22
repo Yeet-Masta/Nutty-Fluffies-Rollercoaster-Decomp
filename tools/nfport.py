@@ -33,6 +33,7 @@ with the Build Support module of each target (Android also needs its OpenJDK
 and Android SDK & NDK modules).
 """
 import argparse
+import json
 import os
 import pathlib
 import platform
@@ -167,12 +168,53 @@ def unity_managed_dir(unity):
     return None
 
 
+def enabled_engine_modules(project, managed):
+    """Engine module DLLs Unity will compile against for this project.
+
+    Optional modules are built-in packages (com.unity.modules.*) that must be
+    listed in Packages/manifest.json, directly or as a dependency; a script
+    using a type from a module that isn't enabled fails in Unity with CS1069.
+    Returns None if the editor's built-in package list can't be found.
+    """
+    builtin = managed.parent / "Resources/PackageManager/BuiltInPackages"
+    if not builtin.is_dir():
+        return None
+    available = {p.name for p in builtin.iterdir() if p.name.startswith("com.unity.modules.") and p.is_dir()}
+    manifest = json.loads((project / "Packages/manifest.json").read_text(encoding="utf-8"))
+    pending = [n for n in manifest.get("dependencies", {}) if n in available]
+    enabled = set()
+    while pending:
+        name = pending.pop()
+        if name in enabled:
+            continue
+        enabled.add(name)
+        meta = builtin / name / "package.json"
+        if meta.exists():
+            deps = json.loads(meta.read_text(encoding="utf-8")).get("dependencies", {})
+            pending.extend(d for d in deps if d in available)
+    modules = []
+    for dll in sorted((managed / "UnityEngine").glob("UnityEngine.*Module.dll")):
+        package = "com.unity.modules." + dll.name[len("UnityEngine."):-len("Module.dll")].lower()
+        if package not in available or package in enabled:
+            modules.append(dll)
+    return modules
+
+
 def compile_check(args, project, managed):
     """Build the runtime and editor script assemblies; returns (error_count, [log files])."""
     ccdir = args.work / "compilecheck"
     if ccdir.exists():
         shutil.rmtree(ccdir)
     shutil.copytree(TOOLS / "compilecheck", ccdir)
+    modules = enabled_engine_modules(project, managed)
+    if modules is None:
+        log("warning: can't find the editor's built-in packages; checking against every engine module")
+    else:
+        refs = [managed / "UnityEngine/UnityEngine.dll"] + modules
+        (ccdir / "Modules.props").write_text(
+            "<Project>\n  <ItemGroup>\n%s  </ItemGroup>\n</Project>\n"
+            % "".join('    <Reference Include="%s" Private="false" />\n' % r for r in refs),
+            encoding="utf-8")
     logs, total = [], 0
     for name in ("firstpass", "main", "editor"):
         res = subprocess.run(

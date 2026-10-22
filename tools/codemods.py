@@ -69,6 +69,9 @@ API_RULES = [
     (re.compile(r"\bTouchScreenKeyboard\.(autorotateTo\w+)"), r"Screen.\1"),
     # GameObject.SampleAnimation(clip, t) -> clip.SampleAnimation(gameObject, t)
     (re.compile(r"\b(gameObject)\.SampleAnimation\((.+?), ([\w.]+)\);"), r"\2.SampleAnimation(\1, \3);"),
+    # Only needed for the removed native ad SDK calling back into Java; the
+    # Android JNI module isn't enabled (and doesn't exist off Android).
+    (re.compile(r"(?m)^(\s*)AndroidJNI\.(?:Attach|Detach)CurrentThread\(\);"), r"\1// NFPort: AndroidJNI thread attach removed with the ad SDK"),
     # Cursor visibility.
     (re.compile(r"\bScreen\.(?:visible|showCursor)\b"), "Cursor.visible"),
     (re.compile(r"\bScreen\.lockCursor\s*=\s*true\b"), "Cursor.lockState = CursorLockMode.Locked"),

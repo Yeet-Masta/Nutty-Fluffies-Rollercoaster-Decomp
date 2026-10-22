@@ -151,6 +151,10 @@ def stub_text(text):
     # Expression-bodied members that reach into the SDK.
     text = re.sub(r"(?m)^(\s*(?:(?:public|private|protected|internal|static)\s+)+[\w.<>\[\]]+\s+\w+\s*(?:\([^)]*\))?\s*)=>\s*[^;]+;",
                   r"\1=> default;", text)
+    # The leftover fields/signatures typed AndroidJavaObject/AndroidJavaClass
+    # would need Unity's optional Android JNI module (and only exist to talk
+    # to the removed Java SDKs), so they become plain objects.
+    text = re.sub(r"\b(?:UnityEngine\.)?AndroidJava(?:Object|Class)\b", "object", text)
     return text
 
 

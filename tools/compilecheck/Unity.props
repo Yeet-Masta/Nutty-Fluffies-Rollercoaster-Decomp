@@ -10,7 +10,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
   </PropertyGroup>
-  <ItemGroup>
+  <!-- nfport.py writes Modules.props with only the engine modules the
+       project's Packages/manifest.json enables, like Unity itself does. -->
+  <Import Project="$(MSBuildThisFileDirectory)Modules.props" Condition="Exists('$(MSBuildThisFileDirectory)Modules.props')" />
+  <ItemGroup Condition="!Exists('$(MSBuildThisFileDirectory)Modules.props')">
     <Reference Include="$(UnityManaged)/UnityEngine/UnityEngine.dll;$(UnityManaged)/UnityEngine/*Module.dll" Exclude="$(UnityManaged)/UnityEngine/UnityEditor*.dll" Private="false" />
   </ItemGroup>
 </Project>

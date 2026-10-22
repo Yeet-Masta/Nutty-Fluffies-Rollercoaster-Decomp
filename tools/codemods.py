@@ -62,9 +62,11 @@ def fix_boo_enumerators(text):
 API_RULES = [
     # AddComponent("Foo") -> AddComponent<Foo>()
     (re.compile(r"\.AddComponent\(\"(\w+)\"\)"), r".AddComponent<\1>()"),
-    # iOS-only device query; on Android it always reported Unknown.
-    (re.compile(r"\biPhoneSettings\.generation\b"), "UnityEngine.iOS.DeviceGeneration.Unknown"),
-    (re.compile(r"(?<![\w.])iPhoneGeneration\."), "UnityEngine.iOS.DeviceGeneration."),
+    # iOS-only device query; on Android it always reported Unknown. Mapped to
+    # NFPortLegacyDevice rather than UnityEngine.iOS, which only exists when
+    # building for iOS.
+    (re.compile(r"\biPhoneSettings\.generation\b"), "NFPortLegacyDevice.generation"),
+    (re.compile(r"(?<![\w.])iPhoneGeneration\."), "NFPortLegacyDeviceGeneration."),
     # Moved from TouchScreenKeyboard to Screen.
     (re.compile(r"\bTouchScreenKeyboard\.(autorotateTo\w+)"), r"Screen.\1"),
     # GameObject.SampleAnimation(clip, t) -> clip.SampleAnimation(gameObject, t)

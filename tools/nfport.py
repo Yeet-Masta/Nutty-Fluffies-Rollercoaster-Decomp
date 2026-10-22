@@ -311,10 +311,15 @@ def step_port(args):
         fail("API update did not converge")
     log("scripts compile cleanly against Unity 2022.3")
 
-    leftovers = [p for p in (project / "Assets").rglob("*.cs")
-                 if "NFPort" not in p.parts and "jar:file://" in p.read_text(encoding="utf-8-sig")]
-    if leftovers:
-        fail("APK-only file reads left in: %s" % ", ".join(str(p.relative_to(project)) for p in leftovers))
+    # Things the compile check can't see: APK-only file reads, and platform
+    # namespaces Unity only provides when building for that platform.
+    game_scripts = [p for p in (project / "Assets").rglob("*.cs") if "NFPort" not in p.parts]
+    for marker, problem in (("jar:file://", "APK-only file reads"),
+                            ("UnityEngine.iOS", "iOS-only APIs (missing on other build targets)"),
+                            ("UnityEngine.tvOS", "tvOS-only APIs (missing on other build targets)")):
+        hits = [p for p in game_scripts if marker in p.read_text(encoding="utf-8-sig")]
+        if hits:
+            fail("%s left in: %s" % (problem, ", ".join(str(p.relative_to(project)) for p in hits)))
     expected = {"FingerGesturesInitializer.cs": "NFPortInput.UseTouch", "GameManager.cs": "NFPortInput.UseTouch"}
     for name, marker in expected.items():
         hits = list((project / "Assets").rglob(name))

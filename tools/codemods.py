@@ -137,7 +137,47 @@ INPUT_RULES = [
 ]
 
 
+def fix_edit_mode_destroy(text):
+    """[ExecuteInEditMode] components (tk2d sprites) call Destroy() in
+    OnDestroy, which Unity 2022 reports as an error in edit mode, failing
+    player builds. Use NFPortCompat.DestroySafe there, as later tk2d does."""
+    if "ExecuteInEditMode" not in text:
+        return text
+    out, pos = [], 0
+    for m in re.finditer(r"void (?:OnDestroy|OnDisable)\(\)\s*\{", text):
+        start = m.end()
+        depth, i = 1, start
+        while depth and i < len(text):
+            depth += {"{": 1, "}": -1}.get(text[i], 0)
+            i += 1
+        body = re.sub(r"(?<![\w.])(?:UnityEngine\.)?(?:Object\.)?Destroy\(", "NFPortCompat.DestroySafe(", text[start:i])
+        out.append(text[pos:start])
+        out.append(body)
+        pos = i
+    out.append(text[pos:])
+    return "".join(out)
+
+
+# Tapjoy (ads/offer wall) is one of the removed SDKs. Its controller registers
+# itself in Awake, and BaseMenuManager.Awake used it while Tapjoy was enabled;
+# with Unity 2022's Awake order the menu could run first, throw, and leave
+# every menu button dead. Keep Tapjoy switched off.
+TAPJOY_OFF = re.compile(r"\bIS_TAPJOY_ENABLED = true\b")
+
+
+# Singletons that register themselves in Awake while other scripts in the
+# same scene use them from their own Awake (e.g. CoinStoreMenu -> StoreManager
+# in MenuScene). Unity never guaranteed Awake order between objects, and the
+# upgraded scenes don't reproduce Unity 4's, so run these first.
+EARLY_SINGLETONS = ("StoreManager", "TapjoyAdController")
+EARLY_SINGLETON_DECL = re.compile(r"(?m)^(public class (%s) : MonoBehaviour)" % "|".join(EARLY_SINGLETONS))
+
+
 def retarget_platform(text):
+    if "[DefaultExecutionOrder(" not in text:
+        text = EARLY_SINGLETON_DECL.sub(r"[DefaultExecutionOrder(-100)]\n\1", text)
+    text = TAPJOY_OFF.sub("IS_TAPJOY_ENABLED = false", text)
+    text = fix_edit_mode_destroy(text)
     if APK_READ.search(text):
         text = APK_READ.sub('NFPortAssetFile.Open("', text)
         if "new WWW(" not in text:

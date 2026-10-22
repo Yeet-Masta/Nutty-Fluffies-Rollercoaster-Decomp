@@ -239,8 +239,13 @@ namespace UnityScript.Lang
             {
                 case null:
                     return Empty;
-                case IList list:
-                    return new ListUpdateableEnumerator(list);
+                // Like UnityScript: only its own Array and arrays of value types
+                // write loop-variable changes back; other collections use their
+                // own enumerator (and Update is a no-op for them).
+                case Array jsArray:
+                    return new ListUpdateableEnumerator(jsArray);
+                case System.Array array when array.GetType().GetElementType().IsValueType:
+                    return new ListUpdateableEnumerator(array);
                 case IEnumerable enumerable:
                     return enumerable.GetEnumerator();
                 case IEnumerator enumerator:

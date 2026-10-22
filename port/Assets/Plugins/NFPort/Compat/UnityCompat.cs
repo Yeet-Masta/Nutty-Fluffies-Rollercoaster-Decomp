@@ -24,6 +24,18 @@ public static class NFPortCompat
         return go.AddComponent(type);
     }
 
+    /// <summary>
+    /// Destroy() for components that also run in edit mode ([ExecuteInEditMode]).
+    /// Unity 2022 logs an error (which fails player builds) when Destroy is
+    /// called outside play mode, e.g. while the build loads and unloads scenes.
+    /// </summary>
+    public static void DestroySafe(UnityEngine.Object obj)
+    {
+        if (obj == null) return;
+        if (Application.isPlaying) UnityEngine.Object.Destroy(obj);
+        else UnityEngine.Object.DestroyImmediate(obj);
+    }
+
     public static Type FindComponentType(string className)
     {
         if (string.IsNullOrEmpty(className)) return null;

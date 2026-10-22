@@ -15,7 +15,9 @@ namespace NFPort.Editor
     public static class NFPortSetup
     {
         const string Marker = "ProjectSettings/NFPortSetup.txt";
-        const int MarkerVersion = 3;
+        const int MarkerVersion = 4;
+        // The original app icon, from the APK's res/drawable-* folders (36-96 px).
+        const string AppIcon = "Assets/NFPort/Icons/app_icon_96.png";
         public const string DefaultApplicationId = "com.UBI.A90.WW.arm64";
 
         static NFPortSetup()
@@ -55,6 +57,12 @@ namespace NFPort.Editor
             // plain http. Unity 4 allowed that; 2022 throws from the WWW
             // constructor unless it is enabled here.
             PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
+
+            // Default icon: used by every platform without icons of its own
+            // (Android launcher, Windows .exe, Linux).
+            var icon = AssetDatabase.LoadAssetAtPath<Texture2D>(AppIcon);
+            if (icon != null)
+                PlayerSettings.SetIcons(NamedBuildTarget.Unknown, new[] { icon }, IconKind.Any);
         }
 
         static void ApplyAndroid()

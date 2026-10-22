@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../Unity.props" />
+  <ItemGroup>
+    <Compile Include="$(ProjectRoot)/Assets/**/Editor/**/*.cs" />
+    <ProjectReference Include="../firstpass/Assembly-CSharp-firstpass.csproj" />
+    <ProjectReference Include="../main/Assembly-CSharp.csproj" />
+    <Reference Include="$(UnityManaged)/UnityEngine/UnityEditor.*Module.dll" Private="false" />
+  </ItemGroup>
+</Project>

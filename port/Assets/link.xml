@@ -1,0 +1,21 @@
+<!--
+  IL2CPP code stripping: keep the game's own assemblies whole. The game calls
+  methods by name (MonoBehaviour.Invoke / SendMessage), adds trigger and object
+  scripts by name from level data (NFPortCompat.AddComponentByName), and the
+  UnityScript compat runtime looks up conversion/equality operators through
+  reflection.
+-->
+<linker>
+  <assembly fullname="Assembly-CSharp" preserve="all" />
+  <assembly fullname="Assembly-CSharp-firstpass" preserve="all" />
+  <assembly fullname="UnityEngine.CoreModule">
+    <type fullname="UnityEngine.Vector2" preserve="all" />
+    <type fullname="UnityEngine.Vector3" preserve="all" />
+    <type fullname="UnityEngine.Vector4" preserve="all" />
+    <type fullname="UnityEngine.Quaternion" preserve="all" />
+    <type fullname="UnityEngine.Color" preserve="all" />
+    <type fullname="UnityEngine.Color32" preserve="all" />
+    <type fullname="UnityEngine.Rect" preserve="all" />
+    <type fullname="UnityEngine.Object" preserve="all" />
+  </assembly>
+</linker>

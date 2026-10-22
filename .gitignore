@@ -1,0 +1,14 @@
+# Game content is regenerated from your own APK and never committed.
+*.apk
+*.aab
+work/
+NuttyFluffiesPort/
+Builds/
+
+# dotnet build output of the compile-check projects
+tools/compilecheck/**/bin/
+tools/compilecheck/**/obj/
+
+__pycache__/
+*.pyc
+.DS_Store

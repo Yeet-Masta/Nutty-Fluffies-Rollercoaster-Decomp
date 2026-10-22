@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../Unity.props" />
+  <ItemGroup>
+    <Compile Include="$(ProjectRoot)/Assets/**/*.cs" Exclude="$(ProjectRoot)/Assets/Plugins/**;$(ProjectRoot)/Assets/Standard Assets/**;$(ProjectRoot)/Assets/**/Editor/**/*.cs" />
+    <ProjectReference Include="../firstpass/Assembly-CSharp-firstpass.csproj" />
+    <Reference Include="$(ProjectRoot)/Assets/Plugins/*.dll" Private="false" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../Unity.props" />
+  <ItemGroup>
+    <Compile Include="$(ProjectRoot)/Assets/Plugins/**/*.cs;$(ProjectRoot)/Assets/Standard Assets/**/*.cs" Exclude="$(ProjectRoot)/Assets/**/Editor/**/*.cs" />
+    <Reference Include="$(ProjectRoot)/Assets/Plugins/*.dll" Private="false" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,198 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &147589
+GameObject:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 479954}
+  - 114: {fileID: 11409266}
+  m_Layer: 0
+  m_Name: data
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &479954
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147589}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &11409266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdeae9d602cd966a5a5b6272023866be, type: 3}
+  m_Name:
+  version: 1
+  spriteDefinitions:
+  - name: logo_redlynx_top
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 1.0304688, y: 0.18046875, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.0304688, y: 0.18046875, z: 0}
+    texelSize: {x: 0.00078125, y: 0.00078125}
+    positions:
+    - {x: -0.5152344, y: -0.09023438, z: 0}
+    - {x: 0.5152344, y: -0.09023438, z: 0}
+    - {x: -0.5152344, y: 0.09023438, z: 0}
+    - {x: 0.5152344, y: 0.09023438, z: -0.001}
+    uvs:
+    - {x: 0.0019541015, y: 0.0009770507}
+    - {x: 0.0019541015, y: 0.64501905}
+    - {x: 0.22753808, y: 0.0009770507}
+    - {x: 0.22753808, y: 0.64501905}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: be989f5864ed06e418d4754f56c5467f, type: 2}
+    sourceTextureGUID: 74752465349f34d8eaf6ebc0f13c78c2
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    colliderType: 1
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  - name: logo_redlynx_bottom
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 0.8101563, y: 0.044531252, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.8101563, y: 0.044531252, z: 0}
+    texelSize: {x: 0.00078125, y: 0.00078125}
+    positions:
+    - {x: -0.40507814, y: -0.022265626, z: 0}
+    - {x: 0.40507814, y: -0.022265626, z: 0}
+    - {x: -0.40507814, y: 0.022265626, z: 0}
+    - {x: 0.40507814, y: 0.022265626, z: -0.001}
+    uvs:
+    - {x: 0.7011728, y: 0.0009770507}
+    - {x: 0.7011728, y: 0.50732374}
+    - {x: 0.756835, y: 0.0009770507}
+    - {x: 0.756835, y: 0.50732374}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: be989f5864ed06e418d4754f56c5467f, type: 2}
+    sourceTextureGUID: 62b16533c6467458abcb8a2ef74fe1d6
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    colliderType: 1
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  - name: logo_ubisoft_bottom
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 0.55625004, y: 0.06171875, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.55625004, y: 0.06171875, z: 0}
+    texelSize: {x: 0.00078125, y: 0.00078125}
+    positions:
+    - {x: -0.27812502, y: -0.030859375, z: 0}
+    - {x: 0.27812502, y: -0.030859375, z: 0}
+    - {x: -0.27812502, y: 0.030859375, z: 0}
+    - {x: 0.27812502, y: 0.030859375, z: -0.001}
+    uvs:
+    - {x: 0.0019541015, y: 0.84668016}
+    - {x: 0.6972647, y: 0.84668016}
+    - {x: 0.0019541015, y: 0.8852534}
+    - {x: 0.6972647, y: 0.8852534}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: be989f5864ed06e418d4754f56c5467f, type: 2}
+    sourceTextureGUID: 1576ddb83283e4b9895bff3cada282f7
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    colliderType: 1
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  - name: logo_ubisoft_top
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 0.31640625, y: 0.31640625, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.31640625, y: 0.31640625, z: 0}
+    texelSize: {x: 0.00078125, y: 0.00078125}
+    positions:
+    - {x: -0.15820312, y: -0.15820312, z: 0}
+    - {x: 0.15820312, y: -0.15820312, z: 0}
+    - {x: -0.15820312, y: 0.15820312, z: 0}
+    - {x: 0.15820312, y: 0.15820312, z: -0.001}
+    uvs:
+    - {x: 0.0019541015, y: 0.64697313}
+    - {x: 0.39745995, y: 0.64697313}
+    - {x: 0.0019541015, y: 0.8447261}
+    - {x: 0.39745995, y: 0.8447261}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: be989f5864ed06e418d4754f56c5467f, type: 2}
+    sourceTextureGUID: de811b31b8d1c430ebc7093ffd1ef2b8
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    colliderType: 1
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  premultipliedAlpha: 1
+  material: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: be989f5864ed06e418d4754f56c5467f, type: 2}
+  textures:
+  - {fileID: 2800000, guid: e92486a3ff2f4b44b96b23fe1e5d4678, type: 3}
+  allowMultipleAtlases: 0
+  spriteCollectionGUID: 8faf328aba5954b47b46370d24c1bef1
+  spriteCollectionName: LogoSpriteCollection
+  invOrthoSize: 2
+  buildKey: 1159043171
+  dataGuid: 132e29dfb339f468e8a773c09dab66d2
+  largeTexture: LogoSpriteCollectionTextureLarge
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 147589}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0

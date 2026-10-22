@@ -1,0 +1,264 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &147589
+GameObject:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 479954}
+  - 114: {fileID: 11409266}
+  m_Layer: 0
+  m_Name: data
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &479954
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147589}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &11409266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdeae9d602cd966a5a5b6272023866be, type: 3}
+  m_Name:
+  version: 1
+  spriteDefinitions:
+  - name: metal_back
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 0.11875, y: 0.2125, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.11875, y: 0.2125, z: 0}
+    texelSize: {x: 0.003125, y: 0.003125}
+    positions:
+    - {x: -0.059375, y: -0.10625, z: 0}
+    - {x: 0.059375, y: -0.10625, z: 0}
+    - {x: -0.059375, y: 0.10625, z: 0}
+    - {x: 0.059375, y: 0.10625, z: -0.001}
+    uvs:
+    - {x: 0.90625197, y: 0.1533213}
+    - {x: 0.9804668, y: 0.1533213}
+    - {x: 0.90625197, y: 0.21972558}
+    - {x: 0.9804668, y: 0.21972558}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: f3833398ae8112b47915c745820de0bc, type: 2}
+    sourceTextureGUID: 6a2e0e1fbdff740d29b5990f3ae2b686
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    colliderType: 0
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  - name: metal_cart
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 0.996875, y: 0.646875, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.996875, y: 0.646875, z: 0}
+    texelSize: {x: 0.003125, y: 0.003125}
+    positions:
+    - {x: -0.4984375, y: -0.3234375, z: 0}
+    - {x: 0.4984375, y: -0.3234375, z: 0}
+    - {x: -0.4984375, y: 0.3234375, z: 0}
+    - {x: 0.4984375, y: 0.3234375, z: -0.001}
+    uvs:
+    - {x: 0.003908203, y: 0.2080088}
+    - {x: 0.62695116, y: 0.2080088}
+    - {x: 0.003908203, y: 0.41015527}
+    - {x: 0.62695116, y: 0.41015527}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: f3833398ae8112b47915c745820de0bc, type: 2}
+    sourceTextureGUID: 9eed74590f551435c84054cc1621b580
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    colliderType: 0
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  - name: metal_driver
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 0.74375004, y: 0.646875, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.74375004, y: 0.646875, z: 0}
+    texelSize: {x: 0.003125, y: 0.003125}
+    positions:
+    - {x: -0.37187502, y: -0.3234375, z: 0}
+    - {x: 0.37187502, y: -0.3234375, z: 0}
+    - {x: -0.37187502, y: 0.3234375, z: 0}
+    - {x: 0.37187502, y: 0.3234375, z: -0.001}
+    uvs:
+    - {x: 0.003908203, y: 0.41406348}
+    - {x: 0.46874803, y: 0.41406348}
+    - {x: 0.003908203, y: 0.61621}
+    - {x: 0.46874803, y: 0.61621}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: f3833398ae8112b47915c745820de0bc, type: 2}
+    sourceTextureGUID: 49231905d57564c49be6b41d88a806b4
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    colliderType: 0
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  - name: metal_jump
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 0.471875, y: 0.484375, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.471875, y: 0.484375, z: 0}
+    texelSize: {x: 0.003125, y: 0.003125}
+    positions:
+    - {x: -0.2359375, y: -0.2421875, z: 0}
+    - {x: 0.2359375, y: -0.2421875, z: 0}
+    - {x: -0.2359375, y: 0.2421875, z: 0}
+    - {x: 0.2359375, y: 0.2421875, z: -0.001}
+    uvs:
+    - {x: 0.6503926, y: 0.0019541015}
+    - {x: 0.6503926, y: 0.14941308}
+    - {x: 0.95312303, y: 0.0019541015}
+    - {x: 0.95312303, y: 0.14941308}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: f3833398ae8112b47915c745820de0bc, type: 2}
+    sourceTextureGUID: 944dacaef4ad24a249a29077a02647ef
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    colliderType: 0
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  - name: metal_nose
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 1.021875, y: 0.646875, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.021875, y: 0.646875, z: 0}
+    texelSize: {x: 0.003125, y: 0.003125}
+    positions:
+    - {x: -0.5109375, y: -0.3234375, z: 0}
+    - {x: 0.5109375, y: -0.3234375, z: 0}
+    - {x: -0.5109375, y: 0.3234375, z: 0}
+    - {x: 0.5109375, y: 0.3234375, z: -0.001}
+    uvs:
+    - {x: 0.003908203, y: 0.0019541015}
+    - {x: 0.64257616, y: 0.0019541015}
+    - {x: 0.003908203, y: 0.20410058}
+    - {x: 0.64257616, y: 0.20410058}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: f3833398ae8112b47915c745820de0bc, type: 2}
+    sourceTextureGUID: dd57d5e56d3ff495e9ced88c820f81cf
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    colliderType: 0
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  - name: metal_rocket
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 0.396875, y: 0.378125, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.396875, y: 0.378125, z: 0}
+    texelSize: {x: 0.003125, y: 0.003125}
+    positions:
+    - {x: -0.1984375, y: -0.1890625, z: 0}
+    - {x: 0.1984375, y: -0.1890625, z: 0}
+    - {x: -0.1984375, y: 0.1890625, z: 0}
+    - {x: 0.1984375, y: 0.1890625, z: -0.001}
+    uvs:
+    - {x: 0.6503926, y: 0.1533213}
+    - {x: 0.89843553, y: 0.1533213}
+    - {x: 0.6503926, y: 0.2714834}
+    - {x: 0.89843553, y: 0.2714834}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: f3833398ae8112b47915c745820de0bc, type: 2}
+    sourceTextureGUID: 76f16c6ef7b3d43879968370705d6159
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    colliderType: 0
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  premultipliedAlpha: 1
+  material: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: f3833398ae8112b47915c745820de0bc, type: 2}
+  textures:
+  - {fileID: 2800000, guid: 1800d62f103416d4bb30d0dfb0140a1a, type: 3}
+  allowMultipleAtlases: 0
+  spriteCollectionGUID: 23b4400ecb8ec4881af9782546ceef60
+  spriteCollectionName: MetalAtlas
+  invOrthoSize: 1
+  buildKey: 1785360365
+  dataGuid: 0021a1413b52e48c29eb714d7f6ac728
+  largeTexture: MetalAtlasTextureLarge
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 147589}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0

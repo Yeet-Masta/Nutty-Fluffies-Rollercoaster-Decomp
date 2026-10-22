@@ -1,0 +1,297 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &147589
+GameObject:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 479954}
+  - 114: {fileID: 11409266}
+  m_Layer: 0
+  m_Name: data
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &479954
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147589}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &11409266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdeae9d602cd966a5a5b6272023866be, type: 3}
+  m_Name:
+  version: 1
+  spriteDefinitions:
+  - name: wood_back
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 0.18125, y: 0.246875, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.18125, y: 0.246875, z: 0}
+    texelSize: {x: 0.003125, y: 0.003125}
+    positions:
+    - {x: -0.090625, y: -0.1234375, z: 0}
+    - {x: 0.090625, y: -0.1234375, z: 0}
+    - {x: -0.090625, y: 0.1234375, z: 0}
+    - {x: 0.090625, y: 0.1234375, z: -0.001}
+    uvs:
+    - {x: 0.87304884, y: 0.10839941}
+    - {x: 0.98632616, y: 0.10839941}
+    - {x: 0.87304884, y: 0.18554589}
+    - {x: 0.98632616, y: 0.18554589}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 2d4626f893227d6439a2cfc45be4163b, type: 2}
+    sourceTextureGUID: c7ef714995c274d56b0b5e785c795844
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    colliderType: 0
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  - name: wood_cart
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 0.86875004, y: 0.715625, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.86875004, y: 0.715625, z: 0}
+    texelSize: {x: 0.003125, y: 0.003125}
+    positions:
+    - {x: -0.43437502, y: -0.3578125, z: 0}
+    - {x: 0.43437502, y: -0.3578125, z: 0}
+    - {x: -0.43437502, y: 0.3578125, z: 0}
+    - {x: 0.43437502, y: 0.3578125, z: -0.001}
+    uvs:
+    - {x: 0.003908203, y: 0.22949317}
+    - {x: 0.54687303, y: 0.22949317}
+    - {x: 0.003908203, y: 0.45312402}
+    - {x: 0.54687303, y: 0.45312402}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 2d4626f893227d6439a2cfc45be4163b, type: 2}
+    sourceTextureGUID: 607dfb3aeab574d2dbe3ec94967187bc
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    colliderType: 0
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  - name: wood_driver
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 0.715625, y: 0.64375, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.715625, y: 0.64375, z: 0}
+    texelSize: {x: 0.003125, y: 0.003125}
+    positions:
+    - {x: -0.3578125, y: -0.321875, z: 0}
+    - {x: 0.3578125, y: -0.321875, z: 0}
+    - {x: -0.3578125, y: 0.321875, z: 0}
+    - {x: 0.3578125, y: 0.321875, z: -0.001}
+    uvs:
+    - {x: 0.55468947, y: 0.22949317}
+    - {x: 0.55468947, y: 0.45312402}
+    - {x: 0.9570293, y: 0.22949317}
+    - {x: 0.9570293, y: 0.45312402}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 2d4626f893227d6439a2cfc45be4163b, type: 2}
+    sourceTextureGUID: 2e379eb8e165a4552bef749153866222
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    colliderType: 0
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  - name: wood_jump
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 0.5125, y: 0.50625, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.5125, y: 0.50625, z: 0}
+    texelSize: {x: 0.003125, y: 0.003125}
+    positions:
+    - {x: -0.25625, y: -0.253125, z: 0}
+    - {x: 0.25625, y: -0.253125, z: 0}
+    - {x: -0.25625, y: 0.253125, z: 0}
+    - {x: 0.25625, y: 0.253125, z: -0.001}
+    uvs:
+    - {x: 0.003908203, y: 0.45703223}
+    - {x: 0.32421678, y: 0.45703223}
+    - {x: 0.003908203, y: 0.6152334}
+    - {x: 0.32421678, y: 0.6152334}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 2d4626f893227d6439a2cfc45be4163b, type: 2}
+    sourceTextureGUID: eb3169fc6d23f4753a0094a34f087a8f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    colliderType: 0
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  - name: wood_nose
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 1.071875, y: 0.715625, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.071875, y: 0.715625, z: 0}
+    texelSize: {x: 0.003125, y: 0.003125}
+    positions:
+    - {x: -0.5359375, y: -0.3578125, z: 0}
+    - {x: 0.5359375, y: -0.3578125, z: 0}
+    - {x: -0.5359375, y: 0.3578125, z: 0}
+    - {x: 0.5359375, y: 0.3578125, z: -0.001}
+    uvs:
+    - {x: 0.003908203, y: 0.0019541015}
+    - {x: 0.67382616, y: 0.0019541015}
+    - {x: 0.003908203, y: 0.22558495}
+    - {x: 0.67382616, y: 0.22558495}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 2d4626f893227d6439a2cfc45be4163b, type: 2}
+    sourceTextureGUID: bdb12b94cfa2f4d70a4417ca9c32791b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    colliderType: 0
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  - name: wood_rocket
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 0.35625002, y: 0.328125, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.35625002, y: 0.328125, z: 0}
+    texelSize: {x: 0.003125, y: 0.003125}
+    positions:
+    - {x: -0.17812501, y: -0.1640625, z: 0}
+    - {x: 0.17812501, y: -0.1640625, z: 0}
+    - {x: -0.17812501, y: 0.1640625, z: 0}
+    - {x: 0.17812501, y: 0.1640625, z: -0.001}
+    uvs:
+    - {x: 0.6816426, y: 0.0019541015}
+    - {x: 0.9042949, y: 0.0019541015}
+    - {x: 0.6816426, y: 0.10449121}
+    - {x: 0.9042949, y: 0.10449121}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 2d4626f893227d6439a2cfc45be4163b, type: 2}
+    sourceTextureGUID: abbef7193d36a41ce9bcf4ff287fdea5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    colliderType: 0
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  - name: wood_rocket_bars
+    boundsData:
+    - {x: 0, y: 0, z: -0.0005}
+    - {x: 0.246875, y: 0.29375002, z: 0.001}
+    untrimmedBoundsData:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.246875, y: 0.29375002, z: 0}
+    texelSize: {x: 0.003125, y: 0.003125}
+    positions:
+    - {x: -0.1234375, y: -0.14687501, z: 0}
+    - {x: 0.1234375, y: -0.14687501, z: 0}
+    - {x: -0.1234375, y: 0.14687501, z: 0}
+    - {x: 0.1234375, y: 0.14687501, z: -0.001}
+    uvs:
+    - {x: 0.6816426, y: 0.10839941}
+    - {x: 0.6816426, y: 0.18554589}
+    - {x: 0.8652324, y: 0.10839941}
+    - {x: 0.8652324, y: 0.18554589}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 2d4626f893227d6439a2cfc45be4163b, type: 2}
+    sourceTextureGUID: 362de46c7fa8046b78f4c0d0bd279abf
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    colliderType: 0
+    colliderVertices: []
+    colliderIndicesFwd:
+    colliderIndicesBack:
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+  premultipliedAlpha: 1
+  material: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: 2d4626f893227d6439a2cfc45be4163b, type: 2}
+  textures:
+  - {fileID: 2800000, guid: 91aaa9c7594509341a7cce0aa6a69259, type: 3}
+  allowMultipleAtlases: 0
+  spriteCollectionGUID: d0c17a1eed64e4e91aa46ac2bb443f17
+  spriteCollectionName: WoodAtlas
+  invOrthoSize: 1
+  buildKey: 676286320
+  dataGuid: bb3ca794f7c004ec3bddde90f0660309
+  largeTexture: WoodAtlasTextureLarge
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 147589}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0

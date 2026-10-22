@@ -1,0 +1,39 @@
+using System;
+using UnityEngine;
+using UnityScript.Lang;
+
+[Serializable]
+public class RayCastTools
+{
+	public static void ifHitInvoke(Ray ray, float depth, string methodName, int layerMask)
+	{
+		RaycastHit[] array = null;
+		array = ((layerMask != -1) ? Physics.RaycastAll(ray, depth, layerMask) : Physics.RaycastAll(ray, depth));
+		for (int num = Extensions.get_length((System.Array)array) - 1; num >= 0; num--)
+		{
+			RaycastHit raycastHit = array[num];
+			if (raycastHit.collider != null)
+			{
+				raycastHit.collider.gameObject.SendMessage(methodName, raycastHit.point, SendMessageOptions.DontRequireReceiver);
+			}
+		}
+	}
+
+	public static GameObject ifHitInvokeNearest(Ray ray, float depth, string methodName, int layerMask)
+	{
+		RaycastHit hitInfo = default(RaycastHit);
+		bool flag = false;
+		flag = ((layerMask != -1) ? Physics.Raycast(ray, out hitInfo, depth, layerMask) : Physics.Raycast(ray, out hitInfo, depth));
+		object result;
+		if (flag && hitInfo.collider != null)
+		{
+			hitInfo.collider.gameObject.SendMessage(methodName, hitInfo.point, SendMessageOptions.DontRequireReceiver);
+			result = hitInfo.collider.gameObject;
+		}
+		else
+		{
+			result = null;
+		}
+		return (GameObject)result;
+	}
+}

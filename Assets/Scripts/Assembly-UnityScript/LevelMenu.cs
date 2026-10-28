@@ -47,29 +47,6 @@ public class LevelMenu : StoreBaseMenu
 		complainingAboutCash = false;
 		informingNewFeature = false;
 		initEverything();
-		if (GameData.LOG)
-		{
-			Debug.Log("rkn activate activate");
-		}
-		if (MenuManager.CanDisplayUrgentNews())
-		{
-			if (GameData.LOG)
-			{
-				Debug.Log("RKN activate levelMenu");
-			}
-			BaseMenuManager.getInstance().pauseCurrentMusic();
-			if (GameData.LOG)
-			{
-				Debug.Log("RKN SHOW URGENT NEWS!!!!!!!!!!!!");
-			}
-			CrossPromotionAndroid.showUrgentNews();
-			MenuManager.ClearDisplayUrgentNews();
-		}
-		if (GameData.IS_TAPJOY_ENABLED)
-		{
-			TapjoyAdController.getInstance().HideAd();
-		}
-		BaseMenu.mmgr.logEvent("Level Menu");
 		cancelButton.SetActiveRecursively(true);
 	}
 
@@ -240,10 +217,6 @@ public class LevelMenu : StoreBaseMenu
 		{
 			lastSelectedLevel = levelIndex;
 			GameData.SELECTED_LEVEL_INDEX = levelIndex;
-			if (BaseMenuManager.getInstance() != null)
-			{
-				BaseMenuManager.getInstance().logEventWithParameter("SelectedTrack", "TrackIndex", string.Empty + levelIndex);
-			}
 			if (!levelInfo.testFlag(GameData.LEVEL_FLAG_BUILT))
 			{
 				VGUIElement.blockingButtonPressed = false;
@@ -261,12 +234,7 @@ public class LevelMenu : StoreBaseMenu
 				PlayerPrefs.Save();
 				wasActive = false;
 			}
-			logTrackEvent("SelectedTrack", levelIndex);
 			MenuManager.getInstance().startGame();
-		}
-		else
-		{
-			MonoBehaviour.print("level is locked");
 		}
 	}
 
@@ -283,10 +251,6 @@ public class LevelMenu : StoreBaseMenu
 			if (levelInfo.testFlag(GameData.LEVEL_FLAG_BUILT))
 			{
 				return;
-			}
-			if (GameData.LOG)
-			{
-				MonoBehaviour.print("going to build level " + levelIndex);
 			}
 			float num = GameData.getTrackPrice(GameData.getActiveLevelPackIndex(), levelIndex);
 			if (GameData.canBuy((int)num))
@@ -338,33 +302,14 @@ public class LevelMenu : StoreBaseMenu
 					CancelInvoke("disablePaperEmitters");
 					Invoke("disablePaperEmitters", 1.5f);
 					GeneralSoundEffects.playSound(BaseMenuManager.getInstance().fireworksSound, 1);
-					logTrackEvent("BuiltTrack", levelIndex);
 				}
 			}
-			else
+			else if (!complainingAboutCash)
 			{
-				if (GameData.LOG)
-				{
-					MonoBehaviour.print("out of cash");
-				}
-				if (!complainingAboutCash)
-				{
-					ResultScreen.EnableTapjoyATmsgBox = true;
-					BaseMenu.mmgr.showErrorMessage(TextData.LEVELS_TITLE_NEED_COINS, TextData.LEVELS_TEXT_NEED_COINS, coinItemImage);
-					complainingAboutCash = true;
-				}
-				logTrackEvent("TriedToBuildTrackWithoutMoney", levelIndex);
+				BaseMenu.mmgr.showErrorMessage(TextData.LEVELS_TITLE_NEED_COINS, TextData.LEVELS_TEXT_NEED_COINS, coinItemImage);
+				complainingAboutCash = true;
 			}
 		}
-		else if (GameData.LOG)
-		{
-			MonoBehaviour.print("level is locked");
-		}
-	}
-
-	private void logTrackEvent(string @event, int trackIndex)
-	{
-		BaseMenu.mmgr.logEventWithParameter(@event, "Track(package-track)", string.Empty + GameData.getActiveLevelPackIndex() + "-" + trackIndex);
 	}
 
 	public override void onMessageBoxClosed(bool dismissed)

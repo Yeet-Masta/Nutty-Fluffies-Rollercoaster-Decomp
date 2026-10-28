@@ -59,7 +59,6 @@ public class StoryMenu : BaseMenu
 		GetComponent<AudioSource>().clip = storyBackgroundAudio;
 		GetComponent<AudioSource>().loop = true;
 		GetComponent<AudioSource>().Play();
-		BaseMenu.mmgr.logEvent("Story Menu");
 		loadingMenu.deactivate();
 	}
 

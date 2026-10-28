@@ -41,13 +41,8 @@ public class MissionMenu : BaseMenu
 		{
 			missionList.activate();
 		}
-		if (GameData.IS_TAPJOY_ENABLED)
-		{
-			TapjoyAdController.getInstance().HideAd();
-		}
 		BaseMenu.mmgr.setTokenCounterVisible(true);
 		BaseMenu.mmgr.setStoreButtonVisible(true);
-		BaseMenu.mmgr.logEvent("Mission Menu");
 		wasActive = true;
 	}
 

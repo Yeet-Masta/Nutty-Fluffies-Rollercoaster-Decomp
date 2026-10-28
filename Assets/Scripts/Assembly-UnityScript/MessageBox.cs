@@ -105,14 +105,6 @@ public class MessageBox : BaseMenu
 		{
 			tapjoyButton.SetActiveRecursively(false);
 		}
-		if (ResultScreen.EnableTapjoyATmsgBox)
-		{
-			ResultScreen.EnableTapjoyATmsgBox = false;
-			if (GameData.IS_TAPJOY_ENABLED && tapjoyButton != null)
-			{
-				tapjoyButton.SetActiveRecursively(true);
-			}
-		}
 		int i;
 		for (i = 0; i < array.Length && i < messageText.Length; i++)
 		{
@@ -159,9 +151,10 @@ public class MessageBox : BaseMenu
 		close(true);
 	}
 
+	// The Tapjoy offer wall is gone (its button is always hidden); kept because
+	// the scene's button calls it by name.
 	public virtual void onTapjoy()
 	{
-		CommunityFeatures.getInstance().showTapjoyOfferPage();
 	}
 
 	private void close(bool dismissed)

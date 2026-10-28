@@ -38,12 +38,6 @@ public class ItemStoreMenu : StoreBaseMenu
 
 	private int totalHeartsValue;
 
-	private bool complainingAboutCash;
-
-	private int purchaseFailIndex;
-
-	private int purchaseFailCount;
-
 	private bool wasActivated;
 
 	private bool IsCartEmpty;
@@ -141,9 +135,6 @@ public class ItemStoreMenu : StoreBaseMenu
 		packContainer.invokeMethod = "updateItemDescription";
 		updateTrainDescription();
 		updateItemDescription();
-		complainingAboutCash = false;
-		purchaseFailIndex = -1;
-		purchaseFailCount = 0;
 		int num4 = 0;
 		int indexOfLastUnlockedButton = getIndexOfLastUnlockedButton();
 		switch (indexOfLastUnlockedButton)
@@ -172,7 +163,6 @@ public class ItemStoreMenu : StoreBaseMenu
 			Invoke("stopCartEmit", 1f);
 			RollerCoasterSounds.getInstance().playFireworks();
 		}
-		BaseMenu.mmgr.logEvent("Item Store Menu");
 		wasActivated = true;
 	}
 
@@ -189,9 +179,6 @@ public class ItemStoreMenu : StoreBaseMenu
 		base.reactivate();
 		trainPreview.setActiveCarts(cartNum, cartNum);
 		updateTrainDescription();
-		complainingAboutCash = false;
-		purchaseFailIndex = -1;
-		purchaseFailCount = 0;
 		wasActivated = true;
 	}
 
@@ -356,39 +343,7 @@ public class ItemStoreMenu : StoreBaseMenu
 					}
 				}
 				purchasedItems++;
-				if (BaseMenuManager.getInstance() != null)
-				{
-					BaseMenuManager.getInstance().logEventWithParameter("Purchased Fluffy ", "FluffyIndex", string.Empty + index);
-				}
 			}
-			else
-			{
-				if (GameData.INAPP_PURCHASE_AVAILABLE)
-				{
-					if (purchaseFailIndex == index)
-					{
-						purchaseFailCount++;
-					}
-					else
-					{
-						purchaseFailCount = 0;
-					}
-					if (purchaseFailCount >= 1)
-					{
-						BaseMenu.mmgr.showErrorMessage(TextData.STORE_TITLE_NEED_COINS, TextData.STORE_TEXT_NEED_COINS, defaultItemImage);
-						complainingAboutCash = true;
-					}
-					purchaseFailIndex = index;
-				}
-				if (GameData.LOG)
-				{
-					MonoBehaviour.print("need more cash");
-				}
-			}
-		}
-		else if (GameData.LOG)
-		{
-			MonoBehaviour.print("All carts are full");
 		}
 		updateTrainDescription();
 		updateItemDescription(index);
@@ -416,31 +371,8 @@ public class ItemStoreMenu : StoreBaseMenu
 				GameData.saveTrain();
 				GameData.createTrainForLevel();
 				updateTrainDescription();
-				if (BaseMenuManager.getInstance() != null)
-				{
-					BaseMenuManager.getInstance().logEvent("Purchased Cart");
-				}
-			}
-			else if (GameData.LOG)
-			{
-				MonoBehaviour.print("too many carts");
 			}
 		}
-		else if (GameData.LOG)
-		{
-			MonoBehaviour.print("need more tokens..");
-		}
-	}
-
-	public override void onMessageBoxClosed(bool dismissed)
-	{
-		if (complainingAboutCash && !dismissed && GameData.canMakeInAppPurchases())
-		{
-			GameMenuManager.getInstance().onStore();
-		}
-		purchaseFailIndex = -1;
-		purchaseFailCount = 0;
-		complainingAboutCash = false;
 	}
 
 	public virtual void onRemoveItem(int index)

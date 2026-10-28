@@ -56,9 +56,6 @@ public class MenuManager : BaseMenuManager
 	private static bool WAS_PLAYING;
 
 	[NonSerialized]
-	private static bool WAS_PLAYING_AT_LEAST_ONCE;
-
-	[NonSerialized]
 	private static bool WAS_IN_STORY;
 
 	[NonSerialized]
@@ -119,20 +116,6 @@ public class MenuManager : BaseMenuManager
 	public new static MenuManager getInstance()
 	{
 		return BaseMenuManager.instance as MenuManager;
-	}
-
-	public static bool CanDisplayUrgentNews()
-	{
-		return WAS_PLAYING_AT_LEAST_ONCE ? true : false;
-	}
-
-	public static void ClearDisplayUrgentNews()
-	{
-		if (GameData.LOG)
-		{
-			Debug.Log("RKN ClearDisplayUrgentNews ClearDisplayUrgentNews");
-		}
-		WAS_PLAYING_AT_LEAST_ONCE = false;
 	}
 
 	public override void Awake()
@@ -221,33 +204,17 @@ public class MenuManager : BaseMenuManager
 
 	public virtual void OnApplicationFocus(bool focus)
 	{
-		if (GameData.LOG)
-		{
-			MonoBehaviour.print("Focus: " + focus);
-		}
-		if (GameData.LOG)
-		{
-			Debug.Log("RKN OnApplicationFocus OnApplicationFocus OnApplicationFocus");
-		}
 		if (focus && frameCounter > 10)
 		{
 			frameCounter = 10;
 		}
 		if (!focus)
 		{
-			if (GameData.LOG)
-			{
-				Debug.Log("Sound Pause");
-			}
 			pauseCurrentMusic();
 		}
 		else
 		{
 			continueCurrentMusic();
-			if (GameData.LOG)
-			{
-				Debug.Log("Sound Resume");
-			}
 		}
 	}
 
@@ -271,16 +238,9 @@ public class MenuManager : BaseMenuManager
 		updateTokenAmount();
 	}
 
+	// Only did analytics logging; kept because buttons call it by name.
 	public virtual void onCommunity()
 	{
-		if (GameData.LOG)
-		{
-			MonoBehaviour.print("community");
-		}
-		if (BaseMenuManager.getInstance() != null)
-		{
-			BaseMenuManager.getInstance().logEvent("Urgent News");
-		}
 	}
 
 	public virtual void onToggleQuality()
@@ -301,21 +261,10 @@ public class MenuManager : BaseMenuManager
 		CommonData.reinit();
 	}
 
+	// Opened the Ubisoft cross-promotion news page, which is gone; kept
+	// because the news button calls it by name.
 	public virtual void onNews()
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("RKN onNews onNews onNews");
-		}
-		if (GameData.LOG)
-		{
-			MonoBehaviour.print("show news");
-		}
-		CrossPromotionAndroid.showWebNews();
-		if (BaseMenuManager.getInstance() != null)
-		{
-			BaseMenuManager.getInstance().logEvent("Read Crosspromo News");
-		}
 	}
 
 	public override void onStore()
@@ -351,12 +300,7 @@ public class MenuManager : BaseMenuManager
 			stopCurrentMusic();
 			setStoreButtonVisible(false);
 			setTokenCounterVisible(false);
-			if (GameData.LOG)
-			{
-				MonoBehaviour.print("going to start game ");
-			}
 			WAS_PLAYING = true;
-			WAS_PLAYING_AT_LEAST_ONCE = true;
 			CustomInput.disableInput(true);
 			loadingMenu.activate();
 			loadingMenu.gameObject.SetActiveRecursively(true);
@@ -449,10 +393,6 @@ public class MenuManager : BaseMenuManager
 
 	public override void onLoadingMenuDeactivation()
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("RKN onLoadingMenuDeactivation :");
-		}
 	}
 
 	public override void onLoadingMenuActivation()

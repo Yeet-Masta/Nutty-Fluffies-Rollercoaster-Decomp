@@ -19,7 +19,6 @@ public class InfoMenu : BaseMenu
 		highSpeedButton.setEnable(PlayerPrefs.GetInt("ANDROID_LOW_DEF") == 1);
 		highVisualButton.setEnable(PlayerPrefs.GetInt("ANDROID_LOW_DEF") != 1);
 		historyButton.SetActiveRecursively(GameData.isFeatureUnlocked(16384));
-		BaseMenu.mmgr.logEvent("Info Menu");
 	}
 
 	public override void onBackButton()

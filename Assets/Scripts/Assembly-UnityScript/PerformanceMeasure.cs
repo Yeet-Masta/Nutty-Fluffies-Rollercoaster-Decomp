@@ -48,10 +48,6 @@ public class PerformanceMeasure : MonoBehaviour
 		}
 		bool flag = list.Count < 30;
 		PlayerPrefs.SetInt("ANDROID_LOW_DEF", (!flag) ? 0 : 0);
-		if (GameData.LOG)
-		{
-			Debug.Log("RKN screen dpi :" + Screen.dpi);
-		}
 		CommonData.reinit();
 	}
 

@@ -116,10 +116,6 @@ public class GameUI : MonoBehaviour
 
 	public virtual void endGame()
 	{
-		if (GameData.IS_TAPJOY_ENABLED)
-		{
-			TapjoyAdController.getInstance().HideAd();
-		}
 		fadeIn.gameObject.SetActiveRecursively(true);
 		fadeIn.reverse = true;
 		fadeIn.duration = 0.1f;

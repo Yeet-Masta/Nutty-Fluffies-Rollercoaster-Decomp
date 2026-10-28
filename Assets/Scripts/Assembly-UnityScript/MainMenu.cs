@@ -23,7 +23,6 @@ public class MainMenu : BaseMenu
 			OnlineServiceManager.getInstance().login();
 			loginCalled = true;
 		}
-		BaseMenu.mmgr.logEvent("Main Menu");
 	}
 
 	public override void deactivate()

@@ -77,7 +77,6 @@ public class ExitMenu : MonoBehaviour
 
 	private void QuitApp()
 	{
-		FlurryAndroid.endSession();
 		Application.Quit();
 	}
 

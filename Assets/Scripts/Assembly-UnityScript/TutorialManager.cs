@@ -90,10 +90,6 @@ public class TutorialManager : MonoBehaviour
 			showAlways = always;
 			if (!hasAllPagesShown(key) || TUTORIAL_DEBUG || always)
 			{
-				if (GameData.LOG)
-				{
-					Debug.Log("ting set tutorial enabled called ****************************");
-				}
 				isTutorialEnable = true;
 				currentPage = null;
 				int num = 0;
@@ -237,10 +233,6 @@ public class TutorialManager : MonoBehaviour
 
 	private void setTutorialDisable()
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("ting  set tutorial disabled called ****************************");
-		}
 		isTutorialEnable = false;
 		PauseMenu.isPauseMenuEnable = false;
 	}

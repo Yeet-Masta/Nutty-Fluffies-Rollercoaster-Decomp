@@ -178,27 +178,10 @@ public class GameMenuManager : BaseMenuManager
 		}
 	}
 
+	// Opened the coin store when in-app purchases were available, which they no
+	// longer are. Kept empty: the base version would do something else.
 	public override void onStore()
 	{
-		if (ResultScreen.ACTIVE)
-		{
-			if (GameData.INAPP_PURCHASE_AVAILABLE)
-			{
-				GameManager.getInstance().gameUI.resultScreen.setVisible(false);
-				menuSwitcher.activateMenu(coinStoreMenu);
-			}
-		}
-		else if (GameData.INAPP_PURCHASE_AVAILABLE)
-		{
-			if (menuSwitcher.activeMenu == missionMenu)
-			{
-				menuSwitcher.switchMenuForced(coinStoreMenu);
-			}
-			else
-			{
-				menuSwitcher.switchMenu(coinStoreMenu);
-			}
-		}
 	}
 
 	public override void onNextMenu()

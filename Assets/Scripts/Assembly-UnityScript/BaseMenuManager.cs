@@ -49,12 +49,6 @@ public class BaseMenuManager : MonoBehaviour
 
 	protected bool coinStoreButtonVisible;
 
-	[NonSerialized]
-	private static bool FLURRY_INITED;
-
-	[NonSerialized]
-	private static bool TAPJOY_INITED;
-
 	private string currentMusic;
 
 	public static BaseMenuManager getInstance()
@@ -73,55 +67,8 @@ public class BaseMenuManager : MonoBehaviour
 		tokenAmount.setValueImmediately(GameData.getTokenAmount());
 		messageBox.deactivate();
 		menuHeader.setText(null);
-		if (!FLURRY_INITED)
-		{
-			FLURRY_INITED = true;
-			FlurryAndroid.startSession(GameData.FLURRY_KEY);
-			MonoBehaviour.print("INITS THE FLURRY");
-			logEvent("Start");
-		}
-		if (!TAPJOY_INITED)
-		{
-			TAPJOY_INITED = true;
-			if (GameData.IS_TAPJOY_ENABLED)
-			{
-				TapjoyAdController.getInstance().LoadFullScreenAd();
-			}
-		}
 		coinStoreMenu.deactivate();
 		freeCoinsMenu.deactivate();
-	}
-
-	public virtual void logEvent(string @event)
-	{
-		FlurryAndroid.logEvent(@event, false);
-	}
-
-	public virtual void logEventWithLevelInfo(string @event)
-	{
-		Dictionary<string, string> dictionary = new Dictionary<string, string>();
-		dictionary.Add("Track(package-track)", string.Empty + GameData.getActiveLevelPackIndex() + "-" + GameData.getSelectedLevelIndex());
-		FlurryAndroid.logEventWithParameters(@event, dictionary, false);
-	}
-
-	public virtual void logEventWithParameter(string @event, string paramName, string parameter)
-	{
-		Dictionary<string, string> dictionary = new Dictionary<string, string>();
-		dictionary.Add(paramName, parameter);
-		FlurryAndroid.logEventWithParameters(@event, dictionary, false);
-	}
-
-	public virtual void logEventWithTwoParameters(string @event, string paramName1, string parameter1, string paramName2, string parameter2)
-	{
-		Dictionary<string, string> dictionary = new Dictionary<string, string>();
-		dictionary.Add(paramName1, parameter1);
-		dictionary.Add(paramName2, parameter2);
-		FlurryAndroid.logEventWithParameters(@event, dictionary, false);
-	}
-
-	public virtual void logEventWithParameters(string @event, Dictionary<string, string> dic)
-	{
-		FlurryAndroid.logEventWithParameters(@event, dic, false);
 	}
 
 	public virtual void showMessage(string title, string message, GameObject imagePrefab)
@@ -200,10 +147,6 @@ public class BaseMenuManager : MonoBehaviour
 
 	public virtual void onPreviousMenu()
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("onPreviousMenu onPreviousMenu onPreviousMenu");
-		}
 		BaseMenu previousMenu = menuSwitcher.activeMenu.previousMenu;
 		menuSwitcher.switchMenu(previousMenu);
 	}
@@ -290,14 +233,6 @@ public class BaseMenuManager : MonoBehaviour
 				showMessage(TextData.FEATURE_TITLE_CART, TextData.FEATURE_TEXT_CART, featureImages[0]);
 			}
 			GameData.setFeatureDescribed(newFeaturesList);
-			if ((newFeaturesList & 0x2000) != 0 && GameData.INAPP_PURCHASE_AVAILABLE)
-			{
-				CommunityFeatures.getInstance().showOffer(4);
-			}
-			if (GameData.LOG)
-			{
-				MonoBehaviour.print("features: " + newFeaturesList);
-			}
 			if (RollerCoasterSounds.getInstance() != null)
 			{
 				RollerCoasterSounds.getInstance().stopMusic();
@@ -347,10 +282,6 @@ public class BaseMenuManager : MonoBehaviour
 	{
 		if (currentMusic != null)
 		{
-			if (GameData.LOG)
-			{
-				Debug.Log("RKN pauseCurrentMusic pauseCurrentMusic pauseCurrentMusic pauseCurrentMusic ");
-			}
 			musicSource.Pause();
 		}
 	}
@@ -394,19 +325,9 @@ public class BaseMenuManager : MonoBehaviour
 
 	public virtual void onPurchaseComplete(string productId)
 	{
-		MonoBehaviour.print("onPurchaseComplete callback");
 		if (productId == "com.redlynx.rollercoaster.maxfluffies")
 		{
-			if (GameData.LOG)
-			{
-				MonoBehaviour.print("would handle max fluffies..");
-			}
 			return;
-		}
-		if (!GameData.USE_AMAZON_IAP)
-		{
-			PlayerPrefs.SetInt("DisableTapjoy", 1);
-			GameData.IS_TAPJOY_ENABLED = false;
 		}
 		updateTokenAmount();
 		GeneralSoundEffects.playSound(cashSound);
@@ -477,18 +398,10 @@ public class BaseMenuManager : MonoBehaviour
 		if (messageBox.isActive())
 		{
 			messageBox.onBackButton();
-			if (GameData.LOG)
-			{
-				Debug.Log("Base Menu manager if if if");
-			}
 		}
 		else
 		{
 			menuSwitcher.activeMenu.onBackButton();
-			if (GameData.LOG)
-			{
-				Debug.Log("Base Menu manager Else Else");
-			}
 		}
 	}
 

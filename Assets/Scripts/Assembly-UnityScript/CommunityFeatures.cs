@@ -77,8 +77,6 @@ public class CommunityFeatures : MonoBehaviour
 	[NonSerialized]
 	public static bool showingOffer;
 
-	private bool offerWallDisplayed;
-
 	public CommunityFeatures()
 	{
 		offerInterval = 5;
@@ -185,7 +183,8 @@ public class CommunityFeatures : MonoBehaviour
 
 	public virtual bool isAvailable(int feature)
 	{
-		return (GameData.IS_TAPJOY_ENABLED || feature != 5) ? true : false;
+		// 5 is the Tapjoy offer wall, which is gone.
+		return feature != 5;
 	}
 
 	public virtual bool hasSupport()
@@ -218,10 +217,6 @@ public class CommunityFeatures : MonoBehaviour
 			incrementCounter("COMMUNITY_OFFER");
 			int num = PlayerPrefs.GetInt("COMMUNITY_OFFER", 0);
 			int num2 = PlayerPrefs.GetInt("DP_COMMUNITY_LOTS_OF_MONEY_LIMIT", 250);
-			if (GameData.LOG && GameData.LOG)
-			{
-				Debug.Log("OFFERIFNEEDED: Counter " + num + " Offer interval " + internalOfferInterval);
-			}
 			int cash = MissionManager.getInstance().getActiveCompletedMissionScore() + GameData.getTokenAmount();
 			bool flag = GameData.hasEnoughMoneyToUnlockNextTrack(cash);
 			bool flag2 = GameData.getNumberOfCarts(GameData.getActiveLevelPack(), GameData.getSelectedLevelIndex()) < 6;
@@ -241,10 +236,6 @@ public class CommunityFeatures : MonoBehaviour
 					goto IL_0140;
 				}
 			}
-			else if (GameData.LOG && GameData.LOG)
-			{
-				Debug.Log("OFFERIFNEEDED: Enought money for next and not short train");
-			}
 		}
 		result = 0;
 		goto IL_0140;
@@ -255,26 +246,19 @@ public class CommunityFeatures : MonoBehaviour
 	public virtual void showOffer(int mode)
 	{
 		showingOffer = true;
-		if (GameData.LOG)
-		{
-			Debug.Log("RKN tushar showing offer ");
-		}
 		if (mode <= -1)
 		{
 			return;
 		}
 		offerMode = mode;
-		if ((5 == offerMode && !GameData.IS_TAPJOY_ENABLED) || 4 == offerMode)
+		// 5 is the Tapjoy offer wall (gone), 4 has no offer.
+		if (5 == offerMode || 4 == offerMode)
 		{
 			return;
 		}
 		int num = FEATURE_VALUES[offerMode];
 		string message = null;
 		string title = null;
-		if (GameData.LOG)
-		{
-			Debug.Log("COMMUNITY OFFER MODE: " + mode);
-		}
 		switch (offerMode)
 		{
 		case 0:
@@ -282,10 +266,6 @@ public class CommunityFeatures : MonoBehaviour
 			title = TextData.COMMUNITY_TITLE_OFFER1;
 			break;
 		case 1:
-			if (GameData.LOG)
-			{
-				Debug.Log("RKN tushar showing offer in FB post ");
-			}
 			message = TextData.COMMUNITY_TEXT_OFFER_POST_FACEBOOK.Replace("%d", string.Empty + num);
 			title = TextData.COMMUNITY_TITLE_OFFER2;
 			break;
@@ -309,10 +289,6 @@ public class CommunityFeatures : MonoBehaviour
 		updateInternalInterval();
 		if (PlayerPrefs.GetInt(FEATURE_KEY[offerMode] + "_COUNTER", 0) < featureUseLimits[offerMode] || featureUseLimits[offerMode] == 0)
 		{
-			if (GameData.LOG)
-			{
-				Debug.Log("RKN tushar showing offer in messagebox show ");
-			}
 			incrementCounter(FEATURE_KEY[offerMode] + "_SHOW");
 			messageBox.activate(title, message, featureGraphics[offerMode], true, false);
 			return;
@@ -338,10 +314,6 @@ public class CommunityFeatures : MonoBehaviour
 	{
 		BaseMenuManager.getInstance().showLoadingScreen(true);
 		Invoke("onSharingFailed", 30f);
-		if (GameData.LOG)
-		{
-			MonoBehaviour.print("would twitter");
-		}
 		SharingManager.getInstance().addListener(gameObject);
 		SharingManager.getInstance().shareMessage(SharingManager.Service.Twitter, COMMUNITY_TEXT_STORE_POST_TWITTER);
 	}
@@ -350,26 +322,14 @@ public class CommunityFeatures : MonoBehaviour
 	{
 		BaseMenuManager.getInstance().showLoadingScreen(true);
 		Invoke("onSharingFailed", 30f);
-		if (GameData.LOG)
-		{
-			MonoBehaviour.print("would like in facebook");
-		}
 		Application.OpenURL(GameData.FACEBOOK_LIKE_URL);
 		onFaceBookLikeCompleted();
 	}
 
 	public virtual void faceBookAdvert()
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("RKN tushar showing offer in faceBookAdvert func ");
-		}
 		BaseMenuManager.getInstance().showLoadingScreen(true);
 		Invoke("onSharingFailed", 30f);
-		if (GameData.LOG)
-		{
-			MonoBehaviour.print("would advert in facebook");
-		}
 		SharingManager.getInstance().addListener(gameObject);
 		SharingManager.getInstance().shareMessage(SharingManager.Service.Facebook, COMMUNITY_TEXT_STORE_POST_FACEBOOK);
 	}
@@ -378,52 +338,9 @@ public class CommunityFeatures : MonoBehaviour
 	{
 		BaseMenuManager.getInstance().showLoadingScreen(true);
 		Invoke("onSharingFailed", 30f);
-		if (GameData.LOG)
-		{
-			MonoBehaviour.print("would send email");
-		}
 		SharingManager.getInstance().addListener(gameObject);
 		string cOMMUNITY_TEXT_EMAIL_POST = COMMUNITY_TEXT_EMAIL_POST;
 		SharingManager.getInstance().shareMessage(SharingManager.Service.Email, COMMUNITY_TEXT_EMAIL_TITLE, string.Format(cOMMUNITY_TEXT_EMAIL_POST, SharingManager.getInstance().shareLinkURL));
-	}
-
-	public virtual void getDoubleCoins()
-	{
-		if (GameData.INAPP_PURCHASE_AVAILABLE)
-		{
-			GameData.unlockFeature(8192);
-			incrementCounter(FEATURE_KEY[4] + "_COUNTER");
-			BaseMenuManager.getInstance().onStore();
-			BaseMenuManager.getInstance().onCommunityFeatureCompleted();
-		}
-	}
-
-	public virtual void showTapjoyOfferPage()
-	{
-		offerWallDisplayed = true;
-		BaseMenuManager.getInstance().showLoadingScreen(true);
-		TapjoyPlugin.ShowOffers();
-		Invoke("CollectTapPoints", 2f);
-	}
-
-	public virtual bool isOfferWallDisplayed()
-	{
-		return offerWallDisplayed;
-	}
-
-	public virtual void resetOfferWallDisplayed()
-	{
-		if (GameData.LOG)
-		{
-			Debug.Log("Anji reset offerwall is called here ....");
-		}
-		offerWallDisplayed = false;
-	}
-
-	private void CollectTapPoints()
-	{
-		BaseMenuManager.getInstance().showLoadingScreen(false);
-		TapjoyAdController.getInstance().GetTapPoints();
 	}
 
 	private void disableLoading()
@@ -435,50 +352,30 @@ public class CommunityFeatures : MonoBehaviour
 	{
 		int value = FEATURE_VALUES[1];
 		showCoinDialog(value, TextData.COMMUNITY_TITLE_FACEBOOK_POST);
-		if (BaseMenuManager.getInstance() != null)
-		{
-			BaseMenuManager.getInstance().logEvent("Community Feature: Facebook post");
-		}
 	}
 
 	public virtual void onEmailPostCompleted()
 	{
 		int value = FEATURE_VALUES[3];
 		showCoinDialog(value, TextData.COMMUNITY_TITLE_EMAIL);
-		if (BaseMenuManager.getInstance() != null)
-		{
-			BaseMenuManager.getInstance().logEvent("Community Feature: Email post");
-		}
 	}
 
 	public virtual void onFaceBookLikeCompleted()
 	{
 		int value = FEATURE_VALUES[2];
 		showCoinDialog(value, TextData.COMMUNITY_TITLE_FACEBOOK_LIKE);
-		if (BaseMenuManager.getInstance() != null)
-		{
-			BaseMenuManager.getInstance().logEvent("Community Feature: Facebook like");
-		}
 	}
 
 	public virtual void onTwitterPostCompleted()
 	{
 		int value = FEATURE_VALUES[0];
 		showCoinDialog(value, TextData.COMMUNITY_TITLE_TWITTER);
-		if (BaseMenuManager.getInstance() != null)
-		{
-			BaseMenuManager.getInstance().logEvent("Community Feature: Twitter post");
-		}
 	}
 
 	public virtual void onSharingFailed()
 	{
 		CancelInvoke("onSharingFailed");
 		BaseMenuManager.getInstance().showLoadingScreen(false);
-		if (GameData.IS_TAPJOY_ENABLED)
-		{
-			TapjoyAdController.getInstance().DisplayFullScreenAd("RC_COMMUNITY_CANCEL");
-		}
 	}
 
 	private void showCoinDialog(int value, string title)
@@ -516,9 +413,6 @@ public class CommunityFeatures : MonoBehaviour
 		case 3:
 			sendEmail();
 			break;
-		case 5:
-			showTapjoyOfferPage();
-			break;
 		}
 	}
 
@@ -532,7 +426,6 @@ public class CommunityFeatures : MonoBehaviour
 	public virtual void OnApplicationPause()
 	{
 		Application.runInBackground = true;
-		LoadingDialog.hideLoadingAnimation();
 	}
 
 	public virtual void OnApplicationFocus(bool focus)
@@ -548,10 +441,6 @@ public class CommunityFeatures : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Escape) && showingOffer)
 		{
 			Invoke("onBackButtonCloseDialog", 0.2f);
-			if (GameData.LOG)
-			{
-				Debug.Log("Anji Back key pressed in community");
-			}
 		}
 	}
 
@@ -583,32 +472,24 @@ public class CommunityFeatures : MonoBehaviour
 		int num = PlayerPrefs.GetInt("COMMUNITY_OFFER_INDEX", 0);
 		int num2 = 0;
 		int num3 = default(int);
-		if (PlayerPrefs.GetInt("TAPJOY_OFFER_SHOWN", 0) == 0 && GameData.IS_TAPJOY_ENABLED)
+		while (!isEnabledForOffer(FEATURE_OFFER_ORDER[num]))
 		{
-			PlayerPrefs.SetInt("TAPJOY_OFFER_SHOWN", 1);
-			num = 4;
+			num++;
+			if (num >= FEATURE_OFFER_ORDER.Length)
+			{
+				num = 0;
+			}
+			num2++;
+			if (num2 < FEATURE_OFFER_ORDER.Length)
+			{
+				continue;
+			}
+			goto IL_006c;
 		}
-		else
+		num3 = num + 1;
+		if (num3 >= FEATURE_OFFER_ORDER.Length)
 		{
-			while (!isEnabledForOffer(FEATURE_OFFER_ORDER[num]))
-			{
-				num++;
-				if (num >= FEATURE_OFFER_ORDER.Length)
-				{
-					num = 0;
-				}
-				num2++;
-				if (num2 < FEATURE_OFFER_ORDER.Length)
-				{
-					continue;
-				}
-				goto IL_006c;
-			}
-			num3 = num + 1;
-			if (num3 >= FEATURE_OFFER_ORDER.Length)
-			{
-				num3 = 0;
-			}
+			num3 = 0;
 		}
 		PlayerPrefs.SetInt("COMMUNITY_OFFER_INDEX", num3);
 		int result = FEATURE_OFFER_ORDER[num];

@@ -163,10 +163,6 @@ public class MissionManager
 			}
 			break;
 		}
-		if (list2.Count > 0)
-		{
-			Debug.Log("goint to recycle " + list2.Count + " missions");
-		}
 		IEnumerator enumerator2 = UnityRuntimeServices.GetEnumerator(list2);
 		while (enumerator2.MoveNext())
 		{

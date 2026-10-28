@@ -25,7 +25,6 @@ public class CreditsMenu : BaseMenu
 		base.activate();
 		BaseMenu.mmgr.setStoreButtonVisible(false);
 		BaseMenu.mmgr.setTokenCounterVisible(false);
-		BaseMenu.mmgr.logEvent("Credits Menu");
 		scroller = (VGUIScroller)GetComponentInChildren(typeof(VGUIScroller));
 		loadFile();
 	}
@@ -39,10 +38,6 @@ public class CreditsMenu : BaseMenu
 		isLoaded = true;
 		string text = FileManager.getInstance().locateAnyFile("Credits_text.txt");
 		bool flag = false;
-		if (GameData.LOG)
-		{
-			Debug.Log("path :: " + text);
-		}
 		string text2 = "0";
 		string text3 = "0";
 		if (text != null)
@@ -51,18 +46,10 @@ public class CreditsMenu : BaseMenu
 			string[] array = text4.Split("\n"[0]);
 			text2 = array[1];
 			text3 = array[2];
-			if (GameData.LOG)
-			{
-				Debug.Log("RKN " + text2);
-			}
 			int i = 0;
 			string[] array2 = array;
 			for (int length = array2.Length; i < length; i++)
 			{
-				if (GameData.LOG)
-				{
-					Debug.Log("RKN " + array2[i]);
-				}
 				if (array2[i] == text2)
 				{
 					flag = true;

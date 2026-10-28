@@ -44,11 +44,8 @@ public class MenuButton : VGUIButton
 	public override void clickButton()
 	{
 		menuButtonPressed = true;
+		// NFPort: ignore clicks while the menus are cross-fading.
 		bool switching = BaseMenuManager.getInstance() != null && BaseMenuManager.getInstance().menuSwitcher.isSwitching();
-		if (GameData.LOG)
-		{
-			Debug.Log("NFPort MenuButton.clickButton '" + name + "' locked=" + locked + " pressed=" + pressed + " dimmed=" + dimmed + " menuSwitching=" + switching);
-		}
 		if (!switching)
 		{
 			base.clickButton();
@@ -57,10 +54,6 @@ public class MenuButton : VGUIButton
 
 	public override void OnMouseUp()
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("NFPort MenuButton.OnMouseUp '" + name + "' downInside=" + mouseDownInsideThisButton + " locked=" + locked + " pressed=" + pressed + " dimmed=" + dimmed + " dragging=" + isContainerDragging());
-		}
 		menuButtonPressed = false;
 		if (!locked && !pressed && !isContainerDragging() && !dimmed)
 		{
@@ -71,10 +64,6 @@ public class MenuButton : VGUIButton
 
 	public override void OnMouseDown()
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("NFPort MenuButton.OnMouseDown '" + name + "' clickAnimator=" + (clickAnimator != null));
-		}
 		if (clickAnimator != null)
 		{
 			(clickAnimator as ButtonPressAnimator).restore();

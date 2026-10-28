@@ -18,10 +18,6 @@ public class CustomInput
 		if (m_disableInput)
 		{
 			Input.ResetInputAxes();
-			if (GameData.LOG)
-			{
-				Debug.Log("m_disableInput m_disableInput :: " + Input.GetKeyDown((KeyCode)keyCode));
-			}
 			result = !m_disableInput;
 		}
 		else

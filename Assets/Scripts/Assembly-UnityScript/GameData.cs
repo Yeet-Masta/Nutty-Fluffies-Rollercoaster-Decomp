@@ -95,25 +95,10 @@ public class GameData
 	public static string GAME_NAME = "Nutty Fluffies";
 
 	[NonSerialized]
-	public static bool USE_AMAZON_IAP;
-
-	[NonSerialized]
 	public static string SERVER_ADDRESS = "http://10.10.254.216/~pekkasarkimo/";
 
 	[NonSerialized]
 	public static string FACEBOOK_LIKE_URL = "http://www.facebook.com/RedLynxGamer";
-
-	[NonSerialized]
-	public static string ANDROID_IAP_LIST_URL;
-
-	[NonSerialized]
-	public static string ANDROID_IAP_LIST_URL_GOOGLE = "http://mob.ubi.com/nuttyfluffies_android/googlev3.json";
-
-	[NonSerialized]
-	public static string ANDROID_IAP_LIST_URL_AMAZON = "http://mob.ubi.com/nuttyfluffies_android/amazon.json";
-
-	[NonSerialized]
-	public static string ANDROID_IAP_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh8sTCtRAU2DdlPofgcAm50z2zTJdo0UV8m91JCF8lStxI9DvDbE3wJJ8HmgW83kx3glzILB6tlDBHiF6q90LDOncMWyHKY0eSkNdIDt/D3pqBGH+ULn9YeposjeCHA4xebdTtX/3IYu876CZGDHxzKvJQDuNeHtjfI+UkDRiroqxKq1Tocc6iHEJKo/syQfwOV3DKMQgRliUZIZ1680U5xfB/Y0sStTBuTvJAJX76NgEtsWHi/AHHWQ7vQMIfi/czMCwNiOY3qou0mPo58uzqpMOacDWo97uLF1bC/wET3GsAy4x9sF8XlxHnaj2REv2rfzl7P4zwXlI6hYHyl7nlQIDAQAB";
 
 	[NonSerialized]
 	public static string APP_STORE_ID = "com.UBI.A90.WW";
@@ -122,22 +107,7 @@ public class GameData
 	public static string VERSION_CHECK_URL;
 
 	[NonSerialized]
-	public static string FLURRY_KEY = "62ZMBRT7WYFNJ2YYJN8B";
-
-	[NonSerialized]
-	public static string TAPJOY_APP_ID = "d678d793-9cd8-4a6a-9fd1-19701929fe0b";
-
-	[NonSerialized]
-	public static string TAPJOY_KEY = "Fi4rnnRI3Yu24aGmdE2g";
-
-	[NonSerialized]
-	public static string APPSTORE_PURCHASE_PAGE;
-
-	[NonSerialized]
 	public static string APPSTORE_PURCHASE_PAGE_GOOGLE = "https://play.google.com/store/apps/details?id=com.UBI.A90.WW";
-
-	[NonSerialized]
-	public static string APPSTORE_PURCHASE_PAGE_AMAZON = "http://www.amazon.com/gp/mas/dl/android?p=com.UBI.A90.WW";
 
 	[NonSerialized]
 	public static string MAC_APPSTORE_RATING_URL = "macappstore://itunes.apple.com/app/id550995178";
@@ -196,8 +166,6 @@ public class GameData
 	[NonSerialized]
 	public static bool EXTRA_LEVEL_PACKS = true;
 
-	[NonSerialized]
-	public static bool IS_TAPJOY_ENABLED = false;
 
 	[NonSerialized]
 	public static bool SCALEDOWN;
@@ -329,9 +297,6 @@ public class GameData
 	public static List<StoreKitProduct> INAPP_PURCHASE_LIST;
 
 	[NonSerialized]
-	public static bool INAPP_PURCHASE_AVAILABLE;
-
-	[NonSerialized]
 	public static Dictionary<string, int> INAPP_PURCHASE_TOKENS = new Dictionary<string, int>();
 
 	[NonSerialized]
@@ -418,43 +383,10 @@ public class GameData
 		{
 			actualDeviceResolution = Screen.currentResolution;
 			isResolutionSet = true;
-			if (LOG)
-			{
-				Debug.Log("kkn game data");
-			}
-		}
-		if (USE_AMAZON_IAP)
-		{
-			APPSTORE_PURCHASE_PAGE = APPSTORE_PURCHASE_PAGE_AMAZON;
-		}
-		else
-		{
-			APPSTORE_PURCHASE_PAGE = APPSTORE_PURCHASE_PAGE_GOOGLE;
 		}
 		if (!INITED)
 		{
 			Application.runInBackground = true;
-			if (!USE_AMAZON_IAP)
-			{
-				CrossPromotionAndroid.setUrgentNewsURLs("http://crosspromotion.ubi.com/news_android_googleplay_rollercoaster.json", "http://crosspromotion.ubi.com/news_android_googleplay_rollercoaster_hd.json");
-				CrossPromotionAndroid.setWebNewsURLs("http://crosspromotion.ubi.com/moregames/moregames_android_googleplay_rollercoaster.html");
-				CrossPromotionAndroid.setInfoBadgeURLs("http://crosspromotion.ubi.com/infobadge/infobadge_android_rollercoaster.json");
-			}
-			else
-			{
-				CrossPromotionAndroid.setUrgentNewsURLs("http://crosspromotion.ubi.com/news_android_amazon_rollercoaster.json", "http://crosspromotion.ubi.com/news_android_amazon_rollercoaster_hd.json");
-				CrossPromotionAndroid.setWebNewsURLs("http://crosspromotion.ubi.com/moregames/moregames_android_amazon_rollercoaster.html");
-				CrossPromotionAndroid.setInfoBadgeURLs("http://crosspromotion.ubi.com/infobadge/infobadge_android_rollercoaster.json");
-			}
-			CrossPromotionAndroid.startComponents(true, true, false);
-			if (!USE_AMAZON_IAP)
-			{
-				PushNotificationsAndroid.InitPushwoosh("PushWooshManager");
-			}
-			if (USE_AMAZON_IAP)
-			{
-				IS_TAPJOY_ENABLED = false;
-			}
 			reloadLevelPacks();
 			INITED = true;
 			load();
@@ -1142,26 +1074,10 @@ public class GameData
 		return Application.internetReachability != NetworkReachability.NotReachable;
 	}
 
+	// In-app purchases needed the Google Play billing SDK, which is gone (see
+	// StoreManager), so the coin store's purchase options never become available.
 	public static bool canMakeInAppPurchases()
 	{
-		if (LOG)
-		{
-			Debug.Log("hasInernet " + (Application.internetReachability != NetworkReachability.NotReachable));
-		}
-		int inAppPurchaseProductCount = getInAppPurchaseProductCount();
-		if (LOG)
-		{
-			Debug.Log("InAppPurchaseProductCount " + inAppPurchaseProductCount);
-		}
-		bool flag = hasInternet();
-		if (flag)
-		{
-			flag = INAPP_PURCHASE_AVAILABLE;
-		}
-		if (flag)
-		{
-			flag = getInAppPurchaseProductCount() > 0;
-		}
-		return flag;
+		return false;
 	}
 }

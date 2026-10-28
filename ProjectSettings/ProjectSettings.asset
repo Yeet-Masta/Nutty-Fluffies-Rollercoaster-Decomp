@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 26
-  productGUID: 63441fce31c2e074193908ecbbdd4d6d
+  productGUID: 5c75ab7a513439c42bf55b6c2b8b9c34
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -295,7 +295,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: de867a4ab20e85f4fb437c815fae85b2, type: 3}
+      m_Icon: {fileID: 2800000, guid: 1273f55d278915b49acee6129a6051bb, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -435,9 +435,9 @@ PlayerSettings:
     m_GraphicsJobs: 0
   m_BuildTargetGraphicsJobMode:
   - m_BuildTarget: PS4Player
-    m_GraphicsJobMode: 536959264
+    m_GraphicsJobMode: -1610442592
   - m_BuildTarget: XboxOnePlayer
-    m_GraphicsJobMode: 536959264
+    m_GraphicsJobMode: -1610442592
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: AndroidPlayer
     m_APIs: 0b00000015000000
@@ -746,11 +746,8 @@ PlayerSettings:
   webGLMemoryGeometricGrowthStep: 0.2
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
-  scriptingDefineSymbols:
-    Android: NFPORT_NO_DIAGNOSTICS
-    WebGL: NFPORT_NO_DIAGNOSTICS
-  additionalCompilerArguments:
-    WebGL: []
+  scriptingDefineSymbols: {}
+  additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
     Android: 1

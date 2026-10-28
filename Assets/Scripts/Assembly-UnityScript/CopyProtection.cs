@@ -142,7 +142,6 @@ public class CopyProtection : MonoBehaviour
 	private void failCheck()
 	{
 		Debug.LogError("NETWORK CHECK FAILED");
-		FlurryAndroid.endSession();
 		Application.Quit();
 	}
 }

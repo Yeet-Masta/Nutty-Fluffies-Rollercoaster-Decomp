@@ -87,18 +87,6 @@ public class LogoAnimationRunner : MonoBehaviour
 
 	public virtual void continueToMenu()
 	{
-		if (PlayerPrefs.GetInt("DisableTapjoy") == 1)
-		{
-			GameData.IS_TAPJOY_ENABLED = false;
-		}
-		else if (GameData.USE_AMAZON_IAP)
-		{
-			GameData.IS_TAPJOY_ENABLED = false;
-		}
-		else
-		{
-			GameData.IS_TAPJOY_ENABLED = false;
-		}
 		if (PlayerPrefs.GetInt("STORY_DISPLAYED", 0) != 0)
 		{
 			Application.LoadLevel("MenuScene");

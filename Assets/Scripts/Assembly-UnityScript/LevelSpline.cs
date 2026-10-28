@@ -53,7 +53,6 @@ public class LevelSpline : LevelEntity
 		List<Vector3> list = null;
 		if (!spline.testSelfIntersection())
 		{
-			MonoBehaviour.print("NO PROBABLE SELF INTERSECTIONS");
 			list = new List<Vector3>();
 			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(splinePoints);
 			while (enumerator.MoveNext())

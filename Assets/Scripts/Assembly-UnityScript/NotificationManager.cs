@@ -83,10 +83,6 @@ public class NotificationManager : MonoBehaviour
 
 	public virtual void OnApplicationPause(bool pause)
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("OnApplicationPause OnApplicationPause OnApplicationPause ");
-		}
 		if (pause)
 		{
 			createNotifications();

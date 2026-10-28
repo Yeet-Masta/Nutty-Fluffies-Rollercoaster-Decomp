@@ -8,8 +8,6 @@ public class PauseMenu : VGUIElement
 
 	private bool shown;
 
-	private bool tapjoyOWOpened;
-
 	[NonSerialized]
 	public static bool handlebackKey = true;
 
@@ -25,45 +23,20 @@ public class PauseMenu : VGUIElement
 		isPauseMenuEnable = true;
 		AnimationManager.getInstance().fadeIn(transform);
 		pauseButton.gameObject.SetActiveRecursively(false);
-		CrossPromotionAndroid.setInfoBadgeVisibility(true);
-		if (BaseMenuManager.getInstance() != null)
-		{
-			BaseMenuManager.getInstance().logEvent("Pause Menu");
-		}
-		if (GameData.IS_TAPJOY_ENABLED)
-		{
-			if (GameData.LOG)
-			{
-				Debug.Log("Anji display ad is called from activate pause menu......");
-			}
-			TapjoyAdController.getInstance().HideAd();
-			TapjoyAdController.getInstance().DisplayAd(false, "RC_PAUSEMENU_AD");
-		}
-		else
-		{
-			transform.Find("TapjoyButton").gameObject.SetActive(false);
-			float x = -0.1536663f;
-			Vector3 position = transform.Find("MissionButton").gameObject.transform.position;
-			float num = (position.x = x);
-			Vector3 vector = (transform.Find("MissionButton").gameObject.transform.position = position);
-			float x2 = 0.1463337f;
-			Vector3 position2 = transform.Find("HelpButton").gameObject.transform.position;
-			float num2 = (position2.x = x2);
-			Vector3 vector3 = (transform.Find("HelpButton").gameObject.transform.position = position2);
-		}
+		// No Tapjoy offer wall: hide its button and close the gap.
+		transform.Find("TapjoyButton").gameObject.SetActive(false);
+		float x = -0.1536663f;
+		Vector3 position = transform.Find("MissionButton").gameObject.transform.position;
+		float num = (position.x = x);
+		Vector3 vector = (transform.Find("MissionButton").gameObject.transform.position = position);
+		float x2 = 0.1463337f;
+		Vector3 position2 = transform.Find("HelpButton").gameObject.transform.position;
+		float num2 = (position2.x = x2);
+		Vector3 vector3 = (transform.Find("HelpButton").gameObject.transform.position = position2);
 	}
 
 	public override void deactivate()
 	{
-		CrossPromotionAndroid.setInfoBadgeVisibility(false);
-		if (GameData.IS_TAPJOY_ENABLED)
-		{
-			if (GameData.LOG)
-			{
-				Debug.Log("Anji hide tapjoy ad is called in deactivate pause menu....");
-			}
-			TapjoyAdController.getInstance().HideAd();
-		}
 		Invoke("setPauseDisable", 0.25f);
 		if (shown)
 		{
@@ -81,23 +54,11 @@ public class PauseMenu : VGUIElement
 
 	public virtual void deactiveInvoke()
 	{
-		if (GameData.IS_TAPJOY_ENABLED)
-		{
-			if (GameData.LOG)
-			{
-				Debug.Log("Hide Ad will be called from deactivate pausemenu....");
-			}
-			TapjoyAdController.getInstance().HideAd();
-		}
 		base.deactivate();
 	}
 
 	private void setPauseDisable()
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("ting  SetPause disabled called ****************************");
-		}
 		isPauseMenuEnable = false;
 	}
 
@@ -105,7 +66,6 @@ public class PauseMenu : VGUIElement
 	{
 		if (shown)
 		{
-			MonoBehaviour.print("onResume");
 			deactivate();
 			GameManager.getInstance().resumeGame();
 		}
@@ -117,28 +77,18 @@ public class PauseMenu : VGUIElement
 		{
 			return;
 		}
-		if (GameData.IS_TAPJOY_ENABLED)
-		{
-			TapjoyAdController.getInstance().HideAd();
-			if (!CrossPromotionAndroid.canShowUrgentNews())
-			{
-				TapjoyAdController.getInstance().DisplayFullScreenAd("RC_BACK_TO_MENU_FROM_GAME");
-			}
-		}
-		MonoBehaviour.print("onEnd");
 		GameManager.getInstance().endGame();
 	}
 
+	// Only printed a debug line; kept because the volume button calls it by name.
 	public virtual void onAdjustVolume()
 	{
-		MonoBehaviour.print("onAdjustVolume");
 	}
 
 	public virtual void onRestartGame()
 	{
 		if (shown)
 		{
-			MonoBehaviour.print("onRestart");
 			GameManager.getInstance().restart();
 		}
 	}
@@ -150,7 +100,6 @@ public class PauseMenu : VGUIElement
 			deactiveInvoke();
 			shown = false;
 			handlebackKey = false;
-			CrossPromotionAndroid.setInfoBadgeVisibility(false);
 			GameMenuManager.getInstance().displayMissionsIngame();
 		}
 	}
@@ -162,7 +111,6 @@ public class PauseMenu : VGUIElement
 			deactiveInvoke();
 			handlebackKey = false;
 			TutorialManager.fromIGM = true;
-			CrossPromotionAndroid.setInfoBadgeVisibility(false);
 			pauseButton.gameObject.SetActiveRecursively(true);
 			TutorialManager.isTutorialFinished = false;
 			TutorialManager.getInstance().showPage("controls", true);
@@ -170,18 +118,10 @@ public class PauseMenu : VGUIElement
 		}
 	}
 
+	// The Tapjoy offer wall is gone (its button is hidden in activate); kept
+	// because the scene's button calls it by name.
 	public virtual void onShowOfferWall()
 	{
-		if (GameData.IS_TAPJOY_ENABLED)
-		{
-			TapjoyPlugin.ShowOffers();
-			Invoke("enableTapjoyOfferwall", 2f);
-		}
-	}
-
-	private void enableTapjoyOfferwall()
-	{
-		tapjoyOWOpened = true;
 	}
 
 	public override void Update()
@@ -190,12 +130,6 @@ public class PauseMenu : VGUIElement
 		{
 			Input.ResetInputAxes();
 			onResumeGame();
-		}
-		else if (tapjoyOWOpened)
-		{
-			BaseMenuManager.getInstance().showLoadingScreen(false);
-			tapjoyOWOpened = false;
-			TapjoyAdController.getInstance().GetTapPoints();
 		}
 	}
 }

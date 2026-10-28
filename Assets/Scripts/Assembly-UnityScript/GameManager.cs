@@ -24,10 +24,6 @@ public class GameManager : MonoBehaviour
 					result = (YieldDefault(2) ? 1 : 0);
 					break;
 				case 2:
-					if (GameData.LOG)
-					{
-						Debug.Log("RKN after Screen.width " + Screen.width + "Screen.height " + Screen.height);
-					}
 					YieldDefault(1);
 					goto case 1;
 				case 1:
@@ -142,10 +138,6 @@ public class GameManager : MonoBehaviour
 
 	public virtual void Awake()
 	{
-		if (GameData.IS_TAPJOY_ENABLED)
-		{
-			TapjoyAdController.getInstance().LoadAd();
-		}
 		Application.targetFrameRate = GameData.targetFPS;
 		inGameMode = false;
 		Resources.UnloadUnusedAssets();
@@ -217,10 +209,6 @@ public class GameManager : MonoBehaviour
 		cameraRef.adjustForTrainLength(vehicle.getCartCount());
 		cameraRef.lastCart = vehicle.getLastCart().transform;
 		sm.prepare();
-		if (GameData.LOG)
-		{
-			Debug.Log("Anji play music in game manager .....");
-		}
 		sm.playGameMusic(level.themeSettings.musicNames);
 		if (GameData.LOG)
 		{
@@ -255,10 +243,6 @@ public class GameManager : MonoBehaviour
 		LevelFactory.getInstance().resetLevel(level);
 		cameraRef.setPosition(startPosition, 1f);
 		cameraRef.resetZoom();
-		if (BaseMenuManager.getInstance() != null)
-		{
-			BaseMenuManager.getInstance().logEventWithLevelInfo("Start Game");
-		}
 		inGameMode = true;
 		hasCheckedMissions = false;
 		gameUI.resultScreen.calculateMaxScores();
@@ -310,10 +294,6 @@ public class GameManager : MonoBehaviour
 	{
 		isInPauseMenu = true;
 		handleBackKey = false;
-		if (GameData.LOG)
-		{
-			Debug.Log("RKN pauseGame pauseGame gameState " + gameState);
-		}
 		if (gameState != 3 && gameState != 1)
 		{
 			gameUI.fadeIn.invokeRef = gameObject;
@@ -333,10 +313,6 @@ public class GameManager : MonoBehaviour
 	{
 		PauseMenu.handlebackKey = false;
 		isInPauseMenu = false;
-		if (GameData.LOG)
-		{
-			Debug.Log("RKN resumeGame resumeGame gameState " + gameState);
-		}
 		if (gameState == 4)
 		{
 			stopGame();
@@ -368,10 +344,6 @@ public class GameManager : MonoBehaviour
 		{
 			backCount = 0;
 			m_back = true;
-			if (GameData.LOG)
-			{
-				Debug.Log("Game Manager");
-			}
 		}
 		if (m_back)
 		{
@@ -415,10 +387,6 @@ public class GameManager : MonoBehaviour
 			vehicle.setCrashed();
 			updateTrainData(true);
 			Invoke("stopGame", 2f);
-			if (BaseMenuManager.getInstance() != null)
-			{
-				BaseMenuManager.getInstance().logEventWithLevelInfo("Crash");
-			}
 		}
 	}
 
@@ -447,14 +415,9 @@ public class GameManager : MonoBehaviour
 
 	private void returnToMenuScene()
 	{
-		LoadingDialog.showLoadingAnimation();
 		if (GameData.SCALEDOWN)
 		{
 			StartCoroutine(resetResolution());
-		}
-		if (GameData.LOG)
-		{
-			Debug.Log("RKN before Screen.width " + Screen.width + "Screen.height " + Screen.height);
 		}
 		if (!CommonData.IN_EDITOR_MODE)
 		{
@@ -462,27 +425,15 @@ public class GameManager : MonoBehaviour
 			MaterialManager.getInstance().purge();
 			Resources.UnloadUnusedAssets();
 		}
-		if (BaseMenuManager.getInstance() != null)
-		{
-			BaseMenuManager.getInstance().logEvent("ReturnToMenu");
-		}
 		Application.LoadLevel("MenuScene");
 	}
 
 	public virtual void finishGame()
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("finishGame finishGame finishGame");
-		}
 		handleBackKey = false;
 		if (!isPlaying())
 		{
 			return;
-		}
-		if (GameData.IS_TAPJOY_ENABLED)
-		{
-			TapjoyAdController.getInstance().DisplayAd(false, "RC_FINISHGAME_AD");
 		}
 		vehicleFinished = true;
 		if (!CommonData.IN_EDITOR_MODE)
@@ -518,10 +469,6 @@ public class GameManager : MonoBehaviour
 		firstRun = true;
 		gameUI.showFinishBadge();
 		RollerCoasterSounds.getInstance().playFinishArriveSound();
-		if (BaseMenuManager.getInstance() != null)
-		{
-			BaseMenuManager.getInstance().logEventWithLevelInfo("Finish Game");
-		}
 	}
 
 	public virtual void stopGame()
@@ -682,24 +629,12 @@ public class GameManager : MonoBehaviour
 			break;
 		case 2:
 			gameUI.activatePauseButton(true);
-			if (GameData.IS_TAPJOY_ENABLED)
-			{
-				TapjoyAdController.getInstance().DisplayAd(true, "RC_INGAME_AD");
-			}
 			break;
 		case 3:
 			if (!hasCheckedMissions)
 			{
 				RollerCoasterMissions.getInstance().checkMissions(GameData.MAX_ACTIVE_MISSIONS);
 				hasCheckedMissions = true;
-			}
-			if (GameData.IS_TAPJOY_ENABLED)
-			{
-				if (GameData.LOG)
-				{
-					Debug.Log("Hide Ad is called before result screen ....");
-				}
-				TapjoyAdController.getInstance().HideAd();
 			}
 			gameUI.showResults();
 			cameraRef.cameraTarget = vehicle.getMiddleCart().transform;
@@ -798,10 +733,6 @@ public class GameManager : MonoBehaviour
 
 	public virtual void OnApplicationFocus(bool focus)
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("Anji on application foucus 11111111...." + focus);
-		}
 		if (!focus)
 		{
 			sm.pauseMusic();

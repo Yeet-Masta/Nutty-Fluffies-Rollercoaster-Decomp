@@ -5,9 +5,6 @@ using UnityEngine;
 [Serializable]
 public class FreeCoinStoreMenu : CoinStoreMenu
 {
-	[NonSerialized]
-	public static bool tapjoyOWOpened;
-
 	private bool wasFreeCoinStoreActive;
 
 	public override void Awake()
@@ -58,22 +55,20 @@ public class FreeCoinStoreMenu : CoinStoreMenu
 			}
 			if (flag)
 			{
-				if (!GameData.IS_TAPJOY_ENABLED)
+				// Without the Tapjoy offer wall, two buttons move into the freed slots.
+				if (CommunityFeatures.FEATURE_KEY[i] == "TWITTER_POST")
 				{
-					if (CommunityFeatures.FEATURE_KEY[i] == "TWITTER_POST")
-					{
-						float x = getItem("DP_PURCHASE_FACEBOOK_LIKE").button.transform.position.x;
-						Vector3 position = button.transform.position;
-						float num = (position.x = x);
-						Vector3 vector = (button.transform.position = position);
-					}
-					if (CommunityFeatures.FEATURE_KEY[i] == "FACEBOOK_POST")
-					{
-						float x2 = getItem("DP_PURCHASE_SEND_EMAIL").button.transform.position.x;
-						Vector3 position2 = button.transform.position;
-						float num2 = (position2.x = x2);
-						Vector3 vector3 = (button.transform.position = position2);
-					}
+					float x = getItem("DP_PURCHASE_FACEBOOK_LIKE").button.transform.position.x;
+					Vector3 position = button.transform.position;
+					float num = (position.x = x);
+					Vector3 vector = (button.transform.position = position);
+				}
+				if (CommunityFeatures.FEATURE_KEY[i] == "FACEBOOK_POST")
+				{
+					float x2 = getItem("DP_PURCHASE_SEND_EMAIL").button.transform.position.x;
+					Vector3 position2 = button.transform.position;
+					float num2 = (position2.x = x2);
+					Vector3 vector3 = (button.transform.position = position2);
 				}
 				item.price = CommunityFeatures.FEATURE_VALUES[i];
 				item.updatePriceText();
@@ -87,11 +82,6 @@ public class FreeCoinStoreMenu : CoinStoreMenu
 		}
 	}
 
-	private void enableTapjoyOfferwall()
-	{
-		tapjoyOWOpened = true;
-	}
-
 	public override void onCommunityFeatureCompleted()
 	{
 		updateCommunityPurchases();
@@ -100,35 +90,27 @@ public class FreeCoinStoreMenu : CoinStoreMenu
 	public virtual void onPostTwitter()
 	{
 		CommunityFeatures.getInstance().showOffer(0);
-		BaseMenuManager.getInstance().logEvent("Selected free coins with twitter");
 	}
 
 	public virtual void onFaceBookLike()
 	{
 		CommunityFeatures.getInstance().showOffer(2);
-		BaseMenuManager.getInstance().logEvent("Selected free coins with Facebook like");
 	}
 
 	public virtual void onFaceBookAdvert()
 	{
 		CommunityFeatures.getInstance().showOffer(1);
-		BaseMenuManager.getInstance().logEvent("Selected free coins with Facebook post");
 	}
 
 	public virtual void onSendEmail()
 	{
 		CommunityFeatures.getInstance().showOffer(3);
-		BaseMenuManager.getInstance().logEvent("Selected free coins with email");
 	}
 
+	// The Tapjoy offer wall is gone (its button is hidden); kept because the
+	// scene's button calls it by name.
 	public virtual void onShowTapjoyOffers()
 	{
-		if (GameData.hasInternet())
-		{
-			CommunityFeatures.getInstance().showTapjoyOfferPage();
-			Invoke("enableTapjoyOfferwall", 2f);
-			BaseMenuManager.getInstance().logEvent("Selected Tapjoy Offer Wall");
-		}
 	}
 
 	public override bool isActive()
@@ -142,12 +124,6 @@ public class FreeCoinStoreMenu : CoinStoreMenu
 		{
 			wasFreeCoinStoreActive = false;
 			BaseMenuManager.getInstance().onPreviousMenu();
-		}
-		else if (tapjoyOWOpened)
-		{
-			BaseMenuManager.getInstance().showLoadingScreen(false);
-			tapjoyOWOpened = false;
-			TapjoyAdController.getInstance().GetTapPoints();
 		}
 	}
 }

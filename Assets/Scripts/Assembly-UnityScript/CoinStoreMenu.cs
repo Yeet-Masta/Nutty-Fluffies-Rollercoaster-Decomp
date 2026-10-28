@@ -43,10 +43,6 @@ public class CoinStoreMenu : StoreBaseMenu
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			Input.ResetInputAxes();
-			if (GameData.LOG)
-			{
-				Debug.Log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-			}
 			onExitStore();
 		}
 		else if (offerWallMessageDisplayed && CommunityFeatures.getInstance().isDialogBoxClosed() && back)
@@ -69,47 +65,27 @@ public class CoinStoreMenu : StoreBaseMenu
 	{
 		foundProducts = 0;
 		base.Awake();
-		if (GameData.USE_AMAZON_IAP)
+		if (bugi && requstProducts)
 		{
-			GameData.ANDROID_IAP_LIST_URL = GameData.ANDROID_IAP_LIST_URL_AMAZON;
-		}
-		else
-		{
-			if (bugi && requstProducts)
+			// Google Play product ids.
+			for (int i = 0; i < iapItems.Length; i++)
 			{
-				for (int i = 0; i < iapItems.Length; i++)
-				{
-					iapItems[i].productID = iapItems[i].productID + ".managed";
-				}
+				iapItems[i].productID = iapItems[i].productID + ".managed";
 			}
-			GameData.ANDROID_IAP_LIST_URL = GameData.ANDROID_IAP_LIST_URL_GOOGLE;
 		}
 		bugi = false;
 		if (!GameData.TEST_BUILD && resetButton != null)
 		{
 			UnityEngine.Object.Destroy(resetButton);
 		}
-		if (GameData.LOG)
+		// In-app purchases never become available any more, so the coin store
+		// always shows the default coin amounts.
+		if (requstProducts)
 		{
-			Debug.Log("Anji Awake in COIN STORE MENU");
-		}
-		if (!GameData.INAPP_PURCHASE_AVAILABLE && requstProducts)
-		{
-			if (GameData.LOG)
-			{
-				Debug.Log("Anji calling request products..." + iapItems.Length);
-			}
-			string text = string.Empty;
 			for (int j = 0; j < iapItems.Length; j++)
 			{
-				text += iapItems[j].productID;
-				if (j < iapItems.Length - 1)
-				{
-					text += ",";
-				}
 				GameData.INAPP_PURCHASE_TOKENS[iapItems[j].productID] = StoreItem.getDefaultPrice(iapItems[j].itemKey);
 			}
-			StoreManager.getInstance().requestProducts(text);
 		}
 		else
 		{
@@ -133,7 +109,6 @@ public class CoinStoreMenu : StoreBaseMenu
 		{
 			nextPageButton.SetActiveRecursively(CommunityFeatures.getInstance().hasSupport());
 		}
-		BaseMenu.mmgr.logEvent("CoinStore_" + gameObject.name);
 		wasActive = true;
 		if (doubleCoinStar != null)
 		{
@@ -294,25 +269,11 @@ public class CoinStoreMenu : StoreBaseMenu
 	public virtual void onExitStore()
 	{
 		GameData.lockFeature(8192);
-		if (GameData.IS_TAPJOY_ENABLED && !offerWallMessageDisplayed && !CommunityFeatures.getInstance().isOfferWallDisplayed())
-		{
-			if (GameData.hasInternet())
-			{
-				CommunityFeatures.getInstance().showOffer(5);
-				offerWallMessageDisplayed = true;
-			}
-			else
-			{
-				BaseMenuManager.getInstance().onPreviousMenu();
-			}
-			return;
-		}
 		if (offerWallMessageDisplayed)
 		{
 			offerWallMessageDisplayed = false;
 			CommunityFeatures.getInstance().onBackButtonCloseDialog();
 		}
-		CommunityFeatures.getInstance().resetOfferWallDisplayed();
 		BaseMenuManager.getInstance().onPreviousMenu();
 	}
 }

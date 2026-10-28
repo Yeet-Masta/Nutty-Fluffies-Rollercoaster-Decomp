@@ -114,17 +114,9 @@ public class LevelPackMenu : BaseMenu
 				Vector3 vector17 = (component.progress.transform.localPosition = localPosition7);
 				component.progress.transform.rotation = Quaternion.Euler(0f, 0f, 346f);
 				component.progress.gameObject.SetActiveRecursively(true);
-				if (GameData.LOG)
-				{
-					Debug.Log("RKN tutorialsPlayed");
-				}
 			}
 			else
 			{
-				if (GameData.LOG)
-				{
-					Debug.Log("RKN tutorialsPlayed else ");
-				}
 				component.setLocked(true);
 				float y4 = -0.1079767f;
 				Vector3 localPosition8 = component.@lock.transform.localPosition;
@@ -134,10 +126,6 @@ public class LevelPackMenu : BaseMenu
 			component.levelName.gameObject.SetActiveRecursively(false);
 			extraPackButtons.Add(gameObject2);
 			GameData.getLevelPack(4).flags = GameData.getLevelPack(4).flags | 1;
-		}
-		if (GameData.IS_TAPJOY_ENABLED)
-		{
-			TapjoyAdController.getInstance().HideAd();
 		}
 		if (GameData.getLevelPack(1).isUnlocked())
 		{
@@ -165,7 +153,6 @@ public class LevelPackMenu : BaseMenu
 		packContainer.setCurrentStep(num12, true);
 		packContainer.immediatePosition();
 		wasActive = true;
-		BaseMenu.mmgr.logEvent("Level Pack Menu");
 	}
 
 	public override void deactivate()
@@ -187,17 +174,10 @@ public class LevelPackMenu : BaseMenu
 	public virtual void onSelectLevelPack(int packIndex)
 	{
 		GameData.setActiveLevelPack(packIndex);
-		MonoBehaviour.print("AT ON SELECT PACK");
 		if (GameData.getActiveLevelPack().isUnlocked())
 		{
-			MonoBehaviour.print("LEVEL WAS UNLOCKED");
 			StoreBaseMenu.COMMON_PRICE_FACTOR = 1f;
-			BaseMenu.mmgr.logEventWithParameter("SelectedLevelPack", "PackIndex", string.Empty + packIndex);
 			MenuManager.getInstance().onNextMenu();
-		}
-		else if (GameData.LOG)
-		{
-			MonoBehaviour.print("level pack is locked");
 		}
 	}
 

@@ -32,10 +32,6 @@ public class MenuSwitcher : MonoBehaviour
 
 	public virtual void switchMenu(BaseMenu to)
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("NFPort MenuSwitcher.switchMenu to '" + (to != null ? to.name : "null") + "' from '" + (activeMenu != null ? activeMenu.name : "null") + "' switching=" + switching);
-		}
 		if (!switching)
 		{
 			nextMenu = to;
@@ -57,10 +53,6 @@ public class MenuSwitcher : MonoBehaviour
 
 	public virtual void switchBack()
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("NFPort MenuSwitcher.switchBack from '" + (activeMenu != null ? activeMenu.name : "null") + "' to '" + (previousMenu != null ? previousMenu.name : "null") + "' switching=" + switching);
-		}
 		if (!switching)
 		{
 			goBack = true;
@@ -73,10 +65,6 @@ public class MenuSwitcher : MonoBehaviour
 
 	public virtual void onFadeOut()
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("NFPort MenuSwitcher.onFadeOut reverse=" + fader.reverse + " active='" + (activeMenu != null ? activeMenu.name : "null") + "' next='" + (nextMenu != null ? nextMenu.name : "null") + "' goBack=" + goBack);
-		}
 		if (!fader.reverse)
 		{
 			BaseMenuManager.getInstance().setStoreButtonVisible(true);

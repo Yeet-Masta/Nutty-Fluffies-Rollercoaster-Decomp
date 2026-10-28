@@ -45,10 +45,6 @@ public class OnlineServiceManager
 
 	public virtual bool login()
 	{
-		if (GameData.LOG)
-		{
-			Debug.Log("Login");
-		}
 		return true;
 	}
 

@@ -82,9 +82,6 @@ public class ResultScreen : VGUIElement
 
 	private bool backToPauseMenu;
 
-	[NonSerialized]
-	public static bool EnableTapjoyATmsgBox;
-
 	public virtual void calculateMaxScores()
 	{
 		maxScoreWithCurrentSetup = getMaxScoreWithCurrentSetup();
@@ -154,15 +151,6 @@ public class ResultScreen : VGUIElement
 		totalTokenEmitter.ClearParticles();
 		powerMeter.activate();
 		Invoke("showFriendsInvoke", 1f);
-		if (!(scorePercent <= GameData.APPSTORE_REVIEW_SCORE_PERCENT) && GameData.getActiveLevelPackIndex() >= GameData.APPSTORE_REVIEW_MINIMUM_LEVELPACK && GameData.getSelectedLevelIndex() >= GameData.APPSTORE_REVIEW_MINIMUM_LEVEL)
-		{
-			if (GameData.LOG)
-			{
-				Debug.Log("RKN Platform Amazon :: " + GameData.USE_AMAZON_IAP);
-			}
-			EtceteraAndroid.customAskForReview(GameData.APPSTORE_REVIEW_LAUNCHES, 0, GameData.APPSTORE_ASK_AGAIN_HOURS, string.Format(TextData.REVIEW_REQUEST_TITLE, GameData.GAME_NAME).Replace("\n", " "), TextData.REVIEW_REQUEST_TEXT, TextData.REVIEW_REQUEST_CONFIRM, TextData.REVIEW_REQUEST_DECIDE_LATER, TextData.REVIEW_REQUEST_REJECT, GameData.APP_STORE_ID, GameData.USE_AMAZON_IAP);
-		}
-		FacebookAndroid.informFacebookInstall();
 		continueButton.gameObject.SetActiveRecursively(false);
 		menuButton.gameObject.SetActiveRecursively(false);
 		restartButton.gameObject.SetActiveRecursively(false);
@@ -170,14 +158,8 @@ public class ResultScreen : VGUIElement
 		GameData.saveHeartRecord(scoreAmount, maxScore);
 		if (BaseMenuManager.getInstance() != null)
 		{
-			BaseMenuManager instance2 = BaseMenuManager.getInstance();
-			Dictionary<string, string> dictionary = new Dictionary<string, string>();
-			dictionary.Add("Score(1 to 10)", string.Empty + Mathf.Round(scorePercent * 10f));
-			dictionary.Add("Track(package-track)", string.Empty + GameData.getActiveLevelPackIndex() + "-" + GameData.getSelectedLevelIndex());
-			dictionary.Add("Coins", string.Empty + Mathf.Round(num / 5) * 5f);
-			instance2.logEventWithParameters("Result", dictionary);
-			instance2.setTokenCounterVisible(true);
-			instance2.setStoreButtonVisible(false);
+			BaseMenuManager.getInstance().setTokenCounterVisible(true);
+			BaseMenuManager.getInstance().setStoreButtonVisible(false);
 		}
 		if (!CommonData.IN_EDITOR_MODE)
 		{
@@ -272,15 +254,10 @@ public class ResultScreen : VGUIElement
 			}
 			if (!enoughtMoneyForNext)
 			{
-				EnableTapjoyATmsgBox = true;
 				GameMenuManager.getInstance().showErrorMessage(TextData.RESULT_TITLE_COINS_NEEDED, TextData.RESULT_TEXT_COINS_NEEDED, coinsImage);
 				GameMenuManager.getInstance().messageBox.setCallBack(gameObject, "onNotEnoughMoneyDialogClosed");
 				errorNotEnoughMoney = true;
 				return;
-			}
-			if (GameData.IS_TAPJOY_ENABLED && !CrossPromotionAndroid.canShowUrgentNews())
-			{
-				TapjoyAdController.getInstance().DisplayFullScreenAd("RC_NEXT_LEVEL");
 			}
 			RollerCoasterSounds.getInstance().stopMusic();
 			GameManager.getInstance().gotoNextLevel();
@@ -301,10 +278,6 @@ public class ResultScreen : VGUIElement
 		{
 			RollerCoasterSounds.getInstance().stopMusic();
 			GameManager.getInstance().gotoNextLevel();
-			if (GameData.IS_TAPJOY_ENABLED && !CrossPromotionAndroid.canShowUrgentNews())
-			{
-				TapjoyAdController.getInstance().DisplayFullScreenAd("RC_BACK_TO_MENU");
-			}
 		}
 		else
 		{
@@ -503,18 +476,10 @@ public class ResultScreen : VGUIElement
 		}
 		if (errorNotEnoughMoney)
 		{
-			if (GameData.LOG)
-			{
-				Debug.Log("errorNotEnoughMoney == true errorNotEnoughMoney == true");
-			}
 			GameMenuManager.getInstance().messageBox.onDismiss();
 			errorNotEnoughMoney = false;
 			backToPauseMenu = false;
 			return;
-		}
-		if (GameData.LOG)
-		{
-			Debug.Log("errorNotEnoughMoney == false errorNotEnoughMoney == false");
 		}
 		if (backToPauseMenu)
 		{
@@ -686,10 +651,6 @@ public class ResultScreen : VGUIElement
 
 	public virtual void onSharingFailed()
 	{
-		if (GameData.IS_TAPJOY_ENABLED)
-		{
-			TapjoyAdController.getInstance().DisplayFullScreenAd("RC_COMMUNITY_CANCEL");
-		}
 		Invoke("restoreSharingButtons", 3f);
 	}
 

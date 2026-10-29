@@ -54,7 +54,7 @@ public class FileManager
 
 	public static FileManager getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(instance, null))
+		if (instance == null)
 		{
 			instance = new FileManager();
 		}
@@ -128,7 +128,7 @@ public class FileManager
 				string text2 = (string)obj;
 				text = text2 + "/textures/" + CommonData.getDevicePath() + "/" + TextureManager.texturePathForType(type) + "/" + name;
 				UnityRuntimeServices.Update(enumerator, text2);
-				if (!RuntimeServices.EqualityOperator(loadWWWFile(text), null))
+				if (loadWWWFile(text) != null)
 				{
 					result = text;
 					break;
@@ -265,13 +265,13 @@ public class FileManager
 	public virtual string loadFileText(string path)
 	{
 		NFPortAssetFile wWW = loadWWWFile(path);
-		return RuntimeServices.EqualityOperator(wWW, null) ? null : wWW.text;
+		return wWW == null ? null : wWW.text;
 	}
 
 	public virtual byte[] loadFileBytes(string path)
 	{
 		NFPortAssetFile wWW = loadWWWFile(path);
-		return RuntimeServices.EqualityOperator(wWW, null) ? null : wWW.bytes;
+		return wWW == null ? null : wWW.bytes;
 	}
 
 	private NFPortAssetFile loadWWWFile(string path)

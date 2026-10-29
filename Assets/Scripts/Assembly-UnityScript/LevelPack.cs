@@ -261,7 +261,7 @@ public class LevelPack
 
 	public static List<LevelPack> getLevelPackList()
 	{
-		if (RuntimeServices.EqualityOperator(levelPacks, null))
+		if (levelPacks == null)
 		{
 			refreshPacks();
 		}
@@ -270,7 +270,7 @@ public class LevelPack
 
 	public static LevelPack getNamedLevelPack(string name)
 	{
-		if (RuntimeServices.EqualityOperator(levelPacks, null))
+		if (levelPacks == null)
 		{
 			refreshPacks();
 		}

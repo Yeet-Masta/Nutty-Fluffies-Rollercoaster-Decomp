@@ -35,7 +35,7 @@ public class LevelData
 				{
 					LevelObjectData levelObjectData = levelEntityData as LevelObjectData;
 					ObjectPackData packForObjectId = odata.getPackForObjectId(levelObjectData.objectId);
-					if (!RuntimeServices.EqualityOperator(packForObjectId, null) && !usedObjectPacks.Contains(packForObjectId))
+					if (packForObjectId != null && !usedObjectPacks.Contains(packForObjectId))
 					{
 						usedObjectPacks.Add(packForObjectId);
 					}
@@ -43,7 +43,7 @@ public class LevelData
 				else if (levelEntityData is LevelSplineData)
 				{
 					ObjectPackData packForSplineTexture = odata.getPackForSplineTexture((levelEntityData as LevelSplineData).texture);
-					if (!RuntimeServices.EqualityOperator(packForSplineTexture, null) && !usedObjectPacks.Contains(packForSplineTexture))
+					if (packForSplineTexture != null && !usedObjectPacks.Contains(packForSplineTexture))
 					{
 						usedObjectPacks.Add(packForSplineTexture);
 					}

@@ -41,7 +41,7 @@ public class FreeCoinStoreMenu : CoinStoreMenu
 			string text = "DP_PURCHASE_" + CommunityFeatures.FEATURE_KEY[i];
 			CommunityFeatures.FEATURE_VALUES[i] = StoreItem.getDefaultPrice(text);
 			StoreItem item = getItem(text);
-			if (RuntimeServices.EqualityOperator(item, null))
+			if (item == null)
 			{
 				continue;
 			}

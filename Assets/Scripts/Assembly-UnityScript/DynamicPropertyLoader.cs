@@ -71,7 +71,7 @@ public class DynamicPropertyLoader : MonoBehaviour
 							UnityRuntimeServices.Update(_0024_0024iterator_0024364_00241526, _0024key_00241520);
 							_0024obj_00241522 = _0024j_00241519.GetField(_0024key_00241520 as string);
 							UnityRuntimeServices.Update(_0024_0024iterator_0024364_00241526, _0024key_00241520);
-							if (RuntimeServices.EqualityOperator(_0024obj_00241522, null))
+							if (_0024obj_00241522 == null)
 							{
 								continue;
 							}

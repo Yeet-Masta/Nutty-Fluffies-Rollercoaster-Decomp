@@ -24,7 +24,7 @@ public class ZLevel
 
 	public static ZLevel getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(instance, null))
+		if (instance == null)
 		{
 			instance = new ZLevel();
 		}

@@ -123,11 +123,11 @@ public class Narrative : VGUISwitchObject
 		}
 		appendLine(text);
 		streamReader.Close();
-		if (!RuntimeServices.EqualityOperator(fileStream, null))
+		if (fileStream != null)
 		{
 			fileStream.Close();
 		}
-		if (!RuntimeServices.EqualityOperator(memoryStream, null))
+		if (memoryStream != null)
 		{
 			memoryStream.Close();
 		}

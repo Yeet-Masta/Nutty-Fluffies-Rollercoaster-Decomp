@@ -333,7 +333,7 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 
 	public virtual void removePages()
 	{
-		if (!RuntimeServices.EqualityOperator(pages, null))
+		if (pages != null)
 		{
 			int i = 0;
 			GameObject[] array = pages;

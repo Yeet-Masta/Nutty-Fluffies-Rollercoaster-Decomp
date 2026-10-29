@@ -78,7 +78,7 @@ public class RollerCoasterMissions : MissionManager
 
 	public new static RollerCoasterMissions getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(MissionManager.instance, null))
+		if (MissionManager.instance == null)
 		{
 			MissionManager.instance = new RollerCoasterMissions();
 			string text = FileManager.getInstance().locateAnyFile("missions.json");

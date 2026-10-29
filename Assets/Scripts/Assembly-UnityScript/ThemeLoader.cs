@@ -11,7 +11,7 @@ public class ThemeLoader
 
 	public static ThemeLoader getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(instance, null))
+		if (instance == null)
 		{
 			instance = new ThemeLoader();
 		}
@@ -49,7 +49,7 @@ public class ThemeLoader
 		}
 		themeData.settings.allowedObjectPacks.Clear();
 		JSONObject field2 = jSONObject.GetField("objectpacks");
-		if (!RuntimeServices.EqualityOperator(field2, null))
+		if (field2 != null)
 		{
 			IEnumerator enumerator2 = UnityRuntimeServices.GetEnumerator(field2.list);
 			while (enumerator2.MoveNext())

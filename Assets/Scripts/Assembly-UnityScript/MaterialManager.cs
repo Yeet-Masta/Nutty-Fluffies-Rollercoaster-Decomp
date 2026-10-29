@@ -16,7 +16,7 @@ public class MaterialManager
 
 	public static MaterialManager getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(instance, null))
+		if (instance == null)
 		{
 			instance = new MaterialManager();
 		}

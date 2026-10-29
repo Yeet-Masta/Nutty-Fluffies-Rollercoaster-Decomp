@@ -11,7 +11,7 @@ public class ObjectListLoader
 
 	public static ObjectListLoader getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(instance, null))
+		if (instance == null)
 		{
 			instance = new ObjectListLoader();
 		}
@@ -62,7 +62,7 @@ public class ObjectListLoader
 			}
 		}
 		JSONObject field2 = jSONObject.GetField("objects");
-		if (!RuntimeServices.EqualityOperator(field2, null))
+		if (field2 != null)
 		{
 			IEnumerator enumerator2 = UnityRuntimeServices.GetEnumerator(field2.list);
 			while (enumerator2.MoveNext())
@@ -73,7 +73,7 @@ public class ObjectListLoader
 					obj2 = RuntimeServices.Coerce(obj2, typeof(JSONObject));
 				}
 				JSONObject jSONObject3 = (JSONObject)obj2;
-				if (RuntimeServices.EqualityOperator(jSONObject3, null))
+				if (jSONObject3 == null)
 				{
 					continue;
 				}

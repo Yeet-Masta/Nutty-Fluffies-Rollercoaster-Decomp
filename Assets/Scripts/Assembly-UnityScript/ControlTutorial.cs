@@ -11,14 +11,14 @@ public class ControlTutorial : TutorialPage
 	{
 		base.activate();
 		int specialCartType = GameManager.getInstance().getSpecialCartType();
-		if (!RuntimeServices.EqualityOperator(specialGraphics, null))
+		if (specialGraphics != null)
 		{
 			for (int i = 0; i < specialGraphics.Length; i++)
 			{
 				specialGraphics[i].SetActiveRecursively(i == specialCartType);
 			}
 		}
-		if (specialCartType == -1 && !RuntimeServices.EqualityOperator(specialExtra, null))
+		if (specialCartType == -1 && specialExtra != null)
 		{
 			int j = 0;
 			GameObject[] array = specialExtra;

@@ -34,7 +34,7 @@ public class OnlineServiceManager
 
 	public static OnlineServiceManager getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(instance, null))
+		if (instance == null)
 		{
 			instance = new OnlineServiceManager();
 		}

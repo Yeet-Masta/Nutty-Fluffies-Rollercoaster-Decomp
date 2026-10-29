@@ -18,7 +18,7 @@ public class NarrativeLine
 		commands = NarrativeCommandReader.findAllCommands(text);
 		textContent = NarrativeCommandReader.removeAllCommands(text);
 		NarrativeCommand narrativeCommand = NarrativeCommandReader.findCommand(commands, "narrateAudio");
-		if (!RuntimeServices.EqualityOperator(narrativeCommand, null))
+		if (narrativeCommand != null)
 		{
 			narrateAudio = (AudioClip)Resources.Load(narrativeCommand.parameters[0]);
 			if (narrateAudio == null)

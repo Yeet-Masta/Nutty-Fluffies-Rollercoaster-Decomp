@@ -28,7 +28,7 @@ public class CustomSettings
 	public virtual void load(JSONObject j)
 	{
 		JSONObject fieldSafe = j.GetFieldSafe("settings", null);
-		if (RuntimeServices.EqualityOperator(fieldSafe, null))
+		if (fieldSafe == null)
 		{
 			return;
 		}

@@ -95,7 +95,7 @@ public class MissionList : VGUIList
 		}
 		else
 		{
-			if (!RuntimeServices.EqualityOperator(listedMissions, null))
+			if (listedMissions != null)
 			{
 				while (animatedRow < listedMissions.Count - 1)
 				{

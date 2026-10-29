@@ -27,7 +27,7 @@ public class LevelObjectFactory
 
 	public static LevelObjectFactory getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(instance, null))
+		if (instance == null)
 		{
 			instance = new LevelObjectFactory();
 		}
@@ -60,11 +60,11 @@ public class LevelObjectFactory
 			{
 				currentLayerObject = (LevelLayer)parent.GetComponent(typeof(LevelLayer));
 			}
-			if (RuntimeServices.EqualityOperator(objects, null))
+			if (objects == null)
 			{
 				Debug.LogError("OBJECTS IS NULL\n");
 			}
-			if (RuntimeServices.EqualityOperator(data, null))
+			if (data == null)
 			{
 				Debug.LogError("DATA IS NULL\n");
 			}
@@ -190,7 +190,7 @@ public class LevelObjectFactory
 			LevelObjectData levelObjectData = currentObjectData;
 			currentObjectData = data;
 			objectPackData = objects.getPackForObjectId(data.objectId);
-			if (!RuntimeServices.EqualityOperator(objectData, null))
+			if (objectData != null)
 			{
 				if (objectData.getNumParts() == 0)
 				{
@@ -212,7 +212,7 @@ public class LevelObjectFactory
 					{
 						flag2 = createObjectComponents(objectPackData, levelObject, objectData, data, false);
 					}
-					if (!RuntimeServices.EqualityOperator(data.childList, null))
+					if (data.childList != null)
 					{
 						foreach (LevelEntityData levelEntityData in data.childList)
 						{
@@ -946,7 +946,7 @@ public class LevelObjectFactory
 			transform2.localScale = localScale3;
 		}
 		Component[] components = @object.GetComponents(typeof(Collider));
-		if (RuntimeServices.EqualityOperator(components, null))
+		if (components == null)
 		{
 			return;
 		}

@@ -244,7 +244,7 @@ public class GameManager : MonoBehaviour
 		else
 		{
 			levelData = LevelLoaderBinary.getInstance().load(CommonData.LEVEL_PACK_NAME, CommonData.LEVEL_NAME, objects);
-			if (RuntimeServices.EqualityOperator(levelData, null))
+			if (levelData == null)
 			{
 				levelData = LevelLoader.getInstance().load(CommonData.LEVEL_PACK_NAME, CommonData.LEVEL_NAME, objects);
 			}

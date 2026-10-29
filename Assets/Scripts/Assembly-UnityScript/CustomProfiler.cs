@@ -18,7 +18,7 @@ public class CustomProfiler
 
 	public static void begin(string elem)
 	{
-		if (!RuntimeServices.EqualityOperator(interTimeDict, null))
+		if (interTimeDict != null)
 		{
 			interTimeDict[elem] = Time.realtimeSinceStartup;
 		}
@@ -26,7 +26,7 @@ public class CustomProfiler
 
 	public static void end(string elem)
 	{
-		if (!RuntimeServices.EqualityOperator(interTimeDict, null))
+		if (interTimeDict != null)
 		{
 			float num = Time.realtimeSinceStartup - interTimeDict[elem];
 			if (totalTimeDict.ContainsKey(elem))

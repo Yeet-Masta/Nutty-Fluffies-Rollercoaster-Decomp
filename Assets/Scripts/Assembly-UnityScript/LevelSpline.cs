@@ -119,7 +119,7 @@ public class LevelSpline : LevelEntity
 
 	public virtual void recreate()
 	{
-		if (!RuntimeServices.EqualityOperator(spline, null))
+		if (spline != null)
 		{
 			create(spline, height);
 		}

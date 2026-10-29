@@ -37,7 +37,7 @@ public class RollerCoasterStatistics : Statistics
 
 	public new static RollerCoasterStatistics getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(Statistics.instance, null))
+		if (Statistics.instance == null)
 		{
 			Statistics.instance = new RollerCoasterStatistics();
 			Statistics.instance.loadStatistics();

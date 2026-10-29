@@ -16,7 +16,7 @@ public class MissionManager
 
 	public static MissionManager getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(instance, null))
+		if (instance == null)
 		{
 			instance = new MissionManager();
 			instance.load("missions.json");

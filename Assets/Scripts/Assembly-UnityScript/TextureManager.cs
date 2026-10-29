@@ -130,7 +130,7 @@ public class TextureManager
 
 	public static TextureManager getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(instance, null))
+		if (instance == null)
 		{
 			instance = new TextureManager();
 		}

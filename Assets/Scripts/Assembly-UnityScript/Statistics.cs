@@ -21,7 +21,7 @@ public class Statistics
 
 	public static Statistics getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(instance, null))
+		if (instance == null)
 		{
 			instance = new Statistics();
 			instance.loadStatistics();

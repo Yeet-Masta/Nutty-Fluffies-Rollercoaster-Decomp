@@ -15,7 +15,7 @@ public class LevelLoaderBinary
 
 	public static LevelLoaderBinary getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(instance, null))
+		if (instance == null)
 		{
 			instance = new LevelLoaderBinary();
 		}
@@ -76,7 +76,7 @@ public class LevelLoaderBinary
 				else if (b2 == 3)
 				{
 					levelData.theme = ThemeLoader.getInstance().loadTheme(sr.ReadString());
-					if (RuntimeServices.EqualityOperator(levelData.theme, null))
+					if (levelData.theme == null)
 					{
 						result = null;
 						break;
@@ -105,7 +105,7 @@ public class LevelLoaderBinary
 			}
 			foreach (string text2 in levelData.theme.settings.allowedObjectPacks)
 			{
-				if (RuntimeServices.EqualityOperator(objects.getPackForName(text2), null))
+				if (objects.getPackForName(text2) == null)
 				{
 					ObjectListLoader.getInstance().loadObjectList(objects, text2);
 				}
@@ -270,7 +270,7 @@ public class LevelLoaderBinary
 							}
 						}
 						while (num4 != 14);
-						if (!RuntimeServices.EqualityOperator(levelEntityData, null))
+						if (levelEntityData != null)
 						{
 							levelEntityData.position.x = x;
 							levelEntityData.position.y = y;

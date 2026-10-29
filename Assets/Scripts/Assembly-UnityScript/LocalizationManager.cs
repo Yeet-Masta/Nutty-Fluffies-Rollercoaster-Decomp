@@ -101,7 +101,7 @@ public class LocalizationManager : MonoBehaviour
 
 	private void loadLanguage(string language)
 	{
-		if (RuntimeServices.EqualityOperator(translation, null) || currentLanguage != language)
+		if (translation == null || currentLanguage != language)
 		{
 			translation = new Dictionary<string, string>();
 			currentLanguage = language;

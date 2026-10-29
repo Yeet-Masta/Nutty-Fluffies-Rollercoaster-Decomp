@@ -12,7 +12,7 @@ public class LevelLoader
 
 	public static LevelLoader getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(instance, null))
+		if (instance == null)
 		{
 			instance = new LevelLoader();
 		}
@@ -38,7 +38,7 @@ public class LevelLoader
 		JSONObject jSONObject = new JSONObject(str);
 		levelData.theme = ThemeLoader.getInstance().loadTheme(jSONObject.GetFieldSafe("theme", new JSONObject("\"" + "woodTrackTheme" + "\"")).str);
 		object result;
-		if (RuntimeServices.EqualityOperator(levelData.theme, null))
+		if (levelData.theme == null)
 		{
 			result = null;
 		}
@@ -66,7 +66,7 @@ public class LevelLoader
 			}
 			foreach (string text in levelData.theme.settings.allowedObjectPacks)
 			{
-				if (RuntimeServices.EqualityOperator(objects.getPackForName(text), null))
+				if (objects.getPackForName(text) == null)
 				{
 					ObjectListLoader.getInstance().loadObjectList(objects, text);
 				}
@@ -134,7 +134,7 @@ public class LevelLoader
 			UnityRuntimeServices.Update(enumerator, jSONObject);
 			JSONObject field = jSONObject.GetField("objects");
 			UnityRuntimeServices.Update(enumerator, jSONObject);
-			if (RuntimeServices.EqualityOperator(field, null))
+			if (field == null)
 			{
 				continue;
 			}
@@ -147,7 +147,7 @@ public class LevelLoader
 					obj2 = RuntimeServices.Coerce(obj2, typeof(JSONObject));
 				}
 				JSONObject jSONObject2 = (JSONObject)obj2;
-				if (RuntimeServices.EqualityOperator(jSONObject2, null))
+				if (jSONObject2 == null)
 				{
 					continue;
 				}
@@ -218,7 +218,7 @@ public class LevelLoader
 					levelEntityData = levelSplineData;
 					JSONObject field2 = jSONObject2.GetField("spline");
 					UnityRuntimeServices.Update(enumerator2, jSONObject2);
-					if (!RuntimeServices.EqualityOperator(field2, null))
+					if (field2 != null)
 					{
 						IEnumerator enumerator3 = UnityRuntimeServices.GetEnumerator(field2.list);
 						while (enumerator3.MoveNext())
@@ -239,7 +239,7 @@ public class LevelLoader
 						}
 					}
 				}
-				if (!RuntimeServices.EqualityOperator(levelEntityData, null))
+				if (levelEntityData != null)
 				{
 					levelEntityData.position.x = x;
 					levelEntityData.position.y = y;
@@ -252,7 +252,7 @@ public class LevelLoader
 					{
 						levelEntityData = null;
 					}
-					if (!RuntimeServices.EqualityOperator(levelEntityData, null))
+					if (levelEntityData != null)
 					{
 						levelLayerData.objectData.Add(levelEntityData);
 					}

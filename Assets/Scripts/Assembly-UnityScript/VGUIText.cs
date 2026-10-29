@@ -39,7 +39,7 @@ public class VGUIText : VGUIElement
 		{
 			setText(preAwakeSetText);
 		}
-		if (!RuntimeServices.EqualityOperator(preAwakeFillTemplateValues, null) && preAwakeFillTemplateValues.Length > 0)
+		if (preAwakeFillTemplateValues != null && preAwakeFillTemplateValues.Length > 0)
 		{
 			fillTemplate(preAwakeFillTemplateValues);
 		}

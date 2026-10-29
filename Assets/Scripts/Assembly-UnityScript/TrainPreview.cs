@@ -33,14 +33,14 @@ public class TrainPreview : MonoBehaviour
 		{
 			originalScale = this.transform.localScale.x;
 		}
-		if (!RuntimeServices.EqualityOperator(activeCart, null))
+		if (activeCart != null)
 		{
 			for (int i = 0; i < activeCart.Length; i++)
 			{
 				UnityEngine.Object.Destroy(activeCart[i].gameObject);
 			}
 		}
-		if (!RuntimeServices.EqualityOperator(attachedItems, null))
+		if (attachedItems != null)
 		{
 			for (int j = 0; j < attachedItems.Length; j++)
 			{

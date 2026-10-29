@@ -9,7 +9,7 @@ public class VehicleFactory
 
 	public static VehicleFactory getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(instance, null))
+		if (instance == null)
 		{
 			instance = new VehicleFactory();
 		}

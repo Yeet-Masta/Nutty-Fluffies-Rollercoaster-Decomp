@@ -33,7 +33,7 @@ public class TextTemplate
 	public static string getString(string template, string[] values)
 	{
 		string text = template;
-		if (!RuntimeServices.EqualityOperator(values, null))
+		if (values != null)
 		{
 			for (int i = 0; i < values.Length && values[i] != null; i++)
 			{

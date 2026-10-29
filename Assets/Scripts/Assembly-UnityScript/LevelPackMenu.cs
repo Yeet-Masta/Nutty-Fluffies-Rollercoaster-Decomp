@@ -16,7 +16,7 @@ public class LevelPackMenu : BaseMenu
 	{
 		VGUIElement.blockingButtonPressed = false;
 		base.activate();
-		if (!RuntimeServices.EqualityOperator(packContainer.pages, null))
+		if (packContainer.pages != null)
 		{
 			int i = 0;
 			GameObject[] pages = packContainer.pages;

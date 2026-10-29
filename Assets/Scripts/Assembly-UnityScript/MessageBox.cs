@@ -83,7 +83,7 @@ public class MessageBox : BaseMenu
 
 	private void internalShowMessage(string title, string message, GameObject image, bool close, bool errorMessage)
 	{
-		if (!RuntimeServices.EqualityOperator(paperEmitters, null))
+		if (paperEmitters != null)
 		{
 			disablePaperEmitters();
 		}

@@ -400,7 +400,7 @@ public class GameData
 	public static LevelPack.LevelInfo getSelectedLevel()
 	{
 		LevelPack activeLevelPack = getActiveLevelPack();
-		return RuntimeServices.EqualityOperator(activeLevelPack, null) ? null : activeLevelPack.getLevelInfo(SELECTED_LEVEL_INDEX);
+		return activeLevelPack == null ? null : activeLevelPack.getLevelInfo(SELECTED_LEVEL_INDEX);
 	}
 
 	public static int getSelectedLevelIndex()
@@ -610,7 +610,7 @@ public class GameData
 	public static StoreKitProduct getInAppPurchaseProduct(string id)
 	{
 		StoreKitProduct storeKitProduct;
-		if (!RuntimeServices.EqualityOperator(INAPP_PURCHASE_LIST, null))
+		if (INAPP_PURCHASE_LIST != null)
 		{
 			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(INAPP_PURCHASE_LIST);
 			while (enumerator.MoveNext())
@@ -639,13 +639,13 @@ public class GameData
 
 	public static int getInAppPurchaseProductCount()
 	{
-		return RuntimeServices.EqualityOperator(INAPP_PURCHASE_LIST, null) ? 0 : INAPP_PURCHASE_LIST.Count;
+		return INAPP_PURCHASE_LIST == null ? 0 : INAPP_PURCHASE_LIST.Count;
 	}
 
 	public static void setInAppPurchased(string id)
 	{
 		StoreKitProduct inAppPurchaseProduct = getInAppPurchaseProduct(id);
-		if (!RuntimeServices.EqualityOperator(inAppPurchaseProduct, null))
+		if (inAppPurchaseProduct != null)
 		{
 			addTokens(getTokenValue(id));
 		}

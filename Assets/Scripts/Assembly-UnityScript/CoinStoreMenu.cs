@@ -169,7 +169,7 @@ public class CoinStoreMenu : StoreBaseMenu
 			{
 				Debug.Log("ITEM ID >>> :::: " + array[i].productID);
 			}
-			if (!RuntimeServices.EqualityOperator(storeKitProduct, null))
+			if (storeKitProduct != null)
 			{
 				parseIAPDescription(storeKitProduct.description, array[i].productID);
 				array[i].price = GameData.getTokenValue(array[i].productID);
@@ -195,7 +195,7 @@ public class CoinStoreMenu : StoreBaseMenu
 		for (int length2 = array2.Length; j < length2; j++)
 		{
 			storeKitProduct = GameData.getInAppPurchaseProduct(array2[j].productID);
-			if (!RuntimeServices.EqualityOperator(storeKitProduct, null))
+			if (storeKitProduct != null)
 			{
 				array2[j].iapPriceText.setText(string.Empty + storeKitProduct.currencySymbol + " " + storeKitProduct.price);
 				array2[j].updatePriceText();
@@ -230,7 +230,7 @@ public class CoinStoreMenu : StoreBaseMenu
 		{
 			array = text.Split(" "[0]);
 		}
-		if (RuntimeServices.EqualityOperator(array, null))
+		if (array == null)
 		{
 			return;
 		}

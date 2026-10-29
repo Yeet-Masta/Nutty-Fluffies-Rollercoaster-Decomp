@@ -50,7 +50,7 @@ public class AlphaAnimator : VGUIAnimator
 	{
 		float timeInterpolator = getTimeInterpolator();
 		currentValue = from + (to - from) * timeInterpolator;
-		if (!RuntimeServices.EqualityOperator(rendererList, null))
+		if (rendererList != null)
 		{
 			for (int i = 0; i < rendererList.Count; i++)
 			{
@@ -77,7 +77,7 @@ public class AlphaAnimator : VGUIAnimator
 		{
 			return;
 		}
-		if (!RuntimeServices.EqualityOperator(rendererList, null))
+		if (rendererList != null)
 		{
 			for (int i = 0; i < rendererList.Count; i++)
 			{

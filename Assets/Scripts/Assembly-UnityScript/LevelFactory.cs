@@ -16,7 +16,7 @@ public class LevelFactory
 
 	public static LevelFactory getInstance()
 	{
-		if (RuntimeServices.EqualityOperator(instance, null))
+		if (instance == null)
 		{
 			instance = new LevelFactory();
 		}
@@ -36,7 +36,7 @@ public class LevelFactory
 		level.oldLeaderboardDoNotUse = data.oldLeaderboardDoNotUse;
 		level.customSettings = data.customSettings;
 		Dictionary<int, bool> dictionary = new Dictionary<int, bool>();
-		if (!RuntimeServices.EqualityOperator(data.theme, null))
+		if (data.theme != null)
 		{
 			foreach (LevelLayerData levelLayerData in data.theme.layerList)
 			{
@@ -121,7 +121,7 @@ public class LevelFactory
 		LevelObjectFactory levelObjectFactory = LevelObjectFactory.getInstance();
 		LevelObjectFactory.setRenderQueueForLayer(layer.layer);
 		LevelObjectFactory.LAYER = layer.layer;
-		if (!RuntimeServices.EqualityOperator(layerData.objectData, null))
+		if (layerData.objectData != null)
 		{
 			for (int i = 0; i < layerData.objectData.Count; i++)
 			{
@@ -138,7 +138,7 @@ public class LevelFactory
 		object result;
 		if (CommonData.EDITOR_ACTIVE || !layerData.checkDevice(1 << CommonData.getDeviceGenerationInt()))
 		{
-			if (!RuntimeServices.EqualityOperator(componentsInChildren, null))
+			if (componentsInChildren != null)
 			{
 				int i = 0;
 				Component[] array = componentsInChildren;
@@ -157,7 +157,7 @@ public class LevelFactory
 				levelLayer.transform.parent = parent.transform;
 				levelLayer.layer = layerData.layer;
 			}
-			if (!RuntimeServices.EqualityOperator(layerData.themeInfo, null))
+			if (layerData.themeInfo != null)
 			{
 				levelLayer.parallaxFactor = layerData.themeInfo.parallaxSpeed;
 				levelLayer.layerName = layerData.themeInfo.layerName;

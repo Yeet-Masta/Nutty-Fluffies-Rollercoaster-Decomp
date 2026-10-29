@@ -100,11 +100,6 @@ public class Cart : MonoBehaviour
 		{
 			renderers[i] = componentsInChildren[i] as MeshRenderer;
 		}
-		int j = 0;
-		MeshRenderer[] array = renderers;
-		for (int length = array.Length; j < length; j++)
-		{
-		}
 		useGUILayout = false;
 		if (animalRoot != null && !animalRoot.gameObject.activeInHierarchy)
 		{
@@ -236,11 +231,9 @@ public class Cart : MonoBehaviour
 				int renderQueueLevel = component.getRenderQueueLevel(num2);
 				if (renderQueueLevel != currentRenderQueue)
 				{
-					int i = 0;
-					MeshRenderer[] array = renderers;
-					for (int length = array.Length; i < length; i++)
+					foreach (MeshRenderer renderer in renderers)
 					{
-						array[i].sharedMaterial.renderQueue = renderQueueLevel + 1;
+						renderer.sharedMaterial.renderQueue = renderQueueLevel + 1;
 					}
 					currentRenderQueue = renderQueueLevel;
 				}

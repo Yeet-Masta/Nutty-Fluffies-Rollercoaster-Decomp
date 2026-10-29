@@ -21,11 +21,9 @@ public class BGMusicPlayer : MonoBehaviour
 		PlayerPrefs.SetFloat("MUSIC_VOLUME", to);
 		musicVolume = to;
 		BGMusicPlayer[] array = ((BGMusicPlayer[])UnityEngine.Object.FindObjectsOfType(typeof(BGMusicPlayer))) as BGMusicPlayer[];
-		int i = 0;
-		BGMusicPlayer[] array2 = array;
-		for (int length = array2.Length; i < length; i++)
+		foreach (BGMusicPlayer bgMusicPlayer in array)
 		{
-			array2[i].GetComponent<AudioSource>().volume = to;
+			bgMusicPlayer.GetComponent<AudioSource>().volume = to;
 		}
 	}
 }

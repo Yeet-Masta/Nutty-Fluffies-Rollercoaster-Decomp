@@ -284,11 +284,9 @@ public class Vehicle : MonoBehaviour
 			}
 			cartsInAir = 0;
 			int num4 = 0;
-			int l = 0;
-			Cart[] array4 = carts;
-			for (int length4 = array4.Length; l < length4; l++)
+			foreach (Cart cart in carts)
 			{
-				if (!array4[l].hasContact)
+				if (!cart.hasContact)
 				{
 					cartsInAir++;
 				}
@@ -585,11 +583,9 @@ public class Vehicle : MonoBehaviour
 	{
 		bool result = false;
 		int num = 0;
-		int i = 0;
-		Cart[] array = carts;
-		for (int length = array.Length; i < length; i++)
+		foreach (Cart cart in carts)
 		{
-			if (array[i].crashed)
+			if (cart.crashed)
 			{
 				result = true;
 				break;
@@ -729,11 +725,9 @@ public class Vehicle : MonoBehaviour
 		{
 			disableSpecial();
 			lockMotion();
-			int i = 0;
-			Cart[] array = carts;
-			for (int length = array.Length; i < length; i++)
+			foreach (Cart cart in carts)
 			{
-				array[i].onFinish();
+				cart.onFinish();
 			}
 		}
 	}

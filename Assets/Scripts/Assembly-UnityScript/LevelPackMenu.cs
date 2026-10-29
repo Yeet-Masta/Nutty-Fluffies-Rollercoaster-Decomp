@@ -17,11 +17,9 @@ public class LevelPackMenu : BaseMenu
 		base.activate();
 		if (packContainer.pages != null)
 		{
-			int i = 0;
-			GameObject[] pages = packContainer.pages;
-			for (int length = pages.Length; i < length; i++)
+			foreach (GameObject page in packContainer.pages)
 			{
-				UnityEngine.Object.Destroy(pages[i]);
+				UnityEngine.Object.Destroy(page);
 			}
 			foreach (GameObject gameObject in extraPackButtons)
 			{

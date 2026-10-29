@@ -30,29 +30,23 @@ public class TriggerEnablePhysics : LevelTriggerActivatable
 		{
 			Component[] array = null;
 			array = targetObjects[i].gameObject.GetComponentsInChildren(typeof(Rigidbody));
-			int j = 0;
-			Component[] array2 = array;
-			for (int length2 = array2.Length; j < length2; j++)
+			foreach (Component component in array)
 			{
-				Rigidbody rigidbody = array2[j] as Rigidbody;
+				Rigidbody rigidbody = component as Rigidbody;
 				rigidbody.useGravity = true;
 				rigidbody.isKinematic = false;
 			}
 			if (c)
 			{
 				Component[] componentsInChildren = targetObjects[i].gameObject.GetComponentsInChildren(typeof(BoxCollider));
-				int k = 0;
-				Component[] array3 = componentsInChildren;
-				for (int length3 = array3.Length; k < length3; k++)
+				foreach (Component component in componentsInChildren)
 				{
-					((BoxCollider)array3[k]).enabled = false;
+					((BoxCollider)component).enabled = false;
 				}
 				Component[] componentsInChildren2 = targetObjects[i].gameObject.GetComponentsInChildren(typeof(SphereCollider));
-				int l = 0;
-				Component[] array4 = componentsInChildren2;
-				for (int length4 = array4.Length; l < length4; l++)
+				foreach (Component component in componentsInChildren2)
 				{
-					((SphereCollider)array4[l]).enabled = false;
+					((SphereCollider)component).enabled = false;
 				}
 			}
 		}
@@ -62,17 +56,13 @@ public class TriggerEnablePhysics : LevelTriggerActivatable
 	{
 		base.prepare();
 		handler.playerTrigger = true;
-		int i = 0;
-		GameObject[] targetObjects = targetHandler.targetObjects;
-		for (int length = targetObjects.Length; i < length; i++)
+		foreach (GameObject targetObject in targetHandler.targetObjects)
 		{
 			Component[] array = null;
-			array = targetObjects[i].gameObject.GetComponentsInChildren(typeof(Rigidbody));
-			int j = 0;
-			Component[] array2 = array;
-			for (int length2 = array2.Length; j < length2; j++)
+			array = targetObject.gameObject.GetComponentsInChildren(typeof(Rigidbody));
+			foreach (Component component in array)
 			{
-				Rigidbody rigidbody = array2[j] as Rigidbody;
+				Rigidbody rigidbody = component as Rigidbody;
 				rigidbody.useGravity = false;
 				rigidbody.isKinematic = true;
 			}

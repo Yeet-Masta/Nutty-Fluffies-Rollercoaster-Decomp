@@ -182,12 +182,10 @@ public class ResultScreen : VGUIElement
 		if (roundEarnedNewCart)
 		{
 			Component[] componentsInChildren = restartButtonCartAdditionLabel.GetComponentsInChildren(typeof(CartImage));
-			int i = 0;
-			Component[] array = componentsInChildren;
-			for (int length = array.Length; i < length; i++)
+			foreach (Component component in componentsInChildren)
 			{
 				int specialCartType = GameManager.getInstance().getSpecialCartType();
-				((CartImage)array[i]).activate(GameManager.getInstance().getTrainType(), specialCartType);
+				((CartImage)component).activate(GameManager.getInstance().getTrainType(), specialCartType);
 			}
 		}
 	}
@@ -573,11 +571,9 @@ public class ResultScreen : VGUIElement
 	{
 		Component[] componentsInChildren = GameManager.getInstance().getGameRoot().GetComponentsInChildren(typeof(TriggerCheckPoint), true);
 		int num = 0;
-		int i = 0;
-		Component[] array = componentsInChildren;
-		for (int length = array.Length; i < length; i++)
+		foreach (Component component in componentsInChildren)
 		{
-			TriggerCheckPoint triggerCheckPoint = array[i] as TriggerCheckPoint;
+			TriggerCheckPoint triggerCheckPoint = component as TriggerCheckPoint;
 			if (triggerCheckPoint != null)
 			{
 				if (triggerCheckPoint.kind == 0)
@@ -597,11 +593,9 @@ public class ResultScreen : VGUIElement
 	{
 		Component[] componentsInChildren = GameManager.getInstance().getGameRoot().GetComponentsInChildren(typeof(TriggerCoin), true);
 		int num = 0;
-		int i = 0;
-		Component[] array = componentsInChildren;
-		for (int length = array.Length; i < length; i++)
+		foreach (Component component in componentsInChildren)
 		{
-			TriggerCoin triggerCoin = array[i] as TriggerCoin;
+			TriggerCoin triggerCoin = component as TriggerCoin;
 			if (triggerCoin != null)
 			{
 				num += triggerCoin.amount;

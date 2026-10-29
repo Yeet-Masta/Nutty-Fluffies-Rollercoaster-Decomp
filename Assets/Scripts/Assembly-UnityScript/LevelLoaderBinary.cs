@@ -26,11 +26,9 @@ public class LevelLoaderBinary
 	{
 		ObjectPackData[] packs = objects.getPacks();
 		List<string> list = new List<string>();
-		int i = 0;
-		ObjectPackData[] array = packs;
-		for (int length = array.Length; i < length; i++)
+		foreach (ObjectPackData pack in packs)
 		{
-			list.AddRange(array[i].getSplineTextures());
+			list.AddRange(pack.getSplineTextures());
 		}
 		return list.ToArray();
 	}
@@ -245,11 +243,9 @@ public class LevelLoaderBinary
 								levelSplineData.height = sr.ReadSingle();
 								levelSplineData.texture = sr.ReadString();
 								bool flag = false;
-								int k = 0;
-								string[] allowedSplineTextures = getAllowedSplineTextures(objectList);
-								for (int length = allowedSplineTextures.Length; k < length; k++)
+								foreach (string allowedSplineTexture in getAllowedSplineTextures(objectList))
 								{
-									if (allowedSplineTextures[k] == levelSplineData.texture)
+									if (allowedSplineTexture == levelSplineData.texture)
 									{
 										flag = true;
 									}

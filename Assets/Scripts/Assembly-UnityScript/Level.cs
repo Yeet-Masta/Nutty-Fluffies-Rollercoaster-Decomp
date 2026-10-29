@@ -95,11 +95,9 @@ public class Level : MonoBehaviour
 	{
 		Component[] componentsInChildren = gameObject.GetComponentsInChildren(typeof(LevelLayer), true);
 		List<LevelLayer> list = new List<LevelLayer>(componentsInChildren.Length);
-		int i = 0;
-		Component[] array = componentsInChildren;
-		for (int length = array.Length; i < length; i++)
+		foreach (Component component in componentsInChildren)
 		{
-			list.Add(array[i] as LevelLayer);
+			list.Add(component as LevelLayer);
 		}
 		list.Sort(new LayerComparer());
 		return list.ToArray();
@@ -169,11 +167,9 @@ public class Level : MonoBehaviour
 	public virtual int getNextReferenceId()
 	{
 		Component[] componentsInChildren = gameObject.GetComponentsInChildren(typeof(LevelEntity), true);
-		int i = 0;
-		Component[] array = componentsInChildren;
-		for (int length = array.Length; i < length; i++)
+		foreach (Component component in componentsInChildren)
 		{
-			LevelEntity levelEntity = array[i] as LevelEntity;
+			LevelEntity levelEntity = component as LevelEntity;
 			int num = levelEntity.referenceId & ~LevelEntityData.REFERENCE_ID_BIT_THEME;
 			if (num > maxId)
 			{

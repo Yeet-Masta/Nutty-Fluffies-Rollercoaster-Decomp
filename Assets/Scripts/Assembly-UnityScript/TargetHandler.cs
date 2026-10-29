@@ -25,11 +25,9 @@ public class TargetHandler
 		List<GameObject> list = new List<GameObject>();
 		Level level = (Level)UnityEngine.Object.FindObjectOfType(typeof(Level));
 		LevelLayer layerForNumber = level.getLayerForNumber(0);
-		int i = 0;
-		string[] array2 = array;
-		for (int length = array2.Length; i < length; i++)
+		foreach (string text in array)
 		{
-			int uniqueID = Convert.ToInt32(array2[i]);
+			int uniqueID = Convert.ToInt32(text);
 			LevelEntity levelEntity = level.findEntity(uniqueID, layerForNumber.gameObject);
 			if ((bool)levelEntity && (bool)levelEntity.gameObject)
 			{
@@ -45,15 +43,13 @@ public class TargetHandler
 		if (targetObjects != null && targetObjects.Length > 0)
 		{
 			string text = string.Empty;
-			int i = 0;
-			GameObject[] array = targetObjects;
-			for (int length = array.Length; i < length; i++)
+			foreach (GameObject targetObject in targetObjects)
 			{
 				if (text.Length > 0)
 				{
 					text += ",";
 				}
-				text += ((LevelEntity)array[i].GetComponent(typeof(LevelEntity))).referenceId;
+				text += ((LevelEntity)targetObject.GetComponent(typeof(LevelEntity))).referenceId;
 			}
 			result = text;
 		}

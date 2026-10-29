@@ -112,13 +112,11 @@ public class ObjectScript : MonoBehaviour, Parametrizable
 		ParamList parameterList = getParameterList();
 		int num = 0;
 		string[] array = ((LevelEntity)gameObject.GetComponent(typeof(LevelEntity))).scriptParams.Split("|"[0]);
-		int i = 0;
-		ParamList.Param[] array2 = parameterList.@params;
-		for (int length = array2.Length; i < length; i++)
+		foreach (ParamList.Param item in parameterList.@params)
 		{
 			if (num < array.Length)
 			{
-				setParam(array2[i].tag, array[num++]);
+				setParam(item.tag, array[num++]);
 			}
 		}
 	}

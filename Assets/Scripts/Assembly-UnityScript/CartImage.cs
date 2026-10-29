@@ -22,17 +22,13 @@ public class CartImage : MonoBehaviour
 		renderers[1] = magnet.GetComponent<Renderer>();
 		renderers[2] = cartImage[cartType].GetComponent<Renderer>();
 		renderers[3] = jumpRocket.GetComponent<Renderer>();
-		int i = 0;
-		GameObject[] array = rocketImage;
-		for (int length = array.Length; i < length; i++)
+		foreach (GameObject item in rocketImage)
 		{
-			array[i].SetActiveRecursively(false);
+			item.SetActiveRecursively(false);
 		}
-		int j = 0;
-		GameObject[] array2 = cartImage;
-		for (int length2 = array2.Length; j < length2; j++)
+		foreach (GameObject item in cartImage)
 		{
-			array2[j].SetActiveRecursively(false);
+			item.SetActiveRecursively(false);
 		}
 		jumpRocket.SetActiveRecursively(special == 2);
 		magnet.SetActiveRecursively(special == 1);

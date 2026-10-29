@@ -27,11 +27,9 @@ public class VGUIImagesTK2D : VGUIImage
 
 	public override void setActive(bool active)
 	{
-		int i = 0;
-		GameObject[] array = images;
-		for (int length = array.Length; i < length; i++)
+		foreach (GameObject image in images)
 		{
-			array[i].SetActiveRecursively(active);
+			image.SetActiveRecursively(active);
 		}
 	}
 }

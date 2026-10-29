@@ -75,11 +75,9 @@ public class ItemStoreMenu : StoreBaseMenu
 		trainPreview.prepare(GameData.TRAIN_DATA.specialCart);
 		trainPreview.setActiveCarts(cartNum, cartNum);
 		int num = 0;
-		int i = 0;
-		GameObject[] pages = packContainer.pages;
-		for (int length = pages.Length; i < length; i++)
+		foreach (GameObject page in packContainer.pages)
 		{
-			Transform transform = pages[i].transform.Find("BuyAnimalButton/Multiplier");
+			Transform transform = page.transform.Find("BuyAnimalButton/Multiplier");
 			if (transform != null)
 			{
 				transform.gameObject.GetComponent<VGUITextTK2D>().setText(string.Empty + GameData.ANIMAL_HEART_VALUE[num] + "X");
@@ -404,11 +402,9 @@ public class ItemStoreMenu : StoreBaseMenu
 	{
 		int num = 0;
 		int num2 = 0;
-		int i = 0;
-		GameData.CartData[] cartList = GameData.TRAIN_DATA.cartList;
-		for (int length = cartList.Length; i < length; i++)
+		foreach (GameData.CartData cartData in GameData.TRAIN_DATA.cartList)
 		{
-			if (cartList[i].animalIndex != GameData.ANIMAL_NONE)
+			if (cartData.animalIndex != GameData.ANIMAL_NONE)
 			{
 				num++;
 			}

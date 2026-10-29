@@ -58,13 +58,11 @@ public class LevelTrigger : LevelEntity, Parametrizable
 		{
 			return;
 		}
-		int i = 0;
-		ParamList.Param[] array2 = parameterList.@params;
-		for (int length = array2.Length; i < length; i++)
+		foreach (ParamList.Param item in parameterList.@params)
 		{
 			if (num < array.Length)
 			{
-				setParam(array2[i].tag, array[num++]);
+				setParam(item.tag, array[num++]);
 			}
 		}
 	}

@@ -21,18 +21,14 @@ public class TriggerActivateObject : LevelTrigger
 		for (int length = targetObjects.Length; i < length; i++)
 		{
 			Component[] componentsInChildren = targetObjects[i].gameObject.GetComponentsInChildren(typeof(LevelTrigger));
-			int j = 0;
-			Component[] array = componentsInChildren;
-			for (int length2 = array.Length; j < length2; j++)
+			foreach (Component component in componentsInChildren)
 			{
-				(array[j] as LevelTrigger).setManualActive(s);
+				(component as LevelTrigger).setManualActive(s);
 			}
 			componentsInChildren = targetObjects[i].gameObject.GetComponentsInChildren(typeof(ObjectScript));
-			int k = 0;
-			Component[] array2 = componentsInChildren;
-			for (int length3 = array2.Length; k < length3; k++)
+			foreach (Component component in componentsInChildren)
 			{
-				(array2[k] as ObjectScript).setManualActive(s);
+				(component as ObjectScript).setManualActive(s);
 			}
 		}
 		onceActivated = true;

@@ -4,11 +4,9 @@ public class TriggerHideObject : LevelTrigger
 {
 	public override void handleAction(Collider other)
 	{
-		int i = 0;
-		GameObject[] targetObjects = targetHandler.targetObjects;
-		for (int length = targetObjects.Length; i < length; i++)
+		foreach (GameObject targetObject in targetHandler.targetObjects)
 		{
-			targetObjects[i].SetActiveRecursively(false);
+			targetObject.SetActiveRecursively(false);
 		}
 	}
 

@@ -159,11 +159,9 @@ public class VehicleFactory
 			cart.animal = gameObject.GetComponent<Animal>();
 			cart.animal.cartRef = cart;
 			cart.heartValue = GameData.ANIMAL_HEART_VALUE[prefabIndex];
-			int i = 0;
-			Component[] componentsInChildren = gameObject.GetComponentsInChildren(typeof(Rigidbody));
-			for (int length = componentsInChildren.Length; i < length; i++)
+			foreach (Component item in gameObject.GetComponentsInChildren(typeof(Rigidbody)))
 			{
-				(componentsInChildren[i] as Rigidbody).solverIterations = 1;
+				(item as Rigidbody).solverIterations = 1;
 			}
 		}
 	}

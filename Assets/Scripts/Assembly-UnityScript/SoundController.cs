@@ -42,35 +42,25 @@ public class SoundController : MonoBehaviour
 
 	public virtual void Awake()
 	{
-		int i = 0;
-		Vector2[] array = volumeControlPoints;
-		for (int length = array.Length; i < length; i++)
+		foreach (Vector2 volumeControlPoint in volumeControlPoints)
 		{
-			volumeCurve.addControlPoint(array[i]);
+			volumeCurve.addControlPoint(volumeControlPoint);
 		}
-		int j = 0;
-		Vector2[] array2 = pitchControlPoints;
-		for (int length2 = array2.Length; j < length2; j++)
+		foreach (Vector2 pitchControlPoint in pitchControlPoints)
 		{
-			pitchCurve.addControlPoint(array2[j]);
+			pitchCurve.addControlPoint(pitchControlPoint);
 		}
-		int k = 0;
-		Vector2[] array3 = masterVolumeControlPoints;
-		for (int length3 = array3.Length; k < length3; k++)
+		foreach (Vector2 masterVolumeControlPoint in masterVolumeControlPoints)
 		{
-			masterVolumeCurve.addControlPoint(array3[k]);
+			masterVolumeCurve.addControlPoint(masterVolumeControlPoint);
 		}
-		int l = 0;
-		Vector2[] array4 = brakeVolumeControlPoints;
-		for (int length4 = array4.Length; l < length4; l++)
+		foreach (Vector2 brakeVolumeControlPoint in brakeVolumeControlPoints)
 		{
-			brakeVolumeCurve.addControlPoint(array4[l]);
+			brakeVolumeCurve.addControlPoint(brakeVolumeControlPoint);
 		}
-		int m = 0;
-		Vector2[] array5 = brakePitchControlPoints;
-		for (int length5 = array5.Length; m < length5; m++)
+		foreach (Vector2 brakePitchControlPoint in brakePitchControlPoints)
 		{
-			brakePitchCurve.addControlPoint(array5[m]);
+			brakePitchCurve.addControlPoint(brakePitchControlPoint);
 		}
 	}
 

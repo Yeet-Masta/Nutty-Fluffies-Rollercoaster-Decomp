@@ -99,11 +99,9 @@ public class RollerCoasterSounds : SoundManager
 		availableAnimals.Clear();
 		for (int i = 0; i < 5; i++)
 		{
-			int j = 0;
-			Cart[] carts = vehicle.carts;
-			for (int length = carts.Length; j < length; j++)
+			foreach (Cart cart in vehicle.carts)
 			{
-				if (carts[j].animalIndex == i)
+				if (cart.animalIndex == i)
 				{
 					availableAnimals.Add(i);
 					break;

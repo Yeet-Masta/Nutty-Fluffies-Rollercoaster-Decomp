@@ -20,11 +20,9 @@ public class TriggerBoost : LevelTriggerActivatable
 		rigidbody.AddForce(new Vector3(bx * 0.5f, by * 0.5f, 0f));
 		if (!GameManager.getInstance().getVehicle().hasCrashed)
 		{
-			int i = 0;
-			Cart[] carts = GameManager.getInstance().getVehicle().carts;
-			for (int length = carts.Length; i < length; i++)
+			foreach (Cart cart in GameManager.getInstance().getVehicle().carts)
 			{
-				carts[i].rb.AddForce(new Vector3(bx * 0.1f, by * 0.1f, 0f));
+				cart.rb.AddForce(new Vector3(bx * 0.1f, by * 0.1f, 0f));
 			}
 		}
 	}

@@ -131,11 +131,9 @@ public class LevelSpline : LevelEntity
 		TextureManager.UV uvs = new TextureManager.UV();
 		Texture2D texture2D = TextureManager.getInstance().createTexture(FileManager.getInstance().locateTexture(tex, TextureManager.TextureType.SPLINE), uvs);
 		texture2D.wrapMode = TextureWrapMode.Repeat;
-		int i = 0;
-		Component[] componentsInChildren = GetComponentsInChildren(typeof(LevelSplineSection));
-		for (int length = componentsInChildren.Length; i < length; i++)
+		foreach (Component component in GetComponentsInChildren(typeof(LevelSplineSection)))
 		{
-			MeshRenderer meshRenderer = ((MeshRenderer)componentsInChildren[i].gameObject.GetComponent(typeof(MeshRenderer))) as MeshRenderer;
+			MeshRenderer meshRenderer = ((MeshRenderer)component.gameObject.GetComponent(typeof(MeshRenderer))) as MeshRenderer;
 			meshRenderer.material.mainTexture = texture2D;
 			meshRenderer.material.SetColor("_MainColor", new Color(0.5f, 0.5f, 0.5f));
 		}

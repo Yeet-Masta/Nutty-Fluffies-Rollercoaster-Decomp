@@ -53,11 +53,9 @@ public class ObjectListData
 		foreach (ObjectPackData objectPackData in packList)
 		{
 			ObjectData[] objects = objectPackData.getObjects();
-			int i = 0;
-			ObjectData[] array = objects;
-			for (int length = array.Length; i < length; i++)
+			foreach (ObjectData objectData in objects)
 			{
-				objIDtoPackCache.Add(array[i].id, num);
+				objIDtoPackCache.Add(objectData.id, num);
 			}
 			num++;
 		}

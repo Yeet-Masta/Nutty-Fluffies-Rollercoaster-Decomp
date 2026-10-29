@@ -62,11 +62,9 @@ public class LevelPack
 	public static void refreshPacks()
 	{
 		levelPacks = new List<LevelPack>();
-		int i = 0;
-		string[] levelPackNames = FileManager.getInstance().getLevelPackNames();
-		for (int length = levelPackNames.Length; i < length; i++)
+		foreach (string levelPackName in FileManager.getInstance().getLevelPackNames())
 		{
-			levelPacks.Add(load(levelPackNames[i]));
+			levelPacks.Add(load(levelPackName));
 		}
 	}
 

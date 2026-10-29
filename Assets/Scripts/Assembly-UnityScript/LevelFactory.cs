@@ -72,11 +72,9 @@ public class LevelFactory
 	{
 		if (!CommonData.EDITOR_ACTIVE)
 		{
-			int i = 0;
-			Component[] componentsInChildren = level.gameObject.GetComponentsInChildren(typeof(LevelSpline), true);
-			for (int length = componentsInChildren.Length; i < length; i++)
+			foreach (Component component in level.gameObject.GetComponentsInChildren(typeof(LevelSpline), true))
 			{
-				LevelSpline levelSpline = componentsInChildren[i] as LevelSpline;
+				LevelSpline levelSpline = component as LevelSpline;
 				MeshCollider meshCollider = (MeshCollider)levelSpline.gameObject.GetComponent(typeof(MeshCollider));
 				level.splineMeshVerticesCache[meshCollider.sharedMesh] = meshCollider.sharedMesh.vertices;
 			}
@@ -88,11 +86,9 @@ public class LevelFactory
 		float num = 0f;
 		float num2 = 0f;
 		Component[] componentsInChildren = level.gameObject.transform.GetComponentsInChildren(typeof(LevelLayer), true);
-		int i = 0;
-		Component[] array = componentsInChildren;
-		for (int length = array.Length; i < length; i++)
+		foreach (Component component in componentsInChildren)
 		{
-			LevelLayer levelLayer = array[i] as LevelLayer;
+			LevelLayer levelLayer = component as LevelLayer;
 			float num3 = -levelLayer.layer * 100;
 			float z = num3;
 			Vector3 localPosition = levelLayer.gameObject.transform.localPosition;
@@ -207,18 +203,14 @@ public class LevelFactory
 			}
 		}
 		Component[] componentsInChildren3 = level.gameObject.GetComponentsInChildren(typeof(LevelTrigger), true);
-		int k = 0;
-		Component[] array = componentsInChildren3;
-		for (int length = array.Length; k < length; k++)
+		foreach (Component item in componentsInChildren3)
 		{
-			(array[k] as LevelTrigger).prepare();
+			(item as LevelTrigger).prepare();
 		}
 		Component[] componentsInChildren4 = level.gameObject.GetComponentsInChildren(typeof(ObjectScript), true);
-		int l = 0;
-		Component[] array2 = componentsInChildren4;
-		for (int length2 = array2.Length; l < length2; l++)
+		foreach (Component item in componentsInChildren4)
 		{
-			(array2[l] as ObjectScript).prepare();
+			(item as ObjectScript).prepare();
 		}
 	}
 
@@ -249,11 +241,9 @@ public class LevelFactory
 	public virtual void resetLevel(Level level)
 	{
 		Component[] componentsInChildren = level.gameObject.GetComponentsInChildren(typeof(LevelTrigger), true);
-		int i = 0;
-		Component[] array = componentsInChildren;
-		for (int length = array.Length; i < length; i++)
+		foreach (Component component in componentsInChildren)
 		{
-			(array[i] as LevelTrigger).prepare();
+			(component as LevelTrigger).prepare();
 		}
 	}
 }

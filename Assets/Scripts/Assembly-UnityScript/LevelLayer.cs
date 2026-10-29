@@ -90,32 +90,26 @@ public class LevelLayer : MonoBehaviour
 			int num = 0;
 			foreach (Vector3[] array4 in meshGatherEntry.pts)
 			{
-				int k = 0;
-				Vector3[] array5 = array4;
-				for (int length = array5.Length; k < length; k++)
+				foreach (Vector3 vector3 in array4)
 				{
-					array[num++] = array5[k];
+					array[num++] = vector3;
 				}
 			}
 			num = 0;
 			foreach (Vector2[] array6 in meshGatherEntry.uvs)
 			{
-				int l = 0;
-				Vector2[] array7 = array6;
-				for (int length2 = array7.Length; l < length2; l++)
+				foreach (Vector2 vector2 in array6)
 				{
-					array2[num++] = array7[l];
+					array2[num++] = vector2;
 				}
 			}
 			num = 0;
 			int num2 = 0;
 			foreach (int[] array8 in meshGatherEntry.inds)
 			{
-				int m = 0;
-				int[] array9 = array8;
-				for (int length3 = array9.Length; m < length3; m++)
+				foreach (int item in array8)
 				{
-					array3[num++] = array9[m] + num2;
+					array3[num++] = item + num2;
 				}
 				num2 += 4;
 			}
@@ -178,11 +172,6 @@ public class LevelLayer : MonoBehaviour
 
 	public virtual void updateColor()
 	{
-		Component[] componentsInChildren = gameObject.transform.GetComponentsInChildren(typeof(Renderer), true);
-		int i = 0;
-		Component[] array = componentsInChildren;
-		for (int length = array.Length; i < length; i++)
-		{
-		}
+		gameObject.transform.GetComponentsInChildren(typeof(Renderer), true);
 	}
 }

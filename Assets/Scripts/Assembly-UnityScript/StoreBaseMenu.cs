@@ -15,11 +15,9 @@ public class StoreBaseMenu : BaseMenu
 	public override void Awake()
 	{
 		StoreItem.DEFAULT_PRICES = GameData.DEFAULT_PRICES;
-		int i = 0;
-		StoreItem[] array = items;
-		for (int length = array.Length; i < length; i++)
+		foreach (StoreItem item in items)
 		{
-			array[i].init();
+			item.init();
 		}
 	}
 

@@ -78,35 +78,25 @@ public class PowerMeter : MonoBehaviour
 		Vector3 localScale = bar.localScale;
 		localScale.y = y;
 		bar.localScale = localScale;
-		int i = 0;
-		VGUIImagesTK2D[] array = leftBarLights;
-		for (int length = array.Length; i < length; i++)
+		foreach (VGUIImagesTK2D leftBarLight in leftBarLights)
 		{
-			array[i].setImage(0);
+			leftBarLight.setImage(0);
 		}
-		int j = 0;
-		VGUIImagesTK2D[] array2 = rightBarLights;
-		for (int length2 = array2.Length; j < length2; j++)
+		foreach (VGUIImagesTK2D rightBarLight in rightBarLights)
 		{
-			array2[j].setImage(0);
+			rightBarLight.setImage(0);
 		}
-		int k = 0;
-		VGUIImagesTK2D[] array3 = starLights1;
-		for (int length3 = array3.Length; k < length3; k++)
+		foreach (VGUIImagesTK2D starLight in starLights1)
 		{
-			array3[k].setImage(0);
+			starLight.setImage(0);
 		}
-		int l = 0;
-		VGUIImagesTK2D[] array4 = starLights2;
-		for (int length4 = array4.Length; l < length4; l++)
+		foreach (VGUIImagesTK2D starLight in starLights2)
 		{
-			array4[l].setImage(0);
+			starLight.setImage(0);
 		}
-		int m = 0;
-		ResultEntry[] array5 = resultEntries;
-		for (int length5 = array5.Length; m < length5; m++)
+		foreach (ResultEntry resultEntry in resultEntries)
 		{
-			array5[m].gameObject.SetActiveRecursively(false);
+			resultEntry.gameObject.SetActiveRecursively(false);
 		}
 		bell.setImage(0);
 		perfectText.SetActiveRecursively(false);
@@ -164,18 +154,14 @@ public class PowerMeter : MonoBehaviour
 		int num = lightPhase & 1;
 		if (lightBarLevel >= 1)
 		{
-			int i = 0;
-			VGUIImagesTK2D[] array = starLights1;
-			for (int length = array.Length; i < length; i++)
+			foreach (VGUIImagesTK2D starLight in starLights1)
 			{
-				array[i].setImage(num);
+				starLight.setImage(num);
 			}
 			int image = (num + 1) & 1;
-			int j = 0;
-			VGUIImagesTK2D[] array2 = starLights2;
-			for (int length2 = array2.Length; j < length2; j++)
+			foreach (VGUIImagesTK2D starLight in starLights2)
 			{
-				array2[j].setImage(image);
+				starLight.setImage(image);
 			}
 		}
 		for (int k = 0; k <= lightBarLevel; k++)

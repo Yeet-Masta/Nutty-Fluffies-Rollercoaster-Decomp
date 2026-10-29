@@ -23,11 +23,9 @@ public class LevelLoader
 	{
 		ObjectPackData[] packs = objects.getPacks();
 		List<string> list = new List<string>();
-		int i = 0;
-		ObjectPackData[] array = packs;
-		for (int length = array.Length; i < length; i++)
+		foreach (ObjectPackData pack in packs)
 		{
-			list.AddRange(array[i].getSplineTextures());
+			list.AddRange(pack.getSplineTextures());
 		}
 		return list.ToArray();
 	}
@@ -202,11 +200,9 @@ public class LevelLoader
 					levelSplineData.texture = jSONObject2.GetFieldSafe("texture", new JSONObject("\"Junglecoaster_track.png\"")).str;
 					UnityRuntimeServices.Update(enumerator2, jSONObject2);
 					bool flag = false;
-					int i = 0;
-					string[] allowedSplineTextures = getAllowedSplineTextures(objectList);
-					for (int length = allowedSplineTextures.Length; i < length; i++)
+					foreach (string allowedSplineTexture in getAllowedSplineTextures(objectList))
 					{
-						if (allowedSplineTextures[i] == levelSplineData.texture)
+						if (allowedSplineTexture == levelSplineData.texture)
 						{
 							flag = true;
 						}

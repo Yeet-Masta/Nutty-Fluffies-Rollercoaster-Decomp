@@ -28,12 +28,10 @@ public class MasterVolume : MonoBehaviour
 
 	public static void updateListeners()
 	{
-		AudioListener[] array = ((AudioListener[])UnityEngine.Object.FindObjectsOfType(typeof(AudioListener))) as AudioListener[];
+		AudioListener[] listeners = (AudioListener[])UnityEngine.Object.FindObjectsOfType(typeof(AudioListener));
 		if (gotVolume)
 		{
-			int i = 0;
-			AudioListener[] array2 = array;
-			for (int length = array2.Length; i < length; i++)
+			foreach (AudioListener listener in listeners)
 			{
 				AudioListener.volume = masterVolume;
 			}

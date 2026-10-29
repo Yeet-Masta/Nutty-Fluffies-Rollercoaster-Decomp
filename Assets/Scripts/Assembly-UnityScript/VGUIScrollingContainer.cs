@@ -93,11 +93,9 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 		immediatePosition();
 		afterEnable = true;
 		startAmount++;
-		int i = 0;
-		GameObject[] array = pages;
-		for (int length = array.Length; i < length; i++)
+		foreach (GameObject page in pages)
 		{
-			if (array[i] != null)
+			if (page != null)
 			{
 				pageCount++;
 			}
@@ -313,11 +311,9 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 		}
 		int num = 0;
 		int num2 = 0;
-		int j = 0;
-		GameObject[] array = pages;
-		for (int length = array.Length; j < length; j++)
+		foreach (GameObject item in pages)
 		{
-			if (array[j].active)
+			if (item.active)
 			{
 				if (reorder)
 				{
@@ -334,11 +330,9 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 	{
 		if (pages != null)
 		{
-			int i = 0;
-			GameObject[] array = pages;
-			for (int length = array.Length; i < length; i++)
+			foreach (GameObject page in pages)
 			{
-				UnityEngine.Object.Destroy(array[i]);
+				UnityEngine.Object.Destroy(page);
 			}
 		}
 	}

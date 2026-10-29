@@ -48,11 +48,9 @@ public class TutorialManager : MonoBehaviour
 		isTutorialFinished = false;
 		if (!SHOW_TUTORIAL)
 		{
-			int i = 0;
-			TutorialPage[] array = tutorialPages;
-			for (int length = array.Length; i < length; i++)
+			foreach (TutorialPage tutorialPage in tutorialPages)
 			{
-				UnityEngine.Object.Destroy(array[i].gameObject);
+				UnityEngine.Object.Destroy(tutorialPage.gameObject);
 			}
 		}
 	}

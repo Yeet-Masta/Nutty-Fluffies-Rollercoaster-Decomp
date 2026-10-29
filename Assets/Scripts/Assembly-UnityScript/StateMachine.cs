@@ -59,11 +59,9 @@ public class StateMachine : MonoBehaviour
 	public virtual void addChildStates()
 	{
 		Component[] componentsInChildren = gameObject.GetComponentsInChildren(typeof(State), true);
-		int i = 0;
-		Component[] array = componentsInChildren;
-		for (int length = array.Length; i < length; i++)
+		foreach (Component component in componentsInChildren)
 		{
-			addState((State)array[i]);
+			addState((State)component);
 		}
 	}
 

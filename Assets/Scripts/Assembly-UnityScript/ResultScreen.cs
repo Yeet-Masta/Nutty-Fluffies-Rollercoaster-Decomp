@@ -535,10 +535,10 @@ public class ResultScreen : VGUIElement
 	{
 		int checkPointHearts = calculateCheckPointHearts();
 		int levelHearts = calculateLevelHearts();
-		int cART_LIMIT = GameData.CART_LIMIT;
+		int cartLimit = GameData.CART_LIMIT;
 		GameManager.getInstance().getVehicle();
 		int score = 0;
-		for (int i = 0; i < cART_LIMIT; i++)
+		for (int i = 0; i < cartLimit; i++)
 		{
 			int heartValue = GameData.ANIMAL_HEART_VALUE[4];
 			score += heartValue * checkPointHearts;

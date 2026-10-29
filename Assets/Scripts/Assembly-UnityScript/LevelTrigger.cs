@@ -21,11 +21,11 @@ public class LevelTrigger : LevelEntity, Parametrizable
 	{
 		int num = 0;
 		int num2 = 0;
-		string[] tRIGGER_SCRIPT_NAMES = LevelTriggerData.TRIGGER_SCRIPT_NAMES;
-		int length = tRIGGER_SCRIPT_NAMES.Length;
+		string[] triggerScriptNames = LevelTriggerData.TRIGGER_SCRIPT_NAMES;
+		int length = triggerScriptNames.Length;
 		while (num2 < length)
 		{
-			if (tRIGGER_SCRIPT_NAMES[num2] == GetType().Name)
+			if (triggerScriptNames[num2] == GetType().Name)
 			{
 				return LevelTriggerData.TRIGGER_SCRIPT_PARAMS[num];
 			}

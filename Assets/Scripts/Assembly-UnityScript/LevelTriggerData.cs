@@ -104,11 +104,11 @@ public class LevelTriggerData : LevelEntityData
 	{
 		int num = 0;
 		int num2 = 0;
-		string[] tRIGGER_SCRIPT_NAMES = TRIGGER_SCRIPT_NAMES;
-		int length = tRIGGER_SCRIPT_NAMES.Length;
+		string[] triggerScriptNames = TRIGGER_SCRIPT_NAMES;
+		int length = triggerScriptNames.Length;
 		while (num2 < length)
 		{
-			if (tRIGGER_SCRIPT_NAMES[num2] == trigger.GetType().Name)
+			if (triggerScriptNames[num2] == trigger.GetType().Name)
 			{
 				return num;
 			}

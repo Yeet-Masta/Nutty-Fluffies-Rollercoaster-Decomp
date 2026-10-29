@@ -102,12 +102,12 @@ public class TrainPreview : MonoBehaviour
 				activeCart[i].setAsUsed(false);
 			}
 			activeCart[i].gameObject.SetActiveRecursively(true);
-			int cART_NORMAL = specialCartType;
+			int cartNormal = specialCartType;
 			if (specialCartType == 0 && i != 0)
 			{
-				cART_NORMAL = Vehicle.CART_NORMAL;
+				cartNormal = Vehicle.CART_NORMAL;
 			}
-			activeCart[i].activate(GameData.getIndexOfActiveTheme(), cART_NORMAL);
+			activeCart[i].activate(GameData.getIndexOfActiveTheme(), cartNormal);
 			activeCart[i].transform.localScale = new Vector3(originalCartScale, originalCartScale, 1f);
 		}
 		for (int j = totalCarts; j < GameData.CART_LIMIT; j++)

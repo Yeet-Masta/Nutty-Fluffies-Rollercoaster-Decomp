@@ -618,13 +618,13 @@ public class GameManager : MonoBehaviour
 
 	public virtual void updateTrainData(bool didCrash)
 	{
-		float aNIMAL_REMOVE_AMOUNT_MAX_PERCENT = GameData.ANIMAL_REMOVE_AMOUNT_MAX_PERCENT;
-		int aNIMAL_REMOVE_AMOUNT_MAX = GameData.ANIMAL_REMOVE_AMOUNT_MAX;
-		int aNIMAL_REMOVE_AMOUNT_MIN = GameData.ANIMAL_REMOVE_AMOUNT_MIN;
+		float animalRemoveAmountMaxPercent = GameData.ANIMAL_REMOVE_AMOUNT_MAX_PERCENT;
+		int animalRemoveAmountMax = GameData.ANIMAL_REMOVE_AMOUNT_MAX;
+		int animalRemoveAmountMin = GameData.ANIMAL_REMOVE_AMOUNT_MIN;
 		int length = GameData.TRAIN_DATA.cartList.Length;
 		if (!didCrash)
 		{
-			int maxRemove = (int)Mathf.Min(aNIMAL_REMOVE_AMOUNT_MAX, Mathf.Max(aNIMAL_REMOVE_AMOUNT_MIN, (float)length * aNIMAL_REMOVE_AMOUNT_MAX_PERCENT));
+			int maxRemove = (int)Mathf.Min(animalRemoveAmountMax, Mathf.Max(animalRemoveAmountMin, (float)length * animalRemoveAmountMaxPercent));
 			int removed = 0;
 			for (int i = 1; i < vehicle.carts.Length; i++)
 			{
@@ -644,7 +644,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			int toRemove = (int)Mathf.Min(aNIMAL_REMOVE_AMOUNT_MAX, Mathf.Max(aNIMAL_REMOVE_AMOUNT_MIN, (float)length * aNIMAL_REMOVE_AMOUNT_MAX_PERCENT));
+			int toRemove = (int)Mathf.Min(animalRemoveAmountMax, Mathf.Max(animalRemoveAmountMin, (float)length * animalRemoveAmountMaxPercent));
 			int cartIndex = 0;
 			int attempts = 0;
 			while (toRemove > 0 && attempts < 30)

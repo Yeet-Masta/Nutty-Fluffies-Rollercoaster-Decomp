@@ -246,30 +246,30 @@ public class FileManager
 
 	public virtual string loadFileText(string path)
 	{
-		NFPortAssetFile wWW = loadWWWFile(path);
-		return wWW == null ? null : wWW.text;
+		NFPortAssetFile www = loadWWWFile(path);
+		return www == null ? null : www.text;
 	}
 
 	public virtual byte[] loadFileBytes(string path)
 	{
-		NFPortAssetFile wWW = loadWWWFile(path);
-		return wWW == null ? null : wWW.bytes;
+		NFPortAssetFile www = loadWWWFile(path);
+		return www == null ? null : www.bytes;
 	}
 
 	private NFPortAssetFile loadWWWFile(string path)
 	{
-		NFPortAssetFile wWW = NFPortAssetFile.Open("" + path);
-		while (!wWW.isDone)
+		NFPortAssetFile www = NFPortAssetFile.Open("" + path);
+		while (!www.isDone)
 		{
 		}
-		if (wWW.error != null)
+		if (www.error != null)
 		{
-			Debug.Log(wWW.error);
+			Debug.Log(www.error);
 			return null;
 		}
 		else
 		{
-			return wWW;
+			return www;
 		}
 	}
 
@@ -284,11 +284,11 @@ public class FileManager
 
 	private void addPacks(string dir, List<string> packList)
 	{
-		NFPortAssetFile wWW = NFPortAssetFile.Open("GameResources/" + dir + "/packs.txt");
-		while (!wWW.isDone)
+		NFPortAssetFile www = NFPortAssetFile.Open("GameResources/" + dir + "/packs.txt");
+		while (!www.isDone)
 		{
 		}
-		StringReader stringReader = new StringReader(wWW.text);
+		StringReader stringReader = new StringReader(www.text);
 		string line = stringReader.ReadLine();
 		while (line != null)
 		{

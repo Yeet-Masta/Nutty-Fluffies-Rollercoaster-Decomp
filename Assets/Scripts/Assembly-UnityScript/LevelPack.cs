@@ -180,26 +180,26 @@ public class LevelPack
 		string rhs = FileManager.getInstance().locateLevelPack(name);
 		LevelPack levelPack = new LevelPack();
 		string json = null;
-		NFPortAssetFile wWW = NFPortAssetFile.Open("" + rhs + "/levelpack.json");
-		while (!wWW.isDone)
+		NFPortAssetFile www = NFPortAssetFile.Open("" + rhs + "/levelpack.json");
+		while (!www.isDone)
 		{
 		}
-		if (wWW.error != null)
+		if (www.error != null)
 		{
-			Debug.Log(wWW.error);
+			Debug.Log(www.error);
 			levelPack.fileName = name;
 			return levelPack;
 		}
 		else
 		{
-			json = wWW.text;
-			JSONObject jSONObject = new JSONObject(json);
-			levelPack.flags = (int)jSONObject.GetFieldSafe("flags", new JSONObject(0f)).n;
-			levelPack.version = (int)jSONObject.GetFieldSafe("version", new JSONObject(0f)).n;
-			levelPack.priceMultiplier = (float)jSONObject.GetFieldSafe("priceMultiplier", new JSONObject(1f)).n;
+			json = www.text;
+			JSONObject root = new JSONObject(json);
+			levelPack.flags = (int)root.GetFieldSafe("flags", new JSONObject(0f)).n;
+			levelPack.version = (int)root.GetFieldSafe("version", new JSONObject(0f)).n;
+			levelPack.priceMultiplier = (float)root.GetFieldSafe("priceMultiplier", new JSONObject(1f)).n;
 			levelPack.fileName = name;
-			levelPack.packName = jSONObject.GetFieldSafe("displayName", new JSONObject("\"noname\"")).str;
-			JSONObject field = jSONObject.GetField("levels");
+			levelPack.packName = root.GetFieldSafe("displayName", new JSONObject("\"noname\"")).str;
+			JSONObject field = root.GetField("levels");
 			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(field.list);
 			while (enumerator.MoveNext())
 			{
@@ -208,15 +208,15 @@ public class LevelPack
 				{
 					obj = RuntimeServices.Coerce(obj, typeof(JSONObject));
 				}
-				JSONObject jSONObject2 = (JSONObject)obj;
+				JSONObject json2 = (JSONObject)obj;
 				LevelInfo levelInfo = new LevelInfo();
-				levelInfo.fileName = jSONObject2.GetFieldSafe("level", new JSONObject(string.Empty)).str;
-				UnityRuntimeServices.Update(enumerator, jSONObject2);
-				levelInfo.flags = (int)jSONObject2.GetFieldSafe("flags", new JSONObject(0f)).n;
-				UnityRuntimeServices.Update(enumerator, jSONObject2);
+				levelInfo.fileName = json2.GetFieldSafe("level", new JSONObject(string.Empty)).str;
+				UnityRuntimeServices.Update(enumerator, json2);
+				levelInfo.flags = (int)json2.GetFieldSafe("flags", new JSONObject(0f)).n;
+				UnityRuntimeServices.Update(enumerator, json2);
 				levelInfo.flags &= LEVEL_FLAG_MASK;
-				levelInfo.settings.load(jSONObject2);
-				UnityRuntimeServices.Update(enumerator, jSONObject2);
+				levelInfo.settings.load(json2);
+				UnityRuntimeServices.Update(enumerator, json2);
 				levelPack.levelList.Add(levelInfo);
 			}
 			return levelPack;

@@ -289,8 +289,8 @@ public class CommunityFeatures : MonoBehaviour
 		BaseMenuManager.getInstance().showLoadingScreen(true);
 		Invoke("onSharingFailed", 30f);
 		SharingManager.getInstance().addListener(gameObject);
-		string cOMMUNITY_TEXT_EMAIL_POST = COMMUNITY_TEXT_EMAIL_POST;
-		SharingManager.getInstance().shareMessage(SharingManager.Service.Email, COMMUNITY_TEXT_EMAIL_TITLE, string.Format(cOMMUNITY_TEXT_EMAIL_POST, SharingManager.getInstance().shareLinkURL));
+		string communityTextEmailPost = COMMUNITY_TEXT_EMAIL_POST;
+		SharingManager.getInstance().shareMessage(SharingManager.Service.Email, COMMUNITY_TEXT_EMAIL_TITLE, string.Format(communityTextEmailPost, SharingManager.getInstance().shareLinkURL));
 	}
 
 	private void disableLoading()

@@ -53,14 +53,14 @@ public class TextureManager
 			}
 			else
 			{
-				JSONObject jSONObject = new JSONObject(json);
-				filename = jSONObject.GetFieldSafe("img", new JSONObject("\"none\"")).str;
-				uv.scaleX = (float)jSONObject.GetFieldSafe("scalex", new JSONObject(1f)).n;
-				uv.scaleY = (float)jSONObject.GetFieldSafe("scaley", new JSONObject(1f)).n;
-				uv.u1 = (float)jSONObject.GetFieldSafe("u1", new JSONObject(0f)).n;
-				uv.v1 = (float)jSONObject.GetFieldSafe("v1", new JSONObject(0f)).n;
-				uv.u2 = (float)jSONObject.GetFieldSafe("u2", new JSONObject(1f)).n;
-				uv.v2 = (float)jSONObject.GetFieldSafe("v2", new JSONObject(1f)).n;
+				JSONObject root = new JSONObject(json);
+				filename = root.GetFieldSafe("img", new JSONObject("\"none\"")).str;
+				uv.scaleX = (float)root.GetFieldSafe("scalex", new JSONObject(1f)).n;
+				uv.scaleY = (float)root.GetFieldSafe("scaley", new JSONObject(1f)).n;
+				uv.u1 = (float)root.GetFieldSafe("u1", new JSONObject(0f)).n;
+				uv.v1 = (float)root.GetFieldSafe("v1", new JSONObject(0f)).n;
+				uv.u2 = (float)root.GetFieldSafe("u2", new JSONObject(1f)).n;
+				uv.v2 = (float)root.GetFieldSafe("v2", new JSONObject(1f)).n;
 				uv.width = uv.u2 - uv.u1;
 				uv.height = uv.v2 - uv.v1;
 				return true;

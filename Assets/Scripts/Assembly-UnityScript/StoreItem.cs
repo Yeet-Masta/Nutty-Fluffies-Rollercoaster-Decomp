@@ -54,13 +54,13 @@ public class StoreItem
 	public static int getDefaultPrice(string id)
 	{
 		int index = 0;
-		DefaultPrice[] dEFAULT_PRICES = DEFAULT_PRICES;
-		int length = dEFAULT_PRICES.Length;
+		DefaultPrice[] defaultPrices = DEFAULT_PRICES;
+		int length = defaultPrices.Length;
 		while (index < length)
 		{
-			if (dEFAULT_PRICES[index].id == id)
+			if (defaultPrices[index].id == id)
 			{
-				return dEFAULT_PRICES[index].price;
+				return defaultPrices[index].price;
 			}
 			index++;
 		}

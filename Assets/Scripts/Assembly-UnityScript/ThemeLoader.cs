@@ -28,10 +28,10 @@ public class ThemeLoader
 	public virtual ThemeData loadThemeFromString(string str, string name)
 	{
 		ThemeData themeData = new ThemeData();
-		JSONObject jSONObject = new JSONObject(str);
+		JSONObject json = new JSONObject(str);
 		themeData.settings.name = name;
 		themeData.settings.musicNames.Clear();
-		JSONObject field = jSONObject.GetField("music");
+		JSONObject field = json.GetField("music");
 		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(field.list);
 		while (enumerator.MoveNext())
 		{
@@ -40,15 +40,15 @@ public class ThemeLoader
 			{
 				obj = RuntimeServices.Coerce(obj, typeof(JSONObject));
 			}
-			JSONObject jSONObject2 = (JSONObject)obj;
-			if (jSONObject2.str != null && jSONObject2.str.Length > 0 && !themeData.settings.musicNames.Contains(jSONObject2.str))
+			JSONObject json2 = (JSONObject)obj;
+			if (json2.str != null && json2.str.Length > 0 && !themeData.settings.musicNames.Contains(json2.str))
 			{
-				themeData.settings.musicNames.Add(jSONObject2.str);
-				UnityRuntimeServices.Update(enumerator, jSONObject2);
+				themeData.settings.musicNames.Add(json2.str);
+				UnityRuntimeServices.Update(enumerator, json2);
 			}
 		}
 		themeData.settings.allowedObjectPacks.Clear();
-		JSONObject field2 = jSONObject.GetField("objectpacks");
+		JSONObject field2 = json.GetField("objectpacks");
 		if (field2 != null)
 		{
 			IEnumerator enumerator2 = UnityRuntimeServices.GetEnumerator(field2.list);
@@ -59,16 +59,16 @@ public class ThemeLoader
 				{
 					obj2 = RuntimeServices.Coerce(obj2, typeof(JSONObject));
 				}
-				JSONObject jSONObject3 = (JSONObject)obj2;
-				if (jSONObject3.str != null && jSONObject3.str.Length > 0 && !themeData.settings.allowedObjectPacks.Contains(jSONObject3.str))
+				JSONObject json3 = (JSONObject)obj2;
+				if (json3.str != null && json3.str.Length > 0 && !themeData.settings.allowedObjectPacks.Contains(json3.str))
 				{
-					themeData.settings.allowedObjectPacks.Add(jSONObject3.str);
-					UnityRuntimeServices.Update(enumerator2, jSONObject3);
+					themeData.settings.allowedObjectPacks.Add(json3.str);
+					UnityRuntimeServices.Update(enumerator2, json3);
 				}
 			}
 		}
-		themeData.settings.customSettings.load(jSONObject);
-		JSONObject field3 = jSONObject.GetField("layers");
+		themeData.settings.customSettings.load(json);
+		JSONObject field3 = json.GetField("layers");
 		LevelLoader.getInstance().loadLayers(field3, themeData.layerList, null);
 		return themeData;
 	}

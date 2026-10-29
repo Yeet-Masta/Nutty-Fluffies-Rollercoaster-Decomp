@@ -33,21 +33,21 @@ public class LevelLoader
 	public virtual LevelData loadFromString(string str, ObjectListData objects)
 	{
 		LevelData levelData = new LevelData();
-		JSONObject jSONObject = new JSONObject(str);
-		levelData.theme = ThemeLoader.getInstance().loadTheme(jSONObject.GetFieldSafe("theme", new JSONObject("\"" + "woodTrackTheme" + "\"")).str);
+		JSONObject json = new JSONObject(str);
+		levelData.theme = ThemeLoader.getInstance().loadTheme(json.GetFieldSafe("theme", new JSONObject("\"" + "woodTrackTheme" + "\"")).str);
 		if (levelData.theme == null)
 		{
 			return null;
 		}
 		else
 		{
-			levelData.startPoint = new Vector2((float)jSONObject.GetFieldSafe("startx", new JSONObject(0f)).n, (float)jSONObject.GetFieldSafe("starty", new JSONObject(0f)).n);
-			levelData.topLeftLimit = new Vector2((float)jSONObject.GetFieldSafe("left", new JSONObject(-10f)).n, (float)jSONObject.GetFieldSafe("top", new JSONObject(-10f)).n);
-			levelData.bottomRightLimit = new Vector2((float)jSONObject.GetFieldSafe("right", new JSONObject(10f)).n, (float)jSONObject.GetFieldSafe("bottom", new JSONObject(10f)).n);
-			levelData.oldLeaderboardDoNotUse = jSONObject.GetFieldSafe("leaderboard", new JSONObject("\"\"")).str;
-			JSONObject field = jSONObject.GetField("layers");
-			levelData.customSettings.load(jSONObject);
-			string str2 = jSONObject.GetFieldSafe("packs", new JSONObject(string.Empty)).str;
+			levelData.startPoint = new Vector2((float)json.GetFieldSafe("startx", new JSONObject(0f)).n, (float)json.GetFieldSafe("starty", new JSONObject(0f)).n);
+			levelData.topLeftLimit = new Vector2((float)json.GetFieldSafe("left", new JSONObject(-10f)).n, (float)json.GetFieldSafe("top", new JSONObject(-10f)).n);
+			levelData.bottomRightLimit = new Vector2((float)json.GetFieldSafe("right", new JSONObject(10f)).n, (float)json.GetFieldSafe("bottom", new JSONObject(10f)).n);
+			levelData.oldLeaderboardDoNotUse = json.GetFieldSafe("leaderboard", new JSONObject("\"\"")).str;
+			JSONObject field = json.GetField("layers");
+			levelData.customSettings.load(json);
+			string str2 = json.GetFieldSafe("packs", new JSONObject(string.Empty)).str;
 			ObjectPackData objectPackData = null;
 			if (str2 != null && str2.Length > 0)
 			{
@@ -111,23 +111,23 @@ public class LevelLoader
 			{
 				obj = RuntimeServices.Coerce(obj, typeof(JSONObject));
 			}
-			JSONObject jSONObject = (JSONObject)obj;
-			int layerId = (int)jSONObject.GetField("layer").n;
-			UnityRuntimeServices.Update(enumerator, jSONObject);
+			JSONObject json = (JSONObject)obj;
+			int layerId = (int)json.GetField("layer").n;
+			UnityRuntimeServices.Update(enumerator, json);
 			LevelLayerData levelLayerData = new LevelLayerData(layerId);
 			layerData.Add(levelLayerData);
-			levelLayerData.themeInfo.layerName = jSONObject.GetFieldSafe("name", new JSONObject("\"<none>\"")).str;
-			UnityRuntimeServices.Update(enumerator, jSONObject);
-			levelLayerData.themeInfo.parallaxSpeed = jSONObject.DecodeVector2("parallax");
-			UnityRuntimeServices.Update(enumerator, jSONObject);
-			levelLayerData.themeInfo.colorMultiplier = jSONObject.DecodeColor3("color");
-			UnityRuntimeServices.Update(enumerator, jSONObject);
-			levelLayerData.themeInfo.flags = (int)jSONObject.GetFieldSafe("flags", new JSONObject(0f)).n;
-			UnityRuntimeServices.Update(enumerator, jSONObject);
-			levelLayerData.deviceList = (int)jSONObject.GetFieldSafe("dev", new JSONObject(0f)).n;
-			UnityRuntimeServices.Update(enumerator, jSONObject);
-			JSONObject field = jSONObject.GetField("objects");
-			UnityRuntimeServices.Update(enumerator, jSONObject);
+			levelLayerData.themeInfo.layerName = json.GetFieldSafe("name", new JSONObject("\"<none>\"")).str;
+			UnityRuntimeServices.Update(enumerator, json);
+			levelLayerData.themeInfo.parallaxSpeed = json.DecodeVector2("parallax");
+			UnityRuntimeServices.Update(enumerator, json);
+			levelLayerData.themeInfo.colorMultiplier = json.DecodeColor3("color");
+			UnityRuntimeServices.Update(enumerator, json);
+			levelLayerData.themeInfo.flags = (int)json.GetFieldSafe("flags", new JSONObject(0f)).n;
+			UnityRuntimeServices.Update(enumerator, json);
+			levelLayerData.deviceList = (int)json.GetFieldSafe("dev", new JSONObject(0f)).n;
+			UnityRuntimeServices.Update(enumerator, json);
+			JSONObject field = json.GetField("objects");
+			UnityRuntimeServices.Update(enumerator, json);
 			if (field == null)
 			{
 				continue;
@@ -140,61 +140,61 @@ public class LevelLoader
 				{
 					obj2 = RuntimeServices.Coerce(obj2, typeof(JSONObject));
 				}
-				JSONObject jSONObject2 = (JSONObject)obj2;
-				if (jSONObject2 == null)
+				JSONObject json2 = (JSONObject)obj2;
+				if (json2 == null)
 				{
 					continue;
 				}
-				float x = (float)jSONObject2.GetField("x").n;
-				UnityRuntimeServices.Update(enumerator2, jSONObject2);
-				float y = (float)jSONObject2.GetField("y").n;
-				UnityRuntimeServices.Update(enumerator2, jSONObject2);
-				double n = jSONObject2.GetFieldSafe("dev", new JSONObject(0f)).n;
-				UnityRuntimeServices.Update(enumerator2, jSONObject2);
-				float typeValue = (float)jSONObject2.GetField("type").n;
-				UnityRuntimeServices.Update(enumerator2, jSONObject2);
-				float id = (float)jSONObject2.GetField("id").n;
-				UnityRuntimeServices.Update(enumerator2, jSONObject2);
-				int flags = (int)jSONObject2.GetFieldSafe("flags", new JSONObject(0f)).n;
-				UnityRuntimeServices.Update(enumerator2, jSONObject2);
-				float rotation = (float)jSONObject2.GetFieldSafe("rotation", new JSONObject(0f)).n;
-				UnityRuntimeServices.Update(enumerator2, jSONObject2);
-				string str = jSONObject2.GetFieldSafe("osa", new JSONObject(string.Empty)).str;
-				UnityRuntimeServices.Update(enumerator2, jSONObject2);
-				string str2 = jSONObject2.GetFieldSafe("osaparams", new JSONObject(string.Empty)).str;
-				UnityRuntimeServices.Update(enumerator2, jSONObject2);
+				float x = (float)json2.GetField("x").n;
+				UnityRuntimeServices.Update(enumerator2, json2);
+				float y = (float)json2.GetField("y").n;
+				UnityRuntimeServices.Update(enumerator2, json2);
+				double n = json2.GetFieldSafe("dev", new JSONObject(0f)).n;
+				UnityRuntimeServices.Update(enumerator2, json2);
+				float typeValue = (float)json2.GetField("type").n;
+				UnityRuntimeServices.Update(enumerator2, json2);
+				float id = (float)json2.GetField("id").n;
+				UnityRuntimeServices.Update(enumerator2, json2);
+				int flags = (int)json2.GetFieldSafe("flags", new JSONObject(0f)).n;
+				UnityRuntimeServices.Update(enumerator2, json2);
+				float rotation = (float)json2.GetFieldSafe("rotation", new JSONObject(0f)).n;
+				UnityRuntimeServices.Update(enumerator2, json2);
+				string str = json2.GetFieldSafe("osa", new JSONObject(string.Empty)).str;
+				UnityRuntimeServices.Update(enumerator2, json2);
+				string str2 = json2.GetFieldSafe("osaparams", new JSONObject(string.Empty)).str;
+				UnityRuntimeServices.Update(enumerator2, json2);
 				LevelEntityData levelEntityData = null;
 				float type = typeValue;
 				if (type == 2f)
 				{
-					float objectId = (float)jSONObject2.GetField("object").n;
-					UnityRuntimeServices.Update(enumerator2, jSONObject2);
-					float z = (float)jSONObject2.GetFieldSafe("z", new JSONObject(0f)).n;
-					UnityRuntimeServices.Update(enumerator2, jSONObject2);
+					float objectId = (float)json2.GetField("object").n;
+					UnityRuntimeServices.Update(enumerator2, json2);
+					float z = (float)json2.GetFieldSafe("z", new JSONObject(0f)).n;
+					UnityRuntimeServices.Update(enumerator2, json2);
 					LevelObjectData levelObjectData = new LevelObjectData((int)id, (int)objectId);
 					levelObjectData.zDepth = (int)z;
 					levelEntityData = levelObjectData;
 				}
 				else if (type == 1f)
 				{
-					LevelTriggerData levelTriggerData = new LevelTriggerData((int)id, (int)jSONObject2.GetField("triggertype").n);
-					UnityRuntimeServices.Update(enumerator2, jSONObject2);
+					LevelTriggerData levelTriggerData = new LevelTriggerData((int)id, (int)json2.GetField("triggertype").n);
+					UnityRuntimeServices.Update(enumerator2, json2);
 					levelEntityData = levelTriggerData;
-					levelTriggerData.size = new Vector2((float)jSONObject2.GetFieldSafe("width", new JSONObject(1f)).n, (float)jSONObject2.GetFieldSafe("height", new JSONObject(1f)).n);
-					UnityRuntimeServices.Update(enumerator2, jSONObject2);
-					levelTriggerData.triggerScript = jSONObject2.GetFieldSafe("script", new JSONObject(string.Empty)).str;
-					UnityRuntimeServices.Update(enumerator2, jSONObject2);
-					levelTriggerData.triggerParam = jSONObject2.GetFieldSafe("param", new JSONObject(string.Empty)).str;
-					UnityRuntimeServices.Update(enumerator2, jSONObject2);
+					levelTriggerData.size = new Vector2((float)json2.GetFieldSafe("width", new JSONObject(1f)).n, (float)json2.GetFieldSafe("height", new JSONObject(1f)).n);
+					UnityRuntimeServices.Update(enumerator2, json2);
+					levelTriggerData.triggerScript = json2.GetFieldSafe("script", new JSONObject(string.Empty)).str;
+					UnityRuntimeServices.Update(enumerator2, json2);
+					levelTriggerData.triggerParam = json2.GetFieldSafe("param", new JSONObject(string.Empty)).str;
+					UnityRuntimeServices.Update(enumerator2, json2);
 				}
 				else if (type == 6f)
 				{
 					Debug.Log("loading spline data");
 					LevelSplineData levelSplineData = new LevelSplineData((int)id);
-					levelSplineData.height = (float)jSONObject2.GetFieldSafe("height", new JSONObject(0.5f)).n;
-					UnityRuntimeServices.Update(enumerator2, jSONObject2);
-					levelSplineData.texture = jSONObject2.GetFieldSafe("texture", new JSONObject("\"Junglecoaster_track.png\"")).str;
-					UnityRuntimeServices.Update(enumerator2, jSONObject2);
+					levelSplineData.height = (float)json2.GetFieldSafe("height", new JSONObject(0.5f)).n;
+					UnityRuntimeServices.Update(enumerator2, json2);
+					levelSplineData.texture = json2.GetFieldSafe("texture", new JSONObject("\"Junglecoaster_track.png\"")).str;
+					UnityRuntimeServices.Update(enumerator2, json2);
 					bool flag = false;
 					foreach (string allowedSplineTexture in getAllowedSplineTextures(objectList))
 					{
@@ -208,8 +208,8 @@ public class LevelLoader
 						levelSplineData.texture = getAllowedSplineTextures(objectList)[0];
 					}
 					levelEntityData = levelSplineData;
-					JSONObject field2 = jSONObject2.GetField("spline");
-					UnityRuntimeServices.Update(enumerator2, jSONObject2);
+					JSONObject field2 = json2.GetField("spline");
+					UnityRuntimeServices.Update(enumerator2, json2);
 					if (field2 != null)
 					{
 						IEnumerator enumerator3 = UnityRuntimeServices.GetEnumerator(field2.list);
@@ -220,13 +220,13 @@ public class LevelLoader
 							{
 								obj3 = RuntimeServices.Coerce(obj3, typeof(JSONObject));
 							}
-							JSONObject jSONObject3 = (JSONObject)obj3;
-							Vector2 position = new Vector2((float)jSONObject3.GetField("xPos").n, (float)jSONObject3.GetField("yPos").n);
-							UnityRuntimeServices.Update(enumerator3, jSONObject3);
-							Vector2 tangentIn = new Vector2((float)jSONObject3.GetField("xIn").n, (float)jSONObject3.GetField("yIn").n);
-							UnityRuntimeServices.Update(enumerator3, jSONObject3);
-							Vector2 tangentOut = new Vector2((float)jSONObject3.GetField("xOut").n, (float)jSONObject3.GetField("yOut").n);
-							UnityRuntimeServices.Update(enumerator3, jSONObject3);
+							JSONObject json3 = (JSONObject)obj3;
+							Vector2 position = new Vector2((float)json3.GetField("xPos").n, (float)json3.GetField("yPos").n);
+							UnityRuntimeServices.Update(enumerator3, json3);
+							Vector2 tangentIn = new Vector2((float)json3.GetField("xIn").n, (float)json3.GetField("yIn").n);
+							UnityRuntimeServices.Update(enumerator3, json3);
+							Vector2 tangentOut = new Vector2((float)json3.GetField("xOut").n, (float)json3.GetField("yOut").n);
+							UnityRuntimeServices.Update(enumerator3, json3);
 							levelSplineData.spline.addPoint(position, tangentIn, tangentOut);
 						}
 					}

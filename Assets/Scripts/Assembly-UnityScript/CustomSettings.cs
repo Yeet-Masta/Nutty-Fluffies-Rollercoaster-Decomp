@@ -40,11 +40,11 @@ public class CustomSettings
 			{
 				obj = RuntimeServices.Coerce(obj, typeof(JSONObject));
 			}
-			JSONObject jSONObject = (JSONObject)obj;
-			string str = jSONObject.GetFieldSafe("key", new JSONObject(0f)).str;
-			UnityRuntimeServices.Update(enumerator, jSONObject);
-			string str2 = jSONObject.GetFieldSafe("value", new JSONObject(string.Empty)).str;
-			UnityRuntimeServices.Update(enumerator, jSONObject);
+			JSONObject json = (JSONObject)obj;
+			string str = json.GetFieldSafe("key", new JSONObject(0f)).str;
+			UnityRuntimeServices.Update(enumerator, json);
+			string str2 = json.GetFieldSafe("value", new JSONObject(string.Empty)).str;
+			UnityRuntimeServices.Update(enumerator, json);
 			setValue(str, str2);
 		}
 	}

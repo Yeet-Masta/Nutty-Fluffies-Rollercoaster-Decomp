@@ -645,9 +645,9 @@ public class LevelObjectFactory
 			Vector3 size2 = boxCollider.size;
 			size2.y = y;
 			boxCollider.size = size2;
-			float sTATIC_OBJECT_DEPTH = STATIC_OBJECT_DEPTH;
+			float staticObjectDepth = STATIC_OBJECT_DEPTH;
 			Vector3 size3 = boxCollider.size;
-			size3.z = sTATIC_OBJECT_DEPTH;
+			size3.z = staticObjectDepth;
 			boxCollider.size = size3;
 			boxCollider.material = prefabs.physicMaterials[0];
 			boxCollider.isTrigger = true;
@@ -696,16 +696,16 @@ public class LevelObjectFactory
 		boxCollider.size = size2;
 		if (dynamic)
 		{
-			float sTATIC_OBJECT_DEPTH = STATIC_OBJECT_DEPTH;
+			float staticObjectDepth = STATIC_OBJECT_DEPTH;
 			Vector3 size3 = boxCollider.size;
-			size3.z = sTATIC_OBJECT_DEPTH;
+			size3.z = staticObjectDepth;
 			boxCollider.size = size3;
 		}
 		else
 		{
-			float sTATIC_OBJECT_DEPTH2 = STATIC_OBJECT_DEPTH;
+			float staticObjectDepth2 = STATIC_OBJECT_DEPTH;
 			Vector3 size4 = boxCollider.size;
-			size4.z = sTATIC_OBJECT_DEPTH2;
+			size4.z = staticObjectDepth2;
 			boxCollider.size = size4;
 		}
 		boxCollider.material = prefabs.physicMaterials[0];

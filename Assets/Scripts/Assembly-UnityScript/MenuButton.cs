@@ -24,8 +24,8 @@ public class MenuButton : VGUIButton
 	{
 		if (graphic != null && graphic.GetComponent<Renderer>() != null)
 		{
-			float num = default(float);
-			num = ((!dim) ? 1f : 0.2f);
+			float num = 0f;
+			num = dim ? 0.2f : 1f;
 			SpriteUtil.setAlpha(graphic.GetComponent<Renderer>(), num);
 		}
 		dimmed = dim;

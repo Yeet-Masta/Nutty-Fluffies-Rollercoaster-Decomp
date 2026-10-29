@@ -474,7 +474,7 @@ public class RollerCoasterMissions : MissionManager
 					flag = gameManager.getVehicle().getNumberOfToys(4) >= num;
 					break;
 				}
-				result = (flag ? 1 : 0);
+				result = flag ? 1 : 0;
 			}
 		}
 		return (byte)result != 0;

@@ -47,7 +47,7 @@ public class FreeCoinStoreMenu : CoinStoreMenu
 			}
 			bool flag = CommunityFeatures.getInstance().isAvailable(i);
 			StoreItemButton button = item.button;
-			if (!(button != null))
+			if (button == null)
 			{
 				continue;
 			}

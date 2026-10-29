@@ -34,7 +34,7 @@ public class CopyProtection : MonoBehaviour
 						Debug.Log("Network check from: " + _0024self__00241490.checkURL);
 					}
 					_0024self__00241490.Invoke("handleTimeout", 30f);
-					result = (Yield(2, _0024download_00241489) ? 1 : 0);
+					result = Yield(2, _0024download_00241489) ? 1 : 0;
 					break;
 				case 2:
 					_0024self__00241490.CancelInvoke();

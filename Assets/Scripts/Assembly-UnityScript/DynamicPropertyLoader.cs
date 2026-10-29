@@ -51,7 +51,7 @@ public class DynamicPropertyLoader : MonoBehaviour
 						Debug.Log("Getting dynamic properties: " + _0024self__00241527.getPropertyURL());
 					}
 					_0024self__00241527.Invoke("handleTimeout", 30f);
-					result = (Yield(2, _0024download_00241518) ? 1 : 0);
+					result = Yield(2, _0024download_00241518) ? 1 : 0;
 					break;
 				case 2:
 					_0024self__00241527.CancelInvoke();

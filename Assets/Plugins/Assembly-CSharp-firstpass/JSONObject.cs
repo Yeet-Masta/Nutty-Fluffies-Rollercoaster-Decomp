@@ -531,7 +531,7 @@ public class JSONObject : Nullable
 		case Type.NUMBER:
 			if (n != double.PositiveInfinity)
 			{
-				text = ((n != double.NegativeInfinity) ? (text + n) : "\"NEGINFINITY\"");
+				text = n != double.NegativeInfinity ? (text + n) : "\"NEGINFINITY\"";
 			}
 			else
 			{
@@ -606,7 +606,7 @@ public class JSONObject : Nullable
 			}
 			break;
 		case Type.BOOL:
-			text = ((!b) ? "false" : "true");
+			text = b ? "true" : "false";
 			break;
 		case Type.NULL:
 			text = "null";

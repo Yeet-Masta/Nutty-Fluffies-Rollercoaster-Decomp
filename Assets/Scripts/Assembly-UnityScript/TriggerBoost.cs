@@ -59,7 +59,7 @@ public class TriggerBoost : LevelTriggerActivatable
 		}
 		else
 		{
-			result = ((!(param == "by")) ? base.getParam(param) : (string.Empty + by));
+			result = param == "by" ? (string.Empty + by) : base.getParam(param);
 		}
 		return result;
 	}

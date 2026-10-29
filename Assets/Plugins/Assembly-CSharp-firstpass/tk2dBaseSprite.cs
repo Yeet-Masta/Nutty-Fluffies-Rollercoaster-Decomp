@@ -109,7 +109,7 @@ public abstract class tk2dBaseSprite : MonoBehaviour
 		tk2dPixelPerfectHelper inst = tk2dPixelPerfectHelper.inst;
 		if ((bool)inst)
 		{
-			num = ((!inst.CameraIsOrtho) ? (inst.scaleK + inst.scaleD * transform.position.z) : inst.scaleK);
+			num = inst.CameraIsOrtho ? inst.scaleK : (inst.scaleK + inst.scaleD * transform.position.z);
 		}
 		else if ((bool)Camera.main)
 		{
@@ -222,7 +222,7 @@ public abstract class tk2dBaseSprite : MonoBehaviour
 	protected void UpdateCollider()
 	{
 		tk2dSpriteDefinition tk2dSpriteDefinition2 = collection.spriteDefinitions[_spriteId];
-		if (!(boxCollider != null))
+		if (boxCollider == null)
 		{
 			return;
 		}
@@ -279,7 +279,7 @@ public abstract class tk2dBaseSprite : MonoBehaviour
 			}
 			meshColliderMesh.vertices = meshColliderPositions;
 			float num = _scale.x * _scale.y * _scale.z;
-			meshColliderMesh.triangles = ((!(num >= 0f)) ? tk2dSpriteDefinition2.colliderIndicesBack : tk2dSpriteDefinition2.colliderIndicesFwd);
+			meshColliderMesh.triangles = num >= 0f ? tk2dSpriteDefinition2.colliderIndicesFwd : tk2dSpriteDefinition2.colliderIndicesBack;
 			meshCollider.sharedMesh = meshColliderMesh;
 			meshCollider.convex = tk2dSpriteDefinition2.colliderConvex;
 			if ((bool)GetComponent<Rigidbody>())

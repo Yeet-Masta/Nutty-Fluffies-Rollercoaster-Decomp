@@ -156,7 +156,7 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour
 					4, 0, 1, 4
 				};
 				float num5 = tk2dBatchedSprite3.localScale.x * tk2dBatchedSprite3.localScale.y * tk2dBatchedSprite3.localScale.z;
-				int[] array7 = ((!(num5 >= 0f)) ? array5 : array6);
+				int[] array7 = num5 >= 0f ? array6 : array5;
 				for (int k = 0; k < array7.Length; k++)
 				{
 					array3[num4 + k] = num3 + array7[k];
@@ -174,7 +174,7 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour
 					array2[num3 + l] = vector5;
 				}
 				float num6 = tk2dBatchedSprite3.localScale.x * tk2dBatchedSprite3.localScale.y * tk2dBatchedSprite3.localScale.z;
-				int[] array8 = ((!(num6 >= 0f)) ? tk2dSpriteDefinition3.colliderIndicesBack : tk2dSpriteDefinition3.colliderIndicesFwd);
+				int[] array8 = num6 >= 0f ? tk2dSpriteDefinition3.colliderIndicesFwd : tk2dSpriteDefinition3.colliderIndicesBack;
 				for (int m = 0; m < array8.Length; m++)
 				{
 					array3[num4 + m] = num3 + array8[m];

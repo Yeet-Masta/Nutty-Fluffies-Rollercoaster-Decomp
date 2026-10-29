@@ -7,7 +7,7 @@ public class VGUIImagesTK2D : VGUIImage
 
 	public virtual void setImage(int index)
 	{
-		if (index < 0 || index >= Extensions.get_length((System.Array)images))
+		if (index < 0 || index >= images.Length)
 		{
 			return;
 		}

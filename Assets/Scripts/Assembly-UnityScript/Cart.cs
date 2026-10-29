@@ -207,7 +207,7 @@ public class Cart : MonoBehaviour
 		if (Physics.Raycast(position, -cachedUpVector, out hitInfo, 16f, LevelSpline.SPLINE_LAYER) || Physics.Raycast(position, -Vector3.up, out hitInfo, 160f, LevelSpline.SPLINE_LAYER))
 		{
 			MeshCollider meshCollider = hitInfo.collider as MeshCollider;
-			if (!(meshCollider != null) || currentTriangle == hitInfo.triangleIndex)
+			if (meshCollider == null || currentTriangle == hitInfo.triangleIndex)
 			{
 				return;
 			}
@@ -361,7 +361,7 @@ public class Cart : MonoBehaviour
 
 	public virtual int getAnimalType()
 	{
-		return (!(animal != null) && Time.time - animalDropTime >= 3f) ? GameData.ANIMAL_NONE : animalIndex;
+		return (animal == null && Time.time - animalDropTime >= 3f) ? GameData.ANIMAL_NONE : animalIndex;
 	}
 
 	public virtual void onFinish()

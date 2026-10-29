@@ -194,7 +194,7 @@ public class LevelSpline : LevelEntity
 			int num4 = vertices.Count;
 			if (!CommonData.EDITOR_ACTIVE)
 			{
-				num4 = ((j >= num - 1) ? vertices.Count : splitPts[j]) - num3;
+				num4 = (j >= num - 1 ? vertices.Count : splitPts[j]) - num3;
 			}
 			Mesh mesh = new Mesh();
 			graphicMeshes[j] = mesh;
@@ -459,7 +459,7 @@ public class LevelSpline : LevelEntity
 
 	private float getSectSize(float minAngle, float maxAngle)
 	{
-		return (minAngle <= maxAngle) ? (maxAngle - minAngle) : (maxAngle + (360f - minAngle));
+		return minAngle <= maxAngle ? (maxAngle - minAngle) : (maxAngle + (360f - minAngle));
 	}
 
 	public virtual void calculateSplitPoints(CSpline2 spl, List<int> indices, List<Vector2> pts)
@@ -473,9 +473,9 @@ public class LevelSpline : LevelEntity
 			pts.Clear();
 		}
 		List<Vector2> splinePoints = getSplinePoints(spl);
-		float num = default(float);
-		float num2 = default(float);
-		float a = default(float);
+		float num = 0f;
+		float num2 = 0f;
+		float a = 0f;
 		for (int i = 1; i < splinePoints.Count; i++)
 		{
 			Vector2 vector = splinePoints[i - 1];

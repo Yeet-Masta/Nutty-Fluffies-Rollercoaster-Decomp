@@ -66,7 +66,7 @@ public class StringTools
 			string lhs = lines[0] as string;
 			for (int i = 1; i < lines.length; i++)
 			{
-				lhs = ((i >= maxLines) ? (lhs + (" " + lines[i])) : (lhs + ("\n" + lines[i])));
+				lhs = i >= maxLines ? (lhs + (" " + lines[i])) : (lhs + ("\n" + lines[i]));
 			}
 			lhs += "\n";
 			result = lhs;
@@ -77,6 +77,6 @@ public class StringTools
 	public static int countLines(string str)
 	{
 		string[] a = str.Split("\n"[0]);
-		return Extensions.get_length((System.Array)a);
+		return a.Length;
 	}
 }

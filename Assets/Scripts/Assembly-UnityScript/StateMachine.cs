@@ -35,7 +35,7 @@ public class StateMachine : MonoBehaviour
 
 	public virtual void Update()
 	{
-		if (!(currentState == null))
+		if (currentState != null)
 		{
 			if (currentStateUpdates == 0)
 			{
@@ -48,7 +48,7 @@ public class StateMachine : MonoBehaviour
 
 	public virtual void LateUpdate()
 	{
-		if (!(currentState == null))
+		if (currentState != null)
 		{
 			currentState.stateLateUpdate();
 		}
@@ -56,7 +56,7 @@ public class StateMachine : MonoBehaviour
 
 	public virtual void FixedUpdate()
 	{
-		if (!(currentState == null))
+		if (currentState != null)
 		{
 			currentState.stateFixedUpdate();
 		}

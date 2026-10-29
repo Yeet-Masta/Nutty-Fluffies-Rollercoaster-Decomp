@@ -65,7 +65,7 @@ public class VGUIDynamicGroup : VGUIElement
 		// ints now, which turned this into integer division (2000 / 3200 = 0).
 		// The resulting x of +-Infinity/NaN hid every edge-anchored button and,
 		// through their NaN bounds, scrambled the draw order of all sprites.
-		if (!(cameraRef == null) && cameraRef.pixelWidth > 0 && cameraRef.pixelHeight > 0 && (horizontalLock == HorizontalLock.LEFT || horizontalLock == HorizontalLock.RIGHT))
+		if (cameraRef != null && cameraRef.pixelWidth > 0 && cameraRef.pixelHeight > 0 && (horizontalLock == HorizontalLock.LEFT || horizontalLock == HorizontalLock.RIGHT))
 		{
 			float num = (float)cameraRef.pixelHeight / (float)cameraRef.pixelWidth;
 			float num2 = referenceAspectRatio / num;

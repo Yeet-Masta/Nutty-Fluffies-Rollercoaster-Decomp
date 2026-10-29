@@ -380,7 +380,7 @@ public class tk2dTextMesh : MonoBehaviour
 			return;
 		}
 		Color color = _color;
-		Color color2 = ((!_useGradient) ? _color : _color2);
+		Color color2 = _useGradient ? _color2 : _color;
 		vertices = new Vector3[_maxChars * 4];
 		uvs = new Vector2[_maxChars * 4];
 		colors = new Color[_maxChars * 4];
@@ -471,7 +471,7 @@ public class tk2dTextMesh : MonoBehaviour
 			if ((updateFlags & UpdateFlags.UpdateColors) != 0)
 			{
 				Color color = _color;
-				Color color2 = ((!_useGradient) ? _color : _color2);
+				Color color2 = _useGradient ? _color2 : _color;
 				for (int j = 0; j < colors.Length; j += 4)
 				{
 					colors[j] = (colors[j + 1] = color);
@@ -572,7 +572,7 @@ public class tk2dTextMesh : MonoBehaviour
 		tk2dPixelPerfectHelper inst = tk2dPixelPerfectHelper.inst;
 		if ((bool)inst)
 		{
-			num = ((!inst.CameraIsOrtho) ? (inst.scaleK + inst.scaleD * transform.position.z) : inst.scaleK);
+			num = inst.CameraIsOrtho ? inst.scaleK : (inst.scaleK + inst.scaleD * transform.position.z);
 		}
 		else if ((bool)Camera.main)
 		{

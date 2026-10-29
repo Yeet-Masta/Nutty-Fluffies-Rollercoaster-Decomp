@@ -386,7 +386,7 @@ public class BaseMenuManager : MonoBehaviour
 
 	public virtual void Update()
 	{
-		if (LoadingMenu.isLoading || !CustomInput.getKeyDown(27) || !(menuSwitcher.activeMenu != null))
+		if (LoadingMenu.isLoading || !CustomInput.getKeyDown(27) || menuSwitcher.activeMenu == null)
 		{
 			return;
 		}

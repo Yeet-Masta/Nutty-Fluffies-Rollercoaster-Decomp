@@ -63,7 +63,7 @@ public class ObjectData
 		string text = string.Empty;
 		for (int i = 0; i < Enum.GetValues(typeof(CommonData.DeviceGeneration)).Length; i++)
 		{
-			text = (checkDevice(1 << i) ? (text + "- ") : (text + (CommonData.deviceChars[i] + " ")));
+			text = checkDevice(1 << i) ? (text + "- ") : (text + (CommonData.deviceChars[i] + " "));
 		}
 		return text;
 	}
@@ -134,6 +134,6 @@ public class ObjectData
 
 	public virtual ObjectPartData getIndPart(int i)
 	{
-		return (i < partList.Count) ? partList[i] : null;
+		return i < partList.Count ? partList[i] : null;
 	}
 }

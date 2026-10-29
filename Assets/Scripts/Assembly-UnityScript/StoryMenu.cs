@@ -78,7 +78,7 @@ public class StoryMenu : BaseMenu
 				slideOutAnimator.deactivate();
 			}
 		}
-		if (currentPanel == Extensions.get_length((System.Array)storyPanels) - 1)
+		if (currentPanel == storyPanels.Length - 1)
 		{
 			showLoading();
 			return;

@@ -283,7 +283,7 @@ public class Vehicle : MonoBehaviour
 				ticker = 0;
 			}
 			cartsInAir = 0;
-			int num4 = default(int);
+			int num4 = 0;
 			int l = 0;
 			Cart[] array4 = carts;
 			for (int length4 = array4.Length; l < length4; l++)
@@ -444,7 +444,7 @@ public class Vehicle : MonoBehaviour
 
 	public virtual bool isSpecialActivated()
 	{
-		return !(special == null) && special.enabled;
+		return special != null && special.enabled;
 	}
 
 	private void checkState()
@@ -554,7 +554,7 @@ public class Vehicle : MonoBehaviour
 		{
 			if (!array[i].rb.isKinematic)
 			{
-				num = ((!flag) ? (1f - 0.01f * amount) : (1f - 0.05f * amount));
+				num = flag ? (1f - 0.05f * amount) : (1f - 0.01f * amount);
 			}
 			array[i].rb.velocity = array[i].rb.velocity * num;
 			num2++;
@@ -584,7 +584,7 @@ public class Vehicle : MonoBehaviour
 	private bool checkCrash()
 	{
 		bool result = false;
-		int num = default(int);
+		int num = 0;
 		int i = 0;
 		Cart[] array = carts;
 		for (int length = array.Length; i < length; i++)

@@ -97,7 +97,7 @@ public class OSATranslate : ObjectScript
 			result = string.Empty + y;
 			break;
 		case "w":
-			result = ((!w) ? "no" : "yes");
+			result = w ? "yes" : "no";
 			break;
 		case "m":
 			result = string.Empty + m;

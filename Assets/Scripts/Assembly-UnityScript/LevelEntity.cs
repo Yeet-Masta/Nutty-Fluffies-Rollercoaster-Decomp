@@ -36,7 +36,7 @@ public class LevelEntity : MonoBehaviour, EditableGameObject
 		string text = string.Empty;
 		for (int i = 0; i < Enum.GetValues(typeof(CommonData.DeviceGeneration)).Length; i++)
 		{
-			text = (checkDevice(1 << i) ? (text + "- ") : (text + (CommonData.deviceChars[i] + " ")));
+			text = checkDevice(1 << i) ? (text + "- ") : (text + (CommonData.deviceChars[i] + " "));
 		}
 		return text;
 	}
@@ -97,7 +97,7 @@ public class LevelEntity : MonoBehaviour, EditableGameObject
 
 	public virtual bool equalsTo(LevelEntity other)
 	{
-		return RuntimeServices.EqualityOperator(other.GetType(), GetType()) && Vector3.Distance(transform.position, other.transform.position) <= 0.1f && ((Mathf.Abs(transform.rotation.eulerAngles.z - other.transform.rotation.eulerAngles.z) <= 0.1f) ? true : false);
+		return RuntimeServices.EqualityOperator(other.GetType(), GetType()) && Vector3.Distance(transform.position, other.transform.position) <= 0.1f && (Mathf.Abs(transform.rotation.eulerAngles.z - other.transform.rotation.eulerAngles.z) <= 0.1f ? true : false);
 	}
 
 	public virtual void deselect()

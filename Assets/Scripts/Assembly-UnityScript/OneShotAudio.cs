@@ -59,7 +59,7 @@ public class OneShotAudio : MonoBehaviour
 		{
 			Debug.Log("OneShot Audio Objects are not created you need to create them!");
 		}
-		else if (!PARENT_TO_MAIN_CAMERA || !(transforms[current].parent != null) || transforms[current].parent.gameObject.active)
+		else if (!PARENT_TO_MAIN_CAMERA || transforms[current].parent == null || transforms[current].parent.gameObject.active)
 		{
 			if (!PARENT_TO_MAIN_CAMERA && !(falloff <= 0f))
 			{
@@ -109,7 +109,7 @@ public class OneShotAudio : MonoBehaviour
 	{
 		for (int i = 0; i < amount; i++)
 		{
-			current = (current + 1) % Extensions.get_length((System.Array)sources);
+			current = (current + 1) % sources.Length;
 			if (priorities[current] == 0)
 			{
 				return;
@@ -120,7 +120,7 @@ public class OneShotAudio : MonoBehaviour
 				return;
 			}
 		}
-		current = (current + 1) % Extensions.get_length((System.Array)sources);
+		current = (current + 1) % sources.Length;
 		priorities[current] = 0;
 	}
 

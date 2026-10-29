@@ -6,7 +6,7 @@ public class VGUIImage : VGUIElement
 
 	private void findRenderer()
 	{
-		if (!(imageRendered != null))
+		if (imageRendered == null)
 		{
 			imageRendered = (Renderer)GetComponent(typeof(Renderer));
 			if (imageRendered == null)

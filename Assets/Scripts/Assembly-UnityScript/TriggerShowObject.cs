@@ -22,6 +22,6 @@ public class TriggerShowObject : LevelTrigger
 
 	public override string getParam(string param)
 	{
-		return (!(param == "t")) ? null : targetHandler.getParamTargets();
+		return param == "t" ? targetHandler.getParamTargets() : null;
 	}
 }

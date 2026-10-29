@@ -42,6 +42,6 @@ public class TriggerCoin : LevelTrigger
 
 	public override string getParam(string param)
 	{
-		return (!(param == "amount")) ? base.getParam(param) : (string.Empty + amount);
+		return param == "amount" ? (string.Empty + amount) : base.getParam(param);
 	}
 }

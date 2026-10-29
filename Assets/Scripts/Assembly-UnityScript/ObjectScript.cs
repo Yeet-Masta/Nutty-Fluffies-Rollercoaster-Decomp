@@ -172,7 +172,7 @@ public class ObjectScript : MonoBehaviour, Parametrizable
 		string result;
 		if (param == "act")
 		{
-			result = ((!triggerActive) ? "no" : "yes");
+			result = triggerActive ? "yes" : "no";
 		}
 		else
 		{

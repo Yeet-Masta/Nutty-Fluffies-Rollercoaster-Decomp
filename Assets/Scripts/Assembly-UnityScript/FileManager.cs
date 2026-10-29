@@ -247,7 +247,7 @@ public class FileManager
 		else
 		{
 			string text = locateLevelPack(pack);
-			result = ((!string.IsNullOrEmpty(text)) ? (text + "/levels/" + name + ".json") : string.Empty);
+			result = string.IsNullOrEmpty(text) ? string.Empty : (text + "/levels/" + name + ".json");
 		}
 		return result;
 	}
@@ -290,13 +290,13 @@ public class FileManager
 	public virtual string loadFileText(string path)
 	{
 		NFPortAssetFile wWW = loadWWWFile(path);
-		return (!RuntimeServices.EqualityOperator(wWW, null)) ? wWW.text : null;
+		return RuntimeServices.EqualityOperator(wWW, null) ? null : wWW.text;
 	}
 
 	public virtual byte[] loadFileBytes(string path)
 	{
 		NFPortAssetFile wWW = loadWWWFile(path);
-		return (!RuntimeServices.EqualityOperator(wWW, null)) ? wWW.bytes : null;
+		return RuntimeServices.EqualityOperator(wWW, null) ? null : wWW.bytes;
 	}
 
 	private NFPortAssetFile loadWWWFile(string path)

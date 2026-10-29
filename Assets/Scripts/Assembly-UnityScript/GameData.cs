@@ -338,7 +338,7 @@ public class GameData
 		TRACK_REVENUE = PlayerPrefs.GetInt("DP_TRACK_REVENUE", TRACK_REVENUE);
 		TRACK_REVENUE_MAX = PlayerPrefs.GetInt("DP_TRACK_REVENUE_MAX", TRACK_REVENUE_MAX);
 		BONUS_VALUES[0] = PlayerPrefs.GetFloat("DP_COINS_PER_HEARTS", BONUS_VALUES[0]);
-		for (int i = 0; i < Extensions.get_length((System.Array)LEVEL_PACK_PRICE_MULTIPLIERS); i++)
+		for (int i = 0; i < LEVEL_PACK_PRICE_MULTIPLIERS.Length; i++)
 		{
 			LEVEL_PACK_PRICE_MULTIPLIERS[i] = PlayerPrefs.GetFloat("DP_LEVEL_PACK_PRICE_MULTIPLIER" + (i + 1), LEVEL_PACK_PRICE_MULTIPLIERS[i]);
 		}
@@ -586,12 +586,12 @@ public class GameData
 			else
 			{
 				activeLevelPack = LEVEL_PACKS[num2];
-				result = (activeLevelPack.isUnlocked() ? 1 : 0);
+				result = activeLevelPack.isUnlocked() ? 1 : 0;
 			}
 		}
 		else
 		{
-			result = (activeLevelPack.getLevelInfo(num).isUnlocked() ? 1 : 0);
+			result = activeLevelPack.getLevelInfo(num).isUnlocked() ? 1 : 0;
 		}
 		return (byte)result != 0;
 	}
@@ -633,7 +633,7 @@ public class GameData
 					obj = RuntimeServices.Coerce(obj, typeof(StoreKitProduct));
 				}
 				storeKitProduct = (StoreKitProduct)obj;
-				if (!(storeKitProduct.productIdentifier == id))
+				if (storeKitProduct.productIdentifier != id)
 				{
 					continue;
 				}
@@ -651,7 +651,7 @@ public class GameData
 
 	public static int getInAppPurchaseProductCount()
 	{
-		return (!RuntimeServices.EqualityOperator(INAPP_PURCHASE_LIST, null)) ? INAPP_PURCHASE_LIST.Count : 0;
+		return RuntimeServices.EqualityOperator(INAPP_PURCHASE_LIST, null) ? 0 : INAPP_PURCHASE_LIST.Count;
 	}
 
 	public static void setInAppPurchased(string id)
@@ -802,7 +802,7 @@ public class GameData
 			levelPack = LEVEL_PACKS[num2];
 		}
 		LevelPack.LevelInfo levelInfo = levelPack.getLevelInfo(num);
-		result = ((!levelInfo.testFlag(LEVEL_FLAG_BUILT)) ? getTrackPrice(num2, num) : 0);
+		result = levelInfo.testFlag(LEVEL_FLAG_BUILT) ? 0 : getTrackPrice(num2, num);
 		goto IL_0073;
 		IL_0073:
 		return result;
@@ -854,7 +854,7 @@ public class GameData
 		int numberOfCarts = getNumberOfCarts(levelPack, levelIndex);
 		string lhs = "LEVEL_ANIMAL_" + levelPack.fileName + "_" + levelPack.levelList[levelIndex].fileName;
 		VehicleData vehicleData = new VehicleData();
-		int num = default(int);
+		int num = 0;
 		vehicleData.cartList = new CartData[numberOfCarts];
 		for (num = 0; num < numberOfCarts; num++)
 		{
@@ -876,7 +876,7 @@ public class GameData
 
 	public static void saveTrain()
 	{
-		if (!(TRAIN_DATA.cartList == null))
+		if (TRAIN_DATA.cartList != null)
 		{
 			LevelPack activeLevelPack = getActiveLevelPack();
 			string lhs = "LEVEL_ANIMAL_" + activeLevelPack.fileName + "_" + activeLevelPack.levelList[SELECTED_LEVEL_INDEX].fileName;
@@ -923,7 +923,7 @@ public class GameData
 		LevelPack activeLevelPack = getActiveLevelPack();
 		string rhs = string.Empty + activeLevelPack.fileName + "_" + activeLevelPack.levelList[levelIndex].fileName;
 		string key = "LEVEL_RECORD_HEARTS_" + rhs;
-		return (PlayerPrefs.GetInt(key, 0) != 0) ? PlayerPrefs.GetInt(key, 0) : (-1);
+		return PlayerPrefs.GetInt(key, 0) != 0 ? PlayerPrefs.GetInt(key, 0) : -1;
 	}
 
 	public static int getHeartRecordPercentage(int levelIndex)

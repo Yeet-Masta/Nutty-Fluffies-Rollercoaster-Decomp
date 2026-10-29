@@ -402,7 +402,7 @@ public class Animal : MonoBehaviour
 			}
 		}
 		stayCounter = 0;
-		float num2 = default(float);
+		float num2 = 0f;
 		if (!(cartRef.tr.position.x <= head.transform.position.x))
 		{
 			float x = 1f;

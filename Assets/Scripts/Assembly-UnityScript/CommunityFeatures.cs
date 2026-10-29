@@ -125,10 +125,10 @@ public class CommunityFeatures : MonoBehaviour
 		}
 		else
 		{
-			num2 = ((num < featureUseLimits[feature]) ? 1 : 0);
+			num2 = num < featureUseLimits[feature] ? 1 : 0;
 			if (num2 == 0)
 			{
-				num2 = ((featureUseLimits[feature] == 0) ? 1 : 0);
+				num2 = featureUseLimits[feature] == 0 ? 1 : 0;
 			}
 		}
 		return (byte)num2 != 0;
@@ -144,10 +144,10 @@ public class CommunityFeatures : MonoBehaviour
 		else
 		{
 			int num2 = PlayerPrefs.GetInt(FEATURE_KEY[feature] + "_SHOW", 0);
-			num = ((num2 < featureShowLimits[feature]) ? 1 : 0);
+			num = num2 < featureShowLimits[feature] ? 1 : 0;
 			if (num == 0)
 			{
-				num = ((featureShowLimits[feature] == 0) ? 1 : 0);
+				num = featureShowLimits[feature] == 0 ? 1 : 0;
 			}
 		}
 		return (byte)num != 0;
@@ -443,7 +443,7 @@ public class CommunityFeatures : MonoBehaviour
 	{
 		int num = PlayerPrefs.GetInt("COMMUNITY_OFFER_INDEX", 0);
 		int num2 = 0;
-		int num3 = default(int);
+		int num3 = 0;
 		while (!isEnabledForOffer(FEATURE_OFFER_ORDER[num]))
 		{
 			num++;

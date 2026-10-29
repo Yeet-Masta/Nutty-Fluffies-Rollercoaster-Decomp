@@ -30,6 +30,6 @@ public class TriggerCheckPoint : LevelTrigger
 
 	public override string getParam(string param)
 	{
-		return (!(param == "kind")) ? base.getParam(param) : (string.Empty + kind);
+		return param == "kind" ? (string.Empty + kind) : base.getParam(param);
 	}
 }

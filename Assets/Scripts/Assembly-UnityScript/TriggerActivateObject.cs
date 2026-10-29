@@ -149,10 +149,10 @@ public class TriggerActivateObject : LevelTrigger
 			result = targetHandler.getParamTargets();
 			break;
 		case "s":
-			result = ((!s) ? "no" : "yes");
+			result = s ? "yes" : "no";
 			break;
 		case "o":
-			result = ((!o) ? "no" : "yes");
+			result = o ? "yes" : "no";
 			break;
 		default:
 			result = null;

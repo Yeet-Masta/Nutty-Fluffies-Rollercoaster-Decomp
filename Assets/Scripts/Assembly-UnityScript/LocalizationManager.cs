@@ -83,7 +83,7 @@ public class LocalizationManager : MonoBehaviour
 
 	public static string localize(string key)
 	{
-		return (!translation.ContainsKey(key)) ? key : translation[key];
+		return translation.ContainsKey(key) ? translation[key] : key;
 	}
 
 	private void translateReferences()

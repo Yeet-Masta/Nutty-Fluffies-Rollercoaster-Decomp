@@ -36,10 +36,10 @@ public class TextTemplate
 		string text = template;
 		if (!RuntimeServices.EqualityOperator(values, null))
 		{
-			for (int i = 0; i < Extensions.get_length((System.Array)values) && values[i] != null; i++)
+			for (int i = 0; i < values.Length && values[i] != null; i++)
 			{
 				string oldValue = "%" + (i + 1);
-				if (Extensions.get_length((System.Array)values) > i)
+				if (values.Length > i)
 				{
 					text = text.Replace(oldValue, values[i]);
 				}

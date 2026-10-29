@@ -84,7 +84,7 @@ public class GeneralSoundEffects : MonoBehaviour
 		{
 			floatIndex = 0f;
 		}
-		int num = (int)Mathf.Floor(floatIndex * (float)Extensions.get_length((System.Array)clips));
+		int num = (int)Mathf.Floor(floatIndex * (float)clips.Length);
 		playSound(clips[num], vol);
 	}
 
@@ -98,7 +98,7 @@ public class GeneralSoundEffects : MonoBehaviour
 		{
 			floatIndex = 0f;
 		}
-		int num = (int)Mathf.Floor(floatIndex * (float)Extensions.get_length((System.Array)clips));
+		int num = (int)Mathf.Floor(floatIndex * (float)clips.Length);
 		if (!isPlaying(clips[num]))
 		{
 			playSound(clips[num], vol);
@@ -130,10 +130,10 @@ public class GeneralSoundEffects : MonoBehaviour
 
 	public static void loadAndPlayRandomSound(string[] clips)
 	{
-		int num = (int)(UnityEngine.Random.value * (float)Extensions.get_length((System.Array)clips));
-		if (num >= Extensions.get_length((System.Array)clips))
+		int num = (int)(UnityEngine.Random.value * (float)clips.Length);
+		if (num >= clips.Length)
 		{
-			num = Extensions.get_length((System.Array)clips) - 1;
+			num = clips.Length - 1;
 		}
 		loadAndPlaySound(clips[num]);
 	}

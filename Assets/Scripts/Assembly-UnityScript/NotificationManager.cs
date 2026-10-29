@@ -118,7 +118,7 @@ public class NotificationManager : MonoBehaviour
 
 	private float getRevenue(int days)
 	{
-		int num = Extensions.get_length((System.Array)GameData.NOTIFICATION_DAYS) - 1;
+		int num = GameData.NOTIFICATION_DAYS.Length - 1;
 		float result;
 		while (true)
 		{

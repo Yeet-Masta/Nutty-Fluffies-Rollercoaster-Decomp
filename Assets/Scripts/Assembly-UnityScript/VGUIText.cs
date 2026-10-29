@@ -40,7 +40,7 @@ public class VGUIText : VGUIElement
 		{
 			setText(preAwakeSetText);
 		}
-		if (!RuntimeServices.EqualityOperator(preAwakeFillTemplateValues, null) && Extensions.get_length((System.Array)preAwakeFillTemplateValues) > 0)
+		if (!RuntimeServices.EqualityOperator(preAwakeFillTemplateValues, null) && preAwakeFillTemplateValues.Length > 0)
 		{
 			fillTemplate(preAwakeFillTemplateValues);
 		}
@@ -73,7 +73,7 @@ public class VGUIText : VGUIElement
 
 	public virtual void setColor(Color to)
 	{
-		if (!(textMesh == null))
+		if (textMesh != null)
 		{
 			textMesh.GetComponent<Renderer>().material.color = to;
 		}

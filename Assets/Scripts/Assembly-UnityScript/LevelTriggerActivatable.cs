@@ -30,7 +30,7 @@ public class LevelTriggerActivatable : LevelTrigger
 		string result;
 		if (param == "act")
 		{
-			result = ((!triggerActive) ? "no" : "yes");
+			result = triggerActive ? "yes" : "no";
 		}
 		else
 		{

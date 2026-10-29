@@ -228,7 +228,7 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 		{
 			return;
 		}
-		for (int i = 0; i < Extensions.get_length((System.Array)pages); i++)
+		for (int i = 0; i < pages.Length; i++)
 		{
 			bool flag = i == currentStep;
 			if (!flag)
@@ -258,7 +258,7 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 	public virtual int getAmountOfVisiblePages()
 	{
 		int num = 0;
-		for (int i = 0; i < Extensions.get_length((System.Array)pages); i++)
+		for (int i = 0; i < pages.Length; i++)
 		{
 			if (pages[i].active)
 			{
@@ -279,7 +279,7 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 	{
 		for (int i = 0; i < pages.Length; i++)
 		{
-			if (!(page == pages[i]))
+			if (page != pages[i])
 			{
 				continue;
 			}

@@ -24,13 +24,13 @@ public class Subtitle : VGUIText
 			text = text.Replace("\r", string.Empty);
 		}
 		chunks = StringTools.getLines(text.Trim(), maxChars);
-		float num = line.duration / (float)Extensions.get_length(text);
+		float num = line.duration / (float)text.Length;
 		showNextChunk();
-		float num2 = (float)Extensions.get_length(chunks[0] as string) * num;
+		float num2 = (float)(chunks[0] as string).Length * num;
 		for (int i = 1; i < chunks.length; i++)
 		{
 			Invoke("showNextChunk", num2 - 0.3f);
-			num2 += (float)Extensions.get_length(chunks[i] as string) * num;
+			num2 += (float)(chunks[i] as string).Length * num;
 		}
 		Invoke("clearText", line.duration);
 	}

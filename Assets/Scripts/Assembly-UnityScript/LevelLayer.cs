@@ -191,7 +191,7 @@ public class LevelLayer : MonoBehaviour
 		string text = string.Empty;
 		for (int i = 0; i < Enum.GetValues(typeof(CommonData.DeviceGeneration)).Length; i++)
 		{
-			text = (checkDevice(1 << i) ? (text + "- ") : (text + (CommonData.deviceChars[i] + " ")));
+			text = checkDevice(1 << i) ? (text + "- ") : (text + (CommonData.deviceChars[i] + " "));
 		}
 		return text;
 	}

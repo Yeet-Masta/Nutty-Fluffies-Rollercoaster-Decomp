@@ -110,7 +110,7 @@ public class Narrative : VGUISwitchObject
 		string text2 = streamReader.ReadLine();
 		while (text2 != null)
 		{
-			if (Extensions.get_length(text2.Trim()) == 0)
+			if (text2.Trim().Length == 0)
 			{
 				appendLine(text);
 				text = string.Empty;
@@ -151,7 +151,7 @@ public class Narrative : VGUISwitchObject
 				obj = RuntimeServices.Coerce(obj, typeof(NarrativeCommand));
 			}
 			NarrativeCommand narrativeCommand = (NarrativeCommand)obj;
-			float num = (float)narrativeCommand.position * currentLine.duration / (float)Extensions.get_length(currentLine.textContent);
+			float num = (float)narrativeCommand.position * currentLine.duration / (float)currentLine.textContent.Length;
 			UnityRuntimeServices.Update(enumerator, narrativeCommand);
 			if (!(num <= 0.25f))
 			{

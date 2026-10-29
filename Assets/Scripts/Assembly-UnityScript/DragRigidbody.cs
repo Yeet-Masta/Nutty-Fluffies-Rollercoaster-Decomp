@@ -47,7 +47,7 @@ public class DragRigidbody : MonoBehaviour
 					{
 						_0024ray_00241512 = _0024mainCamera_00241511.ScreenPointToRay(Input.mousePosition);
 						_0024self__00241514.springJoint.transform.position = _0024ray_00241512.GetPoint(_0024distance_00241513);
-						result = (YieldDefault(2) ? 1 : 0);
+						result = YieldDefault(2) ? 1 : 0;
 						break;
 					}
 					if ((bool)_0024self__00241514.springJoint.connectedBody)
@@ -139,6 +139,6 @@ public class DragRigidbody : MonoBehaviour
 
 	public virtual Camera FindCamera()
 	{
-		return (!GetComponent<Camera>()) ? Camera.main : GetComponent<Camera>();
+		return GetComponent<Camera>() ? GetComponent<Camera>() : Camera.main;
 	}
 }

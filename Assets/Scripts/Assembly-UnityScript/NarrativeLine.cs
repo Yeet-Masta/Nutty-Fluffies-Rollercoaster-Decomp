@@ -29,7 +29,7 @@ public class NarrativeLine
 		}
 		if (narrateAudio == null)
 		{
-			duration = (float)Extensions.get_length(textContent) * 0.1f;
+			duration = (float)textContent.Length * 0.1f;
 		}
 		else
 		{

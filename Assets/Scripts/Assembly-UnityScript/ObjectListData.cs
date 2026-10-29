@@ -102,7 +102,7 @@ public class ObjectListData
 
 	public virtual int getPackIndexForObjectID(int id)
 	{
-		return objIDtoPackCache.ContainsKey(id) ? objIDtoPackCache[id] : (-1);
+		return objIDtoPackCache.ContainsKey(id) ? objIDtoPackCache[id] : -1;
 	}
 
 	public virtual ObjectPackData getPackForObjectId(int id)
@@ -142,7 +142,7 @@ public class ObjectListData
 		int result;
 		if (catIndex != -1)
 		{
-			result = ((catIndex >= 0 && catIndex < packList.Count) ? packList[catIndex].getNumObjects(sceneryMode) : 0);
+			result = (catIndex >= 0 && catIndex < packList.Count) ? packList[catIndex].getNumObjects(sceneryMode) : 0;
 		}
 		else
 		{
@@ -217,7 +217,7 @@ public class ObjectListData
 	public virtual ObjectPackData getPackForName(string packName)
 	{
 		int packIndexForPackName = getPackIndexForPackName(packName);
-		return (packIndexForPackName != -1) ? packList[packIndexForPackName] : null;
+		return packIndexForPackName != -1 ? packList[packIndexForPackName] : null;
 	}
 
 	public virtual void addObject(int catIndex, ObjectData obj)

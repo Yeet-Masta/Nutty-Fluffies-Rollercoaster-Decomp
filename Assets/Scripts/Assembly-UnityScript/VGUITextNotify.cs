@@ -33,7 +33,7 @@ public class VGUITextNotify : VGUINotify
 				default:
 					_0024self__00241532.runningCoRoutinesAmount++;
 					_0024self__00241532.activate();
-					result = (Yield(2, new WaitForSeconds(_0024time_00241530)) ? 1 : 0);
+					result = Yield(2, new WaitForSeconds(_0024time_00241530)) ? 1 : 0;
 					break;
 				case 2:
 					_0024self__00241532.show(_0024text_00241531);

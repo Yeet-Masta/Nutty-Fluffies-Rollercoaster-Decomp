@@ -89,7 +89,7 @@ public class TutorialManager : MonoBehaviour
 				{
 					if (num < length)
 					{
-						if (!(array[num].key == key))
+						if (array[num].key != key)
 						{
 							num++;
 							continue;
@@ -157,7 +157,7 @@ public class TutorialManager : MonoBehaviour
 			else
 			{
 				bool flag = PlayerPrefs.GetInt("TUTORIAL_SHOWN_PAGE_" + key, 0) > 0;
-				result = ((flag && flag) ? 1 : 0);
+				result = (flag && flag) ? 1 : 0;
 			}
 		}
 		return (byte)result != 0;

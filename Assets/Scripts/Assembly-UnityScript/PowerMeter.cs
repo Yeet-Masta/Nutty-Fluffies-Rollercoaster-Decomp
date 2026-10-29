@@ -131,7 +131,7 @@ public class PowerMeter : MonoBehaviour
 		{
 			num = maxValue;
 		}
-		barAnimator.to.y = ((maxValue == 0f) ? 0f : (num / maxValue * barMax));
+		barAnimator.to.y = maxValue == 0f ? 0f : (num / maxValue * barMax);
 		barAnimator.activate();
 		bar.GetComponent<Renderer>().enabled = true;
 	}

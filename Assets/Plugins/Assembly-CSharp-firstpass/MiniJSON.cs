@@ -61,7 +61,7 @@ public class MiniJSON
 	public static string jsonEncode(object json)
 	{
 		StringBuilder stringBuilder = new StringBuilder(2000);
-		return (!serializeValue(json, stringBuilder)) ? null : stringBuilder.ToString();
+		return serializeValue(json, stringBuilder) ? stringBuilder.ToString() : null;
 	}
 
 	public static bool lastDecodeSuccessful()

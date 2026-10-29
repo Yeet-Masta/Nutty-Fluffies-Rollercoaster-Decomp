@@ -44,7 +44,7 @@ public class LevelObjectFactory
 
 	private static int SIGN(int layer)
 	{
-		return (layer != 0) ? ((layer < 0) ? (-1) : ((layer > 0) ? 1 : 0)) : 0;
+		return layer != 0 ? (layer < 0 ? -1 : (layer > 0 ? 1 : 0)) : 0;
 	}
 
 	public static void setRenderQueueForLayer(int layer)
@@ -153,7 +153,7 @@ public class LevelObjectFactory
 			}
 			else
 			{
-				if (!(triggerData.triggerScript == "TriggerActivateObject"))
+				if (triggerData.triggerScript != "TriggerActivateObject")
 				{
 					goto IL_017d;
 				}
@@ -162,7 +162,7 @@ public class LevelObjectFactory
 		}
 		else
 		{
-			if ((NFPortLegacyDevice.generation != NFPortLegacyDeviceGeneration.iPhone4 && NFPortLegacyDevice.generation != NFPortLegacyDeviceGeneration.iPodTouch4Gen) || !(triggerData.triggerScript == "TriggerParticles") || GameData.getActiveLevelPackIndex() != 4)
+			if ((NFPortLegacyDevice.generation != NFPortLegacyDeviceGeneration.iPhone4 && NFPortLegacyDevice.generation != NFPortLegacyDeviceGeneration.iPodTouch4Gen) || triggerData.triggerScript != "TriggerParticles" || GameData.getActiveLevelPackIndex() != 4)
 			{
 				goto IL_017d;
 			}
@@ -305,7 +305,7 @@ public class LevelObjectFactory
 	public virtual LevelObject createObjectInstance(LevelObjectData data, ObjectListData objectData, ObjectData odata)
 	{
 		GameObject gameObject = null;
-		gameObject = (((odata.flags & ObjectData.FLAG_IS_OPTIMIZED) == 0) ? prefabs.objectPrefab.gameObject : prefabs.objectWithTexturePrefab.gameObject);
+		gameObject = (odata.flags & ObjectData.FLAG_IS_OPTIMIZED) == 0 ? prefabs.objectPrefab.gameObject : prefabs.objectWithTexturePrefab.gameObject;
 		if (gameObject == null)
 		{
 			Debug.LogError("object prefab is null");
@@ -362,19 +362,19 @@ public class LevelObjectFactory
 				{
 					if (objectPartData is ObjectPartBoxCollisionData)
 					{
-						createBoxCollision((!@object) ? null : @object.gameObject, objectPartData as ObjectPartBoxCollisionData, flag2);
+						createBoxCollision(@object ? @object.gameObject : null, objectPartData as ObjectPartBoxCollisionData, flag2);
 						UnityRuntimeServices.Update(enumerator, objectPartData);
 					}
 					else if (objectPartData is ObjectPartSphereCollisionData)
 					{
 						if (!USE_CAPSULE_COLLIDERS || flag2)
 						{
-							createSphereCollision((!@object) ? null : @object.gameObject, objectPartData as ObjectPartSphereCollisionData, flag2);
+							createSphereCollision(@object ? @object.gameObject : null, objectPartData as ObjectPartSphereCollisionData, flag2);
 							UnityRuntimeServices.Update(enumerator, objectPartData);
 						}
 						else
 						{
-							createCapsuleCollision((!@object) ? null : @object.gameObject, objectPartData as ObjectPartSphereCollisionData, flag2);
+							createCapsuleCollision(@object ? @object.gameObject : null, objectPartData as ObjectPartSphereCollisionData, flag2);
 							UnityRuntimeServices.Update(enumerator, objectPartData);
 						}
 					}
@@ -383,7 +383,7 @@ public class LevelObjectFactory
 			}
 			if (objectPartData is ObjectPartTextureData)
 			{
-				if (createTexture(pack, (!@object) ? null : @object.gameObject, objectPartData as ObjectPartTextureData, flag, num, objectData, data, simulate))
+				if (createTexture(pack, @object ? @object.gameObject : null, objectPartData as ObjectPartTextureData, flag, num, objectData, data, simulate))
 				{
 					result = true;
 				}
@@ -393,7 +393,7 @@ public class LevelObjectFactory
 			{
 				if (!simulate)
 				{
-					createTriggerPart((!@object) ? null : @object.gameObject, objectPartData as ObjectPartSphereTriggerData);
+					createTriggerPart(@object ? @object.gameObject : null, objectPartData as ObjectPartSphereTriggerData);
 					UnityRuntimeServices.Update(enumerator, objectPartData);
 				}
 				result = true;
@@ -402,7 +402,7 @@ public class LevelObjectFactory
 			{
 				if (!simulate)
 				{
-					createTriggerPart((!@object) ? null : @object.gameObject, objectPartData as ObjectPartBoxTriggerData);
+					createTriggerPart(@object ? @object.gameObject : null, objectPartData as ObjectPartBoxTriggerData);
 					UnityRuntimeServices.Update(enumerator, objectPartData);
 				}
 				result = true;
@@ -534,9 +534,9 @@ public class LevelObjectFactory
 			LevelObject levelObject = null;
 			if (!simulate)
 			{
-				levelObject = ((!parent) ? null : ((LevelObject)parent.GetComponent(typeof(LevelObject))));
+				levelObject = parent ? ((LevelObject)parent.GetComponent(typeof(LevelObject))) : null;
 				TextureManager.UV uV = new TextureManager.UV();
-				Texture2D texture2D = TextureManager.getInstance().createTexture((pack == null) ? string.Empty : pack.fullPath, TextureManager.TextureType.OBJECT, data.texture, uV);
+				Texture2D texture2D = TextureManager.getInstance().createTexture(pack == null ? string.Empty : pack.fullPath, TextureManager.TextureType.OBJECT, data.texture, uV);
 				if (gameObject != null)
 				{
 					USE_ALPHA_SHADER = !data.allowStretch;
@@ -670,7 +670,7 @@ public class LevelObjectFactory
 			levelLayer = ((LevelLayer)parent.GetComponent(typeof(LevelLayer))) as LevelLayer;
 			parent = parent.parent;
 		}
-		if (!(levelLayer == null))
+		if (levelLayer != null)
 		{
 			return;
 		}
@@ -775,7 +775,7 @@ public class LevelObjectFactory
 			boxCollider.size = size4;
 		}
 		boxCollider.material = prefabs.physicMaterials[0];
-		gameObject.layer = ((!currentObjectData.checkFlag(8388608)) ? 12 : 0);
+		gameObject.layer = currentObjectData.checkFlag(8388608) ? 0 : 12;
 		gameObject.transform.parent = parent.transform;
 		if (gameObject != parent)
 		{
@@ -825,7 +825,7 @@ public class LevelObjectFactory
 		SphereCollider sphereCollider = gameObject.AddComponent<SphereCollider>();
 		sphereCollider.radius = sphere.radius;
 		sphereCollider.material = prefabs.physicMaterials[0];
-		gameObject.layer = ((!currentObjectData.checkFlag(8388608)) ? 12 : 0);
+		gameObject.layer = currentObjectData.checkFlag(8388608) ? 0 : 12;
 		gameObject.transform.parent = parent.transform;
 		if (gameObject != parent)
 		{
@@ -874,8 +874,8 @@ public class LevelObjectFactory
 		}
 		CapsuleCollider capsuleCollider = gameObject.AddComponent<CapsuleCollider>();
 		capsuleCollider.radius = sphere.radius;
-		float num = default(float);
-		num = ((!dynamic) ? STATIC_OBJECT_DEPTH : DYNAMIC_OBJECT_DEPTH);
+		float num = 0f;
+		num = dynamic ? DYNAMIC_OBJECT_DEPTH : STATIC_OBJECT_DEPTH;
 		num -= capsuleCollider.radius * 2f;
 		if (!(num >= 0f))
 		{
@@ -883,7 +883,7 @@ public class LevelObjectFactory
 		}
 		capsuleCollider.height = num;
 		capsuleCollider.material = prefabs.physicMaterials[0];
-		gameObject.layer = ((!currentObjectData.checkFlag(8388608)) ? 12 : 0);
+		gameObject.layer = currentObjectData.checkFlag(8388608) ? 0 : 12;
 		gameObject.transform.parent = parent.transform;
 		if (gameObject != parent)
 		{

@@ -58,13 +58,13 @@ public class tk2dAnimatedSprite : tk2dSprite
 
 	public void Play(string name)
 	{
-		int id = ((!anim) ? (-1) : anim.GetClipIdByName(name));
+		int id = anim ? anim.GetClipIdByName(name) : -1;
 		Play(id);
 	}
 
 	public void Play(string name, float clipStartTime)
 	{
-		int id = ((!anim) ? (-1) : anim.GetClipIdByName(name));
+		int id = anim ? anim.GetClipIdByName(name) : -1;
 		Play(id, clipStartTime);
 	}
 
@@ -85,7 +85,7 @@ public class tk2dAnimatedSprite : tk2dSprite
 
 	public int GetClipIdByName(string name)
 	{
-		return (!anim) ? (-1) : anim.GetClipIdByName(name);
+		return anim ? anim.GetClipIdByName(name) : -1;
 	}
 
 	public void Play(int id)

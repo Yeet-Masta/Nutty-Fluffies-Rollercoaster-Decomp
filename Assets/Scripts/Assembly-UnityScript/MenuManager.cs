@@ -352,7 +352,7 @@ public class MenuManager : BaseMenuManager
 	public virtual void OnGUI()
 	{
 		_0024OnGUI_0024locals_00241479 obj = new _0024OnGUI_0024locals_00241479();
-		if (GameData.LOCALIZATION_TEST && !(menuSwitcher.activeMenu != mainMenu))
+		if (GameData.LOCALIZATION_TEST && menuSwitcher.activeMenu == mainMenu)
 		{
 			obj._0024languageId = 0;
 			if (Popup.List(new Rect(Screen.width - 68, 84f, 64f, 20f), ref languagePopup, ref obj._0024languageId, "Lang: " + LocalizationManager.getInstance().getLanguage(), LocalizationManager.LANGUAGES, GUI.skin.button, new _0024OnGUI_0024closure_0024286(obj).Invoke, CustomLayoutOption.MinWidth(64f)))

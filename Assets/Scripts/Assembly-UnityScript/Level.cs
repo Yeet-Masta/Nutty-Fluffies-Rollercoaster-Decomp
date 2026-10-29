@@ -9,7 +9,7 @@ public class Level : MonoBehaviour
 	{
 		public virtual int Compare(LevelLayer a, LevelLayer b)
 		{
-			return (a.layer > b.layer) ? (-1) : ((a.layer < b.layer) ? 1 : 0);
+			return a.layer > b.layer ? -1 : (a.layer < b.layer ? 1 : 0);
 		}
 	}
 
@@ -131,7 +131,7 @@ public class Level : MonoBehaviour
 
 	public virtual LevelEntity findEntity(int uniqueID, GameObject customRoot)
 	{
-		Component[] componentsInChildren = ((!customRoot) ? gameObject : customRoot).GetComponentsInChildren(typeof(LevelEntity), true);
+		Component[] componentsInChildren = (customRoot ? customRoot : gameObject).GetComponentsInChildren(typeof(LevelEntity), true);
 		int num = 0;
 		Component[] array = componentsInChildren;
 		int length = array.Length;

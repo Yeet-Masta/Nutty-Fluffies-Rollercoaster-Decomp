@@ -176,10 +176,10 @@ public class CSpline2
 			else
 			{
 				float num4 = ((bEnd.x - bStart.x) * (bStart.y - aStart.y) - (bEnd.y - bStart.y) * (bStart.x - aStart.x)) / num;
-				num2 = ((!(num4 < 0f)) ? 1 : 0);
+				num2 = num4 < 0f ? 0 : 1;
 				if (num2 != 0)
 				{
-					num2 = ((!(num4 > 1f)) ? 1 : 0);
+					num2 = num4 > 1f ? 0 : 1;
 				}
 			}
 		}

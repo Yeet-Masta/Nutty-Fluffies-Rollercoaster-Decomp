@@ -20,9 +20,9 @@ public class Billboard : MonoBehaviour
 
 	private void Update()
 	{
-		float x = ((!lockX) ? theCamera.transform.localEulerAngles.x : transform.localEulerAngles.x);
-		float y = ((!lockY) ? theCamera.transform.localEulerAngles.y : transform.localEulerAngles.y);
-		float z = ((!lockZ) ? theCamera.transform.localEulerAngles.z : transform.localEulerAngles.z);
+		float x = lockX ? transform.localEulerAngles.x : theCamera.transform.localEulerAngles.x;
+		float y = lockY ? transform.localEulerAngles.y : theCamera.transform.localEulerAngles.y;
+		float z = lockZ ? transform.localEulerAngles.z : theCamera.transform.localEulerAngles.z;
 		transform.localEulerAngles = new Vector3(x, y, z);
 	}
 }

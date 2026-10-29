@@ -104,7 +104,7 @@ public class TriggerEnablePhysics : LevelTriggerActivatable
 		}
 		else if (param == "c")
 		{
-			result = ((!c) ? "no" : "yes");
+			result = c ? "yes" : "no";
 		}
 		else
 		{

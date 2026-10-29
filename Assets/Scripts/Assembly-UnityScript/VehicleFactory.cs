@@ -29,7 +29,7 @@ public class VehicleFactory
 		vehicle.carts[0].transform.parent = vehicle.transform;
 		(vehicle.carts[0] as DriverCart).rocket.SetActiveRecursively(false);
 		position.x -= num;
-		int num2 = default(int);
+		int num2 = 0;
 		for (num2 = 0; num2 < data.cartList.Length - 1; num2++)
 		{
 			Cart cart = createCart(position, vehicle.cartPrefab, trainType);

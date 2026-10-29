@@ -91,7 +91,7 @@ public class OSATraveller : ObjectScript
 		{
 			triggerActive = false;
 		}
-		startMove(waypointIndex, (waypointIndex < targetHandler.targetObjects.Length - 1) ? (waypointIndex + 1) : 0);
+		startMove(waypointIndex, waypointIndex < targetHandler.targetObjects.Length - 1 ? (waypointIndex + 1) : 0);
 		lastChangeTime = Time.time;
 	}
 
@@ -132,10 +132,10 @@ public class OSATraveller : ObjectScript
 			result = string.Empty + w;
 			break;
 		case "o":
-			result = ((!o) ? "no" : "yes");
+			result = o ? "yes" : "no";
 			break;
 		case "l":
-			result = ((!l) ? "no" : "yes");
+			result = l ? "yes" : "no";
 			break;
 		case "t":
 			result = targetHandler.getParamTargets();

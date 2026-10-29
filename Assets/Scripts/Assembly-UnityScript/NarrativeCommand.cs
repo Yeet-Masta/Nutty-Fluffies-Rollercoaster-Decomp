@@ -15,8 +15,8 @@ public class NarrativeCommand
 		this.position = position;
 		string[] array = text.Split(" "[0]);
 		name = array[0];
-		parameters = new string[Extensions.get_length((System.Array)array) - 1];
-		for (int i = 1; i < Extensions.get_length((System.Array)array); i++)
+		parameters = new string[array.Length - 1];
+		for (int i = 1; i < array.Length; i++)
 		{
 			parameters[i - 1] = array[i];
 		}

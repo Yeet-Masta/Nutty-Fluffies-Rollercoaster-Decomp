@@ -33,7 +33,7 @@ public class Magnet : Special
 		for (int i = 1; i < trainRef.carts.Length; i++)
 		{
 			GameObject gameObject = null;
-			gameObject = ((i != 0) ? ((GameObject)UnityEngine.Object.Instantiate(magnetGraphic, Vector3.zero, Quaternion.identity)) : magnetGraphic);
+			gameObject = i != 0 ? ((GameObject)UnityEngine.Object.Instantiate(magnetGraphic, Vector3.zero, Quaternion.identity)) : magnetGraphic;
 			gameObject.transform.parent = trainRef.carts[i].transform;
 			gameObject.transform.localPosition = localPosition;
 			effectRenderers[i - 1] = gameObject.GetComponent<Renderer>();

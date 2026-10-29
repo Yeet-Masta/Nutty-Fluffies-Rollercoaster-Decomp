@@ -143,7 +143,7 @@ public class ZLevel
 		float num2 = 99999f;
 		float result = 0f;
 		Vector3 vector = default(Vector3);
-		float num3 = default(float);
+		float num3 = 0f;
 		if (num >= partition.Length)
 		{
 			num = partition.Length - 1;

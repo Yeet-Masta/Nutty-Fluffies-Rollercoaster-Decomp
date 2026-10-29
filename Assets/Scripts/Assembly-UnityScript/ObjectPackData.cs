@@ -75,7 +75,7 @@ public class ObjectPackData
 	public virtual ObjectData getObjectByID(int id)
 	{
 		int objectIndexByID = getObjectIndexByID(id);
-		return (objectIndexByID != -1) ? objectList[objectIndexByID] : null;
+		return objectIndexByID != -1 ? objectList[objectIndexByID] : null;
 	}
 
 	public virtual int getObjectIndexByID(int id)

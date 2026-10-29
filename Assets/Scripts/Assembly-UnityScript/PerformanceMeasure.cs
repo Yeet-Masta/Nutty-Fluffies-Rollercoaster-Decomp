@@ -42,7 +42,7 @@ public class PerformanceMeasure : MonoBehaviour
 			Debug.Log("PERFORMANCE: " + list.Count);
 		}
 		bool flag = list.Count < 30;
-		PlayerPrefs.SetInt("ANDROID_LOW_DEF", (!flag) ? 0 : 0);
+		PlayerPrefs.SetInt("ANDROID_LOW_DEF", flag ? 0 : 0);
 		CommonData.reinit();
 	}
 

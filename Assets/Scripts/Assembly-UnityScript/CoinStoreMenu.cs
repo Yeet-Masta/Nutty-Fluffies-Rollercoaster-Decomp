@@ -145,7 +145,7 @@ public class CoinStoreMenu : StoreBaseMenu
 
 	public virtual void onPurchaseItem(int index)
 	{
-		if (Extensions.get_length((System.Array)iapItems) > index)
+		if (iapItems.Length > index)
 		{
 			if (GameData.LOG)
 			{
@@ -158,7 +158,7 @@ public class CoinStoreMenu : StoreBaseMenu
 	public virtual void onPurchasePricesReceived()
 	{
 		StoreKitProduct storeKitProduct = null;
-		float num = default(float);
+		float num = 0f;
 		float num2 = 1E+11f;
 		int i = 0;
 		IAPStoreItem[] array = iapItems;
@@ -238,7 +238,7 @@ public class CoinStoreMenu : StoreBaseMenu
 		string[] array2 = array;
 		for (int length = array2.Length; i < length; i++)
 		{
-			int result = default(int);
+			int result = 0;
 			if (array2[i] != null && int.TryParse(array2[i], out result))
 			{
 				GameData.INAPP_PURCHASE_TOKENS[productId] = result;

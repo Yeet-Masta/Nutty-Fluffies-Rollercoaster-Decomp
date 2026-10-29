@@ -170,6 +170,6 @@ public class TrainPreview : MonoBehaviour
 
 	public virtual GameObject getLastCart()
 	{
-		return activeCart[Extensions.get_length((System.Array)activeCart) - 1].gameObject;
+		return activeCart[activeCart.Length - 1].gameObject;
 	}
 }

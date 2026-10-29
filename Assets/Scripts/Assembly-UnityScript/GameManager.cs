@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 				{
 				default:
 					Screen.SetResolution(GameData.actualDeviceResolution.width, GameData.actualDeviceResolution.height, Screen.fullScreenMode);
-					result = (YieldDefault(2) ? 1 : 0);
+					result = YieldDefault(2) ? 1 : 0;
 					break;
 				case 2:
 					YieldDefault(1);
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
 		setGameState(0);
 		stat = RollerCoasterStatistics.getInstance();
 		sm = RollerCoasterSounds.getInstance();
-		controller = (NFPortInput.UseTouch ? (NFPortInput.UseTouch ? (NFPortInput.UseTouch ? controller.GetComponent<TouchScreenController>() as Controller : controller.GetComponent<KeyboardController>() as Controller) : controller.GetComponent<KeyboardController>() as Controller) : controller.GetComponent<KeyboardController>() as Controller);
+		controller = NFPortInput.UseTouch ? (NFPortInput.UseTouch ? (NFPortInput.UseTouch ? controller.GetComponent<TouchScreenController>() as Controller : controller.GetComponent<KeyboardController>() as Controller) : controller.GetComponent<KeyboardController>() as Controller) : controller.GetComponent<KeyboardController>() as Controller;
 		restarts = 0;
 		gameUI.hideAll();
 		gameUI.activatePauseButton(false);
@@ -177,7 +177,7 @@ public class GameManager : MonoBehaviour
 			MonoBehaviour.print("TUTORIAL COMPLETE AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
 		}
 		GameData.VehicleData vehicleData = null;
-		vehicleData = ((!CommonData.IN_EDITOR_MODE) ? GameData.TRAIN_DATA : GameData.VehicleData.createTestTrain(specialCartType));
+		vehicleData = CommonData.IN_EDITOR_MODE ? GameData.VehicleData.createTestTrain(specialCartType) : GameData.TRAIN_DATA;
 		vehicle = VehicleFactory.getInstance().create(vehicleData, gameRoot, new Vector3(startPoint.x, startPoint.y, 0f));
 		vehicle.controller = controller;
 		specialCartType = vehicleData.specialCart;

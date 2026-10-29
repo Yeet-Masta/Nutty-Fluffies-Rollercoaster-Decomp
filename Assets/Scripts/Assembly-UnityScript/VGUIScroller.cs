@@ -78,7 +78,7 @@ public class VGUIScroller : VGUIElement
 		}
 		else
 		{
-			float num = default(float);
+			float num = 0f;
 			Vector3 worldPos = GetWorldPos(Input.mousePosition);
 			if (horizontalScroll)
 			{

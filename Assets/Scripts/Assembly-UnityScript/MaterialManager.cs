@@ -54,7 +54,7 @@ public class MaterialManager
 		Material material = null;
 		if (!materialList.ContainsKey(key))
 		{
-			material = new Material((!alpha) ? LevelDataPrefabs.getInstance().nonAlphaShader : LevelDataPrefabs.getInstance().alphaShader);
+			material = new Material(alpha ? LevelDataPrefabs.getInstance().alphaShader : LevelDataPrefabs.getInstance().nonAlphaShader);
 			material.mainTexture = tex;
 			materialList[key] = material;
 		}

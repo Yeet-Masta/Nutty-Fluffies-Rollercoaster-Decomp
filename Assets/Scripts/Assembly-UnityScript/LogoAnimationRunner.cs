@@ -12,13 +12,13 @@ public class LogoAnimationRunner : MonoBehaviour
 	public virtual void Start()
 	{
 		Application.targetFrameRate = GameData.targetFPS;
-		int num = default(int);
+		int num = 0;
 		loadingMenu.gameObject.SetActiveRecursively(false);
-		for (num = 0; num < Extensions.get_length((System.Array)redlynxAnimators); num++)
+		for (num = 0; num < redlynxAnimators.Length; num++)
 		{
 			redlynxAnimators[num].gameObject.active = false;
 		}
-		for (num = 0; num < Extensions.get_length((System.Array)ubisoftAnimators); num++)
+		for (num = 0; num < ubisoftAnimators.Length; num++)
 		{
 			ubisoftAnimators[num].gameObject.active = false;
 		}
@@ -27,7 +27,7 @@ public class LogoAnimationRunner : MonoBehaviour
 
 	public virtual void startRedlynxAnim()
 	{
-		for (int i = 0; i < Extensions.get_length((System.Array)redlynxAnimators); i++)
+		for (int i = 0; i < redlynxAnimators.Length; i++)
 		{
 			redlynxAnimators[i].gameObject.active = true;
 			redlynxAnimators[i].activate();
@@ -37,8 +37,8 @@ public class LogoAnimationRunner : MonoBehaviour
 
 	public virtual void endRedlynxAnim()
 	{
-		int num = default(int);
-		for (num = 0; num < Extensions.get_length((System.Array)redlynxAnimators); num++)
+		int num = 0;
+		for (num = 0; num < redlynxAnimators.Length; num++)
 		{
 			redlynxAnimators[num].deactivate();
 			redlynxAnimators[num].reverse = true;
@@ -49,12 +49,12 @@ public class LogoAnimationRunner : MonoBehaviour
 
 	public virtual void startUbisoftAnim()
 	{
-		int num = default(int);
-		for (num = 0; num < Extensions.get_length((System.Array)redlynxAnimators); num++)
+		int num = 0;
+		for (num = 0; num < redlynxAnimators.Length; num++)
 		{
 			redlynxAnimators[num].gameObject.active = false;
 		}
-		for (num = 0; num < Extensions.get_length((System.Array)ubisoftAnimators); num++)
+		for (num = 0; num < ubisoftAnimators.Length; num++)
 		{
 			ubisoftAnimators[num].gameObject.active = true;
 			ubisoftAnimators[num].activate();
@@ -64,7 +64,7 @@ public class LogoAnimationRunner : MonoBehaviour
 
 	public virtual void endUbisoftAnim()
 	{
-		for (int i = 0; i < Extensions.get_length((System.Array)ubisoftAnimators); i++)
+		for (int i = 0; i < ubisoftAnimators.Length; i++)
 		{
 			ubisoftAnimators[i].deactivate();
 			ubisoftAnimators[i].reverse = true;
@@ -75,8 +75,8 @@ public class LogoAnimationRunner : MonoBehaviour
 
 	public virtual void showLoading()
 	{
-		int num = default(int);
-		for (num = 0; num < Extensions.get_length((System.Array)ubisoftAnimators); num++)
+		int num = 0;
+		for (num = 0; num < ubisoftAnimators.Length; num++)
 		{
 			ubisoftAnimators[num].gameObject.active = false;
 		}

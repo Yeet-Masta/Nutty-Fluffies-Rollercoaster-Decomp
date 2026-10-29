@@ -28,6 +28,6 @@ public class OSARotate : ObjectScript
 
 	public override string getParam(string param)
 	{
-		return (!(param == "s")) ? base.getParam(param) : (string.Empty + s);
+		return param == "s" ? (string.Empty + s) : base.getParam(param);
 	}
 }

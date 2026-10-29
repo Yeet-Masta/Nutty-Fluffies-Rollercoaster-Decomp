@@ -17,12 +17,12 @@ public class CustomSettings
 
 	public virtual string getValue(string key, string defaultValue)
 	{
-		return (!list.ContainsKey(key)) ? defaultValue : list[key];
+		return list.ContainsKey(key) ? list[key] : defaultValue;
 	}
 
 	public virtual int getIntValue(string key, int defaultValue)
 	{
-		return (!list.ContainsKey(key)) ? defaultValue : int.Parse(list[key]);
+		return list.ContainsKey(key) ? int.Parse(list[key]) : defaultValue;
 	}
 
 	public virtual void load(JSONObject j)

@@ -16,7 +16,7 @@ public class LevelObject : LevelEntity
 
 	public virtual void resetPosition(LevelLayer onLayer)
 	{
-		Transform transform = ((!onLayer) ? gameObject.transform.parent : onLayer.transform);
+		Transform transform = onLayer ? onLayer.transform : gameObject.transform.parent;
 		float x = initialPosition.x * transform.localScale.x + transform.position.x;
 		Vector3 position = this.transform.position;
 		position.x = x;
@@ -33,7 +33,7 @@ public class LevelObject : LevelEntity
 
 	public virtual void savePosition(LevelLayer onLayer)
 	{
-		Transform transform = ((!onLayer) ? gameObject.transform.parent : onLayer.transform);
+		Transform transform = onLayer ? onLayer.transform : gameObject.transform.parent;
 		initialPosition.x = (this.transform.position.x - transform.position.x) * (1f / transform.localScale.x);
 		initialPosition.y = (this.transform.position.y - transform.position.y) * (1f / transform.localScale.y);
 		initialPosition.z = this.transform.eulerAngles.z;

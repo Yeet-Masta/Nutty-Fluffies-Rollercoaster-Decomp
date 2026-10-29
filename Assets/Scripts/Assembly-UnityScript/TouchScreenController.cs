@@ -20,7 +20,7 @@ public class TouchScreenController : Controller
 	{
 		setAcceleratePressed(false);
 		setDeacceleratePressed(false);
-		if (Extensions.get_length((System.Array)Input.touches) == 0)
+		if (Input.touches.Length == 0)
 		{
 			return;
 		}

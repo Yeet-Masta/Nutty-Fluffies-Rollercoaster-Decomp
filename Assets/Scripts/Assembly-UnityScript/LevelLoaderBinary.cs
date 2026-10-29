@@ -169,13 +169,13 @@ public class LevelLoaderBinary
 	{
 		int num = sr.ReadByte();
 		LevelLayerData levelLayerData = null;
-		float x = default(float);
-		float y = default(float);
-		string scriptAttachment = default(string);
-		string scriptParams = default(string);
-		int flags = default(int);
-		int devices = default(int);
-		float rotation = default(float);
+		float x = 0f;
+		float y = 0f;
+		string scriptAttachment = null;
+		string scriptParams = null;
+		int flags = 0;
+		int devices = 0;
+		float rotation = 0f;
 		for (int i = 0; i < num; i++)
 		{
 			int num2 = 0;
@@ -209,7 +209,7 @@ public class LevelLoaderBinary
 					for (int j = 0; j < num3; j++)
 					{
 						LevelEntityData levelEntityData = null;
-						int num4 = default(int);
+						int num4 = 0;
 						do
 						{
 							num4 = sr.ReadByte();

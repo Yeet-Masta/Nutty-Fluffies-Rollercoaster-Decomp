@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class LoadingMenu : BaseMenu
 {
 	public GameObject graphic;
@@ -10,7 +8,6 @@ public class LoadingMenu : BaseMenu
 
 	private bool activated;
 
-	[NonSerialized]
 	public static bool isLoading;
 
 	public override void Awake()

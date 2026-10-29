@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class VGUIImageInvoker : VGUIImage
 {
 	public GameObject invokeObject;

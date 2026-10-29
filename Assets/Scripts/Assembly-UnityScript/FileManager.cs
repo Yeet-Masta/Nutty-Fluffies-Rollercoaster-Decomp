@@ -21,7 +21,6 @@ public class FileManager
 
 	private List<string> themePackNames;
 
-	[NonSerialized]
 	private static FileManager instance;
 
 	protected FileManager()
@@ -321,7 +320,6 @@ public class FileManager
 
 	private string[] getFoldersFullPaths(string dir)
 	{
-		string[] array = null;
 		if (Directory.Exists(dir))
 		{
 			return Directory.GetDirectories(dir);

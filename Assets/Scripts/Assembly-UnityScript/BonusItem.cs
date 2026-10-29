@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class BonusItem : MonoBehaviour
 {
 	public VGUITextTK2D multiplier;

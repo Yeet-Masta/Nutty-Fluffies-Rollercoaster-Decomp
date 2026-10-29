@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class MenuHeader : MonoBehaviour
 {
 	public tk2dTextMesh oneLine;

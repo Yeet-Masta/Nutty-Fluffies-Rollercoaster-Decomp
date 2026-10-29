@@ -1,13 +1,9 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class CommunityFeatures : MonoBehaviour
 {
-	[NonSerialized]
 	private const bool DEBUG_COMMUNITY_FEATURES = false;
 
-	[NonSerialized]
 	private static CommunityFeatures instance;
 
 	private MenuManager mmgr;
@@ -16,28 +12,20 @@ public class CommunityFeatures : MonoBehaviour
 
 	public int offerInterval;
 
-	[NonSerialized]
 	public static string COMMUNITY_TEXT_STORE_POST_FACEBOOK = "I love Nutty Fluffies! You should try it too!";
 
-	[NonSerialized]
 	public static string COMMUNITY_TEXT_STORE_POST_TWITTER = "I love Nutty Fluffies! You should try it too!";
 
-	[NonSerialized]
 	public static string COMMUNITY_TEXT_RESULT_SCREEN_FACEBOOK = "I just finished {0} and got {1} hearts!";
 
-	[NonSerialized]
 	public static string COMMUNITY_TEXT_RESULT_SCREEN_TWITTER = "I just finished {0} and got {1} hearts!";
 
-	[NonSerialized]
 	public static string COMMUNITY_TEXT_EMAIL_POST = "I just completed the last track! w00t!";
 
-	[NonSerialized]
 	public static string COMMUNITY_TEXT_EMAIL_TITLE = "Email Title";
 
-	[NonSerialized]
 	public static readonly string[] FEATURE_KEY = new string[6] { "TWITTER_POST", "FACEBOOK_POST", "FACEBOOK_LIKE", "SEND_EMAIL", "DOUBLE_COINS", "TAPJOY_OFFERWALL" };
 
-	[NonSerialized]
 	public static int[] FEATURE_VALUES = new int[6] { -1, -1, -1, -1, 0, 0 };
 
 	public int[] featureUseLimits;
@@ -46,35 +34,26 @@ public class CommunityFeatures : MonoBehaviour
 
 	public GameObject[] featureGraphics;
 
-	[NonSerialized]
 	public const int MODE_TWITTER_POST = 0;
 
-	[NonSerialized]
 	public const int MODE_FACEBOOK_POST = 1;
 
-	[NonSerialized]
 	public const int MODE_FACEBOOK_LIKE = 2;
 
-	[NonSerialized]
 	public const int MODE_SEND_EMAIL = 3;
 
-	[NonSerialized]
 	public const int MODE_DOUBLE_COINS = 4;
 
-	[NonSerialized]
 	public const int MODE_TAPJOY_OFFERWALL = 5;
 
-	[NonSerialized]
 	public const int MODE_COUNT = 6;
 
-	[NonSerialized]
 	public static readonly int[] FEATURE_OFFER_ORDER = new int[5] { 2, 0, 4, 3, 5 };
 
 	private int offerMode;
 
 	private int internalOfferInterval;
 
-	[NonSerialized]
 	public static bool showingOffer;
 
 	public CommunityFeatures()

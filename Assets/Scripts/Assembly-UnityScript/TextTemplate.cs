@@ -5,7 +5,6 @@ using UnityScript.Lang;
 [Serializable]
 public class TextTemplate
 {
-	[NonSerialized]
 	private static string[] val = new string[3];
 
 	public static string getString(string template, string value)

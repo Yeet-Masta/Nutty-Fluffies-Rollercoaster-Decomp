@@ -1,8 +1,6 @@
-using System;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class VGUIImagesTK2D : VGUIImage
 {
 	public GameObject[] images;

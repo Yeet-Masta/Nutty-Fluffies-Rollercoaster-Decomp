@@ -1,6 +1,3 @@
-using System;
-
-[Serializable]
 public class NewsButton : VGUIButton
 {
 	public VGUIImage notifyImage;

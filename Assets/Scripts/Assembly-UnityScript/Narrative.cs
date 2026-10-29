@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.IO;
 using Boo.Lang.Runtime;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class Narrative : VGUISwitchObject
 {
 	public string autoLoadLinesFrom;
@@ -146,7 +144,6 @@ public class Narrative : VGUISwitchObject
 
 	private void appendLine(string textContent)
 	{
-		AudioClip audioClip = null;
 		lines.Push(new NarrativeLine(textContent));
 	}
 
@@ -186,13 +183,7 @@ public class Narrative : VGUISwitchObject
 		{
 			obj = RuntimeServices.Coerce(obj, typeof(NarrativeCommand));
 		}
-		NarrativeCommand narrativeCommand = (NarrativeCommand)obj;
-		object obj2 = currentLine.commands[currentCommandIndex];
-		if (!(obj2 is NarrativeCommand))
-		{
-			obj2 = RuntimeServices.Coerce(obj2, typeof(NarrativeCommand));
-		}
-		return (NarrativeCommand)obj2;
+		return (NarrativeCommand)obj;
 	}
 
 	public override void activate()
@@ -231,7 +222,7 @@ public class Narrative : VGUISwitchObject
 
 	public virtual void narrateAudio()
 	{
-		NarrativeCommand nextCommand = getNextCommand();
+		getNextCommand();
 		GeneralSoundEffects.playSound(currentLine.narrateAudio);
 	}
 

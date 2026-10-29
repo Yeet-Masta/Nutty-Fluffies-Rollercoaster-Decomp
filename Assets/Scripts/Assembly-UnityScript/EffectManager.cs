@@ -1,10 +1,7 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class EffectManager : MonoBehaviour
 {
-	[NonSerialized]
 	private static EffectManager instance;
 
 	public ParticleEmitter dustEmitter;

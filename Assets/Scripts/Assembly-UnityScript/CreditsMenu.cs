@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class CreditsMenu : BaseMenu
 {
 	private VGUIScroller scroller;
@@ -12,7 +10,6 @@ public class CreditsMenu : BaseMenu
 
 	private float currentY;
 
-	[NonSerialized]
 	public static bool isLoaded;
 
 	public CreditsMenu()
@@ -83,17 +80,17 @@ public class CreditsMenu : BaseMenu
 		Texts2 = (tk2dTextMesh)UnityEngine.Object.Instantiate(Texts, Texts.transform.position, Quaternion.identity);
 		float x = -0.23f;
 		Vector3 position = Texts2.transform.position;
-		float num = (position.x = x);
-		Vector3 vector = (Texts2.transform.position = position);
+		position.x = x;
+		Texts2.transform.position = position;
 		currentY -= 0.1f;
 		float y = currentY;
 		Vector3 position2 = Texts2.transform.position;
-		float num2 = (position2.y = y);
-		Vector3 vector3 = (Texts2.transform.position = position2);
+		position2.y = y;
+		Texts2.transform.position = position2;
 		float z = 0f;
 		Vector3 position3 = Texts2.transform.position;
-		float num3 = (position3.z = z);
-		Vector3 vector5 = (Texts2.transform.position = position3);
+		position3.z = z;
+		Texts2.transform.position = position3;
 		Texts2.setText(name);
 		Texts2.transform.parent = scroller.transform;
 	}
@@ -116,17 +113,17 @@ public class CreditsMenu : BaseMenu
 		Texts2 = (tk2dTextMesh)UnityEngine.Object.Instantiate(Texts, Texts.transform.position, Quaternion.identity);
 		float x = -0.23f;
 		Vector3 position = Texts2.transform.position;
-		float num = (position.x = x);
-		Vector3 vector = (Texts2.transform.position = position);
+		position.x = x;
+		Texts2.transform.position = position;
 		currentY -= 0.15f;
 		float y = currentY;
 		Vector3 position2 = Texts2.transform.position;
-		float num2 = (position2.y = y);
-		Vector3 vector3 = (Texts2.transform.position = position2);
+		position2.y = y;
+		Texts2.transform.position = position2;
 		float z = 0f;
 		Vector3 position3 = Texts2.transform.position;
-		float num3 = (position3.z = z);
-		Vector3 vector5 = (Texts2.transform.position = position3);
+		position3.z = z;
+		Texts2.transform.position = position3;
 		Texts2.setText(title);
 		Texts2.transform.parent = scroller.transform;
 	}
@@ -134,9 +131,5 @@ public class CreditsMenu : BaseMenu
 	public override void onBackButton()
 	{
 		BaseMenuManager.getInstance().onPreviousMenu();
-	}
-
-	public virtual void Main()
-	{
 	}
 }

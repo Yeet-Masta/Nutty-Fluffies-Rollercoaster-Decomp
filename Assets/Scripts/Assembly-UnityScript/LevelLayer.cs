@@ -5,7 +5,6 @@ using Boo.Lang.Runtime;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class LevelLayer : MonoBehaviour
 {
 	[Serializable]
@@ -30,7 +29,6 @@ public class LevelLayer : MonoBehaviour
 		}
 	}
 
-	[NonSerialized]
 	public const int FLAG_DISABLE_SCALE = 1;
 
 	public int referenceId;
@@ -184,8 +182,8 @@ public class LevelLayer : MonoBehaviour
 			(((MeshFilter)gameObject.GetComponent(typeof(MeshFilter))) as MeshFilter).mesh = mesh;
 			float z = 1f * (float)val;
 			Vector3 localPosition = gameObject.transform.localPosition;
-			float num3 = (localPosition.z = z);
-			Vector3 vector = (gameObject.transform.localPosition = localPosition);
+			localPosition.z = z;
+			gameObject.transform.localPosition = localPosition;
 		}
 		gatherTable.Clear();
 	}

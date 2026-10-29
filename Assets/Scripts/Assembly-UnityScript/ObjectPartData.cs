@@ -26,7 +26,6 @@ public class ObjectPartData
 		NUM_OBJECT_PART_TYPES = PART_SPHERE_TRIGGER
 	}
 
-	[NonSerialized]
 	public static readonly string[] PART_NAMES = new string[7] { "<none>", "Texture", "Box Collision", "Sphere Collision", "Polygon Collision", "Box Trigger", "Sphere Trigger" };
 
 	public int type;

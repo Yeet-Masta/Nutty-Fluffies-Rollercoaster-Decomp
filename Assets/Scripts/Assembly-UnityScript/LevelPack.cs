@@ -38,22 +38,16 @@ public class LevelPack
 		}
 	}
 
-	[NonSerialized]
 	public const int FLAG_UNLOCKED = 1;
 
-	[NonSerialized]
 	public const int FLAG_INVISIBLE = 2;
 
-	[NonSerialized]
 	public const int FLAG_EXTERNAL = 4;
 
-	[NonSerialized]
 	public const int FLAG_COMPLETED = 8;
 
-	[NonSerialized]
 	public static readonly int LEVEL_FLAG_MASK = 6;
 
-	[NonSerialized]
 	public static readonly int FLAG_RESERVED_FLAGS = 2147418112;
 
 	public string fileName;
@@ -68,7 +62,6 @@ public class LevelPack
 
 	public float priceMultiplier;
 
-	[NonSerialized]
 	private static List<LevelPack> levelPacks;
 
 	public LevelPack()

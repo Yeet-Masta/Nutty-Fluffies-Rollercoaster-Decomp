@@ -1,12 +1,7 @@
-using System;
-
-[Serializable]
 public class BaseMenu : VGUIElement
 {
-	[NonSerialized]
 	public static BaseMenuManager mmgr;
 
-	[NonSerialized]
 	public static AnimationManager anim;
 
 	public BaseMenu nextMenu;

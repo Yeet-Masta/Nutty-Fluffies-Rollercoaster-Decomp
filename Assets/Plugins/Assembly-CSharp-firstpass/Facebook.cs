@@ -3,15 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Prime31;
-using UnityEngine;
 
 public class Facebook : P31RestKit
 {
 	public string accessToken;
 
 	public string appAccessToken;
-
-	private static Facebook _instance;
 
 	public static Facebook instance
 	{

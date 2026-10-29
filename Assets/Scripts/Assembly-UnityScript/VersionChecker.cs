@@ -1,15 +1,9 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class VersionChecker : MonoBehaviour
 {
-	private GameObject listenerRef;
-
-	[NonSerialized]
 	private static VersionChecker instance;
 
-	[NonSerialized]
 	private static bool hasChecked;
 
 	public int checkInterval;

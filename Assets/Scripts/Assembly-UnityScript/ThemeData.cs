@@ -7,7 +7,6 @@ using UnityScript.Lang;
 [Serializable]
 public class ThemeData
 {
-	[NonSerialized]
 	public const string DEFAULT_THEME_NAME = "woodTrackTheme";
 
 	public ThemeSettings settings;

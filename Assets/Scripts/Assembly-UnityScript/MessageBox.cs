@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Boo.Lang.Runtime;
 using UnityEngine;
 
-[Serializable]
 public class MessageBox : BaseMenu
 {
 	[Serializable]

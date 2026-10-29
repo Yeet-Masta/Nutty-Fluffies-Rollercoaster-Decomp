@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class TriggerHideObject : LevelTrigger
 {
 	public override void handleAction(Collider other)

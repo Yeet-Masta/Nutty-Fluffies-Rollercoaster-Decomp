@@ -6,7 +6,6 @@ using Boo.Lang.Runtime;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class DynamicPropertyLoader : MonoBehaviour
 {
 	[Serializable]

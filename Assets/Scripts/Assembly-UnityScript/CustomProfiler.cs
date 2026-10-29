@@ -8,10 +8,8 @@ using UnityScript.Lang;
 [Serializable]
 public class CustomProfiler
 {
-	[NonSerialized]
 	private static Dictionary<string, float> totalTimeDict;
 
-	[NonSerialized]
 	private static Dictionary<string, float> interTimeDict;
 
 	public static void start()

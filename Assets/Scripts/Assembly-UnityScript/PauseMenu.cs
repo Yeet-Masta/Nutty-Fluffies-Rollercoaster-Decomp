@@ -1,17 +1,13 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class PauseMenu : VGUIElement
 {
 	public Transform pauseButton;
 
 	private bool shown;
 
-	[NonSerialized]
 	public static bool handlebackKey = true;
 
-	[NonSerialized]
 	public static bool isPauseMenuEnable;
 
 	public override void activate()
@@ -27,12 +23,12 @@ public class PauseMenu : VGUIElement
 		transform.Find("TapjoyButton").gameObject.SetActive(false);
 		float x = -0.1536663f;
 		Vector3 position = transform.Find("MissionButton").gameObject.transform.position;
-		float num = (position.x = x);
-		Vector3 vector = (transform.Find("MissionButton").gameObject.transform.position = position);
+		position.x = x;
+		transform.Find("MissionButton").gameObject.transform.position = position;
 		float x2 = 0.1463337f;
 		Vector3 position2 = transform.Find("HelpButton").gameObject.transform.position;
-		float num2 = (position2.x = x2);
-		Vector3 vector3 = (transform.Find("HelpButton").gameObject.transform.position = position2);
+		position2.x = x2;
+		transform.Find("HelpButton").gameObject.transform.position = position2;
 	}
 
 	public override void deactivate()

@@ -1,10 +1,7 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class MainMenu : BaseMenu
 {
-	[NonSerialized]
 	private static bool loginCalled;
 
 	public VGUIButton newsButton;

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Boo.Lang;
 using UnityEngine;
 
-[Serializable]
 public class VGUITextNotify : VGUINotify
 {
 	[Serializable]

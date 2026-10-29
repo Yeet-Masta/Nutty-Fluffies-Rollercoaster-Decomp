@@ -2,21 +2,15 @@ using System;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class NotificationManager : MonoBehaviour
 {
-	[NonSerialized]
 	private static readonly int SECONDS_IN_DAY = 86400;
 
-	[NonSerialized]
 	private const long TICKS_IN_SECOND = 10000000L;
 
-	[NonSerialized]
 	private static NotificationManager instance;
 
 	private bool activated;
-
-	private bool inited;
 
 	private bool didStart;
 
@@ -118,7 +112,7 @@ public class NotificationManager : MonoBehaviour
 		int num = (int)getRevenue(days);
 		if (num > 0)
 		{
-			string text = LocalizationManager.localize("REVENUE_TEXT_MESSAGE_" + number).Replace("%d", string.Empty + GameData.formatTokenValue(string.Empty + num));
+			LocalizationManager.localize("REVENUE_TEXT_MESSAGE_" + number).Replace("%d", string.Empty + GameData.formatTokenValue(string.Empty + num));
 		}
 	}
 

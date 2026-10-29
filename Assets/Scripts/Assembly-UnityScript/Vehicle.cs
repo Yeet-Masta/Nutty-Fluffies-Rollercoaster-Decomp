@@ -1,22 +1,15 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class Vehicle : MonoBehaviour
 {
-	[NonSerialized]
 	public static readonly int CART_NORMAL = -1;
 
-	[NonSerialized]
 	public const int CART_ROCKET = 0;
 
-	[NonSerialized]
 	public const int CART_MAGNET = 1;
 
-	[NonSerialized]
 	public const int CART_HOVER = 2;
 
-	[NonSerialized]
 	public const int MAX_PUSH_SPEED = 30;
 
 	public float maxPushSpeedSliding;
@@ -304,7 +297,6 @@ public class Vehicle : MonoBehaviour
 				ticker = 0;
 			}
 			cartsInAir = 0;
-			int num3 = 0;
 			int num4 = default(int);
 			int l = 0;
 			Cart[] array4 = carts;
@@ -315,8 +307,6 @@ public class Vehicle : MonoBehaviour
 					cartsInAir++;
 				}
 			}
-			float num5 = 0f;
-			int num6 = 0;
 			bool flag3 = false;
 			for (num4 = 0; num4 < cartCount; num4++)
 			{
@@ -535,7 +525,7 @@ public class Vehicle : MonoBehaviour
 
 	private void applyTorque(float amount, float generalSpeed)
 	{
-		bool flag = controller.isCurrentControlTouchBased();
+		controller.isCurrentControlTouchBased();
 		int num = 0;
 		float num2 = 0f;
 		int i = 0;
@@ -544,7 +534,6 @@ public class Vehicle : MonoBehaviour
 		{
 			int num3 = (int)Vector3.Dot(array[i].transform.right, array[i].rb.velocity);
 			num2 = amount * 50f;
-			float num4 = 30f;
 			if ((!(amount <= 0f) && num3 < 30) || (!(amount >= 0f) && num3 > -30))
 			{
 				array[i].rb.AddForce(array[i].transform.right * num2);

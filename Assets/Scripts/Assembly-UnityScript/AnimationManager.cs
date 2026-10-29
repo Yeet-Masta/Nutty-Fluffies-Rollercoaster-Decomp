@@ -1,14 +1,11 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class AnimationManager : MonoBehaviour
 {
 	public ScaleAnimator scaleAnimator;
 
 	public AlphaAnimator alphaAnimator;
 
-	[NonSerialized]
 	private static AnimationManager instance;
 
 	public static AnimationManager getInstance()

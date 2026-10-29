@@ -1,8 +1,6 @@
-using System;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class GeneralSoundEffects : MonoBehaviour
 {
 	public int oneShotSoundAmount;
@@ -15,7 +13,6 @@ public class GeneralSoundEffects : MonoBehaviour
 
 	public float playFalloff;
 
-	[NonSerialized]
 	protected static GeneralSoundEffects instance;
 
 	public GeneralSoundEffects()

@@ -1,14 +1,10 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class VGUITextNative : VGUIText
 {
 	private Mesh mesh;
 
 	private MeshFilter meshFilter;
-
-	private Texture2D texture;
 
 	private MeshRenderer meshRenderer;
 

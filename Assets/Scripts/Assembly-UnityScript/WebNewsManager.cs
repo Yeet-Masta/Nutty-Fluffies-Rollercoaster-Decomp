@@ -3,7 +3,6 @@ using System.Collections;
 using Boo.Lang.Runtime;
 using UnityEngine;
 
-[Serializable]
 public class WebNewsManager : MonoBehaviour
 {
 	[Serializable]
@@ -14,13 +13,10 @@ public class WebNewsManager : MonoBehaviour
 		IDLE = 2
 	}
 
-	[NonSerialized]
 	private static string NEWS_KEY = "WEBNEWS_LOCAL_VERSION";
 
-	[NonSerialized]
 	public static int ERROR_RETRY_DELAY = 60;
 
-	[NonSerialized]
 	private static WebNewsManager instance;
 
 	public string newsURL;
@@ -80,7 +76,6 @@ public class WebNewsManager : MonoBehaviour
 		{
 			return;
 		}
-		int num = default(int);
 		switch (state)
 		{
 		case State.INIT:

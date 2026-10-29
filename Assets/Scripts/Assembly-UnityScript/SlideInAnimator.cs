@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class SlideInAnimator : VGUIAnimator
 {
 	public Vector3 from;

@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class VGUIRunningValue : VGUIText
 {
 	public float duration;
@@ -16,21 +14,15 @@ public class VGUIRunningValue : VGUIText
 
 	public bool changingSoundPitch;
 
-	private float startTime;
-
 	private int valueFrom;
 
 	private int valueTo;
 
 	private float currentValue;
 
-	private int direction;
-
 	private int steps;
 
 	private int totalSteps;
-
-	private int stepTime;
 
 	private float valueStep;
 
@@ -50,14 +42,6 @@ public class VGUIRunningValue : VGUIText
 		valueFrom = from;
 		valueTo = to;
 		currentValue = from;
-		if (to - from > 0)
-		{
-			direction = 1;
-		}
-		else
-		{
-			direction = -1;
-		}
 		steps = 0;
 		totalSteps = Mathf.Abs(to - from);
 		totalSteps = (int)Mathf.Min(totalSteps, Mathf.Floor(duration / stepDuration));

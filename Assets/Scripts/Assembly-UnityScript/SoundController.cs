@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class SoundController : MonoBehaviour
 {
 	public float controlValue;

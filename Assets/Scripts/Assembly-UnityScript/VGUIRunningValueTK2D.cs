@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class VGUIRunningValueTK2D : VGUIRunningValue
 {
 	public tk2dTextMesh textMeshTK;

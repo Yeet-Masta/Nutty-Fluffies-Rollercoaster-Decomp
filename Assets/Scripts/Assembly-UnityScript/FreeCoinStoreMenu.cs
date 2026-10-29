@@ -1,8 +1,6 @@
-using System;
 using Boo.Lang.Runtime;
 using UnityEngine;
 
-[Serializable]
 public class FreeCoinStoreMenu : CoinStoreMenu
 {
 	private bool wasFreeCoinStoreActive;
@@ -60,19 +58,19 @@ public class FreeCoinStoreMenu : CoinStoreMenu
 				{
 					float x = getItem("DP_PURCHASE_FACEBOOK_LIKE").button.transform.position.x;
 					Vector3 position = button.transform.position;
-					float num = (position.x = x);
-					Vector3 vector = (button.transform.position = position);
+					position.x = x;
+					button.transform.position = position;
 				}
 				if (CommunityFeatures.FEATURE_KEY[i] == "FACEBOOK_POST")
 				{
 					float x2 = getItem("DP_PURCHASE_SEND_EMAIL").button.transform.position.x;
 					Vector3 position2 = button.transform.position;
-					float num2 = (position2.x = x2);
-					Vector3 vector3 = (button.transform.position = position2);
+					position2.x = x2;
+					button.transform.position = position2;
 				}
 				item.price = CommunityFeatures.FEATURE_VALUES[i];
 				item.updatePriceText();
-				bool flag2 = CommunityFeatures.getInstance().isEnabled(i);
+				CommunityFeatures.getInstance().isEnabled(i);
 				button.priceText.gameObject.SetActiveRecursively(CommunityFeatures.getInstance().isEnabled(i));
 			}
 			else

@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[Serializable]
 public class ButtonPressAnimator : VGUIAnimator
 {
 	private float origScale;
@@ -56,12 +55,12 @@ public class ButtonPressAnimator : VGUIAnimator
 			float num = (1f - Mathf.Sin(timeInterpolator * (float)Math.PI * 0.5f) * factor) * origScale;
 			float x = num;
 			Vector3 localScale = target.localScale;
-			float num2 = (localScale.x = x);
-			Vector3 vector = (target.localScale = localScale);
+			localScale.x = x;
+			target.localScale = localScale;
 			float y = num;
 			Vector3 localScale2 = target.localScale;
-			float num3 = (localScale2.y = y);
-			Vector3 vector3 = (target.localScale = localScale2);
+			localScale2.y = y;
+			target.localScale = localScale2;
 		}
 		checkComplete(timeInterpolator);
 	}
@@ -81,12 +80,12 @@ public class ButtonPressAnimator : VGUIAnimator
 		{
 			float x = origScale;
 			Vector3 localScale = target.localScale;
-			float num = (localScale.x = x);
-			Vector3 vector = (target.localScale = localScale);
+			localScale.x = x;
+			target.localScale = localScale;
 			float y = origScale;
 			Vector3 localScale2 = target.localScale;
-			float num2 = (localScale2.y = y);
-			Vector3 vector3 = (target.localScale = localScale2);
+			localScale2.y = y;
+			target.localScale = localScale2;
 			if (target != origScaleSource)
 			{
 				MonoBehaviour.print("RESTORING ORIG SCALE TO OBJECT " + target.name + " WHICH WAS ORIGINALLY STORED FROM " + origScaleSource.name + ", STOREPOINT: " + origScaleStorePoint);

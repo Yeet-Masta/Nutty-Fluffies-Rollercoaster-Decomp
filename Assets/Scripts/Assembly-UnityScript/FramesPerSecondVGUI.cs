@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class FramesPerSecondVGUI : MonoBehaviour
 {
 	public float updateInterval;
@@ -36,9 +34,5 @@ public class FramesPerSecondVGUI : MonoBehaviour
 			lastInterval = realtimeSinceStartup;
 			screenText.setText(string.Empty + fps.ToString("f2"));
 		}
-	}
-
-	public virtual void Main()
-	{
 	}
 }

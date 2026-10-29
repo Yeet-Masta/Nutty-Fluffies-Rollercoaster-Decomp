@@ -8,7 +8,6 @@ using UnityScript.Lang;
 [Serializable]
 public class LevelLoader
 {
-	[NonSerialized]
 	public static LevelLoader instance;
 
 	public static LevelLoader getInstance()

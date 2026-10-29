@@ -5,7 +5,6 @@ using Boo.Lang;
 using Boo.Lang.Runtime;
 using UnityEngine;
 
-[Serializable]
 public class GameManager : MonoBehaviour
 {
 	[Serializable]
@@ -40,31 +39,22 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	[NonSerialized]
 	public const int STATE_NONE = 0;
 
-	[NonSerialized]
 	public const int STATE_START = 1;
 
-	[NonSerialized]
 	public const int STATE_DRIVE = 2;
 
-	[NonSerialized]
 	public const int STATE_FINISH = 3;
 
-	[NonSerialized]
 	public const int STATE_CRASH = 4;
 
-	[NonSerialized]
 	public const int STATE_ENDING = 5;
 
-	[NonSerialized]
 	public const int STATE_RESTARTING = 6;
 
-	[NonSerialized]
 	public const int CRASH_DELAY = 2;
 
-	[NonSerialized]
 	private static GameManager instance;
 
 	private GameObject gameRoot;
@@ -80,8 +70,6 @@ public class GameManager : MonoBehaviour
 	private int specialCartType;
 
 	private int trainType;
-
-	private bool firstRun;
 
 	private bool vehicleFinished;
 
@@ -107,10 +95,8 @@ public class GameManager : MonoBehaviour
 
 	public GameObject fpsCounter;
 
-	[NonSerialized]
 	public static bool handleBackKey = true;
 
-	[NonSerialized]
 	public static bool isInPauseMenu;
 
 	[HideInInspector]
@@ -128,7 +114,6 @@ public class GameManager : MonoBehaviour
 
 	public GameManager()
 	{
-		firstRun = true;
 	}
 
 	public static GameManager getInstance()
@@ -227,7 +212,6 @@ public class GameManager : MonoBehaviour
 		{
 			MonoBehaviour.print("START LEVEL COMPLETE AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
 		}
-		firstRun = false;
 		controller.reset();
 		if (!GameData.SHOW_FPS)
 		{
@@ -466,7 +450,6 @@ public class GameManager : MonoBehaviour
 			}
 		}
 		vehicle.onFinish();
-		firstRun = true;
 		gameUI.showFinishBadge();
 		RollerCoasterSounds.getInstance().playFinishArriveSound();
 	}

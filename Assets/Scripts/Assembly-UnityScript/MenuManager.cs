@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[Serializable]
 public class MenuManager : BaseMenuManager
 {
 	[Serializable]
@@ -52,16 +51,10 @@ public class MenuManager : BaseMenuManager
 		}
 	}
 
-	[NonSerialized]
 	private static bool WAS_PLAYING;
 
-	[NonSerialized]
 	private static bool WAS_IN_STORY;
 
-	[NonSerialized]
-	private static bool CURSOR_INITED;
-
-	[NonSerialized]
 	private static bool ASPECT_INITED;
 
 	public MainMenu mainMenu;
@@ -88,8 +81,6 @@ public class MenuManager : BaseMenuManager
 
 	public tk2dTextMesh quality;
 
-	private bool hasLaunchNotification;
-
 	private bool goingToStory;
 
 	private int frameCounter;
@@ -104,7 +95,6 @@ public class MenuManager : BaseMenuManager
 
 	private bool aspectPopup;
 
-	[NonSerialized]
 	private static int currentAspect;
 
 	public MenuManager()

@@ -1,10 +1,7 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class VGUIElement : MonoBehaviour
 {
-	[NonSerialized]
 	protected static bool blockingButtonPressed;
 
 	protected Transform t;

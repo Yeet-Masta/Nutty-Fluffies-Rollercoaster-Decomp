@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[Serializable]
 public class BackgroundShade : MonoBehaviour
 {
 	private float process;

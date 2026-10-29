@@ -1,10 +1,8 @@
-using System;
 using System.Collections;
 using Boo.Lang.Runtime;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class StateMachine : MonoBehaviour
 {
 	protected State currentState;

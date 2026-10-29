@@ -1,17 +1,12 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class MissionMenu : BaseMenu
 {
-	[NonSerialized]
 	public static bool WAS_FORCED_TO_WATCH;
 
-	[NonSerialized]
 	public static bool ENTERED_FROM_PAUSE_MENU;
 
-	[NonSerialized]
 	public static bool GOING_TO_MENU;
 
 	public MissionList missionList;

@@ -1,9 +1,7 @@
-using System;
 using Boo.Lang.Runtime;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class TrainPreview : MonoBehaviour
 {
 	public float cartSpacing;
@@ -92,16 +90,16 @@ public class TrainPreview : MonoBehaviour
 		}
 		float x = num2;
 		Vector3 localScale = transform.localScale;
-		float num3 = (localScale.x = x);
-		Vector3 vector = (transform.localScale = localScale);
+		localScale.x = x;
+		transform.localScale = localScale;
 		float y = num2;
 		Vector3 localScale2 = transform.localScale;
-		float num4 = (localScale2.y = y);
-		Vector3 vector3 = (transform.localScale = localScale2);
+		localScale2.y = y;
+		transform.localScale = localScale2;
 		float x2 = (0f - num) * 0.5f * transform.localScale.x;
 		Vector3 position = trainOverviewRoot.position;
-		float num5 = (position.x = x2);
-		Vector3 vector5 = (trainOverviewRoot.position = position);
+		position.x = x2;
+		trainOverviewRoot.position = position;
 		for (int i = 0; i < totalCarts; i++)
 		{
 			if (i < activeCarts)

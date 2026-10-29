@@ -8,7 +8,6 @@ using UnityScript.Lang;
 [Serializable]
 public class MissionManager
 {
-	[NonSerialized]
 	protected static MissionManager instance;
 
 	protected List<Mission> missionList;

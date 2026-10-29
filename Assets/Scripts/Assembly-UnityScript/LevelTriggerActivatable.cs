@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class LevelTriggerActivatable : LevelTrigger
 {
 	public bool triggerActive;

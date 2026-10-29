@@ -1,10 +1,7 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class StoreBaseMenu : BaseMenu
 {
-	[NonSerialized]
 	public static float COMMON_PRICE_FACTOR = 1f;
 
 	public StoreItem[] items;

@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class MissionListEntry : MonoBehaviour
 {
 	public VGUIText[] description;

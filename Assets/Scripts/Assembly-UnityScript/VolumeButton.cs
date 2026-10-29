@@ -1,6 +1,3 @@
-using System;
-
-[Serializable]
 public class VolumeButton : MenuButton
 {
 	public VGUIImagesTK2D volumeFrames;

@@ -1,10 +1,7 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class BGMusicPlayer : MonoBehaviour
 {
-	[NonSerialized]
 	private static float musicVolume;
 
 	public virtual void Awake()
@@ -30,9 +27,5 @@ public class BGMusicPlayer : MonoBehaviour
 		{
 			array2[i].GetComponent<AudioSource>().volume = to;
 		}
-	}
-
-	public virtual void Main()
-	{
 	}
 }

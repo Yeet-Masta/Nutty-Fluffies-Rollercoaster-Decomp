@@ -1,8 +1,6 @@
-using System;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class TouchScreenController : Controller
 {
 	private bool usingSpecial;
@@ -42,7 +40,6 @@ public class TouchScreenController : Controller
 				Transform transform = GameManager.getInstance().getVehicle().getMiddleCart()
 					.gameObject.transform;
 				Vector3 right = transform.right;
-				Vector3 up = transform.up;
 				Vector2 lhs = new Vector2(right.x, right.y);
 				float num = Vector2.Dot(lhs, touches[i].deltaPosition);
 				if (num > 0f || (vehicle.isInLoop() && !vehicle.isReversing()))

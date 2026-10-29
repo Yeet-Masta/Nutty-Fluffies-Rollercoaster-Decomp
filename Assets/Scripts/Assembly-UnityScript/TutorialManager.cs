@@ -1,19 +1,13 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class TutorialManager : MonoBehaviour
 {
-	[NonSerialized]
 	public static bool SHOW_TUTORIAL = true;
 
-	[NonSerialized]
 	public static bool TUTORIAL_DEBUG;
 
-	[NonSerialized]
 	public static float MINIMUM_PAGE_SHOWTIME = 1f;
 
-	[NonSerialized]
 	public static bool isTutorialFinished;
 
 	public TutorialPage[] tutorialPages;
@@ -26,10 +20,8 @@ public class TutorialManager : MonoBehaviour
 
 	public GameObject background;
 
-	[NonSerialized]
 	public static bool fromIGM;
 
-	[NonSerialized]
 	private static TutorialManager instance;
 
 	private TutorialPage currentPage;
@@ -42,7 +34,6 @@ public class TutorialManager : MonoBehaviour
 
 	private bool showAlways;
 
-	[NonSerialized]
 	public static bool isTutorialEnable;
 
 	public virtual void Awake()
@@ -85,7 +76,6 @@ public class TutorialManager : MonoBehaviour
 		}
 		else
 		{
-			bool flag = currentPage == null;
 			currentPageStartShowTime = Time.realtimeSinceStartup;
 			showAlways = always;
 			if (!hasAllPagesShown(key) || TUTORIAL_DEBUG || always)

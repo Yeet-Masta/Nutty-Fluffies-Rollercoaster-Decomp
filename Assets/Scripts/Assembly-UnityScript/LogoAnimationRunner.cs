@@ -1,8 +1,6 @@
-using System;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class LogoAnimationRunner : MonoBehaviour
 {
 	public VGUIAnimator[] redlynxAnimators;
@@ -100,9 +98,5 @@ public class LogoAnimationRunner : MonoBehaviour
 	public virtual void onLoadingFadeIn()
 	{
 		continueToMenu();
-	}
-
-	public virtual void Main()
-	{
 	}
 }

@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class Camera2D : MonoBehaviour
 {
 	public float initialZoomAdjust;

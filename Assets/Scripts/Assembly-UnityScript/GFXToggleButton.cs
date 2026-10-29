@@ -1,6 +1,3 @@
-using System;
-
-[Serializable]
 public class GFXToggleButton : MenuButton
 {
 	public VGUIImagesTK2D frames;

@@ -3,13 +3,10 @@ using System;
 [Serializable]
 public class Mission
 {
-	[NonSerialized]
 	public const int FLAG_COMPLETED = 1;
 
-	[NonSerialized]
 	public const int FLAG_DISABLED = 2;
 
-	[NonSerialized]
 	public static readonly int FLAG_REQUIRE_FINISH = 32768;
 
 	public string description;

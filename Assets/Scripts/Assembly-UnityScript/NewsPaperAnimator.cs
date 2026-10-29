@@ -1,13 +1,7 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class NewsPaperAnimator : VGUIAnimator
 {
-	private Vector3 to;
-
-	private Vector3 animFrom;
-
 	public float startAngle;
 
 	public NewsPaperAnimator()
@@ -32,16 +26,16 @@ public class NewsPaperAnimator : VGUIAnimator
 		Vector2 vector = Vector3.one * timeInterpolator;
 		float x = vector.x * 1f;
 		Vector3 localScale = target.localScale;
-		float num = (localScale.x = x);
-		Vector3 vector2 = (target.localScale = localScale);
+		localScale.x = x;
+		target.localScale = localScale;
 		float y = vector.y * 1f;
 		Vector3 localScale2 = target.localScale;
-		float num2 = (localScale2.y = y);
-		Vector3 vector4 = (target.localScale = localScale2);
+		localScale2.y = y;
+		target.localScale = localScale2;
 		float z = startAngle * (1f - timeInterpolator);
 		Vector3 localEulerAngles = target.localEulerAngles;
-		float num3 = (localEulerAngles.z = z);
-		Vector3 vector6 = (target.localEulerAngles = localEulerAngles);
+		localEulerAngles.z = z;
+		target.localEulerAngles = localEulerAngles;
 		checkComplete(timeInterpolator);
 	}
 }

@@ -1,13 +1,9 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class MasterVolume : MonoBehaviour
 {
-	[NonSerialized]
 	private static float masterVolume;
 
-	[NonSerialized]
 	private static bool gotVolume;
 
 	public virtual void Start()
@@ -42,9 +38,5 @@ public class MasterVolume : MonoBehaviour
 				AudioListener.volume = masterVolume;
 			}
 		}
-	}
-
-	public virtual void Main()
-	{
 	}
 }

@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[Serializable]
 public class ResultList : VGUIList
 {
 	[Serializable]
@@ -59,8 +58,8 @@ public class ResultList : VGUIList
 		}
 		float y = thisY;
 		Vector3 localPosition = transform.localPosition;
-		float num = (localPosition.y = y);
-		Vector3 vector = (transform.localPosition = localPosition);
+		localPosition.y = y;
+		transform.localPosition = localPosition;
 	}
 
 	public override void deactivate()
@@ -80,8 +79,8 @@ public class ResultList : VGUIList
 		{
 			float x = component.transform.position.x + 0.025f;
 			Vector3 position = component.transform.position;
-			float num = (position.x = x);
-			Vector3 vector = (component.transform.position = position);
+			position.x = x;
+			component.transform.position = position;
 		}
 		Component[] componentsInChildren = component.gameObject.GetComponentsInChildren(typeof(CartImage));
 		int i = 0;
@@ -102,8 +101,8 @@ public class ResultList : VGUIList
 			entryRefs[entryRefs.Count - maxEntries - 1].SetActiveRecursively(false);
 			float y = transform.localPosition.y + verticalSpacing;
 			Vector3 localPosition = transform.localPosition;
-			float num3 = (localPosition.y = y);
-			Vector3 vector3 = (transform.localPosition = localPosition);
+			localPosition.y = y;
+			transform.localPosition = localPosition;
 			listScrollAnimator.activate();
 		}
 	}

@@ -93,13 +93,10 @@ public class TextureManager
 		public UV uvs;
 	}
 
-	[NonSerialized]
 	private static TextureManager instance;
 
-	[NonSerialized]
 	private static Texture2D errorTexture;
 
-	[NonSerialized]
 	public static string[] typePaths = new string[2] { "Objects", "Spline" };
 
 	private Dictionary<string, Texture2D> textureCacheList;
@@ -234,7 +231,6 @@ public class TextureManager
 		TextureDescriptor textureDescriptor = null;
 		string text = fullTexturePath + ".txt";
 		TextureCacheEntry textureCacheEntry = null;
-		string text2 = fullTexturePath;
 		Texture2D result;
 		if (textureDescriptorList.ContainsKey(text))
 		{

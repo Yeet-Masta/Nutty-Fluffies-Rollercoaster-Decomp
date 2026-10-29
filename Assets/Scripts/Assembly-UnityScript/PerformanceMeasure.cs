@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class PerformanceMeasure : MonoBehaviour
 {
 	public GameObject graphics;
@@ -12,8 +10,6 @@ public class PerformanceMeasure : MonoBehaviour
 	private bool ENABLE_FPS_DEBUG;
 
 	private int NUM_SAMPLES;
-
-	private int FRAMES_TO_UPDATE_MASK;
 
 	private List<GameObject> list;
 
@@ -27,7 +23,6 @@ public class PerformanceMeasure : MonoBehaviour
 	{
 		ENABLE_FPS_DEBUG = true;
 		NUM_SAMPLES = 30;
-		FRAMES_TO_UPDATE_MASK = 7;
 		list = new List<GameObject>();
 		timing = new float[NUM_SAMPLES];
 	}

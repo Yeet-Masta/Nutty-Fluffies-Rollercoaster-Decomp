@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Boo.Lang.Runtime;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class LevelPackMenu : BaseMenu
 {
 	public LevelPackButton levelPackButton;
@@ -66,12 +64,12 @@ public class LevelPackMenu : BaseMenu
 				packContainer.pages[k].transform.parent = packContainer.transform;
 				float z = 0f;
 				Vector3 localPosition = packContainer.pages[k].transform.localPosition;
-				float num2 = (localPosition.z = z);
-				Vector3 vector = (packContainer.pages[k].transform.localPosition = localPosition);
+				localPosition.z = z;
+				packContainer.pages[k].transform.localPosition = localPosition;
 				float x = zero.x;
 				Vector3 localPosition2 = packContainer.pages[k].transform.localPosition;
-				float num3 = (localPosition2.x = x);
-				Vector3 vector3 = (packContainer.pages[k].transform.localPosition = localPosition2);
+				localPosition2.x = x;
+				packContainer.pages[k].transform.localPosition = localPosition2;
 				zero.x += packContainer.oneStepLength;
 			}
 		}
@@ -81,24 +79,24 @@ public class LevelPackMenu : BaseMenu
 			gameObject2.transform.parent = transform;
 			float x2 = 0.2695867f;
 			Vector3 localPosition3 = gameObject2.transform.localPosition;
-			float num4 = (localPosition3.x = x2);
-			Vector3 vector5 = (gameObject2.transform.localPosition = localPosition3);
+			localPosition3.x = x2;
+			gameObject2.transform.localPosition = localPosition3;
 			float y = -0.3547182f;
 			Vector3 localPosition4 = gameObject2.transform.localPosition;
-			float num5 = (localPosition4.y = y);
-			Vector3 vector7 = (gameObject2.transform.localPosition = localPosition4);
+			localPosition4.y = y;
+			gameObject2.transform.localPosition = localPosition4;
 			float z2 = 0f;
 			Vector3 localPosition5 = gameObject2.transform.localPosition;
-			float num6 = (localPosition5.z = z2);
-			Vector3 vector9 = (gameObject2.transform.localPosition = localPosition5);
+			localPosition5.z = z2;
+			gameObject2.transform.localPosition = localPosition5;
 			float x3 = 0.6669993f;
 			Vector3 localScale = gameObject2.transform.localScale;
-			float num7 = (localScale.x = x3);
-			Vector3 vector11 = (gameObject2.transform.localScale = localScale);
+			localScale.x = x3;
+			gameObject2.transform.localScale = localScale;
 			float y2 = 0.6669993f;
 			Vector3 localScale2 = gameObject2.transform.localScale;
-			float num8 = (localScale2.y = y2);
-			Vector3 vector13 = (gameObject2.transform.localScale = localScale2);
+			localScale2.y = y2;
+			gameObject2.transform.localScale = localScale2;
 			LevelPackButton component = gameObject2.GetComponent<LevelPackButton>();
 			component.extraPack = true;
 			if (GameData.isFeatureUnlocked(2))
@@ -106,12 +104,12 @@ public class LevelPackMenu : BaseMenu
 				component.setLocked(false);
 				float x4 = -0.009937096f;
 				Vector3 localPosition6 = component.progress.transform.localPosition;
-				float num9 = (localPosition6.x = x4);
-				Vector3 vector15 = (component.progress.transform.localPosition = localPosition6);
+				localPosition6.x = x4;
+				component.progress.transform.localPosition = localPosition6;
 				float y3 = -0.1313739f;
 				Vector3 localPosition7 = component.progress.transform.localPosition;
-				float num10 = (localPosition7.y = y3);
-				Vector3 vector17 = (component.progress.transform.localPosition = localPosition7);
+				localPosition7.y = y3;
+				component.progress.transform.localPosition = localPosition7;
 				component.progress.transform.rotation = Quaternion.Euler(0f, 0f, 346f);
 				component.progress.gameObject.SetActiveRecursively(true);
 			}
@@ -120,8 +118,8 @@ public class LevelPackMenu : BaseMenu
 				component.setLocked(true);
 				float y4 = -0.1079767f;
 				Vector3 localPosition8 = component.@lock.transform.localPosition;
-				float num11 = (localPosition8.y = y4);
-				Vector3 vector19 = (component.@lock.transform.localPosition = localPosition8);
+				localPosition8.y = y4;
+				component.@lock.transform.localPosition = localPosition8;
 			}
 			component.levelName.gameObject.SetActiveRecursively(false);
 			extraPackButtons.Add(gameObject2);

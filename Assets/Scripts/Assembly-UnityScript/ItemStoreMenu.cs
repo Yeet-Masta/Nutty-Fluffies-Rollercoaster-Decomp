@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class ItemStoreMenu : StoreBaseMenu
 {
 	public VGUIScrollingContainer packContainer;
@@ -214,7 +212,7 @@ public class ItemStoreMenu : StoreBaseMenu
 
 	private void updateItemDescription(int index)
 	{
-		int newFeaturesList = GameData.getNewFeaturesList();
+		GameData.getNewFeaturesList();
 		if (!GameData.isFeatureUnlocked(16) && GameData.isFeatureUnlocked(GameData.FEATURE_BUY_CART) && index == 4)
 		{
 			trainDescription.setText(TextData.ANIMAL_DESCRIPTIONS[5]);
@@ -269,8 +267,8 @@ public class ItemStoreMenu : StoreBaseMenu
 			paperEmitterCart.transform.position = cart.transform.position;
 			float z = paperEmitterCart.transform.position.z + 0.1f;
 			Vector3 position = paperEmitterCart.transform.position;
-			float num = (position.z = z);
-			Vector3 vector = (paperEmitterCart.transform.position = position);
+			position.z = z;
+			paperEmitterCart.transform.position = position;
 		}
 	}
 

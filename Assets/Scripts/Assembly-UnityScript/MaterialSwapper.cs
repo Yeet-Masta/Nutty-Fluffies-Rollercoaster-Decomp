@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class MaterialSwapper : MonoBehaviour
 {
 	public Material newMaterial;
@@ -16,9 +14,5 @@ public class MaterialSwapper : MonoBehaviour
 			Renderer renderer = array[i] as Renderer;
 			renderer.material = newMaterial;
 		}
-	}
-
-	public virtual void Main()
-	{
 	}
 }

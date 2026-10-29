@@ -1,10 +1,7 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class LevelDataPrefabs : MonoBehaviour
 {
-	[NonSerialized]
 	public static LevelDataPrefabs instance;
 
 	public Level levelPrefab;

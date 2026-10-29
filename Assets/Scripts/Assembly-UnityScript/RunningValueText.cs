@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[Serializable]
 public class RunningValueText : VGUIRunningValueTK2D
 {
 	public Transform icon;
@@ -37,8 +36,8 @@ public class RunningValueText : VGUIRunningValueTK2D
 		{
 			float y = iconPosition.y + Mathf.Sin(phase) * animationFactor;
 			Vector3 localPosition = icon.localPosition;
-			float num = (localPosition.y = y);
-			Vector3 vector = (icon.localPosition = localPosition);
+			localPosition.y = y;
+			icon.localPosition = localPosition;
 			phase += Time.deltaTime * (float)Math.PI / stepDuration;
 			triggered = phase < (float)Math.PI;
 			if (!(phase <= (float)Math.PI))

@@ -1,28 +1,20 @@
 using System;
 using UnityEngine;
 
-[Serializable]
 public class ObjectScript : MonoBehaviour, Parametrizable
 {
-	[NonSerialized]
 	public const int OBJECT_SCRIPT_NONE = 0;
 
-	[NonSerialized]
 	public const int OBJECT_SCRIPT_ROTATE = 1;
 
-	[NonSerialized]
 	public const int OBJECT_SCRIPT_TRANSLATE = 2;
 
-	[NonSerialized]
 	public const int OBJECT_SCRIPT_PENDULUM = 3;
 
-	[NonSerialized]
 	public const int OBJECT_SCRIPT_WAVE_TRANSLATE = 4;
 
-	[NonSerialized]
 	public const int OBJECT_SCRIPT_TRAVELLER = 5;
 
-	[NonSerialized]
 	public static readonly Type[] OBJECT_SCRIPTS = new Type[6]
 	{
 		null,
@@ -33,7 +25,6 @@ public class ObjectScript : MonoBehaviour, Parametrizable
 		typeof(OSATraveller)
 	};
 
-	[NonSerialized]
 	public static readonly ParamList[] OBJECT_SCRIPT_PARAMS = new ParamList[6]
 	{
 		null,

@@ -4,40 +4,28 @@ using UnityEngine;
 [Serializable]
 public class LevelTriggerData : LevelEntityData
 {
-	[NonSerialized]
 	public const int TRIGGER_SCRIPT_FINISH = 0;
 
-	[NonSerialized]
 	public const int TRIGGER_SCRIPT_CHECKPOINT = 1;
 
-	[NonSerialized]
 	public const int TRIGGER_SCRIPT_HIDE_OBJECT = 2;
 
-	[NonSerialized]
 	public const int TRIGGER_SCRIPT_SHOW_OBJECT = 3;
 
-	[NonSerialized]
 	public const int TRIGGER_SCRIPT_RESET = 4;
 
-	[NonSerialized]
 	public const int TRIGGER_SCRIPT_ENABLE_PHYSICS = 5;
 
-	[NonSerialized]
 	public const int TRIGGER_SCRIPT_BOOST = 6;
 
-	[NonSerialized]
 	public const int TRIGGER_SCRIPT_COIN = 7;
 
-	[NonSerialized]
 	public const int TRIGGER_SCRIPT_ACTIVATE_OBJECT = 8;
 
-	[NonSerialized]
 	public const int TRIGGER_SCRIPT_PARTICLES = 9;
 
-	[NonSerialized]
 	public static readonly string[] TRIGGER_SCRIPT_NAMES = new string[10] { "TriggerFinish", "TriggerCheckPoint", "TriggerHideObject", "TriggerShowObject", "TriggerReset", "TriggerEnablePhysics", "TriggerBoost", "TriggerCoin", "TriggerActivateObject", "TriggerParticles" };
 
-	[NonSerialized]
 	public static readonly ParamList[] TRIGGER_SCRIPT_PARAMS = new ParamList[10]
 	{
 		new ParamList(new ParamList.Param[0]),
@@ -92,10 +80,8 @@ public class LevelTriggerData : LevelEntityData
 		})
 	};
 
-	[NonSerialized]
 	public const int TRIGGER_BOX = 1;
 
-	[NonSerialized]
 	public const int TRIGGER_SPHERE = 2;
 
 	public int triggerType;

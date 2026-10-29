@@ -3,7 +3,6 @@ using System;
 [Serializable]
 public class LevelSplineData : LevelEntityData
 {
-	[NonSerialized]
 	public const int SPLINE_INTERSECT = 8388608;
 
 	public CSpline2 spline;

@@ -7,7 +7,6 @@ using UnityScript.Lang;
 [Serializable]
 public class ThemeLoader
 {
-	[NonSerialized]
 	public static ThemeLoader instance;
 
 	public static ThemeLoader getInstance()

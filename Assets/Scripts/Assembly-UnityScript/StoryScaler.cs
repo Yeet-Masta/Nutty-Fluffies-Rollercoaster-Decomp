@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class StoryScaler : MonoBehaviour
 {
 	public virtual void Start()
@@ -13,15 +11,11 @@ public class StoryScaler : MonoBehaviour
 		}
 		float x = num;
 		Vector3 localScale = transform.localScale;
-		float num2 = (localScale.x = x);
-		Vector3 vector = (transform.localScale = localScale);
+		localScale.x = x;
+		transform.localScale = localScale;
 		float y = num;
 		Vector3 localScale2 = transform.localScale;
-		float num3 = (localScale2.y = y);
-		Vector3 vector3 = (transform.localScale = localScale2);
-	}
-
-	public virtual void Main()
-	{
+		localScale2.y = y;
+		transform.localScale = localScale2;
 	}
 }

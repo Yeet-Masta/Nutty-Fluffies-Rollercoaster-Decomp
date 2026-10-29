@@ -3,255 +3,173 @@ using System;
 [Serializable]
 public class TextData
 {
-	[NonSerialized]
 	public static string[] ANIMAL_DESCRIPTIONS;
 
-	[NonSerialized]
 	public static string FEATURE_TITLE_CAT;
 
-	[NonSerialized]
 	public static string FEATURE_TITLE_DOG;
 
-	[NonSerialized]
 	public static string FEATURE_TITLE_PIG;
 
-	[NonSerialized]
 	public static string FEATURE_TITLE_ELEPHANT;
 
-	[NonSerialized]
 	public static string FEATURE_TITLE_METAL;
 
-	[NonSerialized]
 	public static string FEATURE_TITLE_LOOP;
 
-	[NonSerialized]
 	public static string FEATURE_TITLE_EXTREME;
 
-	[NonSerialized]
 	public static string FEATURE_TITLE_HISTORY;
 
-	[NonSerialized]
 	public static string FEATURE_TITLE_ROCKET_CART;
 
-	[NonSerialized]
 	public static string FEATURE_TITLE_MAGNET_CART;
 
-	[NonSerialized]
 	public static string FEATURE_TITLE_HOVER_CART;
 
-	[NonSerialized]
 	public static string FEATURE_TITLE_CART;
 
-	[NonSerialized]
 	public static string FEATURE_TEXT_CAT;
 
-	[NonSerialized]
 	public static string FEATURE_TEXT_DOG;
 
-	[NonSerialized]
 	public static string FEATURE_TEXT_PIG;
 
-	[NonSerialized]
 	public static string FEATURE_TEXT_ELEPHANT;
 
-	[NonSerialized]
 	public static string FEATURE_TEXT_METAL;
 
-	[NonSerialized]
 	public static string FEATURE_TEXT_LOOP;
 
-	[NonSerialized]
 	public static string FEATURE_TEXT_EXTREME;
 
-	[NonSerialized]
 	public static string FEATURE_TEXT_HISTORY;
 
-	[NonSerialized]
 	public static string FEATURE_TEXT_ROCKET_CART;
 
-	[NonSerialized]
 	public static string FEATURE_TEXT_MAGNET_CART;
 
-	[NonSerialized]
 	public static string FEATURE_TEXT_HOVER_CART;
 
-	[NonSerialized]
 	public static string FEATURE_TEXT_CART;
 
-	[NonSerialized]
 	public static string CHRISTMAS_PACKAGE_UNLOCK_TEXT;
 
-	[NonSerialized]
 	public static string COMMUNITY_TITLE_FACEBOOK_LIKE;
 
-	[NonSerialized]
 	public static string COMMUNITY_TITLE_FACEBOOK_POST;
 
-	[NonSerialized]
 	public static string COMMUNITY_TITLE_TWITTER;
 
-	[NonSerialized]
 	public static string COMMUNITY_TITLE_EMAIL;
 
-	[NonSerialized]
 	public static string COMMUNITY_TITLE_TAPJOY_OFFERWALL;
 
-	[NonSerialized]
 	public static string COMMUNITY_TEXT_RECEIVE_COINS;
 
-	[NonSerialized]
 	public static string COMMUNITY_TITLE_OFFER1;
 
-	[NonSerialized]
 	public static string COMMUNITY_TITLE_OFFER2;
 
-	[NonSerialized]
 	public static string COMMUNITY_TEXT_OFFER_TWITTER;
 
-	[NonSerialized]
 	public static string COMMUNITY_TEXT_OFFER_POST_FACEBOOK;
 
-	[NonSerialized]
 	public static string COMMUNITY_TEXT_OFFER_LIKE_FACEBOOK;
 
-	[NonSerialized]
 	public static string COMMUNITY_TEXT_OFFER_EMAIL;
 
-	[NonSerialized]
 	public static string COMMUNITY_TEXT_OFFER_DOUBLE_COINS;
 
-	[NonSerialized]
 	public static string COMMUNITY_TEXT_OFFER_TAPJOY_OFFERWALL;
 
-	[NonSerialized]
 	public static string IAP_TITLE_PURCHASE_COMPLETE;
 
-	[NonSerialized]
 	public static string IAP_TEXT_PURCHASE_COMPLETE;
 
-	[NonSerialized]
 	public static string IAP_TITLE_PURCHASE_FAIL;
 
-	[NonSerialized]
 	public static string IAP_TEXT_PURCHASE_FAIL;
 
-	[NonSerialized]
 	public static string MISSION_TEXT_COMPLETED;
 
-	[NonSerialized]
 	public static string RESULT_TITLE_COINS_NEEDED;
 
-	[NonSerialized]
 	public static string RESULT_TEXT_COINS_NEEDED;
 
-	[NonSerialized]
 	public static string RESULT_TITLE_CARTS_NEEDED;
 
-	[NonSerialized]
 	public static string RESULT_TEXT_CARTS_NEEDED;
 
-	[NonSerialized]
 	public static string STORE_TITLE_NEED_COINS;
 
-	[NonSerialized]
 	public static string STORE_TEXT_NEED_COINS;
 
-	[NonSerialized]
 	public static string STORE_TITLE_EMPTY_CART;
 
-	[NonSerialized]
 	public static string STORE_TEXT_EMPTY_CART;
 
-	[NonSerialized]
 	public static string BUTTON_LEVEL_NEED_COINS1;
 
-	[NonSerialized]
 	public static string BUTTON_LEVEL_NEED_COINS2;
 
-	[NonSerialized]
 	public static string BUTTON_LEVEL_BUILD_NOW;
 
-	[NonSerialized]
 	public static string LEVELS_TITLE_NEED_COINS;
 
-	[NonSerialized]
 	public static string LEVELS_TEXT_NEED_COINS;
 
-	[NonSerialized]
 	public static string LEVELS_TITLE_LOCKED;
 
-	[NonSerialized]
 	public static string LEVELS_TEXT_LOCKED;
 
-	[NonSerialized]
 	public static string LEVELPACK_TITLE_LOCKED;
 
-	[NonSerialized]
 	public static string LEVELPACK_TEXT_LOCKED;
 
-	[NonSerialized]
 	public static string LEVELPACK_EXTRA_TEXT_LOCKED;
 
-	[NonSerialized]
 	public static string COINSTORE_NOTIFY_VALUE1;
 
-	[NonSerialized]
 	public static string COINSTORE_NOTIFY_VALUE2;
 
-	[NonSerialized]
 	public static string COINSTORE_NOTIFY_POPULAR1;
 
-	[NonSerialized]
 	public static string COINSTORE_NOTIFY_POPULAR2;
 
-	[NonSerialized]
 	public static string COINSTORE_NOTIFY_SAVE;
 
-	[NonSerialized]
 	public static string COINSTORE_NOTIFY_SALE;
 
-	[NonSerialized]
 	public static string COINSTORE_NOTIFY_BONUS;
 
-	[NonSerialized]
 	public static string COINSTORE_SALE_TITLE;
 
-	[NonSerialized]
 	public static string COINSTORE_DOUBLE_COINS_TITLE;
 
-	[NonSerialized]
 	public static string COINSTORE_DOUBLE_COINS_INFO;
 
-	[NonSerialized]
 	public static string REVIEW_REQUEST_TITLE;
 
-	[NonSerialized]
 	public static string REVIEW_REQUEST_TEXT;
 
-	[NonSerialized]
 	public static string REVIEW_REQUEST_CONFIRM;
 
-	[NonSerialized]
 	public static string REVIEW_REQUEST_DECIDE_LATER;
 
-	[NonSerialized]
 	public static string REVIEW_REQUEST_REJECT;
 
-	[NonSerialized]
 	public static string UPDATE_TITLE;
 
-	[NonSerialized]
 	public static string UPDATE_TEXT;
 
-	[NonSerialized]
 	public static string Exit_title_1;
 
-	[NonSerialized]
 	public static string Exit_text_2;
 
 	public static void init()
 	{
-		LocalizationManager instance = LocalizationManager.getInstance();
+		LocalizationManager.getInstance();
 		ANIMAL_DESCRIPTIONS = new string[6];
 		ANIMAL_DESCRIPTIONS[0] = LocalizationManager.localize("ITEM_TEXT_MOUSE");
 		ANIMAL_DESCRIPTIONS[1] = LocalizationManager.localize("ITEM_TEXT_CAT");

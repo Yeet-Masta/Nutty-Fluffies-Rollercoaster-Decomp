@@ -1,10 +1,7 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class ExitMenu : MonoBehaviour
 {
-	[NonSerialized]
 	private static ExitMenu instance;
 
 	private MenuManager mmgr;
@@ -14,16 +11,6 @@ public class ExitMenu : MonoBehaviour
 	public GameObject[] featureGraphics;
 
 	private bool isMessageEnable;
-
-	private string Exit_title_1;
-
-	private string Exit_text_2;
-
-	public ExitMenu()
-	{
-		Exit_title_1 = "Exit";
-		Exit_text_2 = "Do you want to quit \nthe game ?";
-	}
 
 	public static ExitMenu getInstance()
 	{

@@ -5,7 +5,6 @@ using UnityEngine;
 [Serializable]
 public class Statistics
 {
-	[NonSerialized]
 	protected static Statistics instance;
 
 	public int totalPlayCount;

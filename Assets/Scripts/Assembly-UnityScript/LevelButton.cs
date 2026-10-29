@@ -1,10 +1,7 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class LevelButton : MenuButton
 {
-	[NonSerialized]
 	private static float PROGRESS_TEXT_CHANGE_TIME = 2f;
 
 	public VGUIText levelName;
@@ -211,24 +208,24 @@ public class LevelButton : MenuButton
 				gameObject.transform.parent = this.gameObject.transform;
 				float y = 0f - (float)length * 0.5f * 0.05f + 0.05f * (float)i;
 				Vector3 localPosition = gameObject.transform.localPosition;
-				float num = (localPosition.y = y);
-				Vector3 vector = (gameObject.transform.localPosition = localPosition);
+				localPosition.y = y;
+				gameObject.transform.localPosition = localPosition;
 				float x = -0.18f;
 				Vector3 localPosition2 = gameObject.transform.localPosition;
-				float num2 = (localPosition2.x = x);
-				Vector3 vector3 = (gameObject.transform.localPosition = localPosition2);
+				localPosition2.x = x;
+				gameObject.transform.localPosition = localPosition2;
 				float z = -0.5f;
 				Vector3 localPosition3 = gameObject.transform.localPosition;
-				float num3 = (localPosition3.z = z);
-				Vector3 vector5 = (gameObject.transform.localPosition = localPosition3);
+				localPosition3.z = z;
+				gameObject.transform.localPosition = localPosition3;
 				float x2 = 0.7f;
 				Vector3 localScale = gameObject.transform.localScale;
-				float num4 = (localScale.x = x2);
-				Vector3 vector7 = (gameObject.transform.localScale = localScale);
+				localScale.x = x2;
+				gameObject.transform.localScale = localScale;
 				float y2 = 0.7f;
 				Vector3 localScale2 = gameObject.transform.localScale;
-				float num5 = (localScale2.y = y2);
-				Vector3 vector9 = (gameObject.transform.localScale = localScale2);
+				localScale2.y = y2;
+				gameObject.transform.localScale = localScale2;
 			}
 		}
 	}

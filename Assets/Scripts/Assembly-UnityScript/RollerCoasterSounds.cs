@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class RollerCoasterSounds : SoundManager
 {
 	public AudioClip checkPointSound;
@@ -65,7 +63,6 @@ public class RollerCoasterSounds : SoundManager
 
 	private List<int> availableAnimals;
 
-	[NonSerialized]
 	private const int SCREAMS_PER_ANIMAL = 2;
 
 	private Vehicle vehicle;

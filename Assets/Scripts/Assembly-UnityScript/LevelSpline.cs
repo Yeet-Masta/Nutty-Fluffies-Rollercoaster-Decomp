@@ -1,26 +1,19 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Boo.Lang.Runtime;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class LevelSpline : LevelEntity
 {
-	[NonSerialized]
 	public static float DEPTH_FACTOR = 0.5f;
 
-	[NonSerialized]
 	public static float COLLIDER_WIDTH = 0.8f;
 
-	[NonSerialized]
 	public static float GRAPHIC_MESH_Z_OFFSET = -0.5f;
 
-	[NonSerialized]
 	public static float MAX_Z_OFFSET_IN_STEP = 0.2f;
 
-	[NonSerialized]
 	public static readonly int SPLINE_LAYER = 1024;
 
 	public CSpline2 spline;
@@ -394,7 +387,6 @@ public class LevelSpline : LevelEntity
 		float x = vertices[0].x;
 		for (int i = 1; i < vertices.Count; i++)
 		{
-			Vector3 vector2 = vertices[i] - vertices[i - 1];
 			float num = vertices[i].x - x;
 			float x2 = vector.x;
 			float num2 = num / x2;

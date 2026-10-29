@@ -1,19 +1,13 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class Wheel : MonoBehaviour
 {
-	[NonSerialized]
 	public static float MIN_SOUND_COLLISION_IMPACT = 6f;
 
-	[NonSerialized]
 	public static float MAX_COLLISION_IMPACT = 8f;
 
-	[NonSerialized]
 	public static float MAX_COLLISION_STOP_SPEED_LIMIT = 5f;
 
-	[NonSerialized]
 	public static float MIN_SPEED_LIMIT_BEFORE_IMPACT = 25f;
 
 	public bool onTerrain;

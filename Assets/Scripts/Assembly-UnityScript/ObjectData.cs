@@ -4,28 +4,20 @@ using System.Collections.Generic;
 [Serializable]
 public class ObjectData
 {
-	[NonSerialized]
 	public static int FLAG_ALLOW_DYNAMIC = 256;
 
-	[NonSerialized]
 	public static int FLAG_ALLOW_OBJECT_COLLISION = 512;
 
-	[NonSerialized]
 	public static int FLAG_ALLOW_BREAKING = 1024;
 
-	[NonSerialized]
 	public static int FLAG_ALLOW_TRAIN_COLLISION = 2048;
 
-	[NonSerialized]
 	public static int FLAG_IS_OPTIMIZED = 4096;
 
-	[NonSerialized]
 	public static int FLAG_IS_SCENERY = 8192;
 
-	[NonSerialized]
 	public static int FLAG_X_REPEAT_MASK = 15;
 
-	[NonSerialized]
 	public static int FLAG_Y_REPEAT_MASK = 240;
 
 	public int id;

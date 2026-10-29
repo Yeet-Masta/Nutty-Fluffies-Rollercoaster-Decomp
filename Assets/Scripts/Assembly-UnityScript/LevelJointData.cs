@@ -4,13 +4,10 @@ using UnityEngine;
 [Serializable]
 public class LevelJointData : LevelEntityData
 {
-	[NonSerialized]
 	public const int JOINT_FIXED = 1;
 
-	[NonSerialized]
 	public const int JOINT_SPRING = 2;
 
-	[NonSerialized]
 	public const int JOINT_HINGE = 3;
 
 	public int jointType;

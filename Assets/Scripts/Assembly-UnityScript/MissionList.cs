@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Boo.Lang.Runtime;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class MissionList : VGUIList
 {
 	public ScaleAnimator appearAnimator;
@@ -223,8 +221,8 @@ public class MissionList : VGUIList
 			{
 				float y = entryRefs[i].transform.localPosition.y - 2f;
 				Vector3 localPosition = entryRefs[i].transform.localPosition;
-				float num = (localPosition.y = y);
-				Vector3 vector = (entryRefs[i].transform.localPosition = localPosition);
+				localPosition.y = y;
+				entryRefs[i].transform.localPosition = localPosition;
 			}
 			listCompressAnimator.activate();
 			sequenceReady = true;

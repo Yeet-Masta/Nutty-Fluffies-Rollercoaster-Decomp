@@ -1,20 +1,15 @@
-using System;
 using System.Collections.Generic;
 using Boo.Lang.Runtime;
 using UnityEngine;
 
-[Serializable]
 public class LocalizationManager : MonoBehaviour
 {
-	[NonSerialized]
 	public static string[] LANGUAGES = new string[7] { "en", "fr", "it", "de", "es", "br", "fi" };
 
 	public tk2dTextMesh[] textEntry;
 
-	[NonSerialized]
 	private static LocalizationManager instance;
 
-	[NonSerialized]
 	private static Dictionary<string, string> translation;
 
 	private string currentLanguage;

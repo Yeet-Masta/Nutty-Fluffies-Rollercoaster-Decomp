@@ -1,14 +1,11 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class SoundManager : MonoBehaviour
 {
 	public AudioSource musicSource;
 
 	protected AudioClip music;
 
-	[NonSerialized]
 	protected static SoundManager instance;
 
 	public static SoundManager getInstance()

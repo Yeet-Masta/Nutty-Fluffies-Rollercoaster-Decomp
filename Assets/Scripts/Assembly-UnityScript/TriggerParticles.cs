@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[Serializable]
 public class TriggerParticles : LevelTriggerActivatable
 {
 	public ParticleEmitter pe;

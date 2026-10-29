@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class VGUIScroller : VGUIElement
 {
 	public bool horizontalScroll;

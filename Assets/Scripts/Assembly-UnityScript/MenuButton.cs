@@ -1,13 +1,9 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class MenuButton : VGUIButton
 {
-	[NonSerialized]
 	public static bool menuButtonPressed;
 
-	[NonSerialized]
 	public static ButtonPressAnimator clickAnimator;
 
 	public GameObject graphic;

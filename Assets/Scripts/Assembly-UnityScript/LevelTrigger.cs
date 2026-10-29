@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class LevelTrigger : LevelEntity, Parametrizable
 {
 	public TriggerHandler handler;

@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class ObjectEmitter : MonoBehaviour
 {
 	public GameObject @object;
@@ -9,10 +7,6 @@ public class ObjectEmitter : MonoBehaviour
 	public int poolSize;
 
 	private GameObject[] objectPool;
-
-	private int objectsToEmit;
-
-	private Vector3 emitPosition;
 
 	private float initialScale;
 
@@ -46,19 +40,19 @@ public class ObjectEmitter : MonoBehaviour
 			if (!array[i].gameObject.active)
 			{
 				Vector3 position = array[i].transform.position;
-				float num2 = (position.x = x);
-				Vector3 vector = (array[i].transform.position = position);
+				position.x = x;
+				array[i].transform.position = position;
 				Vector3 position2 = array[i].transform.position;
-				float num3 = (position2.y = y);
-				Vector3 vector3 = (array[i].transform.position = position2);
+				position2.y = y;
+				array[i].transform.position = position2;
 				float x2 = initialScale * scale;
 				Vector3 localScale = array[i].transform.localScale;
-				float num4 = (localScale.x = x2);
-				Vector3 vector5 = (array[i].transform.localScale = localScale);
+				localScale.x = x2;
+				array[i].transform.localScale = localScale;
 				float y2 = initialScale * scale;
 				Vector3 localScale2 = array[i].transform.localScale;
-				float num5 = (localScale2.y = y2);
-				Vector3 vector7 = (array[i].transform.localScale = localScale2);
+				localScale2.y = y2;
+				array[i].transform.localScale = localScale2;
 				HeartAnimator component = array[i].GetComponent<HeartAnimator>();
 				component.heartValue = scoreValue;
 				component.activate();

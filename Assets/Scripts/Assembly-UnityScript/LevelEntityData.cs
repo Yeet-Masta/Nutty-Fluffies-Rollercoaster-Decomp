@@ -4,25 +4,18 @@ using UnityEngine;
 [Serializable]
 public class LevelEntityData
 {
-	[NonSerialized]
 	public const int ENTITY_NONE = 0;
 
-	[NonSerialized]
 	public const int ENTITY_TRIGGER = 1;
 
-	[NonSerialized]
 	public const int ENTITY_OBJECT = 2;
 
-	[NonSerialized]
 	public const int ENTITY_JOINT = 3;
 
-	[NonSerialized]
 	public const int ENTITY_GROUP = 5;
 
-	[NonSerialized]
 	public const int ENTITY_SPLINE = 6;
 
-	[NonSerialized]
 	public static readonly int REFERENCE_ID_BIT_THEME = 1073741824;
 
 	public Vector2 position;

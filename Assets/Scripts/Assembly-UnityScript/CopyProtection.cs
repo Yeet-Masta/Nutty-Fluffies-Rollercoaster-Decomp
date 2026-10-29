@@ -5,7 +5,6 @@ using Boo.Lang;
 using Boo.Lang.Runtime;
 using UnityEngine;
 
-[Serializable]
 public class CopyProtection : MonoBehaviour
 {
 	[Serializable]

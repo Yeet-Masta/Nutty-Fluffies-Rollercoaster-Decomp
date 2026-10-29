@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class OSARotate : ObjectScript
 {
 	public float s;

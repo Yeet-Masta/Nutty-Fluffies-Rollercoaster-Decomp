@@ -9,10 +9,8 @@ using UnityScript.Lang;
 [Serializable]
 public class LevelLoaderBinary
 {
-	[NonSerialized]
 	public static LevelLoaderBinary instance;
 
-	[NonSerialized]
 	public static int CURRENT_LEVEL_VERSION = 2;
 
 	public static LevelLoaderBinary getInstance()

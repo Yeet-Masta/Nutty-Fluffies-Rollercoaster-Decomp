@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[Serializable]
 public class Bouncer : MonoBehaviour
 {
 	private Transform tr;
@@ -35,8 +34,8 @@ public class Bouncer : MonoBehaviour
 		{
 			float y = tr.localPosition.y + Mathf.Sin(phase) * animationFactor;
 			Vector3 localPosition = tr.localPosition;
-			float num = (localPosition.y = y);
-			Vector3 vector = (tr.localPosition = localPosition);
+			localPosition.y = y;
+			tr.localPosition = localPosition;
 			phase += Time.deltaTime * (float)Math.PI / duration;
 			if (!(phase <= (float)Math.PI))
 			{

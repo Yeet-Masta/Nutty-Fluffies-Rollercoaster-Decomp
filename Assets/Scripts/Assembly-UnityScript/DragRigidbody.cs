@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Boo.Lang;
 using UnityEngine;
 
-[Serializable]
 public class DragRigidbody : MonoBehaviour
 {
 	[Serializable]
@@ -150,9 +149,5 @@ public class DragRigidbody : MonoBehaviour
 	public virtual Camera FindCamera()
 	{
 		return (!GetComponent<Camera>()) ? Camera.main : GetComponent<Camera>();
-	}
-
-	public virtual void Main()
-	{
 	}
 }

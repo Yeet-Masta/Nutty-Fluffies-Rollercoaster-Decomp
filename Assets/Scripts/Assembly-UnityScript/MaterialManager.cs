@@ -8,7 +8,6 @@ using UnityScript.Lang;
 [Serializable]
 public class MaterialManager
 {
-	[NonSerialized]
 	private static MaterialManager instance;
 
 	private Dictionary<MaterialKey, Material> materialList;

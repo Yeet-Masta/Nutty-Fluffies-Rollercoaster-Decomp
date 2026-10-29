@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class Cart : MonoBehaviour
 {
 	public ConfigurableJoint joint;
@@ -47,8 +45,6 @@ public class Cart : MonoBehaviour
 
 	private int contactCounter;
 
-	private float prevVY;
-
 	[HideInInspector]
 	public Joint toyJoint;
 
@@ -86,13 +82,9 @@ public class Cart : MonoBehaviour
 	[HideInInspector]
 	public int wheelSparcCounter;
 
-	[NonSerialized]
 	private static Level level;
 
-	[NonSerialized]
 	private static EffectManager effectMgr;
-
-	private int totalFinishHeartsDelivered;
 
 	public Cart()
 	{
@@ -110,8 +102,8 @@ public class Cart : MonoBehaviour
 		effectMgr = EffectManager.getInstance();
 		float z = ZLevel.getInstance().getZ(tr.position);
 		Vector3 position = tr.position;
-		float num = (position.z = z);
-		Vector3 vector = (tr.position = position);
+		position.z = z;
+		tr.position = position;
 		object[] componentsInChildren = gameObject.GetComponentsInChildren(typeof(MeshRenderer), true);
 		renderers = new MeshRenderer[componentsInChildren.Length];
 		for (int i = 0; i < componentsInChildren.Length; i++)
@@ -199,7 +191,6 @@ public class Cart : MonoBehaviour
 		int instanceID = other.gameObject.GetInstanceID();
 		if (!visitedTriggers.Contains(instanceID))
 		{
-			RaycastHit raycastHit = default(RaycastHit);
 			visitedTriggers.Add(instanceID);
 			TriggerCheckPoint triggerCheckPoint = other.gameObject.GetComponent<TriggerCheckPoint>() as TriggerCheckPoint;
 			if (!hasContact)
@@ -238,8 +229,8 @@ public class Cart : MonoBehaviour
 			{
 				float z = targetZ;
 				Vector3 position2 = tr.position;
-				float num = (position2.z = z);
-				Vector3 vector = (tr.position = position2);
+				position2.z = z;
+				tr.position = position2;
 			}
 			Vector3 vector3 = tr.position - hitInfo.point;
 			int num2 = hitInfo.triangleIndex >> 1;
@@ -270,8 +261,8 @@ public class Cart : MonoBehaviour
 		{
 			float z2 = ZLevel.getInstance().getZ(tr.position);
 			Vector3 position3 = tr.position;
-			float num3 = (position3.z = z2);
-			Vector3 vector4 = (tr.position = position3);
+			position3.z = z2;
+			tr.position = position3;
 			sqHeightAvailable = false;
 		}
 	}
@@ -351,8 +342,8 @@ public class Cart : MonoBehaviour
 		{
 			float x = rb.velocity.x * 0.95f;
 			Vector3 velocity = rb.velocity;
-			float num = (velocity.x = x);
-			Vector3 vector = (rb.velocity = velocity);
+			velocity.x = x;
+			rb.velocity = velocity;
 		}
 	}
 

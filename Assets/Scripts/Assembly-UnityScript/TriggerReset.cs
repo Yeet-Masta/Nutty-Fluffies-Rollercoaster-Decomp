@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class TriggerReset : LevelTrigger
 {
 	public override void Awake()

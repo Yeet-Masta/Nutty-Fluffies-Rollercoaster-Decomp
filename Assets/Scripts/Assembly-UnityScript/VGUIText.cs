@@ -1,9 +1,7 @@
-using System;
 using Boo.Lang.Runtime;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class VGUIText : VGUIElement
 {
 	public string text;

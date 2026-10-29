@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class BaseMenuManager : MonoBehaviour
 {
-	[NonSerialized]
 	protected static BaseMenuManager instance;
 
-	[NonSerialized]
 	public static bool MENU_SCENE = true;
 
 	public VGUIRunningValueTK2D tokenAmount;

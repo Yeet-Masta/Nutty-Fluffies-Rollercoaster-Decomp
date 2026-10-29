@@ -8,16 +8,12 @@ using UnityScript.Lang;
 [Serializable]
 public class LevelFactory
 {
-	[NonSerialized]
 	private static LevelFactory instance;
 
-	[NonSerialized]
 	public const int LAYER_Z_OFFSET = 100;
 
-	[NonSerialized]
 	public const float OBJECT_Z_ORDER_STEP = 1f;
 
-	[NonSerialized]
 	public const int OBJECT_Z_STEP_LIMIT = 10;
 
 	public static LevelFactory getInstance()
@@ -44,7 +40,6 @@ public class LevelFactory
 		Dictionary<int, bool> dictionary = new Dictionary<int, bool>();
 		if (!RuntimeServices.EqualityOperator(data.theme, null))
 		{
-			bool flag = true;
 			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(data.theme.layerList);
 			while (enumerator.MoveNext())
 			{
@@ -55,7 +50,6 @@ public class LevelFactory
 				}
 				LevelLayerData levelLayerData = (LevelLayerData)obj;
 				LevelObjectFactory.USE_ALPHA_SHADER = true;
-				flag = false;
 				LevelLayer levelLayer = createLayer(level.gameObject, levelLayerData);
 				UnityRuntimeServices.Update(enumerator, levelLayerData);
 				createLayerObjects(levelLayer, objects, levelLayerData);
@@ -125,8 +119,8 @@ public class LevelFactory
 			float num3 = -levelLayer.layer * 100;
 			float z = num3;
 			Vector3 localPosition = levelLayer.gameObject.transform.localPosition;
-			float num4 = (localPosition.z = z);
-			Vector3 vector = (levelLayer.gameObject.transform.localPosition = localPosition);
+			localPosition.z = z;
+			levelLayer.gameObject.transform.localPosition = localPosition;
 			if (!(num3 >= num))
 			{
 				num = num3;
@@ -153,7 +147,7 @@ public class LevelFactory
 		{
 			for (int i = 0; i < layerData.objectData.Count; i++)
 			{
-				LevelEntity levelEntity = levelObjectFactory.create(layerData.objectData[i], layer.gameObject, objects);
+				levelObjectFactory.create(layerData.objectData[i], layer.gameObject, objects);
 			}
 		}
 		layer.createGatheredMesh();
@@ -260,16 +254,16 @@ public class LevelFactory
 		BoxCollider boxCollider = gameObject.gameObject.AddComponent<BoxCollider>();
 		float x = data.bottomRightLimit.x - data.topLeftLimit.x + 1000f;
 		Vector3 size = boxCollider.size;
-		float num = (size.x = x);
-		Vector3 vector = (boxCollider.size = size);
+		size.x = x;
+		boxCollider.size = size;
 		float y = 15f;
 		Vector3 size2 = boxCollider.size;
-		float num2 = (size2.y = y);
-		Vector3 vector3 = (boxCollider.size = size2);
+		size2.y = y;
+		boxCollider.size = size2;
 		float z = 200f;
 		Vector3 size3 = boxCollider.size;
-		float num3 = (size3.z = z);
-		Vector3 vector5 = (boxCollider.size = size3);
+		size3.z = z;
+		boxCollider.size = size3;
 		boxCollider.isTrigger = true;
 		gameObject.AddComponentByName(LevelTriggerData.TRIGGER_SCRIPT_NAMES[4]);
 		gameObject.transform.parent = level.transform;

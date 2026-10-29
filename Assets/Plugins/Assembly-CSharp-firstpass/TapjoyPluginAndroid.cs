@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class TapjoyPluginAndroid : MonoBehaviour
 {
-	private static object currentActivity;
-
-	private static object tapjoyConnect;
-
-	private static object tapjoyConnectInstance;
-
 	private static object TapjoyConnect
 	{
 		get

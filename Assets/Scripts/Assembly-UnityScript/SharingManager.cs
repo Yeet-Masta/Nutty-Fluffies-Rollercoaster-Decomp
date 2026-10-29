@@ -6,7 +6,6 @@ using UnityEngine;
 // and Twitter posts can no longer complete (the requester's own timeout reports
 // the failure, as it did before); e-mail still reports success straight away,
 // which is what the original did after opening the mail composer.
-[Serializable]
 public class SharingManager : MonoBehaviour
 {
 	[Serializable]
@@ -17,7 +16,6 @@ public class SharingManager : MonoBehaviour
 		Email = 2
 	}
 
-	[NonSerialized]
 	private static SharingManager instance;
 
 	public string shareLinkURL;

@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[Serializable]
 public class VGUIDynamicGroup : VGUIElement
 {
 	[Serializable]
@@ -20,7 +19,6 @@ public class VGUIDynamicGroup : VGUIElement
 		BOTTOM = 2
 	}
 
-	[NonSerialized]
 	public static bool DYNAMIC_RESIZE = true;
 
 	public HorizontalLock horizontalLock;
@@ -45,10 +43,6 @@ public class VGUIDynamicGroup : VGUIElement
 
 	private Vector3 initialPosition;
 
-	private Vector2 initialScale;
-
-	private Vector2 initialOffset;
-
 	private Vector2 screenSize;
 
 	private float referenceAspectRatio;
@@ -67,7 +61,7 @@ public class VGUIDynamicGroup : VGUIElement
 		{
 			cameraRef = Camera.main;
 		}
-		Vector2 anchorRefPoint = getAnchorRefPoint();
+		getAnchorRefPoint();
 		initialPosition = transform.localPosition;
 		referenceAspectRatio = referenceSize.y / referenceSize.x;
 		onResize();
@@ -85,8 +79,8 @@ public class VGUIDynamicGroup : VGUIElement
 			float num2 = referenceAspectRatio / num;
 			float x = initialPosition.x * num2;
 			Vector3 localPosition = transform.localPosition;
-			float num3 = (localPosition.x = x);
-			Vector3 vector = (transform.localPosition = localPosition);
+			localPosition.x = x;
+			transform.localPosition = localPosition;
 		}
 	}
 

@@ -10,16 +10,12 @@ public class ObjectListData
 {
 	private int maxObjectId;
 
-	[NonSerialized]
 	public static readonly int PACK_ALL = -1;
 
-	[NonSerialized]
 	public const int TYPE_OBJECTS = 1;
 
-	[NonSerialized]
 	public const int TYPE_SCENERY = 2;
 
-	[NonSerialized]
 	public const int TYPE_BOTH = 3;
 
 	private List<ObjectPackData> packList;

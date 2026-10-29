@@ -1,6 +1,3 @@
-using System;
-
-[Serializable]
 public class HistoryMenu : BaseMenu
 {
 	public override void activate()

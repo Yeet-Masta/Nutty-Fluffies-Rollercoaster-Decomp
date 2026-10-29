@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class SlideOutAnimator : VGUIAnimator
 {
 	private Vector3 from;

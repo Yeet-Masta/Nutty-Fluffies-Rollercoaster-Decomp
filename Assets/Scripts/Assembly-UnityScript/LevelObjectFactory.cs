@@ -7,25 +7,18 @@ using UnityScript.Lang;
 [Serializable]
 public class LevelObjectFactory
 {
-	[NonSerialized]
 	public static float STATIC_OBJECT_DEPTH = 200f;
 
-	[NonSerialized]
 	public static float DYNAMIC_OBJECT_DEPTH = 2f;
 
-	[NonSerialized]
 	public static bool USE_CAPSULE_COLLIDERS;
 
-	[NonSerialized]
 	public static int RENDER_QUEUE;
 
-	[NonSerialized]
 	public static int LAYER;
 
-	[NonSerialized]
 	public static bool USE_ALPHA_SHADER = true;
 
-	[NonSerialized]
 	private static LevelObjectFactory instance;
 
 	private LevelDataPrefabs prefabs;
@@ -62,13 +55,11 @@ public class LevelObjectFactory
 	public virtual LevelEntity create(LevelEntityData data, GameObject parent, ObjectListData objects)
 	{
 		LevelEntity levelEntity = null;
-		LevelLayer levelLayer = null;
 		object result;
 		if (CommonData.EDITOR_ACTIVE || !data.checkDevice(1 << CommonData.getDeviceGenerationInt()))
 		{
 			if ((LevelLayer)parent.GetComponent(typeof(LevelLayer)) != null)
 			{
-				levelLayer = currentLayerObject;
 				currentLayerObject = (LevelLayer)parent.GetComponent(typeof(LevelLayer));
 			}
 			if (RuntimeServices.EqualityOperator(objects, null))
@@ -116,10 +107,6 @@ public class LevelObjectFactory
 					}
 				}
 			}
-			if (parent is LevelLayer)
-			{
-				currentLayerObject = levelLayer;
-			}
 			result = levelEntity;
 		}
 		else
@@ -145,12 +132,12 @@ public class LevelObjectFactory
 			BoxCollider boxCollider = gameObject.gameObject.AddComponent<BoxCollider>();
 			int num = 1;
 			Vector3 size = boxCollider.size;
-			float num2 = (size.x = num);
-			Vector3 vector = (boxCollider.size = size);
+			size.x = num;
+			boxCollider.size = size;
 			int num3 = 1;
 			Vector3 size2 = boxCollider.size;
-			float num4 = (size2.y = num3);
-			Vector3 vector3 = (boxCollider.size = size2);
+			size2.y = num3;
+			boxCollider.size = size2;
 			boxCollider.isTrigger = true;
 		}
 		else
@@ -255,40 +242,40 @@ public class LevelObjectFactory
 						levelObject.name += " (KEEP ME)";
 						int num = 0;
 						Vector3 localPosition = levelObject.transform.localPosition;
-						float num2 = (localPosition.z = num);
-						Vector3 vector = (levelObject.transform.localPosition = localPosition);
+						localPosition.z = num;
+						levelObject.transform.localPosition = localPosition;
 						float x = Mathf.Abs(levelObject.transform.localScale.x);
 						Vector3 localScale = levelObject.transform.localScale;
-						float num3 = (localScale.x = x);
-						Vector3 vector3 = (levelObject.transform.localScale = localScale);
+						localScale.x = x;
+						levelObject.transform.localScale = localScale;
 						float y = Mathf.Abs(levelObject.transform.localScale.y);
 						Vector3 localScale2 = levelObject.transform.localScale;
-						float num4 = (localScale2.y = y);
-						Vector3 vector5 = (levelObject.transform.localScale = localScale2);
+						localScale2.y = y;
+						levelObject.transform.localScale = localScale2;
 						if ((data.flags & 0x80000) != 0)
 						{
 							float x2 = levelObject.transform.localScale.x * -1f;
 							Vector3 localScale3 = levelObject.transform.localScale;
-							float num5 = (localScale3.x = x2);
-							Vector3 vector7 = (levelObject.transform.localScale = localScale3);
+							localScale3.x = x2;
+							levelObject.transform.localScale = localScale3;
 						}
 						if ((data.flags & 0x100000) != 0)
 						{
 							float y2 = levelObject.transform.localScale.y * -1f;
 							Vector3 localScale4 = levelObject.transform.localScale;
-							float num6 = (localScale4.y = y2);
-							Vector3 vector9 = (levelObject.transform.localScale = localScale4);
+							localScale4.y = y2;
+							levelObject.transform.localScale = localScale4;
 						}
 						if (((LevelLayer)parent.GetComponent(typeof(LevelLayer))).checkFlag(1))
 						{
 							float x3 = levelObject.transform.localScale.x * 2f;
 							Vector3 localScale5 = levelObject.transform.localScale;
-							float num7 = (localScale5.x = x3);
-							Vector3 vector11 = (levelObject.transform.localScale = localScale5);
+							localScale5.x = x3;
+							levelObject.transform.localScale = localScale5;
 							float y3 = levelObject.transform.localScale.y * 2f;
 							Vector3 localScale6 = levelObject.transform.localScale;
-							float num8 = (localScale6.y = y3);
-							Vector3 vector13 = (levelObject.transform.localScale = localScale6);
+							localScale6.y = y3;
+							levelObject.transform.localScale = localScale6;
 						}
 						levelObject.setZstep(data.zDepth);
 						levelObject.savePosition(null);
@@ -328,8 +315,8 @@ public class LevelObjectFactory
 		CustomProfiler.end("LevelObjectFactory::Instantiate(objectPrefab)");
 		float rotation = data.rotation;
 		Vector3 localEulerAngles = gameObject2.transform.localEulerAngles;
-		float num = (localEulerAngles.z = rotation);
-		Vector3 vector = (gameObject2.transform.localEulerAngles = localEulerAngles);
+		localEulerAngles.z = rotation;
+		gameObject2.transform.localEulerAngles = localEulerAngles;
 		gameObject2.transform.localScale = Vector3.one;
 		if ((data.flags & 0x20000) != 0)
 		{
@@ -451,12 +438,12 @@ public class LevelObjectFactory
 		joint.axis = Vector3.forward;
 		float x = jointData.anchor.x;
 		Vector3 anchor = joint.anchor;
-		float num = (anchor.x = x);
-		Vector3 vector = (joint.anchor = anchor);
+		anchor.x = x;
+		joint.anchor = anchor;
 		float y = jointData.anchor.y;
 		Vector3 anchor2 = joint.anchor;
-		float num2 = (anchor2.y = y);
-		Vector3 vector3 = (joint.anchor = anchor2);
+		anchor2.y = y;
+		joint.anchor = anchor2;
 	}
 
 	public virtual LevelGroup createGroup(LevelGroupData data, GameObject parent)
@@ -523,19 +510,19 @@ public class LevelObjectFactory
 						gameObject.transform.parent = parent.transform;
 						float x = data.origin.x;
 						Vector3 localPosition = gameObject.transform.localPosition;
-						float num = (localPosition.x = x);
-						Vector3 vector = (gameObject.transform.localPosition = localPosition);
+						localPosition.x = x;
+						gameObject.transform.localPosition = localPosition;
 						float y = data.origin.y;
 						Vector3 localPosition2 = gameObject.transform.localPosition;
-						float num2 = (localPosition2.y = y);
-						Vector3 vector3 = (gameObject.transform.localPosition = localPosition2);
+						localPosition2.y = y;
+						gameObject.transform.localPosition = localPosition2;
 						Vector3 localPosition3 = gameObject.transform.localPosition;
-						float num3 = (localPosition3.z = zAdd);
-						Vector3 vector5 = (gameObject.transform.localPosition = localPosition3);
+						localPosition3.z = zAdd;
+						gameObject.transform.localPosition = localPosition3;
 						float z = parent.transform.eulerAngles.z + data.rotation;
 						Vector3 eulerAngles = gameObject.transform.eulerAngles;
-						float num4 = (eulerAngles.z = z);
-						Vector3 vector7 = (gameObject.transform.eulerAngles = eulerAngles);
+						eulerAngles.z = z;
+						gameObject.transform.eulerAngles = eulerAngles;
 					}
 				}
 				flag = true;
@@ -592,29 +579,29 @@ public class LevelObjectFactory
 					applyLayerColorTo(gameObject);
 					float x2 = data.stretchedScale.x * data.textureSourceSize.x / 256f;
 					Vector3 localScale = gameObject.transform.localScale;
-					float num5 = (localScale.x = x2);
-					Vector3 vector9 = (gameObject.transform.localScale = localScale);
+					localScale.x = x2;
+					gameObject.transform.localScale = localScale;
 					float y2 = data.stretchedScale.y * data.textureSourceSize.y / 256f;
 					Vector3 localScale2 = gameObject.transform.localScale;
-					float num6 = (localScale2.y = y2);
-					Vector3 vector11 = (gameObject.transform.localScale = localScale2);
+					localScale2.y = y2;
+					gameObject.transform.localScale = localScale2;
 					float x3 = gameObject.transform.localScale.x;
 					Vector3 localScale3 = gameObject.transform.localScale;
-					float num7 = (localScale3.z = x3);
-					Vector3 vector13 = (gameObject.transform.localScale = localScale3);
+					localScale3.z = x3;
+					gameObject.transform.localScale = localScale3;
 					if (data.checkFlag(ObjectPartData.Flags.TEXTURE_FLIP_X))
 					{
 						float x4 = 0f - Mathf.Abs(gameObject.transform.localScale.x);
 						Vector3 localScale4 = gameObject.transform.localScale;
-						float num8 = (localScale4.x = x4);
-						Vector3 vector15 = (gameObject.transform.localScale = localScale4);
+						localScale4.x = x4;
+						gameObject.transform.localScale = localScale4;
 					}
 					if (data.checkFlag(ObjectPartData.Flags.TEXTURE_FLIP_Y))
 					{
 						float y3 = 0f - Mathf.Abs(gameObject.transform.localScale.y);
 						Vector3 localScale5 = gameObject.transform.localScale;
-						float num9 = (localScale5.y = y3);
-						Vector3 vector17 = (gameObject.transform.localScale = localScale5);
+						localScale5.y = y3;
+						gameObject.transform.localScale = localScale5;
 					}
 				}
 				else
@@ -717,38 +704,38 @@ public class LevelObjectFactory
 			BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
 			float x = (trig as ObjectPartBoxTriggerData).size.x;
 			Vector3 size = boxCollider.size;
-			float num = (size.x = x);
-			Vector3 vector = (boxCollider.size = size);
+			size.x = x;
+			boxCollider.size = size;
 			float y = (trig as ObjectPartBoxTriggerData).size.y;
 			Vector3 size2 = boxCollider.size;
-			float num2 = (size2.y = y);
-			Vector3 vector3 = (boxCollider.size = size2);
+			size2.y = y;
+			boxCollider.size = size2;
 			float sTATIC_OBJECT_DEPTH = STATIC_OBJECT_DEPTH;
 			Vector3 size3 = boxCollider.size;
-			float num3 = (size3.z = sTATIC_OBJECT_DEPTH);
-			Vector3 vector5 = (boxCollider.size = size3);
+			size3.z = sTATIC_OBJECT_DEPTH;
+			boxCollider.size = size3;
 			boxCollider.material = prefabs.physicMaterials[0];
 			boxCollider.isTrigger = true;
 		}
 		gameObject.transform.parent = parent.transform;
 		float x2 = trig.origin.x;
 		Vector3 localPosition = gameObject.transform.localPosition;
-		float num4 = (localPosition.x = x2);
-		Vector3 vector7 = (gameObject.transform.localPosition = localPosition);
+		localPosition.x = x2;
+		gameObject.transform.localPosition = localPosition;
 		float y2 = trig.origin.y;
 		Vector3 localPosition2 = gameObject.transform.localPosition;
-		float num5 = (localPosition2.y = y2);
-		Vector3 vector9 = (gameObject.transform.localPosition = localPosition2);
+		localPosition2.y = y2;
+		gameObject.transform.localPosition = localPosition2;
 		float z = 0f;
 		Vector3 localPosition3 = gameObject.transform.localPosition;
-		float num6 = (localPosition3.z = z);
-		Vector3 vector11 = (gameObject.transform.localPosition = localPosition3);
+		localPosition3.z = z;
+		gameObject.transform.localPosition = localPosition3;
 		LevelTrigger levelTrigger = gameObject.AddComponentByName(trig.script) as LevelTrigger;
 		levelTrigger.sourceParams = trig.@params;
 		float z2 = parent.transform.eulerAngles.z + trig.rotation;
 		Vector3 eulerAngles = gameObject.transform.eulerAngles;
-		float num7 = (eulerAngles.z = z2);
-		Vector3 vector13 = (gameObject.transform.eulerAngles = eulerAngles);
+		eulerAngles.z = z2;
+		gameObject.transform.eulerAngles = eulerAngles;
 	}
 
 	public virtual void createBoxCollision(GameObject parent, ObjectPartBoxCollisionData box, bool dynamic)
@@ -767,25 +754,25 @@ public class LevelObjectFactory
 		BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
 		float x = box.size.x;
 		Vector3 size = boxCollider.size;
-		float num = (size.x = x);
-		Vector3 vector = (boxCollider.size = size);
+		size.x = x;
+		boxCollider.size = size;
 		float y = box.size.y;
 		Vector3 size2 = boxCollider.size;
-		float num2 = (size2.y = y);
-		Vector3 vector3 = (boxCollider.size = size2);
+		size2.y = y;
+		boxCollider.size = size2;
 		if (dynamic)
 		{
 			float sTATIC_OBJECT_DEPTH = STATIC_OBJECT_DEPTH;
 			Vector3 size3 = boxCollider.size;
-			float num3 = (size3.z = sTATIC_OBJECT_DEPTH);
-			Vector3 vector5 = (boxCollider.size = size3);
+			size3.z = sTATIC_OBJECT_DEPTH;
+			boxCollider.size = size3;
 		}
 		else
 		{
 			float sTATIC_OBJECT_DEPTH2 = STATIC_OBJECT_DEPTH;
 			Vector3 size4 = boxCollider.size;
-			float num4 = (size4.z = sTATIC_OBJECT_DEPTH2);
-			Vector3 vector7 = (boxCollider.size = size4);
+			size4.z = sTATIC_OBJECT_DEPTH2;
+			boxCollider.size = size4;
 		}
 		boxCollider.material = prefabs.physicMaterials[0];
 		gameObject.layer = ((!currentObjectData.checkFlag(8388608)) ? 12 : 0);
@@ -794,31 +781,31 @@ public class LevelObjectFactory
 		{
 			float z = parent.transform.eulerAngles.z + box.rotation;
 			Vector3 eulerAngles = gameObject.transform.eulerAngles;
-			float num5 = (eulerAngles.z = z);
-			Vector3 vector9 = (gameObject.transform.eulerAngles = eulerAngles);
+			eulerAngles.z = z;
+			gameObject.transform.eulerAngles = eulerAngles;
 			float x2 = box.origin.x;
 			Vector3 localPosition = gameObject.transform.localPosition;
-			float num6 = (localPosition.x = x2);
-			Vector3 vector11 = (gameObject.transform.localPosition = localPosition);
+			localPosition.x = x2;
+			gameObject.transform.localPosition = localPosition;
 			float y2 = box.origin.y;
 			Vector3 localPosition2 = gameObject.transform.localPosition;
-			float num7 = (localPosition2.y = y2);
-			Vector3 vector13 = (gameObject.transform.localPosition = localPosition2);
+			localPosition2.y = y2;
+			gameObject.transform.localPosition = localPosition2;
 			float z2 = 0f;
 			Vector3 localPosition3 = gameObject.transform.localPosition;
-			float num8 = (localPosition3.z = z2);
-			Vector3 vector15 = (gameObject.transform.localPosition = localPosition3);
+			localPosition3.z = z2;
+			gameObject.transform.localPosition = localPosition3;
 		}
 		else
 		{
 			float x3 = box.origin.x;
 			Vector3 center = boxCollider.center;
-			float num9 = (center.x = x3);
-			Vector3 vector17 = (boxCollider.center = center);
+			center.x = x3;
+			boxCollider.center = center;
 			float y3 = box.origin.y;
 			Vector3 center2 = boxCollider.center;
-			float num10 = (center2.y = y3);
-			Vector3 vector19 = (boxCollider.center = center2);
+			center2.y = y3;
+			boxCollider.center = center2;
 		}
 	}
 
@@ -844,31 +831,31 @@ public class LevelObjectFactory
 		{
 			float z = parent.transform.eulerAngles.z;
 			Vector3 eulerAngles = gameObject.transform.eulerAngles;
-			float num = (eulerAngles.z = z);
-			Vector3 vector = (gameObject.transform.eulerAngles = eulerAngles);
+			eulerAngles.z = z;
+			gameObject.transform.eulerAngles = eulerAngles;
 			float x = sphere.origin.x;
 			Vector3 localPosition = gameObject.transform.localPosition;
-			float num2 = (localPosition.x = x);
-			Vector3 vector3 = (gameObject.transform.localPosition = localPosition);
+			localPosition.x = x;
+			gameObject.transform.localPosition = localPosition;
 			float y = sphere.origin.y;
 			Vector3 localPosition2 = gameObject.transform.localPosition;
-			float num3 = (localPosition2.y = y);
-			Vector3 vector5 = (gameObject.transform.localPosition = localPosition2);
+			localPosition2.y = y;
+			gameObject.transform.localPosition = localPosition2;
 			float z2 = 0f;
 			Vector3 localPosition3 = gameObject.transform.localPosition;
-			float num4 = (localPosition3.z = z2);
-			Vector3 vector7 = (gameObject.transform.localPosition = localPosition3);
+			localPosition3.z = z2;
+			gameObject.transform.localPosition = localPosition3;
 		}
 		else
 		{
 			float x2 = sphere.origin.x;
 			Vector3 center = sphereCollider.center;
-			float num5 = (center.x = x2);
-			Vector3 vector9 = (sphereCollider.center = center);
+			center.x = x2;
+			sphereCollider.center = center;
 			float y2 = sphere.origin.y;
 			Vector3 center2 = sphereCollider.center;
-			float num6 = (center2.y = y2);
-			Vector3 vector11 = (sphereCollider.center = center2);
+			center2.y = y2;
+			sphereCollider.center = center2;
 		}
 	}
 
@@ -902,31 +889,31 @@ public class LevelObjectFactory
 		{
 			float z = parent.transform.eulerAngles.z;
 			Vector3 eulerAngles = gameObject.transform.eulerAngles;
-			float num2 = (eulerAngles.z = z);
-			Vector3 vector = (gameObject.transform.eulerAngles = eulerAngles);
+			eulerAngles.z = z;
+			gameObject.transform.eulerAngles = eulerAngles;
 			float x = sphere.origin.x;
 			Vector3 localPosition = gameObject.transform.localPosition;
-			float num3 = (localPosition.x = x);
-			Vector3 vector3 = (gameObject.transform.localPosition = localPosition);
+			localPosition.x = x;
+			gameObject.transform.localPosition = localPosition;
 			float y = sphere.origin.y;
 			Vector3 localPosition2 = gameObject.transform.localPosition;
-			float num4 = (localPosition2.y = y);
-			Vector3 vector5 = (gameObject.transform.localPosition = localPosition2);
+			localPosition2.y = y;
+			gameObject.transform.localPosition = localPosition2;
 			float z2 = 0f;
 			Vector3 localPosition3 = gameObject.transform.localPosition;
-			float num5 = (localPosition3.z = z2);
-			Vector3 vector7 = (gameObject.transform.localPosition = localPosition3);
+			localPosition3.z = z2;
+			gameObject.transform.localPosition = localPosition3;
 		}
 		else
 		{
 			float x2 = sphere.origin.x;
 			Vector3 center = capsuleCollider.center;
-			float num6 = (center.x = x2);
-			Vector3 vector9 = (capsuleCollider.center = center);
+			center.x = x2;
+			capsuleCollider.center = center;
 			float y2 = sphere.origin.y;
 			Vector3 center2 = capsuleCollider.center;
-			float num7 = (center2.y = y2);
-			Vector3 vector11 = (capsuleCollider.center = center2);
+			center2.y = y2;
+			capsuleCollider.center = center2;
 		}
 	}
 
@@ -949,8 +936,8 @@ public class LevelObjectFactory
 		levelSpline.transform.parent = parent.transform;
 		float rotation = data.rotation;
 		Vector3 localEulerAngles = levelSpline.transform.localEulerAngles;
-		float num = (localEulerAngles.z = rotation);
-		Vector3 vector = (levelSpline.transform.localEulerAngles = localEulerAngles);
+		localEulerAngles.z = rotation;
+		levelSpline.transform.localEulerAngles = localEulerAngles;
 		levelSpline.transform.localScale = Vector3.one;
 		levelSpline.create(data.spline, data.height);
 		if (CommonData.EDITOR_ACTIVE)
@@ -980,16 +967,16 @@ public class LevelObjectFactory
 			UnityRuntimeServices.Update(enumerator, current);
 			float x = num;
 			Vector3 localScale = transform2.localScale;
-			float num3 = (localScale.x = x);
-			Vector3 vector = (transform2.localScale = localScale);
+			localScale.x = x;
+			transform2.localScale = localScale;
 			float y = num2;
 			Vector3 localScale2 = transform2.localScale;
-			float num4 = (localScale2.y = y);
-			Vector3 vector3 = (transform2.localScale = localScale2);
+			localScale2.y = y;
+			transform2.localScale = localScale2;
 			float z = 1f;
 			Vector3 localScale3 = transform2.localScale;
-			float num5 = (localScale3.z = z);
-			Vector3 vector5 = (transform2.localScale = localScale3);
+			localScale3.z = z;
+			transform2.localScale = localScale3;
 		}
 		Component[] components = @object.GetComponents(typeof(Collider));
 		if (RuntimeServices.EqualityOperator(components, null))
@@ -1005,20 +992,20 @@ public class LevelObjectFactory
 				BoxCollider boxCollider = array[i] as BoxCollider;
 				float x2 = boxCollider.size.x * num;
 				Vector3 size = boxCollider.size;
-				float num6 = (size.x = x2);
-				Vector3 vector7 = (boxCollider.size = size);
+				size.x = x2;
+				boxCollider.size = size;
 				float y2 = boxCollider.size.y * num2;
 				Vector3 size2 = boxCollider.size;
-				float num7 = (size2.y = y2);
-				Vector3 vector9 = (boxCollider.size = size2);
+				size2.y = y2;
+				boxCollider.size = size2;
 				float x3 = boxCollider.center.x * num;
 				Vector3 center = boxCollider.center;
-				float num8 = (center.x = x3);
-				Vector3 vector11 = (boxCollider.center = center);
+				center.x = x3;
+				boxCollider.center = center;
 				float y3 = boxCollider.center.y * num2;
 				Vector3 center2 = boxCollider.center;
-				float num9 = (center2.y = y3);
-				Vector3 vector13 = (boxCollider.center = center2);
+				center2.y = y3;
+				boxCollider.center = center2;
 			}
 			else if (array[i] is SphereCollider)
 			{
@@ -1026,12 +1013,12 @@ public class LevelObjectFactory
 				sphereCollider.radius *= num;
 				float x4 = sphereCollider.center.x * num;
 				Vector3 center3 = sphereCollider.center;
-				float num10 = (center3.x = x4);
-				Vector3 vector15 = (sphereCollider.center = center3);
+				center3.x = x4;
+				sphereCollider.center = center3;
 				float y4 = sphereCollider.center.y * num2;
 				Vector3 center4 = sphereCollider.center;
-				float num11 = (center4.y = y4);
-				Vector3 vector17 = (sphereCollider.center = center4);
+				center4.y = y4;
+				sphereCollider.center = center4;
 			}
 			else if (array[i] is CapsuleCollider)
 			{
@@ -1039,12 +1026,12 @@ public class LevelObjectFactory
 				capsuleCollider.radius *= num;
 				float x5 = capsuleCollider.center.x * num;
 				Vector3 center5 = capsuleCollider.center;
-				float num12 = (center5.x = x5);
-				Vector3 vector19 = (capsuleCollider.center = center5);
+				center5.x = x5;
+				capsuleCollider.center = center5;
 				float y5 = capsuleCollider.center.y * num2;
 				Vector3 center6 = capsuleCollider.center;
-				float num13 = (center6.y = y5);
-				Vector3 vector21 = (capsuleCollider.center = center6);
+				center6.y = y5;
+				capsuleCollider.center = center6;
 			}
 		}
 	}

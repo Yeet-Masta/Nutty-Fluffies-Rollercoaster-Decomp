@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class TriggerEnablePhysics : LevelTriggerActivatable
 {
 	public bool c;

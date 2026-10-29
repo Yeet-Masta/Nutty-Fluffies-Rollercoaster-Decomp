@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class OSAPendulum : ObjectScript
 {
 	public float s;
@@ -22,8 +20,8 @@ public class OSAPendulum : ObjectScript
 			float num = Mathf.Sin((Time.time + o) * s) * a;
 			float z = originalAngleDegrees + num;
 			Vector3 localEulerAngles = cachedTransform.localEulerAngles;
-			float num2 = (localEulerAngles.z = z);
-			Vector3 vector = (cachedTransform.localEulerAngles = localEulerAngles);
+			localEulerAngles.z = z;
+			cachedTransform.localEulerAngles = localEulerAngles;
 		}
 	}
 

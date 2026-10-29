@@ -5,7 +5,6 @@ using UnityEngine;
 [Serializable]
 public class VehicleFactory
 {
-	[NonSerialized]
 	private static VehicleFactory instance;
 
 	public static VehicleFactory getInstance()
@@ -64,28 +63,28 @@ public class VehicleFactory
 		ConfigurableJoint configurableJoint = (ConfigurableJoint)cart1.gameObject.AddComponent(typeof(ConfigurableJoint));
 		int num2 = 1;
 		Vector3 anchor = configurableJoint.anchor;
-		float num3 = (anchor.x = num2);
-		Vector3 vector = (configurableJoint.anchor = anchor);
+		anchor.x = num2;
+		configurableJoint.anchor = anchor;
 		float y = -0.5f;
 		Vector3 anchor2 = configurableJoint.anchor;
-		float num4 = (anchor2.y = y);
-		Vector3 vector3 = (configurableJoint.anchor = anchor2);
+		anchor2.y = y;
+		configurableJoint.anchor = anchor2;
 		int num5 = 0;
 		Vector3 anchor3 = configurableJoint.anchor;
-		float num6 = (anchor3.z = num5);
-		Vector3 vector5 = (configurableJoint.anchor = anchor3);
+		anchor3.z = num5;
+		configurableJoint.anchor = anchor3;
 		int num7 = -1;
 		Vector3 targetPosition = configurableJoint.targetPosition;
-		float num8 = (targetPosition.x = num7);
-		Vector3 vector7 = (configurableJoint.targetPosition = targetPosition);
+		targetPosition.x = num7;
+		configurableJoint.targetPosition = targetPosition;
 		float y2 = -0.5f;
 		Vector3 targetPosition2 = configurableJoint.targetPosition;
-		float num9 = (targetPosition2.y = y2);
-		Vector3 vector9 = (configurableJoint.targetPosition = targetPosition2);
+		targetPosition2.y = y2;
+		configurableJoint.targetPosition = targetPosition2;
 		int num10 = 0;
 		Vector3 targetPosition3 = configurableJoint.targetPosition;
-		float num11 = (targetPosition3.z = num10);
-		Vector3 vector11 = (configurableJoint.targetPosition = targetPosition3);
+		targetPosition3.z = num10;
+		configurableJoint.targetPosition = targetPosition3;
 		configurableJoint.xMotion = ConfigurableJointMotion.Limited;
 		configurableJoint.yMotion = ConfigurableJointMotion.Locked;
 		configurableJoint.zMotion = ConfigurableJointMotion.Free;
@@ -94,28 +93,28 @@ public class VehicleFactory
 		configurableJoint.angularZMotion = ConfigurableJointMotion.Limited;
 		float num12 = 0f;
 		SoftJointLimit linearLimit = configurableJoint.linearLimit;
-		float num13 = (linearLimit.limit = num12);
-		SoftJointLimit softJointLimit = (configurableJoint.linearLimit = linearLimit);
+		linearLimit.limit = num12;
+		configurableJoint.linearLimit = linearLimit;
 		int num15 = 300;
 		SoftJointLimitSpring linearLimit2 = configurableJoint.linearLimitSpring;
-		float num16 = (linearLimit2.spring = num15);
-		SoftJointLimitSpring softJointLimit3 = (configurableJoint.linearLimitSpring = linearLimit2);
+		linearLimit2.spring = num15;
+		configurableJoint.linearLimitSpring = linearLimit2;
 		int num18 = 30;
 		SoftJointLimitSpring linearLimit3 = configurableJoint.linearLimitSpring;
-		float num19 = (linearLimit3.damper = num18);
-		SoftJointLimitSpring softJointLimit5 = (configurableJoint.linearLimitSpring = linearLimit3);
+		linearLimit3.damper = num18;
+		configurableJoint.linearLimitSpring = linearLimit3;
 		int num21 = 25;
 		SoftJointLimit angularZLimit = configurableJoint.angularZLimit;
-		float num22 = (angularZLimit.limit = num21);
-		SoftJointLimit softJointLimit7 = (configurableJoint.angularZLimit = angularZLimit);
+		angularZLimit.limit = num21;
+		configurableJoint.angularZLimit = angularZLimit;
 		int num24 = 100000;
 		SoftJointLimitSpring angularZLimit2 = configurableJoint.angularYZLimitSpring;
-		float num25 = (angularZLimit2.spring = num24);
-		SoftJointLimitSpring softJointLimit9 = (configurableJoint.angularYZLimitSpring = angularZLimit2);
+		angularZLimit2.spring = num24;
+		configurableJoint.angularYZLimitSpring = angularZLimit2;
 		int num27 = 1000;
 		SoftJointLimitSpring angularZLimit3 = configurableJoint.angularYZLimitSpring;
-		float num28 = (angularZLimit3.damper = num27);
-		SoftJointLimitSpring softJointLimit11 = (configurableJoint.angularYZLimitSpring = angularZLimit3);
+		angularZLimit3.damper = num27;
+		configurableJoint.angularYZLimitSpring = angularZLimit3;
 		configurableJoint.connectedBody = cart2.GetComponent<Rigidbody>();
 		cart1.joint = configurableJoint;
 	}

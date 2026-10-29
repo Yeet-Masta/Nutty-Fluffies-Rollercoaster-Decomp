@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class OSAWaveTranslate : ObjectScript
 {
 	public float s;
@@ -13,8 +11,6 @@ public class OSAWaveTranslate : ObjectScript
 	public float t;
 
 	public float o;
-
-	private bool initedWave;
 
 	private Vector3 origPos;
 

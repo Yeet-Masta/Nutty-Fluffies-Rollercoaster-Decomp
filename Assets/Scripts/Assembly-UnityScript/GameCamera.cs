@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class GameCamera : Camera2D
 {
 	public Transform cameraTarget;
@@ -192,8 +190,8 @@ public class GameCamera : Camera2D
 			tr.position = tr.position * (1f - num12) + num12 * cameraTarget.position;
 			float y4 = tr.position.y + 0.05f;
 			Vector3 position = tr.position;
-			float num13 = (position.y = y4);
-			Vector3 vector2 = (tr.position = position);
+			position.y = y4;
+			tr.position = position;
 			tr.position = checkLimits(tr.position);
 		}
 	}
@@ -260,12 +258,12 @@ public class GameCamera : Camera2D
 	{
 		float x = position.x;
 		Vector3 position2 = transform.position;
-		float num = (position2.x = x);
-		Vector3 vector = (transform.position = position2);
+		position2.x = x;
+		transform.position = position2;
 		float y = position.y;
 		Vector3 position3 = transform.position;
-		float num2 = (position3.y = y);
-		Vector3 vector3 = (transform.position = position3);
+		position3.y = y;
+		transform.position = position3;
 		speedOffset = Vector2.zero;
 		cameraRef.orthographicSize = initialViewSize + zoom + initialZoomAdjust + zoomAdjust;
 		if (!(cameraRef.orthographicSize <= limitedSize.y * 0.5f))

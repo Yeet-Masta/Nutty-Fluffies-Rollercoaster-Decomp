@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class IPhoneMouseEmulator : MonoBehaviour
 {
 	public float rayDepth;
@@ -169,9 +167,5 @@ public class IPhoneMouseEmulator : MonoBehaviour
 	public virtual Vector2 getLastMouseDownPosition()
 	{
 		return lastMouseDownPosition;
-	}
-
-	public virtual void Main()
-	{
 	}
 }

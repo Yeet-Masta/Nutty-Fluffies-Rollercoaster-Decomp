@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class ListCompressAnimator : VGUIAnimator
 {
 	private VGUIList list;
@@ -21,8 +19,8 @@ public class ListCompressAnimator : VGUIAnimator
 			float y = entryList[i].transform.localPosition.y;
 			float y2 = y + ((float)(-i) * list.verticalSpacing - y) * timeInterpolator;
 			Vector3 localPosition = entryList[i].transform.localPosition;
-			float num = (localPosition.y = y2);
-			Vector3 vector = (entryList[i].transform.localPosition = localPosition);
+			localPosition.y = y2;
+			entryList[i].transform.localPosition = localPosition;
 		}
 		checkComplete(timeInterpolator);
 	}

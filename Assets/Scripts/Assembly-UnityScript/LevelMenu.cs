@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class LevelMenu : StoreBaseMenu
 {
 	public VGUIButton levelButton;
@@ -71,7 +69,7 @@ public class LevelMenu : StoreBaseMenu
 		}
 		GameData.SELECTED_LEVEL_INDEX = 0;
 		int levelCount = levelPack.getLevelCount();
-		object[] componentsInChildren = GetComponentsInChildren(typeof(VGUIButton), true);
+		GetComponentsInChildren(typeof(VGUIButton), true);
 		createLevelPages(levelCount);
 		createLevelButtons(levelCount);
 		int num3 = PlayerPrefs.GetInt("LEVEL_MENU_SELECTION" + GameData.getActiveLevelPackIndex(), 0);
@@ -189,17 +187,17 @@ public class LevelMenu : StoreBaseMenu
 			packContainer.pages[i].transform.parent = packContainer.transform;
 			int num3 = 0;
 			Vector3 localPosition = packContainer.pages[i].transform.localPosition;
-			float num4 = (localPosition.y = num3);
-			Vector3 vector = (packContainer.pages[i].transform.localPosition = localPosition);
+			localPosition.y = num3;
+			packContainer.pages[i].transform.localPosition = localPosition;
 			float z = 0f;
 			Vector3 localPosition2 = packContainer.pages[i].transform.localPosition;
-			float num5 = (localPosition2.z = z);
-			Vector3 vector3 = (packContainer.pages[i].transform.localPosition = localPosition2);
+			localPosition2.z = z;
+			packContainer.pages[i].transform.localPosition = localPosition2;
 			float x = zero.x;
 			Vector3 localPosition3 = packContainer.pages[i].transform.localPosition;
-			float num6 = (localPosition3.x = x);
-			Vector3 vector5 = (packContainer.pages[i].transform.localPosition = localPosition3);
-			object[] componentsInChildren = packContainer.pages[i].GetComponentsInChildren(typeof(Renderer), true);
+			localPosition3.x = x;
+			packContainer.pages[i].transform.localPosition = localPosition3;
+			packContainer.pages[i].GetComponentsInChildren(typeof(Renderer), true);
 			zero.x += packContainer.oneStepLength;
 		}
 		packContainer.Start();
@@ -296,8 +294,8 @@ public class LevelMenu : StoreBaseMenu
 						array[i].transform.position = gameObject.transform.position;
 						float z = array[i].transform.position.z - 0.5f;
 						Vector3 position = array[i].transform.position;
-						float num2 = (position.z = z);
-						Vector3 vector = (array[i].transform.position = position);
+						position.z = z;
+						array[i].transform.position = position;
 					}
 					CancelInvoke("disablePaperEmitters");
 					Invoke("disablePaperEmitters", 1.5f);

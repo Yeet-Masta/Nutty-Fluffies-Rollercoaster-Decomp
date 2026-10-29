@@ -1,8 +1,6 @@
-using System;
 using Boo.Lang.Runtime;
 using UnityEngine;
 
-[Serializable]
 public class ControlTutorial : TutorialPage
 {
 	public GameObject[] specialGraphics;

@@ -8,13 +8,10 @@ using UnityScript.Lang;
 [Serializable]
 public class ZLevel
 {
-	[NonSerialized]
 	public const float PARTITION_WIDTH = 14f;
 
-	[NonSerialized]
 	public const float SUBDIVISION = 2f;
 
-	[NonSerialized]
 	private static ZLevel instance;
 
 	private List<Vector3> points;

@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[Serializable]
 public class BlinkAnimator : VGUIAnimator
 {
 	public float blinkRate;
@@ -52,12 +51,12 @@ public class BlinkAnimator : VGUIAnimator
 		{
 			float x = initialScale;
 			Vector3 localScale = target.localScale;
-			float num = (localScale.x = x);
-			Vector3 vector = (target.localScale = localScale);
+			localScale.x = x;
+			target.localScale = localScale;
 			float y = initialScale;
 			Vector3 localScale2 = target.localScale;
-			float num2 = (localScale2.y = y);
-			Vector3 vector3 = (target.localScale = localScale2);
+			localScale2.y = y;
+			target.localScale = localScale2;
 		}
 	}
 
@@ -77,12 +76,12 @@ public class BlinkAnimator : VGUIAnimator
 			{
 				float x = num2;
 				Vector3 localScale = target.localScale;
-				float num3 = (localScale.x = x);
-				Vector3 vector = (target.localScale = localScale);
+				localScale.x = x;
+				target.localScale = localScale;
 				float y = num2;
 				Vector3 localScale2 = target.localScale;
-				float num4 = (localScale2.y = y);
-				Vector3 vector3 = (target.localScale = localScale2);
+				localScale2.y = y;
+				target.localScale = localScale2;
 			}
 		}
 	}

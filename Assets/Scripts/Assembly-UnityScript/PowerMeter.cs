@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Boo.Lang.Runtime;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class PowerMeter : MonoBehaviour
 {
 	private float barMax;
@@ -39,8 +37,6 @@ public class PowerMeter : MonoBehaviour
 	public Transform scaleMin;
 
 	public Transform scaleMax;
-
-	private int bellCounter;
 
 	private int lightBarLevel;
 
@@ -80,9 +76,8 @@ public class PowerMeter : MonoBehaviour
 		bellFrame = 0;
 		float y = 0.01f;
 		Vector3 localScale = bar.localScale;
-		float num = (localScale.y = y);
-		Vector3 vector = (bar.localScale = localScale);
-		bellCounter = 0;
+		localScale.y = y;
+		bar.localScale = localScale;
 		int i = 0;
 		VGUIImagesTK2D[] array = leftBarLights;
 		for (int length = array.Length; i < length; i++)
@@ -236,7 +231,6 @@ public class PowerMeter : MonoBehaviour
 					continue;
 				}
 				resultEntries[resultEntryCounter].playerName.setText(name);
-				Vector3 vector = scaleMax.localPosition - scaleMin.localPosition;
 				resultEntries[resultEntryCounter].scale = num2;
 				resultEntries[resultEntryCounter].transform.localPosition = resultScaleStart + resultScaleDelta * num2;
 				resultEntryCounter++;

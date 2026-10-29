@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class VGUINotify : VGUIImageInvoker
 {
 	public float duration;

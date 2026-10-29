@@ -4,7 +4,6 @@ using UnityEngine;
 [Serializable]
 public class CustomInput
 {
-	[NonSerialized]
 	private static bool m_disableInput;
 
 	public static void disableInput(bool disable)

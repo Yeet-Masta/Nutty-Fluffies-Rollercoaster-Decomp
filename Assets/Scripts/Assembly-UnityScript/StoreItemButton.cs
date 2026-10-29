@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class StoreItemButton : MonoBehaviour
 {
 	public tk2dTextMesh priceText;

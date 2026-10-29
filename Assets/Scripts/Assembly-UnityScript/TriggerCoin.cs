@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class TriggerCoin : LevelTrigger
 {
 	public int amount;

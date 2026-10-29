@@ -17,16 +17,12 @@ public class GameData
 	[Serializable]
 	public class VehicleData
 	{
-		[NonSerialized]
 		public const int TRAIN_TYPE_WOOD = 0;
 
-		[NonSerialized]
 		public const int TRAIN_TYPE_METAL = 1;
 
-		[NonSerialized]
 		public const int TRAIN_TYPE_LOOP = 2;
 
-		[NonSerialized]
 		public const int TRAIN_TYPE_EXTREME = 3;
 
 		public int trainType;
@@ -64,191 +60,129 @@ public class GameData
 		}
 	}
 
-	[NonSerialized]
 	public static readonly int ANIMAL_NONE = -1;
 
-	[NonSerialized]
 	public const int ANIMAL_MOUSE = 0;
 
-	[NonSerialized]
 	public const int ANIMAL_KITTEN = 1;
 
-	[NonSerialized]
 	public const int ANIMAL_PUPPY = 2;
 
-	[NonSerialized]
 	public const int ANIMAL_PIG = 3;
 
-	[NonSerialized]
 	public const int ANIMAL_ELEPHANT = 4;
 
-	[NonSerialized]
 	public const int ANIMAL_COUNT = 5;
 
-	[NonSerialized]
 	public static int[] ANIMAL_HEART_VALUE = new int[5] { 1, 1, 1, 1, 1 };
 
-	[NonSerialized]
 	public static string[] ANIMAL_DESCRIPTIONS = new string[6] { "The Mouse gives one heart at each\ncheckpoint, and 2 hearts at the finish.", "The Cat gives extra hearts going\ndownhill, and 4 hearts at the finish.", "The Dog gives extra hearts from jumps,\nand 6 hearts at the finish.", "The Pig gives extra hearts from bumps,\nand 8 hearts at the finish.", "The Elephant gives extra hearts from\ndownhill and jumping, 10 hearts at finish.", "Get one extra cart immediately!" };
 
-	[NonSerialized]
 	public static string GAME_NAME = "Nutty Fluffies";
 
-	[NonSerialized]
 	public static string SERVER_ADDRESS = "http://10.10.254.216/~pekkasarkimo/";
 
-	[NonSerialized]
 	public static string FACEBOOK_LIKE_URL = "http://www.facebook.com/RedLynxGamer";
 
-	[NonSerialized]
 	public static string APP_STORE_ID = "com.UBI.A90.WW";
 
-	[NonSerialized]
 	public static string VERSION_CHECK_URL;
 
-	[NonSerialized]
 	public static string APPSTORE_PURCHASE_PAGE_GOOGLE = "https://play.google.com/store/apps/details?id=com.UBI.A90.WW";
 
-	[NonSerialized]
 	public static string MAC_APPSTORE_RATING_URL = "macappstore://itunes.apple.com/app/id550995178";
 
-	[NonSerialized]
 	public static string GOOGLE_PLAY_RATING_URL = "market://details?id=com.UBI.A90.WW";
 
-	[NonSerialized]
 	public static bool USE_TEST_APPSTORE_SERVER = true;
 
-	[NonSerialized]
 	public static string APPPERSE_KEY = "40155c55bbe24e3cac4d533570ce7dc1";
 
-	[NonSerialized]
 	public static string APPSTORE_REVIEW_PAGE = "itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=553783329";
 
-	[NonSerialized]
 	public static float APPSTORE_REVIEW_SCORE_PERCENT = 0.75f;
 
-	[NonSerialized]
 	public static int APPSTORE_REVIEW_LAUNCHES = 1;
 
-	[NonSerialized]
 	public static int APPSTORE_REVIEW_MINIMUM_LEVEL = 6;
 
-	[NonSerialized]
 	public static int APPSTORE_REVIEW_MINIMUM_LEVELPACK;
 
-	[NonSerialized]
 	public static int APPSTORE_ASK_AGAIN_HOURS = 1;
 
-	[NonSerialized]
 	public static bool TEST_BUILD;
 
-	[NonSerialized]
 	public static bool UNLOCK_LEVELS;
 
-	[NonSerialized]
 	public static string VERSION_STRING = "1.0.5";
 
-	[NonSerialized]
 	public static string VERSION_STRING_VISIBLE = "V" + VERSION_STRING;
 
-	[NonSerialized]
 	public static string BUILD_STRING = string.Empty;
 
-	[NonSerialized]
 	public static bool SHOW_FPS = TEST_BUILD;
 
-	[NonSerialized]
 	public static bool LOCALIZATION_TEST;
 
-	[NonSerialized]
 	public static bool LOG = true;
 
-	[NonSerialized]
 	public static bool EXTRA_LEVEL_PACKS = true;
 
 
-	[NonSerialized]
 	public static bool SCALEDOWN;
 
-	[NonSerialized]
 	public static int targetFPS = 60;
 
-	[NonSerialized]
 	private static List<LevelPack> LEVEL_PACKS;
 
-	[NonSerialized]
 	private static int ACTIVE_LEVEL_PACK;
 
-	[NonSerialized]
 	public static int SELECTED_LEVEL_INDEX;
 
-	[NonSerialized]
 	private static bool INITED;
 
-	[NonSerialized]
 	public static int LEVEL_FLAG_BUILT = 65536;
 
-	[NonSerialized]
 	public const int HEARTS_FOR_SPEED = 1;
 
-	[NonSerialized]
 	public const int HEARTS_FOR_G = 1;
 
-	[NonSerialized]
 	public const int HEARTS_FOR_HEIGHT = 1;
 
-	[NonSerialized]
 	public static int CART_LIMIT = 10;
 
-	[NonSerialized]
 	public static int MIN_CART_COUNT = 4;
 
-	[NonSerialized]
 	public static int MAX_ACTIVE_MISSIONS = 4;
 
-	[NonSerialized]
 	public static int CARTS_TO_UNLOCK_NEXT_LEVEL = 4;
 
-	[NonSerialized]
 	public const int BONUS_HEARTS = 0;
 
-	[NonSerialized]
 	public const int BONUS_MOUSE = 1;
 
-	[NonSerialized]
 	public const int BONUS_CAT = 2;
 
-	[NonSerialized]
 	public const int BONUS_DOG = 3;
 
-	[NonSerialized]
 	public const int BONUS_PIG = 4;
 
-	[NonSerialized]
 	public const int BONUS_ELEPHANT = 5;
 
-	[NonSerialized]
 	public const int BONUS_UNLOCK_NEXT = 6;
 
-	[NonSerialized]
 	public const int BONUS_FINISH = 7;
 
-	[NonSerialized]
 	public const int BONUS_TYPE_COUNT = 8;
 
-	[NonSerialized]
 	public static readonly int BONUS_MOST_VALUABLE = 5;
 
-	[NonSerialized]
 	public static float[] BONUS_VALUES = new float[8] { 0.045f, 2f, 8f, 8f, 10f, 12f, 0f, 0f };
 
-	[NonSerialized]
 	public static int HEARTS_PER_ANIMAL_DROP;
 
-	[NonSerialized]
 	public static int INITIAL_TOKEN_AMOUNT = 50;
 
-	[NonSerialized]
 	public static DefaultPrice[] DEFAULT_PRICES = new DefaultPrice[21]
 	{
 		new DefaultPrice("DP_CONSTRUCTION_PRICE", 50),
@@ -274,107 +208,74 @@ public class GameData
 		new DefaultPrice("DP_PURCHASE_TAPJOY_OFFERWALL", 0)
 	};
 
-	[NonSerialized]
 	public static int TRACK_REVENUE = 20;
 
-	[NonSerialized]
 	public static int TRACK_REVENUE_MAX = 80;
 
-	[NonSerialized]
 	private static float[] LEVEL_PACK_PRICE_MULTIPLIERS = new float[5] { 1f, 1.5f, 2f, 2.5f, 1f };
 
-	[NonSerialized]
 	private static float[] LEVEL_INDEX_PRICE_MULTIPLIERS = new float[11]
 	{
 		1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f,
 		1f
 	};
 
-	[NonSerialized]
 	private static float[] LEVEL_PRICE_INCREMENT_MULTIPLIERS = new float[5] { 0f, 0f, 0f, 0f, 1f };
 
-	[NonSerialized]
 	public static List<StoreKitProduct> INAPP_PURCHASE_LIST;
 
-	[NonSerialized]
 	public static Dictionary<string, int> INAPP_PURCHASE_TOKENS = new Dictionary<string, int>();
 
-	[NonSerialized]
 	public static int SOUND_LEVEL = 2;
 
-	[NonSerialized]
 	public static int TOTAL_TOKENS;
 
-	[NonSerialized]
 	public static VehicleData TRAIN_DATA = new VehicleData();
 
-	[NonSerialized]
 	public static int[] NOTIFICATION_DAYS = new int[4] { 1, 2, 5, 10 };
 
-	[NonSerialized]
 	public const int FEATURE_NONE = 0;
 
-	[NonSerialized]
 	public const int FEATURE_CART_STORE = 1;
 
-	[NonSerialized]
 	public const int FEATURE_CAT = 2;
 
-	[NonSerialized]
 	public const int FEATURE_DOG = 4;
 
-	[NonSerialized]
 	public const int FEATURE_PIG = 8;
 
-	[NonSerialized]
 	public const int FEATURE_ELEPHANT = 16;
 
-	[NonSerialized]
 	public const int FEATURE_METAL_PACK = 1024;
 
-	[NonSerialized]
 	public const int FEATURE_LOOP_PACK = 2048;
 
-	[NonSerialized]
 	public const int FEATURE_EXTREME_PACK = 4096;
 
-	[NonSerialized]
 	public const int FEATURE_DOUBLE_COINS = 8192;
 
-	[NonSerialized]
 	public const int FEATURE_HISTORY_SCREEN = 16384;
 
-	[NonSerialized]
 	public const int FEATURE_ROCKET_CART = 32768;
 
-	[NonSerialized]
 	public const int FEATURE_MAGNET_CART = 65536;
 
-	[NonSerialized]
 	public static readonly int FEATURE_HOVER_CART = 131072;
 
-	[NonSerialized]
 	public static readonly int FEATURE_BUY_CART = 262144;
 
-	[NonSerialized]
 	private static int FEATURE_LIST = 0;
 
-	[NonSerialized]
 	private static int FEATURE_DESCRIPT_LIST;
 
-	[NonSerialized]
 	public static float ANIMAL_REMOVE_AMOUNT_MAX_PERCENT = 0.7f;
 
-	[NonSerialized]
 	public static int ANIMAL_REMOVE_AMOUNT_MAX = 8;
 
-	[NonSerialized]
 	public static int ANIMAL_REMOVE_AMOUNT_MIN = 2;
 
-	[NonSerialized]
 	public static Resolution actualDeviceResolution;
 
-	[NonSerialized]
 	private static bool isResolutionSet;
 
 	public static void init()

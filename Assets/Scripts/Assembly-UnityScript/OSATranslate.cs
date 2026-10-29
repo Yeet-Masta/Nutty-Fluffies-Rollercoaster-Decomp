@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class OSATranslate : ObjectScript
 {
 	public float x;
@@ -41,29 +39,29 @@ public class OSATranslate : ObjectScript
 			{
 				float num3 = cachedTransform.position.x - (num2 + m * cachedTransform.lossyScale.x / 2f) * 2f;
 				Vector3 position = cachedTransform.position;
-				float num4 = (position.x = num3);
-				Vector3 vector = (cachedTransform.position = position);
+				position.x = num3;
+				cachedTransform.position = position;
 			}
 			if (!(x >= 0f) && !(cachedTransform.position.x >= cameraTrans.position.x - num2 - m * cachedTransform.lossyScale.x / 2f))
 			{
 				float num5 = cachedTransform.position.x + (num2 + m * cachedTransform.lossyScale.x / 2f) * 2f;
 				Vector3 position2 = cachedTransform.position;
-				float num6 = (position2.x = num5);
-				Vector3 vector3 = (cachedTransform.position = position2);
+				position2.x = num5;
+				cachedTransform.position = position2;
 			}
 			if (!(y <= 0f) && !(cachedTransform.position.y <= cameraTrans.position.y + orthographicSize + m * cachedTransform.lossyScale.y / 2f))
 			{
 				float num7 = cachedTransform.position.y - (orthographicSize + m * cachedTransform.lossyScale.y / 2f) * 2f;
 				Vector3 position3 = cachedTransform.position;
-				float num8 = (position3.y = num7);
-				Vector3 vector5 = (cachedTransform.position = position3);
+				position3.y = num7;
+				cachedTransform.position = position3;
 			}
 			if (!(y >= 0f) && !(cachedTransform.position.y >= cameraTrans.position.y - orthographicSize - m * cachedTransform.lossyScale.y / 2f))
 			{
 				float num9 = cachedTransform.position.y + (orthographicSize + m * cachedTransform.lossyScale.y / 2f) * 2f;
 				Vector3 position4 = cachedTransform.position;
-				float num10 = (position4.y = num9);
-				Vector3 vector7 = (cachedTransform.position = position4);
+				position4.y = num9;
+				cachedTransform.position = position4;
 			}
 		}
 	}

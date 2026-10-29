@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[Serializable]
 public class Hover : Special
 {
 	private float phase;
@@ -97,12 +96,12 @@ public class Hover : Special
 				{
 					float x = Mathf.Cos(num2);
 					Vector3 localScale = cart.jumpRocketFlame.localScale;
-					float num7 = (localScale.x = x);
-					Vector3 vector = (cart.jumpRocketFlame.localScale = localScale);
+					localScale.x = x;
+					cart.jumpRocketFlame.localScale = localScale;
 					float y = Mathf.Cos(num2);
 					Vector3 localScale2 = cart.jumpRocketFlame.localScale;
-					float num8 = (localScale2.y = y);
-					Vector3 vector3 = (cart.jumpRocketFlame.localScale = localScale2);
+					localScale2.y = y;
+					cart.jumpRocketFlame.localScale = localScale2;
 				}
 			}
 			phase += phaseSpeed;

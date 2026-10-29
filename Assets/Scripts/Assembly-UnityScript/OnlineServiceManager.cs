@@ -20,7 +20,6 @@ public class OnlineServiceManager
 		}
 	}
 
-	[NonSerialized]
 	private static OnlineServiceManager instance;
 
 	private List<LeaderboardScore> leaderboardScores;

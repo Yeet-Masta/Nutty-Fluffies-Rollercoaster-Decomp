@@ -8,103 +8,70 @@ using UnityScript.Lang;
 [Serializable]
 public class RollerCoasterMissions : MissionManager
 {
-	[NonSerialized]
 	public const int FINISH_WITH_N_CARTS = 1;
 
-	[NonSerialized]
 	public const int FINISH_WITH_N_MAGNET_CARTS = 2;
 
-	[NonSerialized]
 	public const int FINISH_WITH_N_ROCKET_CARTS = 3;
 
-	[NonSerialized]
 	public const int FINISH_WITH_N_HOVER_CARTS = 4;
 
-	[NonSerialized]
 	public const int JUMP_DISTANCE = 5;
 
-	[NonSerialized]
 	public const int JUMP_DURATION = 6;
 
-	[NonSerialized]
 	public const int EARN_HEARTS = 7;
 
-	[NonSerialized]
 	public const int RESULT_METER_PERCENT = 8;
 
-	[NonSerialized]
 	public const int USE_ROCKET_N_TIMES = 9;
 
-	[NonSerialized]
 	public const int CRASH_WITH_SPEED = 10;
 
-	[NonSerialized]
 	public const int DROP_TOYS = 11;
 
-	[NonSerialized]
 	public const int RIDES_WITHOUT_CRASH = 12;
 
-	[NonSerialized]
 	public const int FINISH_WITH_WOOD_CARTS = 13;
 
-	[NonSerialized]
 	public const int FINISH_WITH_METAL_CARTS = 14;
 
-	[NonSerialized]
 	public const int FINISH_WITH_LOOP_CARTS = 15;
 
-	[NonSerialized]
 	public const int FINISH_WITH_EXTREME_CARTS = 16;
 
-	[NonSerialized]
 	public const int FINISH_LAST_WOOD_TRACK_WITH_N_CARTS = 17;
 
-	[NonSerialized]
 	public const int FINISH_LAST_METAL_TRACK_WITH_N_CARTS = 18;
 
-	[NonSerialized]
 	public const int FINISH_LAST_LOOP_TRACK_WITH_N_CARTS = 19;
 
-	[NonSerialized]
 	public const int FINISH_LAST_EXTREME_TRACK_WITH_N_CARTS = 20;
 
-	[NonSerialized]
 	public const int UNLOCK_NTH_WOOD_TRACK = 21;
 
-	[NonSerialized]
 	public const int UNLOCK_NTH_METAL_TRACK = 22;
 
-	[NonSerialized]
 	public const int UNLOCK_NTH_LOOP_TRACK = 23;
 
-	[NonSerialized]
 	public const int UNLOCK_NTH_EXTREME_TRACK = 24;
 
-	[NonSerialized]
 	public const int COMPLETE_NTH_WOOD_TRACK = 25;
 
-	[NonSerialized]
 	public const int COMPLETE_NTH_METAL_TRACK = 26;
 
-	[NonSerialized]
 	public const int COMPLETE_NTH_LOOP_TRACK = 27;
 
-	[NonSerialized]
 	public const int COMPLETE_NTH_EXTREME_TRACK = 28;
 
-	[NonSerialized]
 	public const int FINISH_WITH_N_MOUSE = 29;
 
-	[NonSerialized]
 	public const int FINISH_WITH_N_CAT = 30;
 
-	[NonSerialized]
 	public const int FINISH_WITH_N_DOG = 31;
 
-	[NonSerialized]
 	public const int FINISH_WITH_N_PIG = 32;
 
-	[NonSerialized]
 	public const int FINISH_WITH_N_ELEPHANT = 33;
 
 	public int completeCounter;
@@ -223,7 +190,7 @@ public class RollerCoasterMissions : MissionManager
 			GameManager gameManager = GameManager.getInstance();
 			int passengerCartCount = gameManager.getVehicle().getPassengerCartCount();
 			int num = m.intValue();
-			int trainType = gameManager.getTrainType();
+			gameManager.getTrainType();
 			int activeLevelPackIndex = GameData.getActiveLevelPackIndex();
 			if (!rollerCoasterStatistics.roundDidFinish && m.testFlag(Mission.FLAG_REQUIRE_FINISH))
 			{

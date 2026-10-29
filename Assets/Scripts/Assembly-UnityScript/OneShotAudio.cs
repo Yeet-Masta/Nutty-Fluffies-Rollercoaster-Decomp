@@ -1,29 +1,20 @@
-using System;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class OneShotAudio : MonoBehaviour
 {
-	[NonSerialized]
 	private static bool PARENT_TO_MAIN_CAMERA = true;
 
-	[NonSerialized]
 	private static int amount;
 
-	[NonSerialized]
 	private static int current;
 
-	[NonSerialized]
 	private static GameObject[] gos;
 
-	[NonSerialized]
 	private static AudioSource[] sources;
 
-	[NonSerialized]
 	private static Transform[] transforms;
 
-	[NonSerialized]
 	private static int[] priorities;
 
 	public static void InitObjects(int amount)
@@ -177,9 +168,5 @@ public class OneShotAudio : MonoBehaviour
 		sources = null;
 		transforms = null;
 		priorities = null;
-	}
-
-	public virtual void Main()
-	{
 	}
 }

@@ -1,8 +1,6 @@
-using System;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class StoryMenu : BaseMenu
 {
 	public BaseMenu loadingMenu;
@@ -20,8 +18,6 @@ public class StoryMenu : BaseMenu
 	public NewsPaperAnimator newsPaperAnimator;
 
 	public SlideInAnimator reporterScrollAnimator;
-
-	private int flashIndex;
 
 	public GameObject clickBlocker;
 
@@ -134,7 +130,6 @@ public class StoryMenu : BaseMenu
 
 	public virtual void showLoading()
 	{
-		int num = default(int);
 		loadingMenu.activate();
 	}
 

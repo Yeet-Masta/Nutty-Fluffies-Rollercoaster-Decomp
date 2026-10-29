@@ -4,7 +4,6 @@ using UnityEngine;
 [Serializable]
 public class StoreItem
 {
-	[NonSerialized]
 	public static DefaultPrice[] DEFAULT_PRICES = new DefaultPrice[0];
 
 	public int price;

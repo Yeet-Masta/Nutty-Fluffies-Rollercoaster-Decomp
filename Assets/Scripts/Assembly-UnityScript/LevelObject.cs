@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class LevelObject : LevelEntity
 {
 	public int objectId;
@@ -18,8 +16,8 @@ public class LevelObject : LevelEntity
 	{
 		float z = 1f * (float)zStep;
 		Vector3 localPosition = transform.localPosition;
-		float num = (localPosition.z = z);
-		Vector3 vector = (transform.localPosition = localPosition);
+		localPosition.z = z;
+		transform.localPosition = localPosition;
 	}
 
 	public virtual void resetPosition(LevelLayer onLayer)
@@ -27,16 +25,16 @@ public class LevelObject : LevelEntity
 		Transform transform = ((!onLayer) ? gameObject.transform.parent : onLayer.transform);
 		float x = initialPosition.x * transform.localScale.x + transform.position.x;
 		Vector3 position = this.transform.position;
-		float num = (position.x = x);
-		Vector3 vector = (this.transform.position = position);
+		position.x = x;
+		this.transform.position = position;
 		float y = initialPosition.y * transform.localScale.y + transform.position.y;
 		Vector3 position2 = this.transform.position;
-		float num2 = (position2.y = y);
-		Vector3 vector3 = (this.transform.position = position2);
+		position2.y = y;
+		this.transform.position = position2;
 		float z = initialPosition.z;
 		Vector3 eulerAngles = this.transform.eulerAngles;
-		float num3 = (eulerAngles.z = z);
-		Vector3 vector5 = (this.transform.eulerAngles = eulerAngles);
+		eulerAngles.z = z;
+		this.transform.eulerAngles = eulerAngles;
 	}
 
 	public virtual void savePosition(LevelLayer onLayer)

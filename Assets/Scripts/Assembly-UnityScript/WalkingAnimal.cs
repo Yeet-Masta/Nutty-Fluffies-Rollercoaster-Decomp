@@ -1,40 +1,27 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class WalkingAnimal : MonoBehaviour
 {
-	[NonSerialized]
 	public const int MOUSE = 0;
 
-	[NonSerialized]
 	public const int CAT = 1;
 
-	[NonSerialized]
 	public const int DOG = 2;
 
-	[NonSerialized]
 	public const int PIG = 3;
 
-	[NonSerialized]
 	public const int ELEPHANT = 4;
 
-	[NonSerialized]
 	public const int GOAT = 5;
 
-	[NonSerialized]
 	public const int RABBIT = 6;
 
-	[NonSerialized]
 	public static readonly float[] TILT_FACTOR = new float[7] { 8f, 9f, 8f, 6f, 5f, 5f, 15f };
 
-	[NonSerialized]
 	public static readonly float[] VERTICAL_FACTOR = new float[7] { 0.01f, 0.01f, 0.015f, 0.01f, 0.01f, 0.01f, 0.03f };
 
-	[NonSerialized]
 	public static readonly float[] TILT_SPEED = new float[7] { 80f, 30f, 28f, 27f, 25f, 40f, 35f };
 
-	[NonSerialized]
 	public const float X_LIMIT = 1f;
 
 	private float tiltPhase;
@@ -61,8 +48,8 @@ public class WalkingAnimal : MonoBehaviour
 		tiltPhase += 360f * UnityEngine.Random.value;
 		float x = -1f + 2f * UnityEngine.Random.value;
 		Vector3 localPosition = tr.localPosition;
-		float num = (localPosition.x = x);
-		Vector3 vector = (tr.localPosition = localPosition);
+		localPosition.x = x;
+		tr.localPosition = localPosition;
 		int num2 = clones;
 		clones = 0;
 		for (int i = 0; i < num2; i++)
@@ -80,8 +67,8 @@ public class WalkingAnimal : MonoBehaviour
 		tiltPhase += deltaTime * TILT_SPEED[typeIndex] * speed;
 		float z = Mathf.Sin(tiltPhase) * TILT_FACTOR[typeIndex];
 		Vector3 localEulerAngles = tr.localEulerAngles;
-		float num = (localEulerAngles.z = z);
-		Vector3 vector = (tr.localEulerAngles = localEulerAngles);
+		localEulerAngles.z = z;
+		tr.localEulerAngles = localEulerAngles;
 		localPosition.x += 0.2f * speed * deltaTime;
 		localPosition.y = y + Mathf.Sin(tiltPhase) * VERTICAL_FACTOR[typeIndex];
 		if (localPosition.x > 1f || (!(speed >= 0f) && !(localPosition.x >= -1f)))
@@ -96,8 +83,8 @@ public class WalkingAnimal : MonoBehaviour
 			{
 				float x = -1f;
 				Vector3 localScale = tr.localScale;
-				float num2 = (localScale.x = x);
-				Vector3 vector3 = (tr.localScale = localScale);
+				localScale.x = x;
+				tr.localScale = localScale;
 				speed = 0f - speed;
 				localPosition.x = 0.9f;
 			}
@@ -105,8 +92,8 @@ public class WalkingAnimal : MonoBehaviour
 			{
 				float x2 = 1f;
 				Vector3 localScale2 = tr.localScale;
-				float num3 = (localScale2.x = x2);
-				Vector3 vector5 = (tr.localScale = localScale2);
+				localScale2.x = x2;
+				tr.localScale = localScale2;
 				localPosition.x = -1.3f + UnityEngine.Random.value * 0.4f;
 			}
 		}

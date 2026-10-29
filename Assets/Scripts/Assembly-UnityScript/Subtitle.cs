@@ -1,8 +1,6 @@
-using System;
 using Boo.Lang.Runtime;
 using UnityScript.Lang;
 
-[Serializable]
 public class Subtitle : VGUIText
 {
 	public int maxChars;

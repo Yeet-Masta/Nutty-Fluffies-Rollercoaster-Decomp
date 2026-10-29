@@ -1,9 +1,7 @@
-using System;
 using Boo.Lang.Runtime;
 using UnityEngine;
 using UnityScript.Lang;
 
-[Serializable]
 public class VGUIScrollingContainer : VGUIImageInvoker
 {
 	public float oneStepLength;
@@ -149,8 +147,8 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 	{
 		float x = targetPos;
 		Vector3 position = t.position;
-		float num = (position.x = x);
-		Vector3 vector = (t.position = position);
+		position.x = x;
+		t.position = position;
 	}
 
 	public virtual void scrollOneStepLeft()
@@ -375,8 +373,8 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 				float num = stepSlideSpeed * Time.deltaTime;
 				float x2 = x * (1f - num) + targetPos * num;
 				Vector3 position = t.position;
-				float num2 = (position.x = x2);
-				Vector3 vector = (t.position = position);
+				position.x = x2;
+				t.position = position;
 				scrollSpeed *= 1f - stiffness;
 			}
 			else
@@ -390,8 +388,8 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 			float x3 = t.localPosition.x;
 			float x4 = GetWorldPos(Input.mousePosition).x + dragAnchorX;
 			Vector3 position2 = t.position;
-			float num3 = (position2.x = x4);
-			Vector3 vector3 = (t.position = position2);
+			position2.x = x4;
+			t.position = position2;
 			scrollSpeed += (x3 - t.localPosition.x) * stiffness;
 		}
 	}

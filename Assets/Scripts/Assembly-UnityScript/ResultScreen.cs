@@ -1,23 +1,16 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class ResultScreen : VGUIElement
 {
-	[NonSerialized]
 	public const float BONUS_ENTRY_INTERVAL = 0.2f;
 
-	[NonSerialized]
 	public const float EPIC_SCORE_TRESHOLD = 0.9f;
 
-	[NonSerialized]
 	public const float GOOD_SCORE_TRESHOLD = 0.5f;
 
-	[NonSerialized]
 	public const float SPECIAL_HEARTS_MAX_MULTIPLY = 0.15f;
 
-	[NonSerialized]
 	public static bool ACTIVE;
 
 	public ParticleEmitter totalTokenEmitter;
@@ -308,7 +301,7 @@ public class ResultScreen : VGUIElement
 	{
 		List<ResultList.BonusEntry> list = new List<ResultList.BonusEntry>();
 		ResultList.BonusEntry bonusEntry = null;
-		Vehicle vehicle = GameManager.getInstance().getVehicle();
+		GameManager.getInstance().getVehicle();
 		float activePriceMultiplier = GameData.getActivePriceMultiplier();
 		for (int i = 0; i < 8; i++)
 		{
@@ -361,7 +354,6 @@ public class ResultScreen : VGUIElement
 		}
 		if (currentBonusIndex < bonusList.Count)
 		{
-			int type = bonusList[currentBonusIndex].type;
 			resultList.instatiateBonus(bonusList[currentBonusIndex], false);
 			float activePriceMultiplier = GameData.getActivePriceMultiplier();
 			heartSum += bonusList[currentBonusIndex].value;
@@ -413,7 +405,7 @@ public class ResultScreen : VGUIElement
 		if (activated)
 		{
 			GeneralSoundEffects.playSound(bonusSound);
-			float num = resultList.heartSum.setValue((int)heartSum);
+			resultList.heartSum.setValue((int)heartSum);
 			powerMeter.setValue(getEstimatedScoreWithMaxCarts((int)heartSum));
 			Invoke("addBonusType", 0.2f);
 		}
@@ -565,7 +557,7 @@ public class ResultScreen : VGUIElement
 		int num = calculateCheckPointHearts();
 		int num2 = calculateLevelHearts();
 		int cART_LIMIT = GameData.CART_LIMIT;
-		Vehicle vehicle = GameManager.getInstance().getVehicle();
+		GameManager.getInstance().getVehicle();
 		int num3 = 0;
 		for (int i = 0; i < cART_LIMIT; i++)
 		{
@@ -588,7 +580,6 @@ public class ResultScreen : VGUIElement
 			TriggerCheckPoint triggerCheckPoint = array[i] as TriggerCheckPoint;
 			if (triggerCheckPoint != null)
 			{
-				int kind = triggerCheckPoint.kind;
 				if (triggerCheckPoint.kind == 0)
 				{
 					num++;
@@ -625,14 +616,14 @@ public class ResultScreen : VGUIElement
 		{
 			int num = -5;
 			Vector3 localPosition = transform.localPosition;
-			float num2 = (localPosition.x = num);
-			Vector3 vector = (transform.localPosition = localPosition);
+			localPosition.x = num;
+			transform.localPosition = localPosition;
 			return;
 		}
 		int num3 = 0;
 		Vector3 localPosition2 = transform.localPosition;
-		float num4 = (localPosition2.x = num3);
-		Vector3 vector3 = (transform.localPosition = localPosition2);
+		localPosition2.x = num3;
+		transform.localPosition = localPosition2;
 		if ((bool)BaseMenuManager.getInstance())
 		{
 			BaseMenuManager.getInstance().freeCoinsMenu.deactivate();

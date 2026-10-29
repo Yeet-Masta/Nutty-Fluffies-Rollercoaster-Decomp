@@ -7,7 +7,6 @@ using UnityScript.Lang;
 [Serializable]
 public class ObjectListLoader
 {
-	[NonSerialized]
 	public static ObjectListLoader instance;
 
 	public static ObjectListLoader getInstance()

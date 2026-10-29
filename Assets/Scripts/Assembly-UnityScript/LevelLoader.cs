@@ -35,10 +35,9 @@ public class LevelLoader
 		LevelData levelData = new LevelData();
 		JSONObject jSONObject = new JSONObject(str);
 		levelData.theme = ThemeLoader.getInstance().loadTheme(jSONObject.GetFieldSafe("theme", new JSONObject("\"" + "woodTrackTheme" + "\"")).str);
-		object result;
 		if (levelData.theme == null)
 		{
-			result = null;
+			return null;
 		}
 		else
 		{
@@ -76,9 +75,8 @@ public class LevelLoader
 			}
 			List<LevelLayerData> layerData = levelData.layerData;
 			loadLayers(field, layerData, objects);
-			result = levelData;
+			return levelData;
 		}
-		return (LevelData)result;
 	}
 
 	public virtual LevelData load(string packName, string trackName, ObjectListData objects)
@@ -88,11 +86,10 @@ public class LevelLoader
 		CustomProfiler.begin("LevelLoader::load");
 		string path = FileManager.getInstance().locateLevel(packName, trackName);
 		text = FileManager.getInstance().loadFileText(path);
-		object result;
 		if (string.IsNullOrEmpty(text))
 		{
 			Debug.LogWarning("Could not open track '" + trackName + "'");
-			result = null;
+			return null;
 		}
 		else
 		{
@@ -100,9 +97,8 @@ public class LevelLoader
 			levelData.fileName = trackName;
 			CustomProfiler.end("LevelLoader::load");
 			CustomProfiler.report();
-			result = levelData;
+			return levelData;
 		}
-		return (LevelData)result;
 	}
 
 	public virtual void loadLayers(JSONObject layers, List<LevelLayerData> layerData, ObjectListData objectList)

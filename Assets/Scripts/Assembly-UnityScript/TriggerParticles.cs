@@ -149,43 +149,30 @@ public class TriggerParticles : LevelTriggerActivatable
 
 	public override string getParam(string param)
 	{
-		string result;
 		switch (param)
 		{
 		case "pt":
-			result = string.Empty + pt;
-			break;
+			return string.Empty + pt;
 		case "ds":
-			result = string.Empty + ds;
-			break;
+			return string.Empty + ds;
 		case "ns":
-			result = string.Empty + ns;
-			break;
+			return string.Empty + ns;
 		case "xs":
-			result = string.Empty + xs;
-			break;
+			return string.Empty + xs;
 		case "xm":
-			result = string.Empty + xm;
-			break;
+			return string.Empty + xm;
 		case "ys":
-			result = string.Empty + ys;
-			break;
+			return string.Empty + ys;
 		case "ym":
-			result = string.Empty + ym;
-			break;
+			return string.Empty + ym;
 		case "ss":
-			result = string.Empty + ss;
-			break;
+			return string.Empty + ss;
 		case "sm":
-			result = string.Empty + sm;
-			break;
+			return string.Empty + sm;
 		case "lf":
-			result = string.Empty + lf;
-			break;
+			return string.Empty + lf;
 		default:
-			result = base.getParam(param);
-			break;
+			return base.getParam(param);
 		}
-		return result;
 	}
 }

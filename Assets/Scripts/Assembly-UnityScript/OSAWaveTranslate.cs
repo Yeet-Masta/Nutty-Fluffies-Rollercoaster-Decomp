@@ -56,28 +56,20 @@ public class OSAWaveTranslate : ObjectScript
 
 	public override string getParam(string param)
 	{
-		string result;
 		switch (param)
 		{
 		case "s":
-			result = string.Empty + s;
-			break;
+			return string.Empty + s;
 		case "xa":
-			result = string.Empty + xa;
-			break;
+			return string.Empty + xa;
 		case "ya":
-			result = string.Empty + ya;
-			break;
+			return string.Empty + ya;
 		case "t":
-			result = string.Empty + t;
-			break;
+			return string.Empty + t;
 		case "o":
-			result = string.Empty + o;
-			break;
+			return string.Empty + o;
 		default:
-			result = base.getParam(param);
-			break;
+			return base.getParam(param);
 		}
-		return result;
 	}
 }

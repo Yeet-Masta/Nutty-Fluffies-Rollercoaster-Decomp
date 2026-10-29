@@ -13,16 +13,14 @@ public class CustomInput
 
 	public static bool getKeyDown(int keyCode)
 	{
-		bool result;
 		if (m_disableInput)
 		{
 			Input.ResetInputAxes();
-			result = !m_disableInput;
+			return !m_disableInput;
 		}
 		else
 		{
-			result = Input.GetKeyDown((KeyCode)keyCode);
+			return Input.GetKeyDown((KeyCode)keyCode);
 		}
-		return result;
 	}
 }

@@ -516,14 +516,13 @@ public class GameData
 	public static bool unlockLevel(int index)
 	{
 		LevelPack activeLevelPack = getActiveLevelPack();
-		int result;
 		if (index >= activeLevelPack.levelList.Count)
 		{
-			result = 0;
+			return false;
 		}
 		else if (activeLevelPack.getLevelInfo(index).isUnlocked())
 		{
-			result = 1;
+			return true;
 		}
 		else
 		{
@@ -531,9 +530,8 @@ public class GameData
 			PlayerPrefs.SetInt("LEVEL_FLAGS_" + activeLevelPack.fileName + "_" + activeLevelPack.levelList[index].fileName, activeLevelPack.levelList[index].flags);
 			PlayerPrefs.Save();
 			RollerCoasterStatistics.getInstance().roundUnlockedNextTrack = true;
-			result = 1;
+			return true;
 		}
-		return (byte)result != 0;
 	}
 
 	public static void unlockLevelPack(int index)
@@ -563,25 +561,23 @@ public class GameData
 	{
 		LevelPack activeLevelPack = getActiveLevelPack();
 		int num = SELECTED_LEVEL_INDEX + 1;
-		int result;
 		if (num >= activeLevelPack.levelList.Count)
 		{
 			int num2 = ACTIVE_LEVEL_PACK + 1;
 			if (num2 >= LEVEL_PACKS.Count)
 			{
-				result = 1;
+				return true;
 			}
 			else
 			{
 				activeLevelPack = LEVEL_PACKS[num2];
-				result = activeLevelPack.isUnlocked() ? 1 : 0;
+				return activeLevelPack.isUnlocked();
 			}
 		}
 		else
 		{
-			result = activeLevelPack.getLevelInfo(num).isUnlocked() ? 1 : 0;
+			return activeLevelPack.getLevelInfo(num).isUnlocked();
 		}
-		return (byte)result != 0;
 	}
 
 	public static void completeLevel(int index, int carts)
@@ -638,7 +634,6 @@ public class GameData
 
 	public static int getTokenValue(string productId)
 	{
-		int result;
 		if (INAPP_PURCHASE_TOKENS.ContainsKey(productId))
 		{
 			int num = 1;
@@ -646,22 +641,20 @@ public class GameData
 			{
 				num = 2;
 			}
-			result = INAPP_PURCHASE_TOKENS[productId] * num;
+			return INAPP_PURCHASE_TOKENS[productId] * num;
 		}
 		else
 		{
-			result = -1;
+			return -1;
 		}
-		return result;
 	}
 
 	public static int getLevelPackProgress(int index)
 	{
 		LevelPack levelPack = LEVEL_PACKS[index];
-		int result;
 		if (levelPack.levelList.Count == 0)
 		{
-			result = 0;
+			return 0;
 		}
 		else
 		{
@@ -673,34 +666,30 @@ public class GameData
 				num2 += (float)(CART_LIMIT - startingCartAmount);
 				num += (float)(getNumberOfCarts(levelPack, i) - startingCartAmount);
 			}
-			result = (int)Mathf.Ceil(num * 100f / num2);
+			return (int)Mathf.Ceil(num * 100f / num2);
 		}
-		return result;
 	}
 
 	public static int getLevelProgress(LevelPack levelPack, int index)
 	{
-		int result;
 		if (levelPack.levelList.Count == 0)
 		{
-			result = 0;
+			return 0;
 		}
 		else
 		{
 			float num = CART_LIMIT;
 			int num2 = PlayerPrefs.GetInt("LEVEL_FINISH_CART_NUM_" + levelPack.fileName + "_" + levelPack.levelList[index].fileName, 0);
-			result = (int)Mathf.Ceil((float)num2 * 100f / num);
+			return (int)Mathf.Ceil((float)num2 * 100f / num);
 		}
-		return result;
 	}
 
 	public static string formatTokenValue(string value)
 	{
 		int num = value.Length - 3;
-		string result;
 		if (num < 0)
 		{
-			result = value;
+			return value;
 		}
 		else
 		{
@@ -714,9 +703,8 @@ public class GameData
 			{
 				text = value.Substring(0, 3 + num) + " " + text;
 			}
-			result = text;
+			return text;
 		}
-		return result;
 	}
 
 	public static void unlockFeature(int feature)
@@ -900,17 +888,15 @@ public class GameData
 		string rhs = string.Empty + activeLevelPack.fileName + "_" + activeLevelPack.levelList[levelIndex].fileName;
 		string key = "LEVEL_RECORD_HEARTS_" + rhs;
 		string key2 = "LEVEL_MAXIMUM_HEARTS_" + rhs;
-		int result;
 		if (PlayerPrefs.GetInt(key, 0) == 0)
 		{
-			result = -1;
+			return -1;
 		}
 		else
 		{
 			float f = PlayerPrefs.GetInt(key, 0) * 100 / PlayerPrefs.GetInt(key2, 0);
-			result = (int)Mathf.Min(100f, Mathf.Floor(f));
+			return (int)Mathf.Min(100f, Mathf.Floor(f));
 		}
-		return result;
 	}
 
 	public static string genLeaderboard(int pack, int index)

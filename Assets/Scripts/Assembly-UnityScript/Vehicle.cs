@@ -670,19 +670,17 @@ public class Vehicle : MonoBehaviour
 
 	public virtual bool activateSpecial()
 	{
-		int result;
 		if (special != null && special.ready)
 		{
 			@lock = false;
 			carts[0].rb.isKinematic = false;
 			special.activateSpecial();
-			result = 1;
+			return true;
 		}
 		else
 		{
-			result = 0;
+			return false;
 		}
-		return (byte)result != 0;
 	}
 
 	public virtual int getNumberOfToys(int toyType)

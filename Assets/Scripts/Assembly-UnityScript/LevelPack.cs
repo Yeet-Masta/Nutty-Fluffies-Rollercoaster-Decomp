@@ -186,10 +186,9 @@ public class LevelPack
 
 	public virtual int getProgress()
 	{
-		int result;
 		if (levelList.Count == 0)
 		{
-			result = 0;
+			return 0;
 		}
 		else
 		{
@@ -202,9 +201,8 @@ public class LevelPack
 				}
 			}
 			float num2 = num / (float)levelList.Count;
-			result = (int)Mathf.Ceil(num2 * 100f);
+			return (int)Mathf.Ceil(num2 * 100f);
 		}
-		return result;
 	}
 
 	private static LevelPack load(string name)
@@ -216,12 +214,11 @@ public class LevelPack
 		while (!wWW.isDone)
 		{
 		}
-		LevelPack result;
 		if (wWW.error != null)
 		{
 			Debug.Log(wWW.error);
 			levelPack.fileName = name;
-			result = levelPack;
+			return levelPack;
 		}
 		else
 		{
@@ -252,9 +249,8 @@ public class LevelPack
 				UnityRuntimeServices.Update(enumerator, jSONObject2);
 				levelPack.levelList.Add(levelInfo);
 			}
-			result = levelPack;
+			return levelPack;
 		}
-		return result;
 	}
 
 	public static List<LevelPack> getLevelPackList()

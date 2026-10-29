@@ -130,7 +130,6 @@ public class LevelFactory
 	{
 		LevelLayer levelLayer = null;
 		Component[] componentsInChildren = parent.transform.GetComponentsInChildren(typeof(LevelLayer), true);
-		object result;
 		if (CommonData.EDITOR_ACTIVE || !layerData.checkDevice(1 << CommonData.getDeviceGenerationInt()))
 		{
 			if (componentsInChildren != null)
@@ -161,13 +160,12 @@ public class LevelFactory
 				levelLayer.updateColor();
 				levelLayer.deviceList = layerData.deviceList;
 			}
-			result = levelLayer;
+			return levelLayer;
 		}
 		else
 		{
-			result = null;
+			return null;
 		}
-		return (LevelLayer)result;
 	}
 
 	public virtual Level createLevel(GameObject parent)

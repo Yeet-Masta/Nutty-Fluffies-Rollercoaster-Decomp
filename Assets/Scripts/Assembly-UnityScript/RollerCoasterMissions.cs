@@ -167,14 +167,13 @@ public class RollerCoasterMissions : MissionManager
 
 	private bool checkMission(Mission m)
 	{
-		int result;
 		if (m.testFlag(1) || GameData.LOCALIZATION_TEST)
 		{
-			result = 1;
+			return true;
 		}
 		else if (GameManager.getInstance() == null || GameManager.getInstance().getVehicle() == null)
 		{
-			result = 0;
+			return false;
 		}
 		else
 		{
@@ -186,7 +185,7 @@ public class RollerCoasterMissions : MissionManager
 			int activeLevelPackIndex = GameData.getActiveLevelPackIndex();
 			if (!rollerCoasterStatistics.roundDidFinish && m.testFlag(Mission.FLAG_REQUIRE_FINISH))
 			{
-				result = 0;
+				return false;
 			}
 			else
 			{
@@ -466,10 +465,9 @@ public class RollerCoasterMissions : MissionManager
 					flag = gameManager.getVehicle().getNumberOfToys(4) >= num;
 					break;
 				}
-				result = flag ? 1 : 0;
+				return flag;
 			}
 		}
-		return (byte)result != 0;
 	}
 
 	private bool isLastTrack()

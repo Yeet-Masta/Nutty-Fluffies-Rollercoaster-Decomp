@@ -23,16 +23,14 @@ public class RayCastTools
 		RaycastHit hitInfo = default(RaycastHit);
 		bool flag = false;
 		flag = layerMask != -1 ? Physics.Raycast(ray, out hitInfo, depth, layerMask) : Physics.Raycast(ray, out hitInfo, depth);
-		object result;
 		if (flag && hitInfo.collider != null)
 		{
 			hitInfo.collider.gameObject.SendMessage(methodName, hitInfo.point, SendMessageOptions.DontRequireReceiver);
-			result = hitInfo.collider.gameObject;
+			return hitInfo.collider.gameObject;
 		}
 		else
 		{
-			result = null;
+			return null;
 		}
-		return (GameObject)result;
 	}
 }

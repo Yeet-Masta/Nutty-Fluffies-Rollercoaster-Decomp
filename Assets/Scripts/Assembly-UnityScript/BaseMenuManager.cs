@@ -175,7 +175,6 @@ public class BaseMenuManager : MonoBehaviour
 	public virtual bool descriptNewFeatures()
 	{
 		int newFeaturesList = GameData.getNewFeaturesList();
-		int result;
 		if (newFeaturesList != 0)
 		{
 			messageBox.enablePaperEmitters(true);
@@ -239,13 +238,12 @@ public class BaseMenuManager : MonoBehaviour
 			}
 			musicSource.volume = 1f;
 			musicSource.loop = false;
-			result = 1;
+			return true;
 		}
 		else
 		{
-			result = 0;
+			return false;
 		}
-		return (byte)result != 0;
 	}
 
 	public virtual void playMusicClip(AudioClip music, bool loop)

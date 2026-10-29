@@ -70,7 +70,7 @@ public class TutorialManager : MonoBehaviour
 		int result;
 		if (!SHOW_TUTORIAL)
 		{
-			result = 0;
+			return false;
 		}
 		else
 		{
@@ -132,7 +132,7 @@ public class TutorialManager : MonoBehaviour
 			else
 			{
 				onContinue();
-				result = 0;
+				return false;
 			}
 		}
 		return (byte)result != 0;
@@ -140,25 +140,23 @@ public class TutorialManager : MonoBehaviour
 
 	public virtual bool hasAllPagesShown(string key)
 	{
-		int result;
 		if (GameData.getActiveLevelPackIndex() == 0 && GameData.SELECTED_LEVEL_INDEX < 4)
 		{
-			result = 0;
+			return false;
 		}
 		else
 		{
 			int intValue = GameData.getSelectedLevel().settings.getIntValue("specialcart", Vehicle.CART_NORMAL);
 			if (intValue != Vehicle.CART_NORMAL && PlayerPrefs.GetInt("TUTORIAL_SHOWN_PAGE_SPECIAL_" + intValue, 0) <= 2)
 			{
-				result = 0;
+				return false;
 			}
 			else
 			{
 				bool flag = PlayerPrefs.GetInt("TUTORIAL_SHOWN_PAGE_" + key, 0) > 0;
-				result = (flag && flag) ? 1 : 0;
+				return (flag && flag);
 			}
 		}
-		return (byte)result != 0;
 	}
 
 	public virtual void onContinue()

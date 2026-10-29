@@ -122,28 +122,20 @@ public class OSATraveller : ObjectScript
 
 	public override string getParam(string param)
 	{
-		string result;
 		switch (param)
 		{
 		case "s":
-			result = string.Empty + s;
-			break;
+			return string.Empty + s;
 		case "w":
-			result = string.Empty + w;
-			break;
+			return string.Empty + w;
 		case "o":
-			result = o ? "yes" : "no";
-			break;
+			return o ? "yes" : "no";
 		case "l":
-			result = l ? "yes" : "no";
-			break;
+			return l ? "yes" : "no";
 		case "t":
-			result = targetHandler.getParamTargets();
-			break;
+			return targetHandler.getParamTargets();
 		default:
-			result = base.getParam(param);
-			break;
+			return base.getParam(param);
 		}
-		return result;
 	}
 }

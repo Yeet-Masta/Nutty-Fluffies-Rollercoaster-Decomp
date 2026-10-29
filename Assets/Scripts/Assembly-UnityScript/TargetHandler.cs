@@ -39,7 +39,6 @@ public class TargetHandler
 
 	public virtual string getParamTargets()
 	{
-		string result;
 		if (targetObjects != null && targetObjects.Length > 0)
 		{
 			string text = string.Empty;
@@ -51,13 +50,12 @@ public class TargetHandler
 				}
 				text += ((LevelEntity)targetObject.GetComponent(typeof(LevelEntity))).referenceId;
 			}
-			result = text;
+			return text;
 		}
 		else
 		{
-			result = string.Empty;
+			return string.Empty;
 		}
-		return result;
 	}
 
 	public virtual void removeTargetObject(int refId)

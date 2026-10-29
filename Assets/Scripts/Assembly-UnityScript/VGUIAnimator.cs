@@ -127,23 +127,17 @@ public class VGUIAnimator : MonoBehaviour
 		{
 			num = 1f;
 		}
-		float result;
 		switch (interpolator)
 		{
 		case Interpolator.LINEAR:
-			result = num;
-			break;
+			return num;
 		case Interpolator.OVERSHOOT:
-			result = getOvershootEaseOutInterpolator(num);
-			break;
+			return getOvershootEaseOutInterpolator(num);
 		case Interpolator.EASE_IN_OUT:
-			result = 0.5f - Mathf.Cos(num * (float)Math.PI) * 0.5f;
-			break;
+			return 0.5f - Mathf.Cos(num * (float)Math.PI) * 0.5f;
 		default:
-			result = num;
-			break;
+			return num;
 		}
-		return result;
 	}
 
 	public virtual void checkComplete(float x)

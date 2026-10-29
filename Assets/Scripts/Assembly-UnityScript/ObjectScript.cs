@@ -167,16 +167,14 @@ public class ObjectScript : MonoBehaviour, Parametrizable
 
 	public virtual string getParam(string param)
 	{
-		string result;
 		if (param == "act")
 		{
-			result = triggerActive ? "yes" : "no";
+			return triggerActive ? "yes" : "no";
 		}
 		else
 		{
-			result = null;
+			return null;
 		}
-		return result;
 	}
 
 	public virtual ParamList getParameterList()

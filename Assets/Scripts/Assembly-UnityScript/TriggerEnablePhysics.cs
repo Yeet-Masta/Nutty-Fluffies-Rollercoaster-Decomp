@@ -87,19 +87,17 @@ public class TriggerEnablePhysics : LevelTriggerActivatable
 
 	public override string getParam(string param)
 	{
-		string result;
 		if (param == "t")
 		{
-			result = targetHandler.getParamTargets();
+			return targetHandler.getParamTargets();
 		}
 		else if (param == "c")
 		{
-			result = c ? "yes" : "no";
+			return c ? "yes" : "no";
 		}
 		else
 		{
-			result = base.getParam(param);
+			return base.getParam(param);
 		}
-		return result;
 	}
 }

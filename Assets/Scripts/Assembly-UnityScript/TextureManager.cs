@@ -47,10 +47,9 @@ public class TextureManager
 		public virtual bool load(string descFile)
 		{
 			string text = FileManager.getInstance().loadFileText(descFile);
-			int result;
 			if (text == null)
 			{
-				result = 0;
+				return false;
 			}
 			else
 			{
@@ -64,9 +63,8 @@ public class TextureManager
 				uv.v2 = (float)jSONObject.GetFieldSafe("v2", new JSONObject(1f)).n;
 				uv.width = uv.u2 - uv.u1;
 				uv.height = uv.v2 - uv.v1;
-				result = 1;
+				return true;
 			}
-			return (byte)result != 0;
 		}
 	}
 
@@ -138,14 +136,13 @@ public class TextureManager
 
 	public virtual Texture2D loadFile(string fileName)
 	{
-		object result;
 		if (string.IsNullOrEmpty(fileName))
 		{
-			result = null;
+			return null;
 		}
 		else if (textureCacheList.ContainsKey(fileName))
 		{
-			result = textureCacheList[fileName];
+			return textureCacheList[fileName];
 		}
 		else
 		{
@@ -157,7 +154,7 @@ public class TextureManager
 				{
 					Debug.Log("FAILED!!! NO TEXTURE PNG IN: " + fileName);
 				}
-				result = null;
+				return null;
 			}
 			else
 			{
@@ -166,22 +163,20 @@ public class TextureManager
 				texture2D.anisoLevel = 1;
 				texture2D.name = fileName;
 				textureCacheList[fileName] = texture2D;
-				result = texture2D;
+				return texture2D;
 			}
 		}
-		return (Texture2D)result;
 	}
 
 	public virtual Texture2D loadFileWithOutMipmap(string fileName)
 	{
-		object result;
 		if (string.IsNullOrEmpty(fileName))
 		{
-			result = null;
+			return null;
 		}
 		else if (textureCacheList.ContainsKey(fileName))
 		{
-			result = textureCacheList[fileName];
+			return textureCacheList[fileName];
 		}
 		else
 		{
@@ -193,7 +188,7 @@ public class TextureManager
 				{
 					Debug.Log("FAILED!!! NO TEXTURE PNG IN: " + fileName);
 				}
-				result = null;
+				return null;
 			}
 			else
 			{
@@ -202,10 +197,9 @@ public class TextureManager
 				texture2D.anisoLevel = 1;
 				texture2D.name = fileName;
 				textureCacheList[fileName] = texture2D;
-				result = texture2D;
+				return texture2D;
 			}
 		}
-		return (Texture2D)result;
 	}
 
 	public virtual Texture2D createTexture(string fullTexturePath, UV uvs)
@@ -214,7 +208,6 @@ public class TextureManager
 		TextureDescriptor textureDescriptor = null;
 		string text = fullTexturePath + ".txt";
 		TextureCacheEntry textureCacheEntry = null;
-		Texture2D result;
 		if (textureDescriptorList.ContainsKey(text))
 		{
 			textureCacheEntry = textureDescriptorList[text];
@@ -223,7 +216,7 @@ public class TextureManager
 				uvs.copyFrom(textureCacheEntry.uvs);
 			}
 			CustomProfiler.end("createTexture");
-			result = textureCacheEntry.tex;
+			return textureCacheEntry.tex;
 		}
 		else
 		{
@@ -252,9 +245,8 @@ public class TextureManager
 				textureDescriptorList.Add(text, textureCacheEntry);
 			}
 			CustomProfiler.end("createTexture");
-			result = texture2D;
+			return texture2D;
 		}
-		return result;
 	}
 
 	public virtual Texture2D createAssetTexture(string texture)

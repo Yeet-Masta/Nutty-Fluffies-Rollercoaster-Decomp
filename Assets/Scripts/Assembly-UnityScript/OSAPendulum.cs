@@ -43,22 +43,16 @@ public class OSAPendulum : ObjectScript
 
 	public override string getParam(string param)
 	{
-		string result;
 		switch (param)
 		{
 		case "s":
-			result = string.Empty + s;
-			break;
+			return string.Empty + s;
 		case "a":
-			result = string.Empty + a;
-			break;
+			return string.Empty + a;
 		case "o":
-			result = string.Empty + o;
-			break;
+			return string.Empty + o;
 		default:
-			result = base.getParam(param);
-			break;
+			return base.getParam(param);
 		}
-		return result;
 	}
 }

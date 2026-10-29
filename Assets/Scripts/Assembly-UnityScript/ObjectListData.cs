@@ -129,10 +129,9 @@ public class ObjectListData
 
 	public virtual int getNumObjects(int catIndex, int sceneryMode)
 	{
-		int result;
 		if (catIndex != -1)
 		{
-			result = (catIndex >= 0 && catIndex < packList.Count) ? packList[catIndex].getNumObjects(sceneryMode) : 0;
+			return (catIndex >= 0 && catIndex < packList.Count) ? packList[catIndex].getNumObjects(sceneryMode) : 0;
 		}
 		else
 		{
@@ -141,9 +140,8 @@ public class ObjectListData
 			{
 				num += objectPackData.getNumObjects(sceneryMode);
 			}
-			result = num;
+			return num;
 		}
-		return result;
 	}
 
 	public virtual int getNumPacks()

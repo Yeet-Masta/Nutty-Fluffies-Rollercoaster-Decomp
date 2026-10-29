@@ -44,36 +44,32 @@ public class Narrative : VGUISwitchObject
 	public virtual bool showNextLine()
 	{
 		currentLineIndex++;
-		int result;
 		if (currentLineIndex >= lines.length)
 		{
-			result = 0;
+			return false;
 		}
 		else
 		{
 			showLine(lines[currentLineIndex] as NarrativeLine);
-			result = 1;
+			return true;
 		}
-		return (byte)result != 0;
 	}
 
 	public virtual bool showCurrentLine()
 	{
-		int result;
 		if (currentLineIndex == -1)
 		{
-			result = 0;
+			return false;
 		}
 		else if (currentLineIndex >= lines.length)
 		{
-			result = 0;
+			return false;
 		}
 		else
 		{
 			showLine(lines[currentLineIndex] as NarrativeLine);
-			result = 1;
+			return true;
 		}
-		return (byte)result != 0;
 	}
 
 	public virtual void showLine(NarrativeLine line)

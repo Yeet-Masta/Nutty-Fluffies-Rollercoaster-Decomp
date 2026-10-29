@@ -87,25 +87,18 @@ public class OSATranslate : ObjectScript
 
 	public override string getParam(string param)
 	{
-		string result;
 		switch (param)
 		{
 		case "x":
-			result = string.Empty + x;
-			break;
+			return string.Empty + x;
 		case "y":
-			result = string.Empty + y;
-			break;
+			return string.Empty + y;
 		case "w":
-			result = w ? "yes" : "no";
-			break;
+			return w ? "yes" : "no";
 		case "m":
-			result = string.Empty + m;
-			break;
+			return string.Empty + m;
 		default:
-			result = base.getParam(param);
-			break;
+			return base.getParam(param);
 		}
-		return result;
 	}
 }

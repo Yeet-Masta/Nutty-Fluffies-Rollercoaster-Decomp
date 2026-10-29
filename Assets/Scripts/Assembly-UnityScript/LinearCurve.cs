@@ -14,7 +14,7 @@ public class LinearCurve
 		float result;
 		if (!(controlPoints[0].x <= t))
 		{
-			result = controlPoints[0].y;
+			return controlPoints[0].y;
 		}
 		else
 		{

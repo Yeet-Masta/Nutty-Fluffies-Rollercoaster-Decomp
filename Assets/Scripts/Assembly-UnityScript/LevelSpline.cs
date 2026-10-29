@@ -78,11 +78,11 @@ public class LevelSpline : LevelEntity
 		int result;
 		if (!base.equalsTo(other))
 		{
-			result = 0;
+			return false;
 		}
 		else if (spline.splineData.Count != (other as LevelSpline).spline.splineData.Count)
 		{
-			result = 0;
+			return false;
 		}
 		else
 		{

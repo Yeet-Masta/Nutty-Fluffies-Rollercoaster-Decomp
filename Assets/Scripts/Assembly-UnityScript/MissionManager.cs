@@ -37,10 +37,9 @@ public class MissionManager
 		List<Mission> list = new List<Mission>();
 		List<string> list2 = new List<string>();
 		string text = FileManager.getInstance().loadFileText(file);
-		object result;
 		if (text == null)
 		{
-			result = list;
+			return list;
 		}
 		else
 		{
@@ -97,9 +96,8 @@ public class MissionManager
 			}
 			missionList = list;
 			DescriptionList = list2;
-			result = null;
+			return null;
 		}
-		return (List<Mission>)result;
 	}
 
 	public virtual void updateMissionScores()

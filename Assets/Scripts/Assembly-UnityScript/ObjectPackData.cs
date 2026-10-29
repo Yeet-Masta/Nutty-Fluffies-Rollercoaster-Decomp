@@ -26,10 +26,9 @@ public class ObjectPackData
 
 	public virtual int getNumObjects(int sceneryMode)
 	{
-		int result;
 		if (sceneryMode == 3)
 		{
-			result = objectList.Count;
+			return objectList.Count;
 		}
 		else
 		{
@@ -41,9 +40,8 @@ public class ObjectPackData
 					num++;
 				}
 			}
-			result = num;
+			return num;
 		}
-		return result;
 	}
 
 	public virtual void removeObjectByID(int id)

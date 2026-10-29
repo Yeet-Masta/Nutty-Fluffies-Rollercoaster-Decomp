@@ -54,10 +54,9 @@ public class StringTools
 
 	public static string wrapToLines(string str, int lineLength, int maxLines)
 	{
-		string result;
 		if (str.Length <= lineLength)
 		{
-			result = str;
+			return str;
 		}
 		else
 		{
@@ -68,9 +67,8 @@ public class StringTools
 				lhs = i >= maxLines ? (lhs + (" " + lines[i])) : (lhs + ("\n" + lines[i]));
 			}
 			lhs += "\n";
-			result = lhs;
+			return lhs;
 		}
-		return result;
 	}
 
 	public static int countLines(string str)

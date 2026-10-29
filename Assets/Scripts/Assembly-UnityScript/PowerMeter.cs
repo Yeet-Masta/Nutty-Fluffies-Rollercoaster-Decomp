@@ -226,7 +226,7 @@ public class PowerMeter : MonoBehaviour
 		}
 		else
 		{
-			result = 0;
+			return false;
 		}
 		return (byte)result != 0;
 	}

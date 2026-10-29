@@ -332,19 +332,17 @@ public class Cart : MonoBehaviour
 
 	private float getZForIndex(int index, Mesh mesh)
 	{
-		float result;
 		if (level.splineMeshVerticesCache.Count == 0 || !level.splineMeshVerticesCache.ContainsKey(mesh))
 		{
-			result = 0f;
+			return 0f;
 		}
 		else
 		{
 			Vector3[] array = level.splineMeshVerticesCache[mesh];
 			index &= -2;
 			float num = (array[index].z + array[index + 1].z + array[index + 2].z + array[index + 3].z) * 0.25f;
-			result = num;
+			return num;
 		}
-		return result;
 	}
 
 	public virtual bool hasAnimal()

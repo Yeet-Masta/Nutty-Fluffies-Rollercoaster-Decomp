@@ -52,7 +52,6 @@ public class LevelObjectFactory
 	public virtual LevelEntity create(LevelEntityData data, GameObject parent, ObjectListData objects)
 	{
 		LevelEntity levelEntity = null;
-		object result;
 		if (CommonData.EDITOR_ACTIVE || !data.checkDevice(1 << CommonData.getDeviceGenerationInt()))
 		{
 			if ((LevelLayer)parent.GetComponent(typeof(LevelLayer)) != null)
@@ -104,13 +103,12 @@ public class LevelObjectFactory
 					}
 				}
 			}
-			result = levelEntity;
+			return levelEntity;
 		}
 		else
 		{
-			result = null;
+			return null;
 		}
-		return (LevelEntity)result;
 	}
 
 	public virtual LevelTrigger createTrigger(LevelTriggerData triggerData, GameObject parent)
@@ -165,7 +163,6 @@ public class LevelObjectFactory
 		ObjectData objectData = objects.getObject(data.objectId);
 		LevelObject levelObject = null;
 		ObjectPackData objectPackData = null;
-		object result;
 		if (data.objectId != 1170 && data.objectId != 1137 && data.objectId != 1025 && data.objectId != 1169 && data.objectId != 1136 && data.objectId != 1037 && data.objectId != 1168 && data.objectId != 1135 && data.objectId != 1058 && data.objectId != 1167 && data.objectId != 1134 && data.objectId != 1066 && (NFPortLegacyDevice.generation != NFPortLegacyDeviceGeneration.iPhone3GS || (data.objectId != 1016 && data.objectId != 1017 && data.objectId != 1053 && data.objectId != 1054 && data.objectId != 1102 && data.objectId != 1103 && data.objectId != 1088 && data.objectId != 1089 && data.objectId != 1090 && data.objectId != 1150 && data.objectId != 1151 && data.objectId != 1055 && data.objectId != 1107 && data.objectId != 1106 && data.objectId != 1096 && data.objectId != 1097)) && (CommonData.EDITOR_ACTIVE || !objectData.checkDevice(1 << CommonData.getDeviceGenerationInt())))
 		{
 			LevelObjectData levelObjectData = currentObjectData;
@@ -175,7 +172,7 @@ public class LevelObjectFactory
 			{
 				if (objectData.getNumParts() == 0)
 				{
-					result = null;
+					return null;
 				}
 				else
 				{
@@ -206,7 +203,7 @@ public class LevelObjectFactory
 					}
 					if (!flag2)
 					{
-						result = null;
+						return null;
 					}
 					else
 					{
@@ -255,7 +252,7 @@ public class LevelObjectFactory
 							levelObject.setFlag(4194304, true);
 						}
 						currentObjectData = levelObjectData;
-						result = levelObject;
+						return levelObject;
 					}
 				}
 			}
@@ -263,14 +260,13 @@ public class LevelObjectFactory
 			{
 				Debug.LogError("Object " + data.objectId + " not found");
 				currentObjectData = levelObjectData;
-				result = null;
+				return null;
 			}
 		}
 		else
 		{
-			result = null;
+			return null;
 		}
-		return (LevelObject)result;
 	}
 
 	public virtual LevelObject createObjectInstance(LevelObjectData data, ObjectListData objectData, ObjectData odata)
@@ -418,10 +414,9 @@ public class LevelObjectFactory
 	public virtual bool createTexture(ObjectPackData pack, GameObject parent, ObjectPartTextureData data, bool toParent, float zAdd, ObjectData objectData, LevelObjectData levelObjectData, bool simulate)
 	{
 		bool flag = false;
-		bool result;
 		if (data.checkFlag(ObjectPartData.Flags.TEXTURE_EDITOR_ONLY) && !CommonData.EDITOR_ACTIVE)
 		{
-			result = flag;
+			return flag;
 		}
 		else
 		{
@@ -608,9 +603,8 @@ public class LevelObjectFactory
 					currentLayerObject.addTextureMesh(texture2D, currentObjectData.zDepth, zAdd, RENDER_QUEUE, array, array2, array3);
 				}
 			}
-			result = flag;
+			return flag;
 		}
-		return result;
 	}
 
 	public static void applyLayerColorTo(GameObject obj)

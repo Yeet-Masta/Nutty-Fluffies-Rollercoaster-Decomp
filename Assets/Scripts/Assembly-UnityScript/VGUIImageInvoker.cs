@@ -20,10 +20,9 @@ public class VGUIImageInvoker : VGUIImage
 
 	public virtual bool activateInvoke(bool blocking)
 	{
-		int result;
 		if (invokeObject == null || invokeMethod == null)
 		{
-			result = 0;
+			return false;
 		}
 		else
 		{
@@ -36,9 +35,8 @@ public class VGUIImageInvoker : VGUIImage
 				Invoke("executeInvoke", invokeTime);
 				VGUIElement.blockingButtonPressed = blocking;
 			}
-			result = 1;
+			return true;
 		}
-		return (byte)result != 0;
 	}
 
 	public virtual void cancelPendingInvoke()

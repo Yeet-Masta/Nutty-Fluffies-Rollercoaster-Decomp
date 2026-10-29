@@ -27,15 +27,13 @@ public class LevelTriggerActivatable : LevelTrigger
 
 	public override string getParam(string param)
 	{
-		string result;
 		if (param == "act")
 		{
-			result = triggerActive ? "yes" : "no";
+			return triggerActive ? "yes" : "no";
 		}
 		else
 		{
-			result = base.getParam(param);
+			return base.getParam(param);
 		}
-		return result;
 	}
 }

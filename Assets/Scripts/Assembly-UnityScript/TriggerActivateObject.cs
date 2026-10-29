@@ -60,22 +60,16 @@ public class TriggerActivateObject : LevelTrigger
 
 	public override string getParam(string param)
 	{
-		object result;
 		switch (param)
 		{
 		case "t":
-			result = targetHandler.getParamTargets();
-			break;
+			return targetHandler.getParamTargets();
 		case "s":
-			result = s ? "yes" : "no";
-			break;
+			return s ? "yes" : "no";
 		case "o":
-			result = o ? "yes" : "no";
-			break;
+			return o ? "yes" : "no";
 		default:
-			result = null;
-			break;
+			return null;
 		}
-		return (string)result;
 	}
 }

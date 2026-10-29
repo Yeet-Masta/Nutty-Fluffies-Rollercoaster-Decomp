@@ -50,15 +50,13 @@ public class TriggerBoost : LevelTriggerActivatable
 
 	public override string getParam(string param)
 	{
-		string result;
 		if (param == "bx")
 		{
-			result = string.Empty + bx;
+			return string.Empty + bx;
 		}
 		else
 		{
-			result = param == "by" ? (string.Empty + by) : base.getParam(param);
+			return param == "by" ? (string.Empty + by) : base.getParam(param);
 		}
-		return result;
 	}
 }

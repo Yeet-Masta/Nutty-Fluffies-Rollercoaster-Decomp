@@ -147,7 +147,7 @@ public class FileManager
 		string result;
 		if (string.IsNullOrEmpty(name))
 		{
-			result = string.Empty;
+			return string.Empty;
 		}
 		else
 		{
@@ -182,7 +182,7 @@ public class FileManager
 		string result;
 		if (string.IsNullOrEmpty(name))
 		{
-			result = string.Empty;
+			return string.Empty;
 		}
 		else
 		{
@@ -214,17 +214,15 @@ public class FileManager
 
 	public virtual string locateLevel(string pack, string name)
 	{
-		string result;
 		if (string.IsNullOrEmpty(name))
 		{
-			result = string.Empty;
+			return string.Empty;
 		}
 		else
 		{
 			string text = locateLevelPack(pack);
-			result = string.IsNullOrEmpty(text) ? string.Empty : (text + "/levels/" + name + ".json");
+			return string.IsNullOrEmpty(text) ? string.Empty : (text + "/levels/" + name + ".json");
 		}
-		return result;
 	}
 
 	public virtual string locateTheme(string name)
@@ -232,7 +230,7 @@ public class FileManager
 		string result;
 		if (string.IsNullOrEmpty(name))
 		{
-			result = string.Empty;
+			return string.Empty;
 		}
 		else
 		{
@@ -280,17 +278,15 @@ public class FileManager
 		while (!wWW.isDone)
 		{
 		}
-		object result;
 		if (wWW.error != null)
 		{
 			Debug.Log(wWW.error);
-			result = null;
+			return null;
 		}
 		else
 		{
-			result = wWW;
+			return wWW;
 		}
-		return (NFPortAssetFile)result;
 	}
 
 	private string[] getFoldersFullPaths(string dir)

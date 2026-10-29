@@ -55,7 +55,7 @@ public class TrainPreview : MonoBehaviour
 		for (int k = 0; k < GameData.CART_LIMIT; k++)
 		{
 			Vector3 localPosition = new Vector3(0f + cartSpacing * (float)k, 0f, 0f);
-			CartImage cartImage = ((CartImage)UnityEngine.Object.Instantiate(this.cartImage, Vector3.zero, Quaternion.identity)) as CartImage;
+			CartImage cartImage = UnityEngine.Object.Instantiate(this.cartImage, Vector3.zero, Quaternion.identity);
 			Transform transform = cartImage.transform;
 			Vector3 localScale = transform.localScale;
 			transform.parent = trainOverviewRoot;

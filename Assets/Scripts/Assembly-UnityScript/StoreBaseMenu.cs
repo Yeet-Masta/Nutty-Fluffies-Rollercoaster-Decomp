@@ -49,8 +49,8 @@ public class StoreBaseMenu : BaseMenu
 		StoreItemButton[] buttons = new StoreItemButton[items.Length];
 		for (int i = 0; i < items.Length; i++)
 		{
-			GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(items[i].button.gameObject, Vector3.zero, Quaternion.identity);
-			buttons[i] = gameObject.GetComponent<StoreItemButton>() as StoreItemButton;
+			GameObject gameObject = UnityEngine.Object.Instantiate(items[i].button.gameObject, Vector3.zero, Quaternion.identity);
+			buttons[i] = gameObject.GetComponent<StoreItemButton>();
 		}
 		return buttons;
 	}

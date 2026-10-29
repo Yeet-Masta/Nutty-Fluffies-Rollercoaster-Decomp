@@ -19,7 +19,7 @@ public class VehicleFactory
 	{
 		Vector3 position2 = new Vector3(position.x, position.y, 0f);
 		int trainType = data.trainType;
-		Vehicle vehicle = ((Vehicle)UnityEngine.Object.Instantiate(RollerCoasterPrefabs.getInstance().trains[trainType], position2, Quaternion.identity)) as Vehicle;
+		Vehicle vehicle = UnityEngine.Object.Instantiate(RollerCoasterPrefabs.getInstance().trains[trainType], position2, Quaternion.identity);
 		float spacing = (0f - (vehicle.cartPrefab.GetComponent<Collider>() as CapsuleCollider).height) * 0.9f;
 		vehicle.transform.parent = parent.transform;
 		vehicle.carts = new Cart[data.cartList.Length + 1];
@@ -116,14 +116,14 @@ public class VehicleFactory
 	private Cart createCart(Vector2 position, Cart prefab, int themeIndex)
 	{
 		Vector3 position2 = new Vector3(position.x, position.y, 0f);
-		return ((Cart)UnityEngine.Object.Instantiate(prefab, position2, Quaternion.identity)) as Cart;
+		return UnityEngine.Object.Instantiate(prefab, position2, Quaternion.identity);
 	}
 
 	private void addSpecials(int special, Vehicle vehicle)
 	{
 		if (special > -1)
 		{
-			Special special2 = ((Special)UnityEngine.Object.Instantiate(RollerCoasterPrefabs.getInstance().specials[special], Vector3.zero, Quaternion.identity)) as Special;
+			Special special2 = UnityEngine.Object.Instantiate(RollerCoasterPrefabs.getInstance().specials[special], Vector3.zero, Quaternion.identity);
 			special2.transform.parent = vehicle.transform;
 			special2.transform.localPosition = Vector3.zero;
 			special2.trainRef = vehicle;
@@ -136,7 +136,7 @@ public class VehicleFactory
 	{
 		if (prefabIndex != GameData.ANIMAL_NONE)
 		{
-			GameObject gameObject = ((GameObject)UnityEngine.Object.Instantiate(RollerCoasterPrefabs.getInstance().toys[prefabIndex], Vector3.zero, Quaternion.identity)) as GameObject;
+			GameObject gameObject = UnityEngine.Object.Instantiate(RollerCoasterPrefabs.getInstance().toys[prefabIndex], Vector3.zero, Quaternion.identity);
 			gameObject.transform.parent = cart.animalRoot;
 			gameObject.transform.localPosition = Vector3.zero;
 			Joint component = gameObject.GetComponent<Joint>();

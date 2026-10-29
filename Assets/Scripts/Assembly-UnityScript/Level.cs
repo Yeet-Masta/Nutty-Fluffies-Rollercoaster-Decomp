@@ -57,7 +57,7 @@ public class Level : MonoBehaviour
 			layers[i] = componentsInChildren[i] as LevelLayer;
 			layerTransforms[i] = layers[i].transform;
 		}
-		myCamera = Camera.main.gameObject.GetComponent<Camera2D>() as Camera2D;
+		myCamera = Camera.main.gameObject.GetComponent<Camera2D>();
 		cameraTransform = Camera.main.transform;
 	}
 

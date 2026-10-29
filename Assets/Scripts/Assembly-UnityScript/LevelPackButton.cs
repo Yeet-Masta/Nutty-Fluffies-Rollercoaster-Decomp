@@ -19,7 +19,7 @@ public class LevelPackButton : MenuButton
 	public override void clickButton()
 	{
 		base.clickButton();
-		(MenuButton.clickAnimator as ButtonPressAnimator).restore();
+		(MenuButton.clickAnimator).restore();
 		if (isLocked() && !pressed && !VGUIElement.blockingButtonPressed)
 		{
 			string message = TextData.LEVELPACK_TEXT_LOCKED.Replace("%d", string.Empty + GameData.CARTS_TO_UNLOCK_NEXT_LEVEL);

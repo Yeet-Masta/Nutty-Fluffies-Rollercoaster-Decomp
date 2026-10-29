@@ -61,7 +61,7 @@ public class PerformanceMeasure : MonoBehaviour
 			timingIndex = 0;
 			if (!(totalTime / (float)NUM_SAMPLES >= 0.02f))
 			{
-				GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(graphics, Vector3.zero, Quaternion.identity);
+				GameObject gameObject = UnityEngine.Object.Instantiate(graphics, Vector3.zero, Quaternion.identity);
 				gameObject.GetComponent<Renderer>().material = new Material(gameObject.GetComponent<Renderer>().material);
 				gameObject.transform.parent = root;
 				gameObject.transform.position = new Vector3(graphics.transform.position.x, graphics.transform.position.y, graphics.transform.position.z + (float)list.Count / 50f);

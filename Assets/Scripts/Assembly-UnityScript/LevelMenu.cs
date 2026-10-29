@@ -176,7 +176,7 @@ public class LevelMenu : StoreBaseMenu
 		Vector3 zero = Vector3.zero;
 		for (int i = 0; i < pageCount; i++)
 		{
-			packContainer.pages[i] = (GameObject)UnityEngine.Object.Instantiate(levelGrid.gameObject, zero, Quaternion.identity);
+			packContainer.pages[i] = UnityEngine.Object.Instantiate(levelGrid.gameObject, zero, Quaternion.identity);
 			packContainer.pages[i].transform.parent = packContainer.transform;
 			Vector3 localPosition = packContainer.pages[i].transform.localPosition;
 			localPosition.y = 0;

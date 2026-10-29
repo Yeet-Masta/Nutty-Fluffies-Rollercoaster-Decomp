@@ -41,7 +41,7 @@ public class MissionList : VGUIList
 		listedMissions = RollerCoasterMissions.getInstance().getMissionsForMenu(GameData.MAX_ACTIVE_MISSIONS);
 		for (int i = 0; i < listedMissions.Count; i++)
 		{
-			MissionListEntry missionListEntry = createEntry().GetComponent<MissionListEntry>() as MissionListEntry;
+			MissionListEntry missionListEntry = createEntry().GetComponent<MissionListEntry>();
 			missionListEntry.setDescription(listedMissions[i].description);
 			if (listedMissions[i].score > 0)
 			{
@@ -90,7 +90,7 @@ public class MissionList : VGUIList
 				animatedRow++;
 				if (listedMissions[animatedRow].testFlag(1))
 				{
-					MissionListEntry missionListEntry = entryRefs[animatedRow].GetComponent<MissionListEntry>() as MissionListEntry;
+					MissionListEntry missionListEntry = entryRefs[animatedRow].GetComponent<MissionListEntry>();
 					appearAnimator.activate(missionListEntry.completed.transform);
 					missionListEntry.completed.SetActiveRecursively(true);
 					listedMissions[animatedRow].flags = listedMissions[animatedRow].flags | 2;
@@ -192,6 +192,6 @@ public class MissionList : VGUIList
 
 	private MissionListEntry getEntry(int index)
 	{
-		return entryRefs[animatedRow].GetComponent<MissionListEntry>() as MissionListEntry;
+		return entryRefs[animatedRow].GetComponent<MissionListEntry>();
 	}
 }

@@ -20,7 +20,7 @@ public class BGMusicPlayer : MonoBehaviour
 	{
 		PlayerPrefs.SetFloat("MUSIC_VOLUME", to);
 		musicVolume = to;
-		BGMusicPlayer[] players = ((BGMusicPlayer[])UnityEngine.Object.FindObjectsOfType(typeof(BGMusicPlayer))) as BGMusicPlayer[];
+		BGMusicPlayer[] players = (BGMusicPlayer[])UnityEngine.Object.FindObjectsOfType(typeof(BGMusicPlayer));
 		foreach (BGMusicPlayer bgMusicPlayer in players)
 		{
 			bgMusicPlayer.GetComponent<AudioSource>().volume = to;

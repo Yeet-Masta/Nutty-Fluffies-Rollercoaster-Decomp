@@ -146,7 +146,7 @@ public class LevelFactory
 			}
 			if (levelLayer == null)
 			{
-				levelLayer = (LevelLayer)UnityEngine.Object.Instantiate(LevelDataPrefabs.getInstance().layerPrefab, Vector3.zero, Quaternion.identity);
+				levelLayer = UnityEngine.Object.Instantiate(LevelDataPrefabs.getInstance().layerPrefab, Vector3.zero, Quaternion.identity);
 				levelLayer.transform.parent = parent.transform;
 				levelLayer.layer = layerData.layer;
 			}
@@ -166,7 +166,7 @@ public class LevelFactory
 
 	public virtual Level createLevel(GameObject parent)
 	{
-		Level level = (Level)UnityEngine.Object.Instantiate(LevelDataPrefabs.getInstance().levelPrefab, Vector3.zero, Quaternion.identity);
+		Level level = UnityEngine.Object.Instantiate(LevelDataPrefabs.getInstance().levelPrefab, Vector3.zero, Quaternion.identity);
 		level.transform.parent = parent.transform;
 		return level;
 	}
@@ -213,7 +213,7 @@ public class LevelFactory
 		Vector3 zero = Vector3.zero;
 		zero.x = (data.topLeftLimit.x + data.bottomRightLimit.x) * 0.5f;
 		zero.y = data.topLeftLimit.y - 20f;
-		GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(LevelDataPrefabs.getInstance().triggerPrefab, zero, Quaternion.identity);
+		GameObject gameObject = UnityEngine.Object.Instantiate(LevelDataPrefabs.getInstance().triggerPrefab, zero, Quaternion.identity);
 		BoxCollider boxCollider = gameObject.gameObject.AddComponent<BoxCollider>();
 		float x = data.bottomRightLimit.x - data.topLeftLimit.x + 1000f;
 		Vector3 size = boxCollider.size;

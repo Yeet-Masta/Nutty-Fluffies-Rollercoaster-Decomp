@@ -178,7 +178,7 @@ public class LevelButton : MenuButton
 			int animalIndex = vehicleData.cartList[i].animalIndex;
 			if (animalIndex != GameData.ANIMAL_NONE)
 			{
-				GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(previewImages[animalIndex], Vector3.zero, Quaternion.identity);
+				GameObject gameObject = UnityEngine.Object.Instantiate(previewImages[animalIndex], Vector3.zero, Quaternion.identity);
 				gameObject.transform.parent = this.gameObject.transform;
 				float y = 0f - (float)length * 0.5f * 0.05f + 0.05f * (float)i;
 				Vector3 localPosition = gameObject.transform.localPosition;

@@ -68,7 +68,7 @@ public class TriggerParticles : LevelTriggerActivatable
 		}
 		if (LevelObjectFactory.getInstance() != null && (bool)LevelObjectFactory.getInstance().getPrefabs() && (bool)LevelObjectFactory.getInstance().getPrefabs().emitters[pt])
 		{
-			pe = (ParticleEmitter)UnityEngine.Object.Instantiate(LevelObjectFactory.getInstance().getPrefabs().emitters[pt]);
+			pe = UnityEngine.Object.Instantiate(LevelObjectFactory.getInstance().getPrefabs().emitters[pt]);
 			pe.transform.parent = transform;
 			pe.transform.localPosition = Vector3.zero;
 			pe.emit = false;

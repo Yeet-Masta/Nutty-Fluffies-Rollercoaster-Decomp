@@ -113,7 +113,7 @@ public class LevelLayer : MonoBehaviour
 				}
 				vertexOffset += 4;
 			}
-			GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(LevelObjectFactory.getInstance().getPrefabs().objectTexturePrefab, Vector3.zero, Quaternion.identity);
+			GameObject gameObject = UnityEngine.Object.Instantiate(LevelObjectFactory.getInstance().getPrefabs().objectTexturePrefab, Vector3.zero, Quaternion.identity);
 			gameObject.transform.parent = transform;
 			gameObject.transform.localPosition = Vector3.zero;
 			gameObject.name = "GatheredMesh (layer " + layer + ", texture '" + texture.name + "')";
@@ -123,7 +123,7 @@ public class LevelLayer : MonoBehaviour
 			mesh.vertices = vertices;
 			mesh.uv = uvs;
 			mesh.triangles = triangles;
-			(((MeshFilter)gameObject.GetComponent(typeof(MeshFilter))) as MeshFilter).mesh = mesh;
+			((MeshFilter)gameObject.GetComponent(typeof(MeshFilter))).mesh = mesh;
 			float z = 1f * (float)val;
 			Vector3 localPosition = gameObject.transform.localPosition;
 			localPosition.z = z;

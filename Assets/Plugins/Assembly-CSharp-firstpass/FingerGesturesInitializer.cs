@@ -17,7 +17,7 @@ public class FingerGesturesInitializer : MonoBehaviour
 		if (!FingerGestures.Instance)
 		{
 			FingerGestures fingerGestures = NFPortInput.UseTouch ? androidGestures : (Application.isEditor ? editorGestures : desktopGestures);
-			FingerGestures fingerGestures2 = Object.Instantiate(fingerGestures) as FingerGestures;
+			FingerGestures fingerGestures2 = Object.Instantiate(fingerGestures);
 			fingerGestures2.name = fingerGestures.name;
 			if (makePersistent)
 			{

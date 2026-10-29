@@ -41,7 +41,7 @@ public class Hover : Special
 		int index = 0;
 		for (int i = 1; i < trainRef.carts.Length; i++)
 		{
-			GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(flameGraphic, Vector3.zero, Quaternion.identity);
+			GameObject gameObject = UnityEngine.Object.Instantiate(flameGraphic, Vector3.zero, Quaternion.identity);
 			gameObject.transform.parent = trainRef.carts[i].jumpRocketFlame;
 			gameObject.transform.localPosition = localPosition;
 			gameObject.GetComponent<Renderer>().material = new Material(gameObject.GetComponent<Renderer>().sharedMaterial);

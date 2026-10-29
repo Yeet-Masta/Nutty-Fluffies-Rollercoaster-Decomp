@@ -17,7 +17,7 @@ public class ObjectEmitter : MonoBehaviour
 		GameObject[] array = objectPool;
 		for (int length = array.Length; i < length; i++)
 		{
-			array[i] = (GameObject)UnityEngine.Object.Instantiate(@object, Vector3.zero, Quaternion.identity);
+			array[i] = UnityEngine.Object.Instantiate(@object, Vector3.zero, Quaternion.identity);
 			array[i].transform.parent = transform;
 			array[i].SetActiveRecursively(false);
 		}

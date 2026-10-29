@@ -154,7 +154,7 @@ public class LevelPackMenu : BaseMenu
 
 	public virtual GameObject createLevelPackButton(int levelIndex, Vector3 position)
 	{
-		GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(levelPackButton.gameObject, position, Quaternion.identity);
+		GameObject gameObject = UnityEngine.Object.Instantiate(levelPackButton.gameObject, position, Quaternion.identity);
 		LevelPackButton component = gameObject.GetComponent<LevelPackButton>();
 		bool activeRecursively = GameData.getLevelPack(levelIndex).isUnlocked();
 		string iconPath = FileManager.getInstance().locateLevelPack(GameData.getLevelPack(levelIndex).fileName) + "/icons/" + CommonData.getIconPath() + "/pack-icon.png";

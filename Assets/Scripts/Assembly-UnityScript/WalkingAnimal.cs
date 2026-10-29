@@ -48,7 +48,7 @@ public class WalkingAnimal : MonoBehaviour
 		clones = 0;
 		for (int i = 0; i < count; i++)
 		{
-			GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(this.gameObject, tr.position, Quaternion.identity);
+			GameObject gameObject = UnityEngine.Object.Instantiate(this.gameObject, tr.position, Quaternion.identity);
 			gameObject.transform.parent = tr.parent;
 			gameObject.transform.localScale = Vector3.one;
 		}

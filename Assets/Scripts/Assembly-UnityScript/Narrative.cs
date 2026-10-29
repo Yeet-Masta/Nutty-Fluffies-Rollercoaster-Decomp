@@ -88,7 +88,7 @@ public class Narrative : VGUISwitchObject
 				Debug.LogWarning("Could not load recording from \"" + fileName + "\" using empty recording...");
 				return;
 			}
-			memoryStream = new MemoryStream((textAsset as TextAsset).bytes);
+			memoryStream = new MemoryStream((textAsset).bytes);
 			streamReader = new StreamReader(memoryStream);
 		}
 		else

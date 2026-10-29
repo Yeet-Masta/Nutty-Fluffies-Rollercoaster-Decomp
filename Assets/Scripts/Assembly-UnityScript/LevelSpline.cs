@@ -112,7 +112,7 @@ public class LevelSpline : LevelEntity
 		texture2D.wrapMode = TextureWrapMode.Repeat;
 		foreach (Component component in GetComponentsInChildren(typeof(LevelSplineSection)))
 		{
-			MeshRenderer meshRenderer = ((MeshRenderer)component.gameObject.GetComponent(typeof(MeshRenderer))) as MeshRenderer;
+			MeshRenderer meshRenderer = (MeshRenderer)component.gameObject.GetComponent(typeof(MeshRenderer));
 			meshRenderer.material.mainTexture = texture2D;
 			meshRenderer.material.SetColor("_MainColor", new Color(0.5f, 0.5f, 0.5f));
 		}

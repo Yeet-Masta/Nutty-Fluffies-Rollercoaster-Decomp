@@ -111,7 +111,7 @@ public class LevelObjectFactory
 	public virtual LevelTrigger createTrigger(LevelTriggerData triggerData, GameObject parent)
 	{
 		CustomProfiler.begin("LevelObjectFactory::Instantiate(triggerPrefab)");
-		GameObject gameObject = ((GameObject)UnityEngine.Object.Instantiate(prefabs.triggerPrefab, triggerData.position, createRotation(triggerData.rotation))) as GameObject;
+		GameObject gameObject = UnityEngine.Object.Instantiate(prefabs.triggerPrefab, triggerData.position, createRotation(triggerData.rotation));
 		CustomProfiler.end("LevelObjectFactory::Instantiate(triggerPrefab)");
 		if (triggerData.triggerType == 2)
 		{
@@ -260,7 +260,7 @@ public class LevelObjectFactory
 			Debug.LogError("object prefab is null");
 		}
 		CustomProfiler.begin("LevelObjectFactory::Instantiate(objectPrefab)");
-		GameObject gameObject2 = (GameObject)UnityEngine.Object.Instantiate(gameObject, data.position, Quaternion.identity);
+		GameObject gameObject2 = UnityEngine.Object.Instantiate(gameObject, data.position, Quaternion.identity);
 		CustomProfiler.end("LevelObjectFactory::Instantiate(objectPrefab)");
 		float rotation = data.rotation;
 		Vector3 localEulerAngles = gameObject2.transform.localEulerAngles;
@@ -362,7 +362,7 @@ public class LevelObjectFactory
 			Debug.LogError("illegal joint type");
 			break;
 		}
-		LevelJoint levelJoint = target.AddComponent<LevelJoint>() as LevelJoint;
+		LevelJoint levelJoint = target.AddComponent<LevelJoint>();
 		levelJoint.connectReferenceId = jointData.connectionRef;
 		joint.axis = Vector3.forward;
 		float x = jointData.anchor.x;
@@ -377,7 +377,7 @@ public class LevelObjectFactory
 
 	public virtual LevelGroup createGroup(LevelGroupData data, GameObject parent)
 	{
-		return ((LevelGroup)UnityEngine.Object.Instantiate(prefabs.groupPrefab, data.position, createRotation(data.rotation))) as LevelGroup;
+		return UnityEngine.Object.Instantiate(prefabs.groupPrefab, data.position, createRotation(data.rotation));
 	}
 
 	public virtual Quaternion createRotation(float rotation)
@@ -424,7 +424,7 @@ public class LevelObjectFactory
 				else
 				{
 					CustomProfiler.begin("LevelObjectFactory::Instantiate(texturePrefab)");
-					gameObject = (GameObject)UnityEngine.Object.Instantiate(prefabs.objectTexturePrefab, Vector3.zero, Quaternion.identity);
+					gameObject = UnityEngine.Object.Instantiate(prefabs.objectTexturePrefab, Vector3.zero, Quaternion.identity);
 					CustomProfiler.end("LevelObjectFactory::Instantiate(texturePrefab)");
 					gameObject.transform.parent = parent.transform;
 					float x = data.origin.x;
@@ -473,7 +473,7 @@ public class LevelObjectFactory
 			if (gameObject != null)
 			{
 				mesh = new Mesh();
-				(((MeshFilter)gameObject.GetComponent(typeof(MeshFilter))) as MeshFilter).mesh = mesh;
+				((MeshFilter)gameObject.GetComponent(typeof(MeshFilter))).mesh = mesh;
 			}
 			Vector3[] vertices = new Vector3[4]
 			{
@@ -584,7 +584,7 @@ public class LevelObjectFactory
 		Transform parent = obj.transform.parent;
 		while (levelLayer == null && parent != null)
 		{
-			levelLayer = ((LevelLayer)parent.GetComponent(typeof(LevelLayer))) as LevelLayer;
+			levelLayer = (LevelLayer)parent.GetComponent(typeof(LevelLayer));
 			parent = parent.parent;
 		}
 		if (levelLayer != null)
@@ -607,7 +607,7 @@ public class LevelObjectFactory
 	public virtual void createTriggerPart(GameObject parent, ObjectPartTriggerData trig)
 	{
 		CustomProfiler.begin("LevelObjectFactory::Instantiate(triggerPrefab:part)");
-		GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(prefabs.triggerPrefab, Vector3.zero, Quaternion.identity);
+		GameObject gameObject = UnityEngine.Object.Instantiate(prefabs.triggerPrefab, Vector3.zero, Quaternion.identity);
 		CustomProfiler.end("LevelObjectFactory::Instantiate(triggerPrefab:part)");
 		if (trig is ObjectPartSphereTriggerData)
 		{
@@ -664,7 +664,7 @@ public class LevelObjectFactory
 		else
 		{
 			CustomProfiler.begin("LevelObjectFactory::Instantiate(objectColliderPrefab)");
-			gameObject = (GameObject)UnityEngine.Object.Instantiate(prefabs.objectColliderPrefab, Vector3.zero, Quaternion.identity);
+			gameObject = UnityEngine.Object.Instantiate(prefabs.objectColliderPrefab, Vector3.zero, Quaternion.identity);
 			CustomProfiler.end("LevelObjectFactory::Instantiate(objectColliderPrefab)");
 		}
 		BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
@@ -734,7 +734,7 @@ public class LevelObjectFactory
 		else
 		{
 			CustomProfiler.begin("LevelObjectFactory::Instantiate(objectColliderPrefab)");
-			gameObject = (GameObject)UnityEngine.Object.Instantiate(prefabs.objectColliderPrefab, Vector3.zero, Quaternion.identity);
+			gameObject = UnityEngine.Object.Instantiate(prefabs.objectColliderPrefab, Vector3.zero, Quaternion.identity);
 			CustomProfiler.end("LevelObjectFactory::Instantiate(objectColliderPrefab)");
 		}
 		SphereCollider sphereCollider = gameObject.AddComponent<SphereCollider>();
@@ -783,7 +783,7 @@ public class LevelObjectFactory
 		else
 		{
 			CustomProfiler.begin("LevelObjectFactory::Instantiate(objectColliderPrefab)");
-			gameObject = (GameObject)UnityEngine.Object.Instantiate(prefabs.objectColliderPrefab, Vector3.zero, Quaternion.identity);
+			gameObject = UnityEngine.Object.Instantiate(prefabs.objectColliderPrefab, Vector3.zero, Quaternion.identity);
 			CustomProfiler.end("LevelObjectFactory::Instantiate(objectColliderPrefab)");
 		}
 		CapsuleCollider capsuleCollider = gameObject.AddComponent<CapsuleCollider>();
@@ -833,7 +833,7 @@ public class LevelObjectFactory
 	public virtual GameObject createSplineSection(GameObject parent)
 	{
 		CustomProfiler.begin("LevelObjectFactory::Instantiate(splineSectionPrefab)");
-		GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(prefabs.splineSectionPrefab, Vector3.zero, Quaternion.identity);
+		GameObject gameObject = UnityEngine.Object.Instantiate(prefabs.splineSectionPrefab, Vector3.zero, Quaternion.identity);
 		CustomProfiler.end("LevelObjectFactory::Instantiate(splineSectionPrefab)");
 		gameObject.transform.parent = parent.transform;
 		gameObject.transform.localPosition = Vector3.zero;
@@ -844,7 +844,7 @@ public class LevelObjectFactory
 	{
 		data.height = 1.55859f;
 		CustomProfiler.begin("LevelObjectFactory::Instantiate(splinePrefab)");
-		LevelSpline levelSpline = ((LevelSpline)UnityEngine.Object.Instantiate(prefabs.splinePrefab, data.position, Quaternion.identity)) as LevelSpline;
+		LevelSpline levelSpline = UnityEngine.Object.Instantiate(prefabs.splinePrefab, data.position, Quaternion.identity);
 		CustomProfiler.end("LevelObjectFactory::Instantiate(splinePrefab)");
 		levelSpline.transform.parent = parent.transform;
 		float rotation = data.rotation;

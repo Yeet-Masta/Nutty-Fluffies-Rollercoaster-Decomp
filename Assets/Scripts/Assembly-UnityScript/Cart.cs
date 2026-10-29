@@ -177,7 +177,7 @@ public class Cart : MonoBehaviour
 		if (!visitedTriggers.Contains(instanceID))
 		{
 			visitedTriggers.Add(instanceID);
-			TriggerCheckPoint triggerCheckPoint = other.gameObject.GetComponent<TriggerCheckPoint>() as TriggerCheckPoint;
+			TriggerCheckPoint triggerCheckPoint = other.gameObject.GetComponent<TriggerCheckPoint>();
 			if (!hasContact)
 			{
 				height = trainRef.heightBonusTreshold + 1f;

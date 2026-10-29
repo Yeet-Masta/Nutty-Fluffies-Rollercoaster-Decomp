@@ -12,7 +12,7 @@ public class TriggerBoost : LevelTriggerActivatable
 		{
 			return;
 		}
-		Rigidbody rigidbody = ((Rigidbody)other.gameObject.GetComponent(typeof(Rigidbody))) as Rigidbody;
+		Rigidbody rigidbody = (Rigidbody)other.gameObject.GetComponent(typeof(Rigidbody));
 		if (!rigidbody || !handler.isVehicle(other))
 		{
 			return;

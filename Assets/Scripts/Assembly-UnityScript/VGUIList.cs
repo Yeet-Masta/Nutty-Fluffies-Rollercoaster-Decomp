@@ -16,7 +16,7 @@ public class VGUIList : VGUIElement
 
 	public virtual GameObject createEntry(GameObject prefab)
 	{
-		GameObject gameObject = ((GameObject)UnityEngine.Object.Instantiate(prefab, Vector3.zero, Quaternion.identity)) as GameObject;
+		GameObject gameObject = UnityEngine.Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
 		gameObject.transform.parent = transform;
 		gameObject.transform.localPosition = calculatePosition();
 		gameObject.transform.localScale = prefab.transform.localScale;

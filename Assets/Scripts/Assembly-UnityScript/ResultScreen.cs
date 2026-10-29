@@ -161,7 +161,7 @@ public class ResultScreen : VGUIElement
 	private void showReplayButton()
 	{
 		restartButton.gameObject.SetActiveRecursively(true);
-		(((ScaleAnimator)restartButton.GetComponent(typeof(ScaleAnimator))) as ScaleAnimator).activate();
+		((ScaleAnimator)restartButton.GetComponent(typeof(ScaleAnimator))).activate();
 		bool roundEarnedNewCart = RollerCoasterStatistics.getInstance().roundEarnedNewCart;
 		restartButtonCartAdditionLabel.SetActiveRecursively(roundEarnedNewCart);
 		if (roundEarnedNewCart)
@@ -265,7 +265,7 @@ public class ResultScreen : VGUIElement
 	{
 		if (ACTIVE)
 		{
-			(MenuButton.clickAnimator as ButtonPressAnimator).restore();
+			(MenuButton.clickAnimator).restore();
 			RollerCoasterSounds.getInstance().stopMusic();
 			GameManager.getInstance().restart();
 		}
@@ -393,9 +393,9 @@ public class ResultScreen : VGUIElement
 	private void showContinueAndMenuButtons()
 	{
 		continueButton.gameObject.SetActiveRecursively(true);
-		(((ScaleAnimator)continueButton.GetComponent(typeof(ScaleAnimator))) as ScaleAnimator).activate();
+		((ScaleAnimator)continueButton.GetComponent(typeof(ScaleAnimator))).activate();
 		menuButton.gameObject.SetActiveRecursively(true);
-		(((ScaleAnimator)menuButton.GetComponent(typeof(ScaleAnimator))) as ScaleAnimator).activate();
+		((ScaleAnimator)menuButton.GetComponent(typeof(ScaleAnimator))).activate();
 	}
 
 	public virtual void showTotalCoinsEarned()

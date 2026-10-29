@@ -72,7 +72,7 @@ public class CreditsMenu : BaseMenu
 	public virtual void setText(string name)
 	{
 		Texts = (tk2dTextMesh)GameObject.Find("Text").GetComponent(typeof(tk2dTextMesh));
-		Texts2 = (tk2dTextMesh)UnityEngine.Object.Instantiate(Texts, Texts.transform.position, Quaternion.identity);
+		Texts2 = UnityEngine.Object.Instantiate(Texts, Texts.transform.position, Quaternion.identity);
 		Vector3 position = Texts2.transform.position;
 		position.x = -0.23f;
 		Texts2.transform.position = position;
@@ -103,7 +103,7 @@ public class CreditsMenu : BaseMenu
 	public virtual void setTitle(string title)
 	{
 		Texts = (tk2dTextMesh)GameObject.Find("TextT").GetComponent(typeof(tk2dTextMesh));
-		Texts2 = (tk2dTextMesh)UnityEngine.Object.Instantiate(Texts, Texts.transform.position, Quaternion.identity);
+		Texts2 = UnityEngine.Object.Instantiate(Texts, Texts.transform.position, Quaternion.identity);
 		Vector3 position = Texts2.transform.position;
 		position.x = -0.23f;
 		Texts2.transform.position = position;

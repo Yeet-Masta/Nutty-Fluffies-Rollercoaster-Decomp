@@ -60,7 +60,7 @@ public class MenuButton : VGUIButton
 	{
 		if (clickAnimator != null)
 		{
-			(clickAnimator as ButtonPressAnimator).restore();
+			(clickAnimator).restore();
 		}
 		base.OnMouseDown();
 		if (!locked && !pressed && !hasScrollingContainer() && !dimmed)
@@ -69,7 +69,7 @@ public class MenuButton : VGUIButton
 		}
 		else
 		{
-			(clickAnimator as ButtonPressAnimator).setTarget(transform);
+			(clickAnimator).setTarget(transform);
 		}
 	}
 
@@ -88,7 +88,7 @@ public class MenuButton : VGUIButton
 		{
 			clickAnimator.deactivate();
 		}
-		(clickAnimator as ButtonPressAnimator).restore();
+		(clickAnimator).restore();
 		clickAnimator.setTarget(transform);
 		clickAnimator.reverse = scaleDown;
 		clickAnimator.activate();

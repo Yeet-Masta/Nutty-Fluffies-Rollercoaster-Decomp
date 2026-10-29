@@ -281,7 +281,7 @@ public class ItemStoreMenu : StoreBaseMenu
 	{
 		if (animal > GameData.ANIMAL_NONE)
 		{
-			GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(previewImages[animal], Vector3.zero, Quaternion.identity);
+			GameObject gameObject = UnityEngine.Object.Instantiate(previewImages[animal], Vector3.zero, Quaternion.identity);
 			object[] componentsInChildren = gameObject.GetComponentsInChildren(typeof(RemoveItemButton), true);
 			RemoveItemButton removeItemButton = componentsInChildren[0] as RemoveItemButton;
 			removeItemButton.invokeObject = this.gameObject;

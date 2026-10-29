@@ -89,7 +89,7 @@ public class LevelEntity : MonoBehaviour, EditableGameObject
 		Transform parent = transform.parent;
 		while (levelLayer == null && parent != null)
 		{
-			levelLayer = ((LevelLayer)parent.GetComponent(typeof(LevelLayer))) as LevelLayer;
+			levelLayer = (LevelLayer)parent.GetComponent(typeof(LevelLayer));
 			parent = parent.parent;
 		}
 		return levelLayer;

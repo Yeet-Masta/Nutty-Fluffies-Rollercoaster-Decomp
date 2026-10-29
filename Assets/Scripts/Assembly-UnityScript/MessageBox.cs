@@ -109,7 +109,7 @@ public class MessageBox : BaseMenu
 		}
 		if (image != null)
 		{
-			messageImage = (GameObject)UnityEngine.Object.Instantiate(image, Vector3.zero, Quaternion.identity);
+			messageImage = UnityEngine.Object.Instantiate(image, Vector3.zero, Quaternion.identity);
 			messageImage.transform.parent = imageRoot;
 			messageImage.transform.localPosition = Vector3.zero;
 		}

@@ -16,7 +16,7 @@ public class Camera2D : MonoBehaviour
 
 	public virtual void Awake()
 	{
-		cameraRef = gameObject.GetComponent<Camera>() as Camera;
+		cameraRef = gameObject.GetComponent<Camera>();
 		initialViewSize = 18f / cameraRef.aspect * 0.5f;
 	}
 

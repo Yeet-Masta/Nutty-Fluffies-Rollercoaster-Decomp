@@ -31,9 +31,6 @@ public class LevelTriggerActivatable : LevelTrigger
 		{
 			return triggerActive ? "yes" : "no";
 		}
-		else
-		{
-			return base.getParam(param);
-		}
+		return base.getParam(param);
 	}
 }

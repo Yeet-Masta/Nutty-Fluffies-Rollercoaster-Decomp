@@ -52,10 +52,7 @@ public class TargetHandler
 			}
 			return ids;
 		}
-		else
-		{
-			return string.Empty;
-		}
+		return string.Empty;
 	}
 
 	public virtual void removeTargetObject(int refId)

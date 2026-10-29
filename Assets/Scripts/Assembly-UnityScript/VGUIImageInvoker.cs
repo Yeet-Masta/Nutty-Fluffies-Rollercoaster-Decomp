@@ -24,19 +24,16 @@ public class VGUIImageInvoker : VGUIImage
 		{
 			return false;
 		}
+		if (invokeTime == 0f)
+		{
+			executeInvoke();
+		}
 		else
 		{
-			if (invokeTime == 0f)
-			{
-				executeInvoke();
-			}
-			else
-			{
-				Invoke("executeInvoke", invokeTime);
-				VGUIElement.blockingButtonPressed = blocking;
-			}
-			return true;
+			Invoke("executeInvoke", invokeTime);
+			VGUIElement.blockingButtonPressed = blocking;
 		}
+		return true;
 	}
 
 	public virtual void cancelPendingInvoke()

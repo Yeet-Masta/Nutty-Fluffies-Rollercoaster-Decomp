@@ -51,20 +51,17 @@ public class TextureManager
 			{
 				return false;
 			}
-			else
-			{
-				JSONObject root = new JSONObject(json);
-				filename = root.GetFieldSafe("img", new JSONObject("\"none\"")).str;
-				uv.scaleX = (float)root.GetFieldSafe("scalex", new JSONObject(1f)).n;
-				uv.scaleY = (float)root.GetFieldSafe("scaley", new JSONObject(1f)).n;
-				uv.u1 = (float)root.GetFieldSafe("u1", new JSONObject(0f)).n;
-				uv.v1 = (float)root.GetFieldSafe("v1", new JSONObject(0f)).n;
-				uv.u2 = (float)root.GetFieldSafe("u2", new JSONObject(1f)).n;
-				uv.v2 = (float)root.GetFieldSafe("v2", new JSONObject(1f)).n;
-				uv.width = uv.u2 - uv.u1;
-				uv.height = uv.v2 - uv.v1;
-				return true;
-			}
+			JSONObject root = new JSONObject(json);
+			filename = root.GetFieldSafe("img", new JSONObject("\"none\"")).str;
+			uv.scaleX = (float)root.GetFieldSafe("scalex", new JSONObject(1f)).n;
+			uv.scaleY = (float)root.GetFieldSafe("scaley", new JSONObject(1f)).n;
+			uv.u1 = (float)root.GetFieldSafe("u1", new JSONObject(0f)).n;
+			uv.v1 = (float)root.GetFieldSafe("v1", new JSONObject(0f)).n;
+			uv.u2 = (float)root.GetFieldSafe("u2", new JSONObject(1f)).n;
+			uv.v2 = (float)root.GetFieldSafe("v2", new JSONObject(1f)).n;
+			uv.width = uv.u2 - uv.u1;
+			uv.height = uv.v2 - uv.v1;
+			return true;
 		}
 	}
 
@@ -140,32 +137,26 @@ public class TextureManager
 		{
 			return null;
 		}
-		else if (textureCacheList.ContainsKey(fileName))
+		if (textureCacheList.ContainsKey(fileName))
 		{
 			return textureCacheList[fileName];
 		}
-		else
+		Texture2D texture2D = new Texture2D(4, 4, TextureFormat.ARGB4444, true);
+		byte[] bytes = FileManager.getInstance().loadFileBytes(fileName);
+		if (bytes == null)
 		{
-			Texture2D texture2D = new Texture2D(4, 4, TextureFormat.ARGB4444, true);
-			byte[] bytes = FileManager.getInstance().loadFileBytes(fileName);
-			if (bytes == null)
+			if (GameData.LOG)
 			{
-				if (GameData.LOG)
-				{
-					Debug.Log("FAILED!!! NO TEXTURE PNG IN: " + fileName);
-				}
-				return null;
+				Debug.Log("FAILED!!! NO TEXTURE PNG IN: " + fileName);
 			}
-			else
-			{
-				texture2D.LoadImage(bytes);
-				texture2D.filterMode = FilterMode.Bilinear;
-				texture2D.anisoLevel = 1;
-				texture2D.name = fileName;
-				textureCacheList[fileName] = texture2D;
-				return texture2D;
-			}
+			return null;
 		}
+		texture2D.LoadImage(bytes);
+		texture2D.filterMode = FilterMode.Bilinear;
+		texture2D.anisoLevel = 1;
+		texture2D.name = fileName;
+		textureCacheList[fileName] = texture2D;
+		return texture2D;
 	}
 
 	public virtual Texture2D loadFileWithOutMipmap(string fileName)
@@ -174,32 +165,26 @@ public class TextureManager
 		{
 			return null;
 		}
-		else if (textureCacheList.ContainsKey(fileName))
+		if (textureCacheList.ContainsKey(fileName))
 		{
 			return textureCacheList[fileName];
 		}
-		else
+		Texture2D texture2D = new Texture2D(4, 4, TextureFormat.ARGB4444, false);
+		byte[] bytes = FileManager.getInstance().loadFileBytes(fileName);
+		if (bytes == null)
 		{
-			Texture2D texture2D = new Texture2D(4, 4, TextureFormat.ARGB4444, false);
-			byte[] bytes = FileManager.getInstance().loadFileBytes(fileName);
-			if (bytes == null)
+			if (GameData.LOG)
 			{
-				if (GameData.LOG)
-				{
-					Debug.Log("FAILED!!! NO TEXTURE PNG IN: " + fileName);
-				}
-				return null;
+				Debug.Log("FAILED!!! NO TEXTURE PNG IN: " + fileName);
 			}
-			else
-			{
-				texture2D.LoadImage(bytes);
-				texture2D.filterMode = FilterMode.Bilinear;
-				texture2D.anisoLevel = 1;
-				texture2D.name = fileName;
-				textureCacheList[fileName] = texture2D;
-				return texture2D;
-			}
+			return null;
 		}
+		texture2D.LoadImage(bytes);
+		texture2D.filterMode = FilterMode.Bilinear;
+		texture2D.anisoLevel = 1;
+		texture2D.name = fileName;
+		textureCacheList[fileName] = texture2D;
+		return texture2D;
 	}
 
 	public virtual Texture2D createTexture(string fullTexturePath, UV uvs)
@@ -218,35 +203,32 @@ public class TextureManager
 			CustomProfiler.end("createTexture");
 			return textureCacheEntry.tex;
 		}
-		else
+		textureDescriptor = new TextureDescriptor();
+		if (textureDescriptor.load(descFile))
 		{
-			textureDescriptor = new TextureDescriptor();
-			if (textureDescriptor.load(descFile))
-			{
-				fullTexturePath = FileManager.getDirectoryName(fullTexturePath) + "/" + textureDescriptor.filename;
-			}
-			Texture2D texture2D = getInstance().loadFile(fullTexturePath);
-			if (texture2D == null)
-			{
-				texture2D = errorTexture;
-			}
-			texture2D.wrapMode = TextureWrapMode.Clamp;
-			texture2D.mipMapBias = -0.5f;
-			if (textureDescriptor != null)
-			{
-				textureCacheEntry = new TextureCacheEntry();
-				textureCacheEntry.tex = texture2D;
-				textureCacheEntry.uvs = new UV();
-				textureCacheEntry.uvs.copyFrom(textureDescriptor.uv);
-				if (uvs != null)
-				{
-					uvs.copyFrom(textureDescriptor.uv);
-				}
-				textureDescriptorList.Add(descFile, textureCacheEntry);
-			}
-			CustomProfiler.end("createTexture");
-			return texture2D;
+			fullTexturePath = FileManager.getDirectoryName(fullTexturePath) + "/" + textureDescriptor.filename;
 		}
+		Texture2D texture2D = getInstance().loadFile(fullTexturePath);
+		if (texture2D == null)
+		{
+			texture2D = errorTexture;
+		}
+		texture2D.wrapMode = TextureWrapMode.Clamp;
+		texture2D.mipMapBias = -0.5f;
+		if (textureDescriptor != null)
+		{
+			textureCacheEntry = new TextureCacheEntry();
+			textureCacheEntry.tex = texture2D;
+			textureCacheEntry.uvs = new UV();
+			textureCacheEntry.uvs.copyFrom(textureDescriptor.uv);
+			if (uvs != null)
+			{
+				uvs.copyFrom(textureDescriptor.uv);
+			}
+			textureDescriptorList.Add(descFile, textureCacheEntry);
+		}
+		CustomProfiler.end("createTexture");
+		return texture2D;
 	}
 
 	public virtual Texture2D createAssetTexture(string texture)

@@ -160,19 +160,16 @@ public class LevelPack
 		{
 			return 0;
 		}
-		else
+		float built = 0f;
+		foreach (LevelInfo levelInfo in levelList)
 		{
-			float built = 0f;
-			foreach (LevelInfo levelInfo in levelList)
+			if (levelInfo.testFlag(8))
 			{
-				if (levelInfo.testFlag(8))
-				{
-					built++;
-				}
+				built++;
 			}
-			float fraction = built / (float)levelList.Count;
-			return (int)Mathf.Ceil(fraction * 100f);
 		}
+		float fraction = built / (float)levelList.Count;
+		return (int)Mathf.Ceil(fraction * 100f);
 	}
 
 	private static LevelPack load(string name)
@@ -190,27 +187,24 @@ public class LevelPack
 			levelPack.fileName = name;
 			return levelPack;
 		}
-		else
+		json = www.text;
+		JSONObject root = new JSONObject(json);
+		levelPack.flags = (int)root.GetFieldSafe("flags", new JSONObject(0f)).n;
+		levelPack.version = (int)root.GetFieldSafe("version", new JSONObject(0f)).n;
+		levelPack.priceMultiplier = (float)root.GetFieldSafe("priceMultiplier", new JSONObject(1f)).n;
+		levelPack.fileName = name;
+		levelPack.packName = root.GetFieldSafe("displayName", new JSONObject("\"noname\"")).str;
+		JSONObject field = root.GetField("levels");
+		foreach (JSONObject json2 in field.list)
 		{
-			json = www.text;
-			JSONObject root = new JSONObject(json);
-			levelPack.flags = (int)root.GetFieldSafe("flags", new JSONObject(0f)).n;
-			levelPack.version = (int)root.GetFieldSafe("version", new JSONObject(0f)).n;
-			levelPack.priceMultiplier = (float)root.GetFieldSafe("priceMultiplier", new JSONObject(1f)).n;
-			levelPack.fileName = name;
-			levelPack.packName = root.GetFieldSafe("displayName", new JSONObject("\"noname\"")).str;
-			JSONObject field = root.GetField("levels");
-			foreach (JSONObject json2 in field.list)
-			{
-				LevelInfo levelInfo = new LevelInfo();
-				levelInfo.fileName = json2.GetFieldSafe("level", new JSONObject(string.Empty)).str;
-				levelInfo.flags = (int)json2.GetFieldSafe("flags", new JSONObject(0f)).n;
-				levelInfo.flags &= LEVEL_FLAG_MASK;
-				levelInfo.settings.load(json2);
-				levelPack.levelList.Add(levelInfo);
-			}
-			return levelPack;
+			LevelInfo levelInfo = new LevelInfo();
+			levelInfo.fileName = json2.GetFieldSafe("level", new JSONObject(string.Empty)).str;
+			levelInfo.flags = (int)json2.GetFieldSafe("flags", new JSONObject(0f)).n;
+			levelInfo.flags &= LEVEL_FLAG_MASK;
+			levelInfo.settings.load(json2);
+			levelPack.levelList.Add(levelInfo);
 		}
+		return levelPack;
 	}
 
 	public static List<LevelPack> getLevelPackList()

@@ -171,10 +171,7 @@ public class ObjectScript : MonoBehaviour, Parametrizable
 		{
 			return triggerActive ? "yes" : "no";
 		}
-		else
-		{
-			return null;
-		}
+		return null;
 	}
 
 	public virtual ParamList getParameterList()

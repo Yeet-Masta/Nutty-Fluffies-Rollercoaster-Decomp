@@ -166,171 +166,165 @@ public class RollerCoasterMissions : MissionManager
 		{
 			return true;
 		}
-		else if (GameManager.getInstance() == null || GameManager.getInstance().getVehicle() == null)
+		if (GameManager.getInstance() == null || GameManager.getInstance().getVehicle() == null)
 		{
 			return false;
 		}
-		else
+		RollerCoasterStatistics rollerCoasterStatistics = RollerCoasterStatistics.getInstance();
+		GameManager gameManager = GameManager.getInstance();
+		int passengerCartCount = gameManager.getVehicle().getPassengerCartCount();
+		int target = m.intValue();
+		gameManager.getTrainType();
+		int activeLevelPackIndex = GameData.getActiveLevelPackIndex();
+		if (!rollerCoasterStatistics.roundDidFinish && m.testFlag(Mission.FLAG_REQUIRE_FINISH))
 		{
-			RollerCoasterStatistics rollerCoasterStatistics = RollerCoasterStatistics.getInstance();
-			GameManager gameManager = GameManager.getInstance();
-			int passengerCartCount = gameManager.getVehicle().getPassengerCartCount();
-			int target = m.intValue();
-			gameManager.getTrainType();
-			int activeLevelPackIndex = GameData.getActiveLevelPackIndex();
-			if (!rollerCoasterStatistics.roundDidFinish && m.testFlag(Mission.FLAG_REQUIRE_FINISH))
-			{
-				return false;
-			}
-			else
-			{
-				bool completed = false;
-				int specialCartType = GameManager.getInstance().getSpecialCartType();
-				switch (m.type)
-				{
-				case 1:
-					completed = passengerCartCount >= target;
-					break;
-				case 2:
-				{
-					completed = passengerCartCount >= target && specialCartType == 1;
-					break;
-				}
-				case 3:
-				{
-					completed = passengerCartCount >= target && specialCartType == 0;
-					break;
-				}
-				case 4:
-				{
-					completed = passengerCartCount >= target && specialCartType == 2;
-					break;
-				}
-				case 5:
-					completed = rollerCoasterStatistics.roundJumpLength > m.value;
-					break;
-				case 6:
-					completed = rollerCoasterStatistics.roundJumpDuration > m.value;
-					break;
-				case 7:
-					completed = gameManager.getScoreAmount() >= target;
-					break;
-				case 8:
-					completed = rollerCoasterStatistics.roundPowerPercent > m.value;
-					break;
-				case 9:
-				{
-					completed = specialCartType == 0 && rollerCoasterStatistics.roundSpecialUseCount >= target;
-					break;
-				}
-				case 10:
-					completed = !(rollerCoasterStatistics.roundCrashSpeed < m.value);
-					break;
-				case 11:
-					completed = rollerCoasterStatistics.roundDroppedItems >= target;
-					break;
-				case 12:
-					completed = rollerCoasterStatistics.roundsWithoutFail >= target;
-					break;
-				case 13:
-				{
-					completed = activeLevelPackIndex == 0 && passengerCartCount >= target;
-					break;
-				}
-				case 14:
-				{
-					completed = activeLevelPackIndex == 1 && passengerCartCount >= target;
-					break;
-				}
-				case 15:
-				{
-					completed = activeLevelPackIndex == 2 && passengerCartCount >= target;
-					break;
-				}
-				case 16:
-				{
-					completed = activeLevelPackIndex == 3 && passengerCartCount >= target;
-					break;
-				}
-				case 17:
-				{
-					completed = activeLevelPackIndex == 0 && passengerCartCount >= target && isLastTrack();
-					break;
-				}
-				case 18:
-				{
-					completed = activeLevelPackIndex == 1 && passengerCartCount >= target && isLastTrack();
-					break;
-				}
-				case 19:
-				{
-					completed = activeLevelPackIndex == 2 && passengerCartCount >= target && isLastTrack();
-					break;
-				}
-				case 20:
-				{
-					completed = activeLevelPackIndex == 3 && passengerCartCount >= target && isLastTrack();
-					break;
-				}
-				case 21:
-				{
-					completed = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 0 && GameData.SELECTED_LEVEL_INDEX + 2 == target;
-					break;
-				}
-				case 22:
-				{
-					completed = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 1 && GameData.SELECTED_LEVEL_INDEX + 2 == target;
-					break;
-				}
-				case 23:
-				{
-					completed = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 2 && GameData.SELECTED_LEVEL_INDEX + 2 == target;
-					break;
-				}
-				case 24:
-				{
-					completed = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 3 && GameData.SELECTED_LEVEL_INDEX + 2 == target;
-					break;
-				}
-				case 25:
-				{
-					completed = activeLevelPackIndex == 0 && GameData.SELECTED_LEVEL_INDEX + 1 == target;
-					break;
-				}
-				case 26:
-				{
-					completed = activeLevelPackIndex == 1 && GameData.SELECTED_LEVEL_INDEX + 1 == target;
-					break;
-				}
-				case 27:
-				{
-					completed = activeLevelPackIndex == 2 && GameData.SELECTED_LEVEL_INDEX + 1 == target;
-					break;
-				}
-				case 28:
-				{
-					completed = activeLevelPackIndex == 3 && GameData.SELECTED_LEVEL_INDEX + 1 == target;
-					break;
-				}
-				case 29:
-					completed = gameManager.getVehicle().getNumberOfToys(0) >= target;
-					break;
-				case 30:
-					completed = gameManager.getVehicle().getNumberOfToys(1) >= target;
-					break;
-				case 31:
-					completed = gameManager.getVehicle().getNumberOfToys(2) >= target;
-					break;
-				case 32:
-					completed = gameManager.getVehicle().getNumberOfToys(3) >= target;
-					break;
-				case 33:
-					completed = gameManager.getVehicle().getNumberOfToys(4) >= target;
-					break;
-				}
-				return completed;
-			}
+			return false;
 		}
+		bool completed = false;
+		int specialCartType = GameManager.getInstance().getSpecialCartType();
+		switch (m.type)
+		{
+		case 1:
+			completed = passengerCartCount >= target;
+			break;
+		case 2:
+		{
+			completed = passengerCartCount >= target && specialCartType == 1;
+			break;
+		}
+		case 3:
+		{
+			completed = passengerCartCount >= target && specialCartType == 0;
+			break;
+		}
+		case 4:
+		{
+			completed = passengerCartCount >= target && specialCartType == 2;
+			break;
+		}
+		case 5:
+			completed = rollerCoasterStatistics.roundJumpLength > m.value;
+			break;
+		case 6:
+			completed = rollerCoasterStatistics.roundJumpDuration > m.value;
+			break;
+		case 7:
+			completed = gameManager.getScoreAmount() >= target;
+			break;
+		case 8:
+			completed = rollerCoasterStatistics.roundPowerPercent > m.value;
+			break;
+		case 9:
+		{
+			completed = specialCartType == 0 && rollerCoasterStatistics.roundSpecialUseCount >= target;
+			break;
+		}
+		case 10:
+			completed = !(rollerCoasterStatistics.roundCrashSpeed < m.value);
+			break;
+		case 11:
+			completed = rollerCoasterStatistics.roundDroppedItems >= target;
+			break;
+		case 12:
+			completed = rollerCoasterStatistics.roundsWithoutFail >= target;
+			break;
+		case 13:
+		{
+			completed = activeLevelPackIndex == 0 && passengerCartCount >= target;
+			break;
+		}
+		case 14:
+		{
+			completed = activeLevelPackIndex == 1 && passengerCartCount >= target;
+			break;
+		}
+		case 15:
+		{
+			completed = activeLevelPackIndex == 2 && passengerCartCount >= target;
+			break;
+		}
+		case 16:
+		{
+			completed = activeLevelPackIndex == 3 && passengerCartCount >= target;
+			break;
+		}
+		case 17:
+		{
+			completed = activeLevelPackIndex == 0 && passengerCartCount >= target && isLastTrack();
+			break;
+		}
+		case 18:
+		{
+			completed = activeLevelPackIndex == 1 && passengerCartCount >= target && isLastTrack();
+			break;
+		}
+		case 19:
+		{
+			completed = activeLevelPackIndex == 2 && passengerCartCount >= target && isLastTrack();
+			break;
+		}
+		case 20:
+		{
+			completed = activeLevelPackIndex == 3 && passengerCartCount >= target && isLastTrack();
+			break;
+		}
+		case 21:
+		{
+			completed = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 0 && GameData.SELECTED_LEVEL_INDEX + 2 == target;
+			break;
+		}
+		case 22:
+		{
+			completed = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 1 && GameData.SELECTED_LEVEL_INDEX + 2 == target;
+			break;
+		}
+		case 23:
+		{
+			completed = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 2 && GameData.SELECTED_LEVEL_INDEX + 2 == target;
+			break;
+		}
+		case 24:
+		{
+			completed = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 3 && GameData.SELECTED_LEVEL_INDEX + 2 == target;
+			break;
+		}
+		case 25:
+		{
+			completed = activeLevelPackIndex == 0 && GameData.SELECTED_LEVEL_INDEX + 1 == target;
+			break;
+		}
+		case 26:
+		{
+			completed = activeLevelPackIndex == 1 && GameData.SELECTED_LEVEL_INDEX + 1 == target;
+			break;
+		}
+		case 27:
+		{
+			completed = activeLevelPackIndex == 2 && GameData.SELECTED_LEVEL_INDEX + 1 == target;
+			break;
+		}
+		case 28:
+		{
+			completed = activeLevelPackIndex == 3 && GameData.SELECTED_LEVEL_INDEX + 1 == target;
+			break;
+		}
+		case 29:
+			completed = gameManager.getVehicle().getNumberOfToys(0) >= target;
+			break;
+		case 30:
+			completed = gameManager.getVehicle().getNumberOfToys(1) >= target;
+			break;
+		case 31:
+			completed = gameManager.getVehicle().getNumberOfToys(2) >= target;
+			break;
+		case 32:
+			completed = gameManager.getVehicle().getNumberOfToys(3) >= target;
+			break;
+		case 33:
+			completed = gameManager.getVehicle().getNumberOfToys(4) >= target;
+			break;
+		}
+		return completed;
 	}
 
 	private bool isLastTrack()

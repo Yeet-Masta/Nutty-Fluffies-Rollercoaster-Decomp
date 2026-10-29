@@ -161,10 +161,7 @@ public class LevelFactory
 			}
 			return levelLayer;
 		}
-		else
-		{
-			return null;
-		}
+		return null;
 	}
 
 	public virtual Level createLevel(GameObject parent)

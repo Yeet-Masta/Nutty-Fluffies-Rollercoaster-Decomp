@@ -76,22 +76,19 @@ public class LevelSpline : LevelEntity
 		{
 			return false;
 		}
-		else if (spline.splineData.Count != (other as LevelSpline).spline.splineData.Count)
+		if (spline.splineData.Count != (other as LevelSpline).spline.splineData.Count)
 		{
 			return false;
 		}
-		else
+		int index = 0;
+		foreach (CSpline2.CSplinePoint cSplinePoint in spline.splineData)
 		{
-			int index = 0;
-			foreach (CSpline2.CSplinePoint cSplinePoint in spline.splineData)
+			if (cSplinePoint.position != (other as LevelSpline).spline.splineData[index++].position)
 			{
-				if (cSplinePoint.position != (other as LevelSpline).spline.splineData[index++].position)
-				{
-					return false;
-				}
+				return false;
 			}
-			return true;
 		}
+		return true;
 	}
 
 	public virtual void updatePoint(int index)

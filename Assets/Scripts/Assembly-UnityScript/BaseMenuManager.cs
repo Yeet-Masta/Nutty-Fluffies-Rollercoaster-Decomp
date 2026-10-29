@@ -236,10 +236,7 @@ public class BaseMenuManager : MonoBehaviour
 			musicSource.loop = false;
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 
 	public virtual void playMusicClip(AudioClip music, bool loop)

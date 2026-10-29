@@ -41,44 +41,41 @@ public class MissionManager
 		{
 			return list;
 		}
-		else
+		JSONObject root = new JSONObject(json);
+		JSONObject field = root.GetField("missions");
+		float scoreFactor = PlayerPrefs.GetFloat("DP_MISSION_SCORE_FACTOR", 1f);
+		foreach (JSONObject json2 in field.list)
 		{
-			JSONObject root = new JSONObject(json);
-			JSONObject field = root.GetField("missions");
-			float scoreFactor = PlayerPrefs.GetFloat("DP_MISSION_SCORE_FACTOR", 1f);
-			foreach (JSONObject json2 in field.list)
+			string str = json2.GetFieldSafe("description", new JSONObject(string.Empty)).str;
+			int savedFlags = PlayerPrefs.GetInt("MISSION_" + str + "_FLAGS", 0);
+			if ((savedFlags & 2) == 0)
 			{
-				string str = json2.GetFieldSafe("description", new JSONObject(string.Empty)).str;
-				int savedFlags = PlayerPrefs.GetInt("MISSION_" + str + "_FLAGS", 0);
-				if ((savedFlags & 2) == 0)
-				{
-					Mission mission = new Mission();
-					mission.id = str;
-					mission.flags = savedFlags;
-					mission.description = LocalizationManager.localize(json2.GetFieldSafe("description", new JSONObject(string.Empty)).str);
-					mission.activeRounds = (int)json2.GetFieldSafe("activeRounds", new JSONObject(0f)).n;
-					mission.time = (float)json2.GetFieldSafe("time", new JSONObject(0f)).n;
-					mission.score = (int)(json2.GetFieldSafe("score", new JSONObject(0f)).n * (double)scoreFactor);
-					mission.type = (int)json2.GetFieldSafe("type", new JSONObject(0f)).n;
-					mission.value = (float)json2.GetFieldSafe("value", new JSONObject(0f)).n;
-					mission.flags = (int)json2.GetFieldSafe("flags", new JSONObject(0f)).n;
-					mission.featureUnlock = (int)json2.GetFieldSafe("featureUnlock", new JSONObject(0f)).n;
-					mission.achievementKey = json2.GetFieldSafe("achievementKey", new JSONObject(string.Empty)).str;
-					mission.originalScore = (int)json2.GetFieldSafe("score", new JSONObject(0f)).n;
-					mission.flags |= savedFlags;
-					mission.attempts = PlayerPrefs.GetInt("MISSION_" + str + "_ATTEMPTS", 0);
-					list.Add(mission);
-					list2.Add(json2.GetFieldSafe("description", new JSONObject(string.Empty)).str);
-				}
+				Mission mission = new Mission();
+				mission.id = str;
+				mission.flags = savedFlags;
+				mission.description = LocalizationManager.localize(json2.GetFieldSafe("description", new JSONObject(string.Empty)).str);
+				mission.activeRounds = (int)json2.GetFieldSafe("activeRounds", new JSONObject(0f)).n;
+				mission.time = (float)json2.GetFieldSafe("time", new JSONObject(0f)).n;
+				mission.score = (int)(json2.GetFieldSafe("score", new JSONObject(0f)).n * (double)scoreFactor);
+				mission.type = (int)json2.GetFieldSafe("type", new JSONObject(0f)).n;
+				mission.value = (float)json2.GetFieldSafe("value", new JSONObject(0f)).n;
+				mission.flags = (int)json2.GetFieldSafe("flags", new JSONObject(0f)).n;
+				mission.featureUnlock = (int)json2.GetFieldSafe("featureUnlock", new JSONObject(0f)).n;
+				mission.achievementKey = json2.GetFieldSafe("achievementKey", new JSONObject(string.Empty)).str;
+				mission.originalScore = (int)json2.GetFieldSafe("score", new JSONObject(0f)).n;
+				mission.flags |= savedFlags;
+				mission.attempts = PlayerPrefs.GetInt("MISSION_" + str + "_ATTEMPTS", 0);
+				list.Add(mission);
+				list2.Add(json2.GetFieldSafe("description", new JSONObject(string.Empty)).str);
 			}
-			if (GameData.LOG)
-			{
-				Debug.Log("loaded " + list.Count + " missions");
-			}
-			missionList = list;
-			DescriptionList = list2;
-			return null;
 		}
+		if (GameData.LOG)
+		{
+			Debug.Log("loaded " + list.Count + " missions");
+		}
+		missionList = list;
+		DescriptionList = list2;
+		return null;
 	}
 
 	public virtual void updateMissionScores()

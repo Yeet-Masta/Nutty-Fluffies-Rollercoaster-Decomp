@@ -28,9 +28,6 @@ public class RayCastTools
 			hitInfo.collider.gameObject.SendMessage(methodName, hitInfo.point, SendMessageOptions.DontRequireReceiver);
 			return hitInfo.collider.gameObject;
 		}
-		else
-		{
-			return null;
-		}
+		return null;
 	}
 }

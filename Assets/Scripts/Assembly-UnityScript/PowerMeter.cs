@@ -214,10 +214,7 @@ public class PowerMeter : MonoBehaviour
 			resultEntryCounter++;
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 
 	public virtual void startResultEntryAnimations()

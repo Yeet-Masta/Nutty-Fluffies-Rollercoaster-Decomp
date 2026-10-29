@@ -105,10 +105,7 @@ public class LevelObjectFactory
 			}
 			return levelEntity;
 		}
-		else
-		{
-			return null;
-		}
+		return null;
 	}
 
 	public virtual LevelTrigger createTrigger(LevelTriggerData triggerData, GameObject parent)
@@ -172,98 +169,86 @@ public class LevelObjectFactory
 				{
 					return null;
 				}
-				else
+				bool canCreate = createObjectComponents(objectPackData, null, objectData, data, true);
+				if (canCreate)
 				{
-					bool canCreate = createObjectComponents(objectPackData, null, objectData, data, true);
-					if (canCreate)
+					levelObject = createObjectInstance(data, objects, objectData);
+					levelObject.objectId = data.objectId;
+					levelObject.transform.parent = parent.transform;
+					levelObject.transform.localScale = Vector3.one;
+					levelObject.flags = data.flags;
+				}
+				bool created = false;
+				if (objectData.getNumParts() != 0)
+				{
+					created = createObjectComponents(objectPackData, levelObject, objectData, data, false);
+				}
+				if (data.childList != null)
+				{
+					foreach (LevelEntityData levelEntityData in data.childList)
 					{
-						levelObject = createObjectInstance(data, objects, objectData);
-						levelObject.objectId = data.objectId;
-						levelObject.transform.parent = parent.transform;
-						levelObject.transform.localScale = Vector3.one;
-						levelObject.flags = data.flags;
-					}
-					bool created = false;
-					if (objectData.getNumParts() != 0)
-					{
-						created = createObjectComponents(objectPackData, levelObject, objectData, data, false);
-					}
-					if (data.childList != null)
-					{
-						foreach (LevelEntityData levelEntityData in data.childList)
-						{
-							create(levelEntityData, levelObject.gameObject, objects);
-						}
-					}
-					if (canCreate)
-					{
-						objectData.cloneRef = levelObject;
-					}
-					if (!created)
-					{
-						return null;
-					}
-					else
-					{
-						levelObject.name += " (KEEP ME)";
-						Vector3 localPosition = levelObject.transform.localPosition;
-						localPosition.z = 0;
-						levelObject.transform.localPosition = localPosition;
-						float x = Mathf.Abs(levelObject.transform.localScale.x);
-						Vector3 localScale = levelObject.transform.localScale;
-						localScale.x = x;
-						levelObject.transform.localScale = localScale;
-						float y = Mathf.Abs(levelObject.transform.localScale.y);
-						Vector3 localScale2 = levelObject.transform.localScale;
-						localScale2.y = y;
-						levelObject.transform.localScale = localScale2;
-						if ((data.flags & 0x80000) != 0)
-						{
-							float x2 = levelObject.transform.localScale.x * -1f;
-							Vector3 localScale3 = levelObject.transform.localScale;
-							localScale3.x = x2;
-							levelObject.transform.localScale = localScale3;
-						}
-						if ((data.flags & 0x100000) != 0)
-						{
-							float y2 = levelObject.transform.localScale.y * -1f;
-							Vector3 localScale4 = levelObject.transform.localScale;
-							localScale4.y = y2;
-							levelObject.transform.localScale = localScale4;
-						}
-						if (((LevelLayer)parent.GetComponent(typeof(LevelLayer))).checkFlag(1))
-						{
-							float x3 = levelObject.transform.localScale.x * 2f;
-							Vector3 localScale5 = levelObject.transform.localScale;
-							localScale5.x = x3;
-							levelObject.transform.localScale = localScale5;
-							float y3 = levelObject.transform.localScale.y * 2f;
-							Vector3 localScale6 = levelObject.transform.localScale;
-							localScale6.y = y3;
-							levelObject.transform.localScale = localScale6;
-						}
-						levelObject.setZstep(data.zDepth);
-						levelObject.savePosition(null);
-						if ((data.flags & 0x20000) != 0)
-						{
-							levelObject.setFlag(4194304, true);
-						}
-						currentObjectData = levelObjectData;
-						return levelObject;
+						create(levelEntityData, levelObject.gameObject, objects);
 					}
 				}
-			}
-			else
-			{
-				Debug.LogError("Object " + data.objectId + " not found");
+				if (canCreate)
+				{
+					objectData.cloneRef = levelObject;
+				}
+				if (!created)
+				{
+					return null;
+				}
+				levelObject.name += " (KEEP ME)";
+				Vector3 localPosition = levelObject.transform.localPosition;
+				localPosition.z = 0;
+				levelObject.transform.localPosition = localPosition;
+				float x = Mathf.Abs(levelObject.transform.localScale.x);
+				Vector3 localScale = levelObject.transform.localScale;
+				localScale.x = x;
+				levelObject.transform.localScale = localScale;
+				float y = Mathf.Abs(levelObject.transform.localScale.y);
+				Vector3 localScale2 = levelObject.transform.localScale;
+				localScale2.y = y;
+				levelObject.transform.localScale = localScale2;
+				if ((data.flags & 0x80000) != 0)
+				{
+					float x2 = levelObject.transform.localScale.x * -1f;
+					Vector3 localScale3 = levelObject.transform.localScale;
+					localScale3.x = x2;
+					levelObject.transform.localScale = localScale3;
+				}
+				if ((data.flags & 0x100000) != 0)
+				{
+					float y2 = levelObject.transform.localScale.y * -1f;
+					Vector3 localScale4 = levelObject.transform.localScale;
+					localScale4.y = y2;
+					levelObject.transform.localScale = localScale4;
+				}
+				if (((LevelLayer)parent.GetComponent(typeof(LevelLayer))).checkFlag(1))
+				{
+					float x3 = levelObject.transform.localScale.x * 2f;
+					Vector3 localScale5 = levelObject.transform.localScale;
+					localScale5.x = x3;
+					levelObject.transform.localScale = localScale5;
+					float y3 = levelObject.transform.localScale.y * 2f;
+					Vector3 localScale6 = levelObject.transform.localScale;
+					localScale6.y = y3;
+					levelObject.transform.localScale = localScale6;
+				}
+				levelObject.setZstep(data.zDepth);
+				levelObject.savePosition(null);
+				if ((data.flags & 0x20000) != 0)
+				{
+					levelObject.setFlag(4194304, true);
+				}
 				currentObjectData = levelObjectData;
-				return null;
+				return levelObject;
 			}
-		}
-		else
-		{
+			Debug.LogError("Object " + data.objectId + " not found");
+			currentObjectData = levelObjectData;
 			return null;
 		}
+		return null;
 	}
 
 	public virtual LevelObject createObjectInstance(LevelObjectData data, ObjectListData objectData, ObjectData odata)
@@ -407,193 +392,190 @@ public class LevelObjectFactory
 		{
 			return flag;
 		}
-		else
+		GameObject gameObject = null;
+		bool gatherMesh = !CommonData.EDITOR_ACTIVE;
+		foreach (ObjectPartData objectPartData in objectData.getParts())
 		{
-			GameObject gameObject = null;
-			bool gatherMesh = !CommonData.EDITOR_ACTIVE;
-			foreach (ObjectPartData objectPartData in objectData.getParts())
-			{
-				if (objectPartData.type == 5 || objectPartData.type == 6)
-				{
-					gatherMesh = false;
-				}
-			}
-			if (currentObjectData.scriptAttachment != null && currentObjectData.scriptAttachment.Length > 0)
+			if (objectPartData.type == 5 || objectPartData.type == 6)
 			{
 				gatherMesh = false;
 			}
-			if ((currentObjectData.flags & 0x20000) != 0)
-			{
-				gatherMesh = false;
-			}
-			if (data.allowStretch)
-			{
-				gatherMesh = false;
-			}
-			if (!gatherMesh)
-			{
-				if (!simulate)
-				{
-					if (toParent)
-					{
-						gameObject = parent;
-					}
-					else
-					{
-						CustomProfiler.begin("LevelObjectFactory::Instantiate(texturePrefab)");
-						gameObject = (GameObject)UnityEngine.Object.Instantiate(prefabs.objectTexturePrefab, Vector3.zero, Quaternion.identity);
-						CustomProfiler.end("LevelObjectFactory::Instantiate(texturePrefab)");
-						gameObject.transform.parent = parent.transform;
-						float x = data.origin.x;
-						Vector3 localPosition = gameObject.transform.localPosition;
-						localPosition.x = x;
-						gameObject.transform.localPosition = localPosition;
-						float y = data.origin.y;
-						Vector3 localPosition2 = gameObject.transform.localPosition;
-						localPosition2.y = y;
-						gameObject.transform.localPosition = localPosition2;
-						Vector3 localPosition3 = gameObject.transform.localPosition;
-						localPosition3.z = zAdd;
-						gameObject.transform.localPosition = localPosition3;
-						float z = parent.transform.eulerAngles.z + data.rotation;
-						Vector3 eulerAngles = gameObject.transform.eulerAngles;
-						eulerAngles.z = z;
-						gameObject.transform.eulerAngles = eulerAngles;
-					}
-				}
-				flag = true;
-			}
-			else
-			{
-				flag = false;
-			}
-			LevelObject levelObject = null;
+		}
+		if (currentObjectData.scriptAttachment != null && currentObjectData.scriptAttachment.Length > 0)
+		{
+			gatherMesh = false;
+		}
+		if ((currentObjectData.flags & 0x20000) != 0)
+		{
+			gatherMesh = false;
+		}
+		if (data.allowStretch)
+		{
+			gatherMesh = false;
+		}
+		if (!gatherMesh)
+		{
 			if (!simulate)
 			{
-				levelObject = parent ? ((LevelObject)parent.GetComponent(typeof(LevelObject))) : null;
-				TextureManager.UV uV = new TextureManager.UV();
-				Texture2D texture2D = TextureManager.getInstance().createTexture(pack == null ? string.Empty : pack.fullPath, TextureManager.TextureType.OBJECT, data.texture, uV);
-				if (gameObject != null)
+				if (toParent)
 				{
-					USE_ALPHA_SHADER = !data.allowStretch;
-					gameObject.GetComponent<Renderer>().sharedMaterial = MaterialManager.getInstance().getMaterialForUniqueID(texture2D, LAYER, USE_ALPHA_SHADER);
-					gameObject.GetComponent<Renderer>().sharedMaterial.renderQueue = RENDER_QUEUE;
-					USE_ALPHA_SHADER = true;
-				}
-				int repeat = levelObjectData.getRepeat(ObjectData.FLAG_X_REPEAT_MASK);
-				int repeat2 = levelObjectData.getRepeat(ObjectData.FLAG_Y_REPEAT_MASK);
-				if (repeat > 0 || repeat2 > 0)
-				{
-					texture2D.wrapMode = TextureWrapMode.Repeat;
-				}
-				Mesh mesh = null;
-				if (gameObject != null)
-				{
-					mesh = new Mesh();
-					(((MeshFilter)gameObject.GetComponent(typeof(MeshFilter))) as MeshFilter).mesh = mesh;
-				}
-				Vector3[] vertices = new Vector3[4]
-				{
-					new Vector3(-0.5f, -0.5f),
-					new Vector3(0.5f + (float)repeat, -0.5f),
-					new Vector3(-0.5f, 0.5f + (float)repeat2),
-					new Vector3(0.5f + (float)repeat, 0.5f + (float)repeat2)
-				};
-				Vector2[] uvs = new Vector2[4]
-				{
-					new Vector2(uV.u1, 1f - uV.v2 * (float)(1 + repeat2)),
-					new Vector2(uV.u2 * (float)(1 + repeat), 1f - uV.v2 * (float)(1 + repeat2)),
-					new Vector2(uV.u1, 1f - uV.v1),
-					new Vector2(uV.u2 * (float)(1 + repeat), 1f - uV.v1)
-				};
-				int[] triangles = new int[6] { 2, 1, 0, 3, 1, 2 };
-				if (gameObject != null)
-				{
-					mesh.vertices = vertices;
-					mesh.uv = uvs;
-					mesh.triangles = triangles;
-					applyLayerColorTo(gameObject);
-					float x2 = data.stretchedScale.x * data.textureSourceSize.x / 256f;
-					Vector3 localScale = gameObject.transform.localScale;
-					localScale.x = x2;
-					gameObject.transform.localScale = localScale;
-					float y2 = data.stretchedScale.y * data.textureSourceSize.y / 256f;
-					Vector3 localScale2 = gameObject.transform.localScale;
-					localScale2.y = y2;
-					gameObject.transform.localScale = localScale2;
-					float x3 = gameObject.transform.localScale.x;
-					Vector3 localScale3 = gameObject.transform.localScale;
-					localScale3.z = x3;
-					gameObject.transform.localScale = localScale3;
-					if (data.checkFlag(ObjectPartData.Flags.TEXTURE_FLIP_X))
-					{
-						float x4 = 0f - Mathf.Abs(gameObject.transform.localScale.x);
-						Vector3 localScale4 = gameObject.transform.localScale;
-						localScale4.x = x4;
-						gameObject.transform.localScale = localScale4;
-					}
-					if (data.checkFlag(ObjectPartData.Flags.TEXTURE_FLIP_Y))
-					{
-						float y3 = 0f - Mathf.Abs(gameObject.transform.localScale.y);
-						Vector3 localScale5 = gameObject.transform.localScale;
-						localScale5.y = y3;
-						gameObject.transform.localScale = localScale5;
-					}
+					gameObject = parent;
 				}
 				else
 				{
-					if ((bool)parent && (bool)(MeshFilter)parent.GetComponent(typeof(MeshFilter)))
-					{
-						UnityEngine.Object.Destroy((MeshFilter)parent.GetComponent(typeof(MeshFilter)));
-					}
-					if ((bool)parent && (bool)(MeshRenderer)parent.GetComponent(typeof(MeshRenderer)))
-					{
-						UnityEngine.Object.Destroy((MeshRenderer)parent.GetComponent(typeof(MeshRenderer)));
-					}
-					for (int i = 0; i < vertices.Length; i++)
-					{
-						vertices[i].x = vertices[i].x * (data.stretchedScale.x * data.textureSourceSize.x / 256f);
-						vertices[i].y = vertices[i].y * (data.stretchedScale.y * data.textureSourceSize.y / 256f);
-						if (data.checkFlag(ObjectPartData.Flags.TEXTURE_FLIP_X))
-						{
-							vertices[i].x = vertices[i].x * -1f;
-						}
-						if (data.checkFlag(ObjectPartData.Flags.TEXTURE_FLIP_Y))
-						{
-							vertices[i].y = vertices[i].y * -1f;
-						}
-						Vector3 partCorner = vertices[i];
-						float partAngle = data.rotation * ((float)Math.PI / 180f);
-						vertices[i].x = partCorner.x * Mathf.Cos(partAngle) - partCorner.y * Mathf.Sin(partAngle);
-						vertices[i].y = partCorner.y * Mathf.Cos(partAngle) + partCorner.x * Mathf.Sin(partAngle);
-						vertices[i].x = vertices[i].x + data.origin.x;
-						vertices[i].y = vertices[i].y + data.origin.y;
-						if (currentLayerObject.checkFlag(1))
-						{
-							vertices[i].x = vertices[i].x * 2f;
-							vertices[i].y = vertices[i].y * 2f;
-						}
-						if ((currentObjectData.flags & 0x80000) != 0)
-						{
-							vertices[i].x = vertices[i].x * -1f;
-						}
-						if ((currentObjectData.flags & 0x100000) != 0)
-						{
-							vertices[i].y = vertices[i].y * -1f;
-						}
-						Vector3 objectCorner = vertices[i];
-						float objectAngle = levelObjectData.rotation * ((float)Math.PI / 180f);
-						vertices[i].x = objectCorner.x * Mathf.Cos(objectAngle) - objectCorner.y * Mathf.Sin(objectAngle);
-						vertices[i].y = objectCorner.y * Mathf.Cos(objectAngle) + objectCorner.x * Mathf.Sin(objectAngle);
-						vertices[i].x = vertices[i].x + levelObjectData.position.x;
-						vertices[i].y = vertices[i].y + levelObjectData.position.y;
-						vertices[i].z = zAdd;
-					}
-					currentLayerObject.addTextureMesh(texture2D, currentObjectData.zDepth, zAdd, RENDER_QUEUE, vertices, uvs, triangles);
+					CustomProfiler.begin("LevelObjectFactory::Instantiate(texturePrefab)");
+					gameObject = (GameObject)UnityEngine.Object.Instantiate(prefabs.objectTexturePrefab, Vector3.zero, Quaternion.identity);
+					CustomProfiler.end("LevelObjectFactory::Instantiate(texturePrefab)");
+					gameObject.transform.parent = parent.transform;
+					float x = data.origin.x;
+					Vector3 localPosition = gameObject.transform.localPosition;
+					localPosition.x = x;
+					gameObject.transform.localPosition = localPosition;
+					float y = data.origin.y;
+					Vector3 localPosition2 = gameObject.transform.localPosition;
+					localPosition2.y = y;
+					gameObject.transform.localPosition = localPosition2;
+					Vector3 localPosition3 = gameObject.transform.localPosition;
+					localPosition3.z = zAdd;
+					gameObject.transform.localPosition = localPosition3;
+					float z = parent.transform.eulerAngles.z + data.rotation;
+					Vector3 eulerAngles = gameObject.transform.eulerAngles;
+					eulerAngles.z = z;
+					gameObject.transform.eulerAngles = eulerAngles;
 				}
 			}
-			return flag;
+			flag = true;
 		}
+		else
+		{
+			flag = false;
+		}
+		LevelObject levelObject = null;
+		if (!simulate)
+		{
+			levelObject = parent ? ((LevelObject)parent.GetComponent(typeof(LevelObject))) : null;
+			TextureManager.UV uV = new TextureManager.UV();
+			Texture2D texture2D = TextureManager.getInstance().createTexture(pack == null ? string.Empty : pack.fullPath, TextureManager.TextureType.OBJECT, data.texture, uV);
+			if (gameObject != null)
+			{
+				USE_ALPHA_SHADER = !data.allowStretch;
+				gameObject.GetComponent<Renderer>().sharedMaterial = MaterialManager.getInstance().getMaterialForUniqueID(texture2D, LAYER, USE_ALPHA_SHADER);
+				gameObject.GetComponent<Renderer>().sharedMaterial.renderQueue = RENDER_QUEUE;
+				USE_ALPHA_SHADER = true;
+			}
+			int repeat = levelObjectData.getRepeat(ObjectData.FLAG_X_REPEAT_MASK);
+			int repeat2 = levelObjectData.getRepeat(ObjectData.FLAG_Y_REPEAT_MASK);
+			if (repeat > 0 || repeat2 > 0)
+			{
+				texture2D.wrapMode = TextureWrapMode.Repeat;
+			}
+			Mesh mesh = null;
+			if (gameObject != null)
+			{
+				mesh = new Mesh();
+				(((MeshFilter)gameObject.GetComponent(typeof(MeshFilter))) as MeshFilter).mesh = mesh;
+			}
+			Vector3[] vertices = new Vector3[4]
+			{
+				new Vector3(-0.5f, -0.5f),
+				new Vector3(0.5f + (float)repeat, -0.5f),
+				new Vector3(-0.5f, 0.5f + (float)repeat2),
+				new Vector3(0.5f + (float)repeat, 0.5f + (float)repeat2)
+			};
+			Vector2[] uvs = new Vector2[4]
+			{
+				new Vector2(uV.u1, 1f - uV.v2 * (float)(1 + repeat2)),
+				new Vector2(uV.u2 * (float)(1 + repeat), 1f - uV.v2 * (float)(1 + repeat2)),
+				new Vector2(uV.u1, 1f - uV.v1),
+				new Vector2(uV.u2 * (float)(1 + repeat), 1f - uV.v1)
+			};
+			int[] triangles = new int[6] { 2, 1, 0, 3, 1, 2 };
+			if (gameObject != null)
+			{
+				mesh.vertices = vertices;
+				mesh.uv = uvs;
+				mesh.triangles = triangles;
+				applyLayerColorTo(gameObject);
+				float x2 = data.stretchedScale.x * data.textureSourceSize.x / 256f;
+				Vector3 localScale = gameObject.transform.localScale;
+				localScale.x = x2;
+				gameObject.transform.localScale = localScale;
+				float y2 = data.stretchedScale.y * data.textureSourceSize.y / 256f;
+				Vector3 localScale2 = gameObject.transform.localScale;
+				localScale2.y = y2;
+				gameObject.transform.localScale = localScale2;
+				float x3 = gameObject.transform.localScale.x;
+				Vector3 localScale3 = gameObject.transform.localScale;
+				localScale3.z = x3;
+				gameObject.transform.localScale = localScale3;
+				if (data.checkFlag(ObjectPartData.Flags.TEXTURE_FLIP_X))
+				{
+					float x4 = 0f - Mathf.Abs(gameObject.transform.localScale.x);
+					Vector3 localScale4 = gameObject.transform.localScale;
+					localScale4.x = x4;
+					gameObject.transform.localScale = localScale4;
+				}
+				if (data.checkFlag(ObjectPartData.Flags.TEXTURE_FLIP_Y))
+				{
+					float y3 = 0f - Mathf.Abs(gameObject.transform.localScale.y);
+					Vector3 localScale5 = gameObject.transform.localScale;
+					localScale5.y = y3;
+					gameObject.transform.localScale = localScale5;
+				}
+			}
+			else
+			{
+				if ((bool)parent && (bool)(MeshFilter)parent.GetComponent(typeof(MeshFilter)))
+				{
+					UnityEngine.Object.Destroy((MeshFilter)parent.GetComponent(typeof(MeshFilter)));
+				}
+				if ((bool)parent && (bool)(MeshRenderer)parent.GetComponent(typeof(MeshRenderer)))
+				{
+					UnityEngine.Object.Destroy((MeshRenderer)parent.GetComponent(typeof(MeshRenderer)));
+				}
+				for (int i = 0; i < vertices.Length; i++)
+				{
+					vertices[i].x = vertices[i].x * (data.stretchedScale.x * data.textureSourceSize.x / 256f);
+					vertices[i].y = vertices[i].y * (data.stretchedScale.y * data.textureSourceSize.y / 256f);
+					if (data.checkFlag(ObjectPartData.Flags.TEXTURE_FLIP_X))
+					{
+						vertices[i].x = vertices[i].x * -1f;
+					}
+					if (data.checkFlag(ObjectPartData.Flags.TEXTURE_FLIP_Y))
+					{
+						vertices[i].y = vertices[i].y * -1f;
+					}
+					Vector3 partCorner = vertices[i];
+					float partAngle = data.rotation * ((float)Math.PI / 180f);
+					vertices[i].x = partCorner.x * Mathf.Cos(partAngle) - partCorner.y * Mathf.Sin(partAngle);
+					vertices[i].y = partCorner.y * Mathf.Cos(partAngle) + partCorner.x * Mathf.Sin(partAngle);
+					vertices[i].x = vertices[i].x + data.origin.x;
+					vertices[i].y = vertices[i].y + data.origin.y;
+					if (currentLayerObject.checkFlag(1))
+					{
+						vertices[i].x = vertices[i].x * 2f;
+						vertices[i].y = vertices[i].y * 2f;
+					}
+					if ((currentObjectData.flags & 0x80000) != 0)
+					{
+						vertices[i].x = vertices[i].x * -1f;
+					}
+					if ((currentObjectData.flags & 0x100000) != 0)
+					{
+						vertices[i].y = vertices[i].y * -1f;
+					}
+					Vector3 objectCorner = vertices[i];
+					float objectAngle = levelObjectData.rotation * ((float)Math.PI / 180f);
+					vertices[i].x = objectCorner.x * Mathf.Cos(objectAngle) - objectCorner.y * Mathf.Sin(objectAngle);
+					vertices[i].y = objectCorner.y * Mathf.Cos(objectAngle) + objectCorner.x * Mathf.Sin(objectAngle);
+					vertices[i].x = vertices[i].x + levelObjectData.position.x;
+					vertices[i].y = vertices[i].y + levelObjectData.position.y;
+					vertices[i].z = zAdd;
+				}
+				currentLayerObject.addTextureMesh(texture2D, currentObjectData.zDepth, zAdd, RENDER_QUEUE, vertices, uvs, triangles);
+			}
+		}
+		return flag;
 	}
 
 	public static void applyLayerColorTo(GameObject obj)

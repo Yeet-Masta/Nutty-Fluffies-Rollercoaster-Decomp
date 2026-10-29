@@ -676,10 +676,7 @@ public class Vehicle : MonoBehaviour
 			special.activateSpecial();
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 
 	public virtual int getNumberOfToys(int toyType)

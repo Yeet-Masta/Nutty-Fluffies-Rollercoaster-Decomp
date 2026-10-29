@@ -48,11 +48,8 @@ public class Narrative : VGUISwitchObject
 		{
 			return false;
 		}
-		else
-		{
-			showLine(lines[currentLineIndex] as NarrativeLine);
-			return true;
-		}
+		showLine(lines[currentLineIndex] as NarrativeLine);
+		return true;
 	}
 
 	public virtual bool showCurrentLine()
@@ -61,15 +58,12 @@ public class Narrative : VGUISwitchObject
 		{
 			return false;
 		}
-		else if (currentLineIndex >= lines.length)
+		if (currentLineIndex >= lines.length)
 		{
 			return false;
 		}
-		else
-		{
-			showLine(lines[currentLineIndex] as NarrativeLine);
-			return true;
-		}
+		showLine(lines[currentLineIndex] as NarrativeLine);
+		return true;
 	}
 
 	public virtual void showLine(NarrativeLine line)

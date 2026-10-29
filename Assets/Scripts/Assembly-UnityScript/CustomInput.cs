@@ -18,9 +18,6 @@ public class CustomInput
 			Input.ResetInputAxes();
 			return !m_disableInput;
 		}
-		else
-		{
-			return Input.GetKeyDown((KeyCode)keyCode);
-		}
+		return Input.GetKeyDown((KeyCode)keyCode);
 	}
 }

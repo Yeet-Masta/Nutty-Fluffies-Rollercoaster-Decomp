@@ -100,15 +100,12 @@ public class ObjectListData
 		{
 			return (catIndex >= 0 && catIndex < packList.Count) ? packList[catIndex].getNumObjects(sceneryMode) : 0;
 		}
-		else
+		int total = 0;
+		foreach (ObjectPackData objectPackData in packList)
 		{
-			int total = 0;
-			foreach (ObjectPackData objectPackData in packList)
-			{
-				total += objectPackData.getNumObjects(sceneryMode);
-			}
-			return total;
+			total += objectPackData.getNumObjects(sceneryMode);
 		}
+		return total;
 	}
 
 	public virtual int getNumPacks()

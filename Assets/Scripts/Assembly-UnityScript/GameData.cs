@@ -519,18 +519,15 @@ public class GameData
 		{
 			return false;
 		}
-		else if (activeLevelPack.getLevelInfo(index).isUnlocked())
+		if (activeLevelPack.getLevelInfo(index).isUnlocked())
 		{
 			return true;
 		}
-		else
-		{
-			activeLevelPack.unlockLevel(index);
-			PlayerPrefs.SetInt("LEVEL_FLAGS_" + activeLevelPack.fileName + "_" + activeLevelPack.levelList[index].fileName, activeLevelPack.levelList[index].flags);
-			PlayerPrefs.Save();
-			RollerCoasterStatistics.getInstance().roundUnlockedNextTrack = true;
-			return true;
-		}
+		activeLevelPack.unlockLevel(index);
+		PlayerPrefs.SetInt("LEVEL_FLAGS_" + activeLevelPack.fileName + "_" + activeLevelPack.levelList[index].fileName, activeLevelPack.levelList[index].flags);
+		PlayerPrefs.Save();
+		RollerCoasterStatistics.getInstance().roundUnlockedNextTrack = true;
+		return true;
 	}
 
 	public static void unlockLevelPack(int index)
@@ -567,16 +564,10 @@ public class GameData
 			{
 				return true;
 			}
-			else
-			{
-				activeLevelPack = LEVEL_PACKS[nextPack];
-				return activeLevelPack.isUnlocked();
-			}
+			activeLevelPack = LEVEL_PACKS[nextPack];
+			return activeLevelPack.isUnlocked();
 		}
-		else
-		{
-			return activeLevelPack.getLevelInfo(nextLevel).isUnlocked();
-		}
+		return activeLevelPack.getLevelInfo(nextLevel).isUnlocked();
 	}
 
 	public static void completeLevel(int index, int carts)
@@ -641,10 +632,7 @@ public class GameData
 			}
 			return INAPP_PURCHASE_TOKENS[productId] * multiplier;
 		}
-		else
-		{
-			return -1;
-		}
+		return -1;
 	}
 
 	public static int getLevelPackProgress(int index)
@@ -654,18 +642,15 @@ public class GameData
 		{
 			return 0;
 		}
-		else
+		float earned = 0f;
+		float possible = 0f;
+		for (int i = 0; i < levelPack.levelList.Count; i++)
 		{
-			float earned = 0f;
-			float possible = 0f;
-			for (int i = 0; i < levelPack.levelList.Count; i++)
-			{
-				int startingCartAmount = getStartingCartAmount(index, i);
-				possible += (float)(CART_LIMIT - startingCartAmount);
-				earned += (float)(getNumberOfCarts(levelPack, i) - startingCartAmount);
-			}
-			return (int)Mathf.Ceil(earned * 100f / possible);
+			int startingCartAmount = getStartingCartAmount(index, i);
+			possible += (float)(CART_LIMIT - startingCartAmount);
+			earned += (float)(getNumberOfCarts(levelPack, i) - startingCartAmount);
 		}
+		return (int)Mathf.Ceil(earned * 100f / possible);
 	}
 
 	public static int getLevelProgress(LevelPack levelPack, int index)
@@ -674,12 +659,9 @@ public class GameData
 		{
 			return 0;
 		}
-		else
-		{
-			float cartLimit = CART_LIMIT;
-			int finishedCarts = PlayerPrefs.GetInt("LEVEL_FINISH_CART_NUM_" + levelPack.fileName + "_" + levelPack.levelList[index].fileName, 0);
-			return (int)Mathf.Ceil((float)finishedCarts * 100f / cartLimit);
-		}
+		float cartLimit = CART_LIMIT;
+		int finishedCarts = PlayerPrefs.GetInt("LEVEL_FINISH_CART_NUM_" + levelPack.fileName + "_" + levelPack.levelList[index].fileName, 0);
+		return (int)Mathf.Ceil((float)finishedCarts * 100f / cartLimit);
 	}
 
 	public static string formatTokenValue(string value)
@@ -689,20 +671,17 @@ public class GameData
 		{
 			return value;
 		}
-		else
+		string formatted = string.Empty;
+		while (pos >= 0)
 		{
-			string formatted = string.Empty;
-			while (pos >= 0)
-			{
-				formatted = value.Substring(pos, 3) + " " + formatted;
-				pos -= 3;
-			}
-			if (pos > -3)
-			{
-				formatted = value.Substring(0, 3 + pos) + " " + formatted;
-			}
-			return formatted;
+			formatted = value.Substring(pos, 3) + " " + formatted;
+			pos -= 3;
 		}
+		if (pos > -3)
+		{
+			formatted = value.Substring(0, 3 + pos) + " " + formatted;
+		}
+		return formatted;
 	}
 
 	public static void unlockFeature(int feature)
@@ -890,11 +869,8 @@ public class GameData
 		{
 			return -1;
 		}
-		else
-		{
-			float f = PlayerPrefs.GetInt(key, 0) * 100 / PlayerPrefs.GetInt(key2, 0);
-			return (int)Mathf.Min(100f, Mathf.Floor(f));
-		}
+		float f = PlayerPrefs.GetInt(key, 0) * 100 / PlayerPrefs.GetInt(key2, 0);
+		return (int)Mathf.Min(100f, Mathf.Floor(f));
 	}
 
 	public static string genLeaderboard(int pack, int index)

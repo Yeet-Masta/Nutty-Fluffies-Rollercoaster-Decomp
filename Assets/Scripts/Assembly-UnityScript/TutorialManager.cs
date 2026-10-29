@@ -71,60 +71,54 @@ public class TutorialManager : MonoBehaviour
 		{
 			return false;
 		}
-		else
+		currentPageStartShowTime = Time.realtimeSinceStartup;
+		showAlways = always;
+		if (!hasAllPagesShown(key) || TUTORIAL_DEBUG || always)
 		{
-			currentPageStartShowTime = Time.realtimeSinceStartup;
-			showAlways = always;
-			if (!hasAllPagesShown(key) || TUTORIAL_DEBUG || always)
+			isTutorialEnable = true;
+			currentPage = null;
+			foreach (TutorialPage page in tutorialPages)
 			{
-				isTutorialEnable = true;
-				currentPage = null;
-				foreach (TutorialPage page in tutorialPages)
+				if (page.key == key)
 				{
-					if (page.key == key)
+					currentPage = page;
+					if (page.shown)
 					{
-						currentPage = page;
-						if (page.shown)
-						{
-							return false;
-						}
-						break;
+						return false;
 					}
+					break;
 				}
-				if (currentPage != null)
+			}
+			if (currentPage != null)
+			{
+				currentPage.gameObject.SetActiveRecursively(true);
+				gameObject.active = true;
+				background.SetActiveRecursively(true);
+				continueButton.activate();
+				currentPage.activate();
+				if (currentPage.pauseGame)
 				{
-					currentPage.gameObject.SetActiveRecursively(true);
-					gameObject.active = true;
-					background.SetActiveRecursively(true);
-					continueButton.activate();
-					currentPage.activate();
-					if (currentPage.pauseGame)
-					{
-						Time.timeScale = 0f;
-					}
-					animator.reverse = false;
-					animator.activate();
-					bganimator.reverse = false;
-					bganimator.activate();
-					animating = true;
-					gameObject.active = true;
-					if (GameData.LOG)
-					{
-						print("DISPLAYING TUTORIAL : " + key);
-					}
+					Time.timeScale = 0f;
 				}
-				else
+				animator.reverse = false;
+				animator.activate();
+				bganimator.reverse = false;
+				bganimator.activate();
+				animating = true;
+				gameObject.active = true;
+				if (GameData.LOG)
 				{
-					Debug.LogError("UNKONWN TUTORIAL: " + key);
+					print("DISPLAYING TUTORIAL : " + key);
 				}
-				return true;
 			}
 			else
 			{
-				onContinue();
-				return false;
+				Debug.LogError("UNKONWN TUTORIAL: " + key);
 			}
+			return true;
 		}
+		onContinue();
+		return false;
 	}
 
 	public virtual bool hasAllPagesShown(string key)
@@ -133,19 +127,13 @@ public class TutorialManager : MonoBehaviour
 		{
 			return false;
 		}
-		else
+		int intValue = GameData.getSelectedLevel().settings.getIntValue("specialcart", Vehicle.CART_NORMAL);
+		if (intValue != Vehicle.CART_NORMAL && PlayerPrefs.GetInt("TUTORIAL_SHOWN_PAGE_SPECIAL_" + intValue, 0) <= 2)
 		{
-			int intValue = GameData.getSelectedLevel().settings.getIntValue("specialcart", Vehicle.CART_NORMAL);
-			if (intValue != Vehicle.CART_NORMAL && PlayerPrefs.GetInt("TUTORIAL_SHOWN_PAGE_SPECIAL_" + intValue, 0) <= 2)
-			{
-				return false;
-			}
-			else
-			{
-				bool flag = PlayerPrefs.GetInt("TUTORIAL_SHOWN_PAGE_" + key, 0) > 0;
-				return (flag && flag);
-			}
+			return false;
 		}
+		bool flag = PlayerPrefs.GetInt("TUTORIAL_SHOWN_PAGE_" + key, 0) > 0;
+		return (flag && flag);
 	}
 
 	public virtual void onContinue()

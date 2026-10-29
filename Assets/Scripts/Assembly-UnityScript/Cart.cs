@@ -335,12 +335,9 @@ public class Cart : MonoBehaviour
 		{
 			return 0f;
 		}
-		else
-		{
-			Vector3[] vertices = level.splineMeshVerticesCache[mesh];
-			index &= -2;
-			return (vertices[index].z + vertices[index + 1].z + vertices[index + 2].z + vertices[index + 3].z) * 0.25f;
-		}
+		Vector3[] vertices = level.splineMeshVerticesCache[mesh];
+		index &= -2;
+		return (vertices[index].z + vertices[index + 1].z + vertices[index + 2].z + vertices[index + 3].z) * 0.25f;
 	}
 
 	public virtual bool hasAnimal()

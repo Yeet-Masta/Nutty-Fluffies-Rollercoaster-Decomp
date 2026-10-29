@@ -91,13 +91,10 @@ public class TriggerEnablePhysics : LevelTriggerActivatable
 		{
 			return targetHandler.getParamTargets();
 		}
-		else if (param == "c")
+		if (param == "c")
 		{
 			return c ? "yes" : "no";
 		}
-		else
-		{
-			return base.getParam(param);
-		}
+		return base.getParam(param);
 	}
 }

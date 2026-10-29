@@ -50,17 +50,14 @@ public class StringTools
 		{
 			return str;
 		}
-		else
+		UnityScript.Lang.Array lines = getLines(str, lineLength);
+		string lhs = lines[0] as string;
+		for (int i = 1; i < lines.length; i++)
 		{
-			UnityScript.Lang.Array lines = getLines(str, lineLength);
-			string lhs = lines[0] as string;
-			for (int i = 1; i < lines.length; i++)
-			{
-				lhs = i >= maxLines ? (lhs + (" " + lines[i])) : (lhs + ("\n" + lines[i]));
-			}
-			lhs += "\n";
-			return lhs;
+			lhs = i >= maxLines ? (lhs + (" " + lines[i])) : (lhs + ("\n" + lines[i]));
 		}
+		lhs += "\n";
+		return lhs;
 	}
 
 	public static int countLines(string str)

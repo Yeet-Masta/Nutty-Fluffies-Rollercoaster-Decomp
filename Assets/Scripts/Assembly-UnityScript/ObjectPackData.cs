@@ -30,18 +30,15 @@ public class ObjectPackData
 		{
 			return objectList.Count;
 		}
-		else
+		int count = 0;
+		foreach (ObjectData objectData in objectList)
 		{
-			int count = 0;
-			foreach (ObjectData objectData in objectList)
+			if (objectData.matchesSceneryType(sceneryMode))
 			{
-				if (objectData.matchesSceneryType(sceneryMode))
-				{
-					count++;
-				}
+				count++;
 			}
-			return count;
 		}
+		return count;
 	}
 
 	public virtual void removeObjectByID(int id)

@@ -9,16 +9,13 @@ public class Bits
 		{
 			return -1;
 		}
-		else
+		int index = 0;
+		while ((bit & 1) == 0)
 		{
-			int index = 0;
-			while ((bit & 1) == 0)
-			{
-				bit >>= 1;
-				index++;
-			}
-			return index;
+			bit >>= 1;
+			index++;
 		}
+		return index;
 	}
 
 	public static int GetMaskShift(int mask)

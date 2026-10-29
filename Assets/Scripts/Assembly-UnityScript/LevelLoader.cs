@@ -39,44 +39,41 @@ public class LevelLoader
 		{
 			return null;
 		}
-		else
+		levelData.startPoint = new Vector2((float)json.GetFieldSafe("startx", new JSONObject(0f)).n, (float)json.GetFieldSafe("starty", new JSONObject(0f)).n);
+		levelData.topLeftLimit = new Vector2((float)json.GetFieldSafe("left", new JSONObject(-10f)).n, (float)json.GetFieldSafe("top", new JSONObject(-10f)).n);
+		levelData.bottomRightLimit = new Vector2((float)json.GetFieldSafe("right", new JSONObject(10f)).n, (float)json.GetFieldSafe("bottom", new JSONObject(10f)).n);
+		levelData.oldLeaderboardDoNotUse = json.GetFieldSafe("leaderboard", new JSONObject("\"\"")).str;
+		JSONObject field = json.GetField("layers");
+		levelData.customSettings.load(json);
+		string str2 = json.GetFieldSafe("packs", new JSONObject(string.Empty)).str;
+		ObjectPackData objectPackData = null;
+		if (str2 != null && str2.Length > 0)
 		{
-			levelData.startPoint = new Vector2((float)json.GetFieldSafe("startx", new JSONObject(0f)).n, (float)json.GetFieldSafe("starty", new JSONObject(0f)).n);
-			levelData.topLeftLimit = new Vector2((float)json.GetFieldSafe("left", new JSONObject(-10f)).n, (float)json.GetFieldSafe("top", new JSONObject(-10f)).n);
-			levelData.bottomRightLimit = new Vector2((float)json.GetFieldSafe("right", new JSONObject(10f)).n, (float)json.GetFieldSafe("bottom", new JSONObject(10f)).n);
-			levelData.oldLeaderboardDoNotUse = json.GetFieldSafe("leaderboard", new JSONObject("\"\"")).str;
-			JSONObject field = json.GetField("layers");
-			levelData.customSettings.load(json);
-			string str2 = json.GetFieldSafe("packs", new JSONObject(string.Empty)).str;
-			ObjectPackData objectPackData = null;
-			if (str2 != null && str2.Length > 0)
+			string[] packNames = str2.Split(","[0]);
+			int i = 0;
+			string[] array2 = packNames;
+			for (int length = array2.Length; i < length; i++)
 			{
-				string[] packNames = str2.Split(","[0]);
-				int i = 0;
-				string[] array2 = packNames;
-				for (int length = array2.Length; i < length; i++)
-				{
-					ObjectListLoader.getInstance().loadObjectList(objects, array2[i]);
-					objectPackData = objects.getPackForName(array2[i]);
-					levelData.usedObjectPacks.Add(objectPackData);
-				}
+				ObjectListLoader.getInstance().loadObjectList(objects, array2[i]);
+				objectPackData = objects.getPackForName(array2[i]);
+				levelData.usedObjectPacks.Add(objectPackData);
 			}
-			foreach (string packName in levelData.theme.settings.allowedObjectPacks)
-			{
-				if (objects.getPackForName(packName) == null)
-				{
-					ObjectListLoader.getInstance().loadObjectList(objects, packName);
-				}
-				objectPackData = objects.getPackForName(packName);
-				if (!levelData.usedObjectPacks.Contains(objectPackData))
-				{
-					levelData.usedObjectPacks.Add(objectPackData);
-				}
-			}
-			List<LevelLayerData> layerData = levelData.layerData;
-			loadLayers(field, layerData, objects);
-			return levelData;
 		}
+		foreach (string packName in levelData.theme.settings.allowedObjectPacks)
+		{
+			if (objects.getPackForName(packName) == null)
+			{
+				ObjectListLoader.getInstance().loadObjectList(objects, packName);
+			}
+			objectPackData = objects.getPackForName(packName);
+			if (!levelData.usedObjectPacks.Contains(objectPackData))
+			{
+				levelData.usedObjectPacks.Add(objectPackData);
+			}
+		}
+		List<LevelLayerData> layerData = levelData.layerData;
+		loadLayers(field, layerData, objects);
+		return levelData;
 	}
 
 	public virtual LevelData load(string packName, string trackName, ObjectListData objects)
@@ -91,14 +88,11 @@ public class LevelLoader
 			Debug.LogWarning("Could not open track '" + trackName + "'");
 			return null;
 		}
-		else
-		{
-			LevelData levelData = loadFromString(json, objects);
-			levelData.fileName = trackName;
-			CustomProfiler.end("LevelLoader::load");
-			CustomProfiler.report();
-			return levelData;
-		}
+		LevelData levelData = loadFromString(json, objects);
+		levelData.fileName = trackName;
+		CustomProfiler.end("LevelLoader::load");
+		CustomProfiler.report();
+		return levelData;
 	}
 
 	public virtual void loadLayers(JSONObject layers, List<LevelLayerData> layerData, ObjectListData objectList)

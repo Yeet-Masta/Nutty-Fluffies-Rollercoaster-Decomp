@@ -54,9 +54,6 @@ public class TriggerBoost : LevelTriggerActivatable
 		{
 			return string.Empty + bx;
 		}
-		else
-		{
-			return param == "by" ? (string.Empty + by) : base.getParam(param);
-		}
+		return param == "by" ? (string.Empty + by) : base.getParam(param);
 	}
 }

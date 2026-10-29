@@ -163,11 +163,8 @@ public class FileManager
 		{
 			return string.Empty;
 		}
-		else
-		{
-			string packPath = locateLevelPack(pack);
-			return string.IsNullOrEmpty(packPath) ? string.Empty : (packPath + "/levels/" + name + ".json");
-		}
+		string packPath = locateLevelPack(pack);
+		return string.IsNullOrEmpty(packPath) ? string.Empty : (packPath + "/levels/" + name + ".json");
 	}
 
 	public virtual string locateTheme(string name)
@@ -210,10 +207,7 @@ public class FileManager
 			Debug.Log(www.error);
 			return null;
 		}
-		else
-		{
-			return www;
-		}
+		return www;
 	}
 
 	private string[] getFoldersFullPaths(string dir)

@@ -116,8 +116,7 @@ public class MiniJSON
 			{
 				return null;
 			}
-			int num = nextToken(json, ref index);
-			if (num != 5)
+			if (nextToken(json, ref index) != 5)
 			{
 				return null;
 			}
@@ -241,8 +240,7 @@ public class MiniJSON
 					default:
 						continue;
 					}
-					int num = json.Length - index;
-					if (num >= 4)
+					if (json.Length - index >= 4)
 					{
 						char[] array = new char[4];
 						Array.Copy(json, index, array, 0, 4);

@@ -42,8 +42,7 @@ public class Subtitle : VGUIText
 		{
 			obj = RuntimeServices.Coerce(obj, typeof(string));
 		}
-		string text = StringTools.wrapToLines((string)obj, (int)((float)(maxChars / maxLines) * 1.05f), maxLines);
-		setText(text);
+		setText(StringTools.wrapToLines((string)obj, (int)((float)(maxChars / maxLines) * 1.05f), maxLines));
 	}
 
 	public virtual void clearText()

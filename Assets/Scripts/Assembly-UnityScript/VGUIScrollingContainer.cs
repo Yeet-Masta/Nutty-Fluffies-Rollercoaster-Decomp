@@ -407,8 +407,7 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 
 	public virtual void FingerGestureOnDragMove(int fingerIndex, Vector2 fingerPos, Vector2 delta)
 	{
-		float magnitude = (fingerPos - dragStartPos).magnitude;
-		if (!(magnitude <= (float)Screen.width * 0.07f))
+		if (!((fingerPos - dragStartPos).magnitude <= (float)Screen.width * 0.07f))
 		{
 			draggedOverMinimumAmount = true;
 			VGUIElement.blockingButtonPressed = true;

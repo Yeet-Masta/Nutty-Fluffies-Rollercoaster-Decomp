@@ -139,8 +139,7 @@ public class WebNewsManager : MonoBehaviour
 
 	private bool isWhiteSpace(char c)
 	{
-		bool flag = c == " "[0] || c == "\r"[0] || c == "\n"[0] || c == "\t"[0];
-		return flag;
+		return c == " "[0] || c == "\r"[0] || c == "\n"[0] || c == "\t"[0];
 	}
 
 	private void parseVersionText(IEnumerator se)

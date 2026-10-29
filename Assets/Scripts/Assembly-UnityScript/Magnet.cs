@@ -80,8 +80,7 @@ public class Magnet : Special
 				if (Physics.Raycast(carts[j].tr.position, -carts[j].tr.up, distanceTreshold, LevelSpline.SPLINE_LAYER))
 				{
 					float num3 = power;
-					float num4 = Vector3.Dot(carts[j].tr.up, carts[j].rb.velocity);
-					if (!(num4 >= 0f))
+					if (!(Vector3.Dot(carts[j].tr.up, carts[j].rb.velocity) >= 0f))
 					{
 						num3 *= 3f;
 					}

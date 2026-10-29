@@ -65,8 +65,7 @@ public class Popup
 			position2.width += 8f;
 			position2.height += 8f;
 		}
-		EventType typeForControl = Event.current.GetTypeForControl(controlID);
-		if (typeForControl == EventType.MouseUp && showList)
+		if (Event.current.GetTypeForControl(controlID) == EventType.MouseUp && showList)
 		{
 			flag = true;
 			initialListIndex = -1;

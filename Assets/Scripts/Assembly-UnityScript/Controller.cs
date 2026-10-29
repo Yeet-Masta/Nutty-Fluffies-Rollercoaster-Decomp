@@ -131,7 +131,6 @@ public class Controller : MonoBehaviour
 
 	public virtual bool isTouchInsideSpecialArea(Vector2 pos)
 	{
-		bool flag = pos.y < (float)Screen.height * 0.25f && pos.x < (float)Screen.width * 0.3f;
-		return flag;
+		return pos.y < (float)Screen.height * 0.25f && pos.x < (float)Screen.width * 0.3f;
 	}
 }

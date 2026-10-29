@@ -151,10 +151,8 @@ public class Animal : MonoBehaviour
 		startBreakForce = joint.breakForce * 100f * GetComponent<Rigidbody>().mass;
 		joint.breakForce = 100000f;
 		Invoke("returnBreakForce", 4f);
-		bool flag = typeIndex == 1 || typeIndex == 4;
-		givesExtraHeartsWhenSpeeding = flag;
-		bool flag2 = typeIndex == 2 || typeIndex == 4;
-		givesExtraHeartsWhenInAir = flag2;
+		givesExtraHeartsWhenSpeeding = typeIndex == 1 || typeIndex == 4;
+		givesExtraHeartsWhenInAir = typeIndex == 2 || typeIndex == 4;
 		givesExtraHeartsFromBumps = typeIndex == 3;
 	}
 

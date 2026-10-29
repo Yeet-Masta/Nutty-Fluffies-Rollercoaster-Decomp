@@ -58,14 +58,12 @@ public class tk2dAnimatedSprite : tk2dSprite
 
 	public void Play(string name)
 	{
-		int id = anim ? anim.GetClipIdByName(name) : -1;
-		Play(id);
+		Play(anim ? anim.GetClipIdByName(name) : -1);
 	}
 
 	public void Play(string name, float clipStartTime)
 	{
-		int id = anim ? anim.GetClipIdByName(name) : -1;
-		Play(id, clipStartTime);
+		Play(anim ? anim.GetClipIdByName(name) : -1, clipStartTime);
 	}
 
 	public void Stop()
@@ -182,8 +180,7 @@ public class tk2dAnimatedSprite : tk2dSprite
 		clipTime += Time.deltaTime * currentClip.fps;
 		if (currentClip.wrapMode == tk2dSpriteAnimationClip.WrapMode.Loop || currentClip.wrapMode == tk2dSpriteAnimationClip.WrapMode.RandomLoop)
 		{
-			int frame = (int)clipTime % currentClip.frames.Length;
-			SetFrame(frame);
+			SetFrame((int)clipTime % currentClip.frames.Length);
 		}
 		else if (currentClip.wrapMode == tk2dSpriteAnimationClip.WrapMode.LoopSection)
 		{

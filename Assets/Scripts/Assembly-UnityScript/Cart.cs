@@ -208,8 +208,7 @@ public class Cart : MonoBehaviour
 			}
 			currentTriangle = hitInfo.triangleIndex;
 			Mesh sharedMesh = meshCollider.sharedMesh;
-			float zForIndex = getZForIndex(currentTriangle, sharedMesh);
-			targetZ = zForIndex;
+			targetZ = getZForIndex(currentTriangle, sharedMesh);
 			if (!(Mathf.Abs(tr.position.z - targetZ) <= 0.1f))
 			{
 				float z = targetZ;
@@ -340,8 +339,7 @@ public class Cart : MonoBehaviour
 		{
 			Vector3[] array = level.splineMeshVerticesCache[mesh];
 			index &= -2;
-			float num = (array[index].z + array[index + 1].z + array[index + 2].z + array[index + 3].z) * 0.25f;
-			return num;
+			return (array[index].z + array[index + 1].z + array[index + 2].z + array[index + 3].z) * 0.25f;
 		}
 	}
 

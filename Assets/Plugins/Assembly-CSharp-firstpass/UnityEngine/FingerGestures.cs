@@ -432,8 +432,7 @@ namespace UnityEngine
 		{
 			if (finger.tapCount > 0)
 			{
-				float num = Time.time - finger.tapStartTime;
-				if (num > maxTapTime)
+				if (Time.time - finger.tapStartTime > maxTapTime)
 				{
 					return true;
 				}

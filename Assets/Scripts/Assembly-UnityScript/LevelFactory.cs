@@ -54,8 +54,7 @@ public class LevelFactory
 			if (dictionary.ContainsKey(levelLayerData2.layer))
 			{
 				levelLayerData2.themeInfo = null;
-				LevelLayer layer = createLayer(level.gameObject, levelLayerData2);
-				createLayerObjects(layer, objects, levelLayerData2);
+				createLayerObjects(createLayer(level.gameObject, levelLayerData2), objects, levelLayerData2);
 			}
 		}
 		applyLayerZs(level);

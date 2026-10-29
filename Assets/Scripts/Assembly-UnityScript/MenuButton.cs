@@ -40,9 +40,7 @@ public class MenuButton : VGUIButton
 	public override void clickButton()
 	{
 		menuButtonPressed = true;
-		// NFPort: ignore clicks while the menus are cross-fading.
-		bool switching = BaseMenuManager.getInstance() != null && BaseMenuManager.getInstance().menuSwitcher.isSwitching();
-		if (!switching)
+		if (!(BaseMenuManager.getInstance() != null && BaseMenuManager.getInstance().menuSwitcher.isSwitching()))
 		{
 			base.clickButton();
 		}

@@ -80,8 +80,7 @@ public class FacebookManager : MonoBehaviour
 		if (accessTokenExtendedEvent != null)
 		{
 			double value = double.Parse(secondsSinceEpoch);
-			DateTime obj = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(value);
-			accessTokenExtendedEvent(obj);
+			accessTokenExtendedEvent(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(value));
 		}
 	}
 
@@ -139,8 +138,7 @@ public class FacebookManager : MonoBehaviour
 	{
 		if (customRequestReceivedEvent != null)
 		{
-			object obj = Prime31.MiniJSON.jsonDecode(result);
-			customRequestReceivedEvent(obj);
+			customRequestReceivedEvent(Prime31.MiniJSON.jsonDecode(result));
 		}
 	}
 

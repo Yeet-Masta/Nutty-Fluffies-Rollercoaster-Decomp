@@ -110,8 +110,7 @@ public class ResultScreen : VGUIElement
 		resultList.activate();
 		float activePriceMultiplier = GameData.getActivePriceMultiplier();
 		int scoreAmount = GameManager.getInstance().getScoreAmount();
-		int num = (int)Mathf.Round((float)scoreAmount * activePriceMultiplier * GameData.BONUS_VALUES[0]);
-		GameData.addTokens(num);
+		GameData.addTokens((int)Mathf.Round((float)scoreAmount * activePriceMultiplier * GameData.BONUS_VALUES[0]));
 		Invoke("addBonusType", 0.2f);
 		base.activate();
 		Time.timeScale = 1f;

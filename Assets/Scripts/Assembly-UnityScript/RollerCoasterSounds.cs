@@ -315,8 +315,7 @@ public class RollerCoasterSounds : SoundManager
 
 	public virtual bool isPlayingResultMusic()
 	{
-		bool flag = musicSource.clip == resultMusic || musicSource.clip == resultMusicEpic;
-		return flag;
+		return musicSource.clip == resultMusic || musicSource.clip == resultMusicEpic;
 	}
 
 	public virtual void playTrackCollision(float impactPower)

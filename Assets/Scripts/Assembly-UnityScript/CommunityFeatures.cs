@@ -161,8 +161,7 @@ public class CommunityFeatures : MonoBehaviour
 
 	public virtual bool hasSupport()
 	{
-		bool flag = isAvailable(0) || isAvailable(1) || isAvailable(2) || isAvailable(3) || isAvailable(5);
-		return flag;
+		return isAvailable(0) || isAvailable(1) || isAvailable(2) || isAvailable(3) || isAvailable(5);
 	}
 
 	public virtual bool offerIfNeeded()
@@ -301,26 +300,22 @@ public class CommunityFeatures : MonoBehaviour
 
 	public virtual void onFacebookPostCompleted()
 	{
-		int value = FEATURE_VALUES[1];
-		showCoinDialog(value, TextData.COMMUNITY_TITLE_FACEBOOK_POST);
+		showCoinDialog(FEATURE_VALUES[1], TextData.COMMUNITY_TITLE_FACEBOOK_POST);
 	}
 
 	public virtual void onEmailPostCompleted()
 	{
-		int value = FEATURE_VALUES[3];
-		showCoinDialog(value, TextData.COMMUNITY_TITLE_EMAIL);
+		showCoinDialog(FEATURE_VALUES[3], TextData.COMMUNITY_TITLE_EMAIL);
 	}
 
 	public virtual void onFaceBookLikeCompleted()
 	{
-		int value = FEATURE_VALUES[2];
-		showCoinDialog(value, TextData.COMMUNITY_TITLE_FACEBOOK_LIKE);
+		showCoinDialog(FEATURE_VALUES[2], TextData.COMMUNITY_TITLE_FACEBOOK_LIKE);
 	}
 
 	public virtual void onTwitterPostCompleted()
 	{
-		int value = FEATURE_VALUES[0];
-		showCoinDialog(value, TextData.COMMUNITY_TITLE_TWITTER);
+		showCoinDialog(FEATURE_VALUES[0], TextData.COMMUNITY_TITLE_TWITTER);
 	}
 
 	public virtual void onSharingFailed()

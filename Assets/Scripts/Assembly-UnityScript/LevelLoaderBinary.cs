@@ -185,8 +185,7 @@ public class LevelLoaderBinary
 						do
 						{
 							num4 = sr.ReadByte();
-							int num5 = num4;
-							if (num5 != 12)
+							if (num4 != 12)
 							{
 								continue;
 							}

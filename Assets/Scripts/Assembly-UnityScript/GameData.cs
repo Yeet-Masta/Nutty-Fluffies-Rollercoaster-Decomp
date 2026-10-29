@@ -505,8 +505,7 @@ public class GameData
 			}
 		}
 		pack.flags = 4 & pack.flags;
-		int num2 = PlayerPrefs.GetInt("LEVELPACK_FLAGS_" + pack.fileName, 0);
-		if ((num2 & 1) != 0 || UNLOCK_LEVELS)
+		if ((PlayerPrefs.GetInt("LEVELPACK_FLAGS_" + pack.fileName, 0) & 1) != 0 || UNLOCK_LEVELS)
 		{
 			pack.flags |= 1;
 		}
@@ -625,8 +624,7 @@ public class GameData
 
 	public static void setInAppPurchased(string id)
 	{
-		StoreKitProduct inAppPurchaseProduct = getInAppPurchaseProduct(id);
-		if (inAppPurchaseProduct != null)
+		if (getInAppPurchaseProduct(id) != null)
 		{
 			addTokens(getTokenValue(id));
 		}

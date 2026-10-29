@@ -304,8 +304,7 @@ public class Vehicle : MonoBehaviour
 				}
 				if (!carts[num4].hasContact && !disableDefaultMagnet && num4 < cartCount - 2 && !((float)num4 >= (float)cartCount * 0.5f - (float)cartsInAir * 0.6f))
 				{
-					float num7 = Vector3.Dot(carts[num4].tr.up, carts[num4 + 1].tr.right);
-					if (!(num7 <= -0.2f))
+					if (!(Vector3.Dot(carts[num4].tr.up, carts[num4 + 1].tr.right) <= -0.2f))
 					{
 						carts[num4].applyDefaultMagnet();
 					}

@@ -588,14 +588,12 @@ public class GameManager : MonoBehaviour
 
 	public virtual bool isControllingEnabled()
 	{
-		bool flag = gameState == 2 && !vehicleFinished;
-		return flag;
+		return gameState == 2 && !vehicleFinished;
 	}
 
 	public virtual bool isPlaying()
 	{
-		bool flag = gameState == 2 && !vehicleFinished && Time.timeScale > 0f;
-		return flag;
+		return gameState == 2 && !vehicleFinished && Time.timeScale > 0f;
 	}
 
 	public virtual bool isInGameMode()

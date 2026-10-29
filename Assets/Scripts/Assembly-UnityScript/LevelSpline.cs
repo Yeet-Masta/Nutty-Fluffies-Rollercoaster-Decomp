@@ -485,8 +485,7 @@ public class LevelSpline : LevelEntity
 					{
 						num = num3;
 					}
-					float sectSize2 = getSectSize(num2, num);
-					if (!(sectSize2 < 180f) && !(sectSize >= 180f))
+					if (!(getSectSize(num2, num) < 180f) && !(sectSize >= 180f))
 					{
 						if (indices != null)
 						{

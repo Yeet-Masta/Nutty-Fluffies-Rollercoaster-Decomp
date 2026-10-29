@@ -1,5 +1,4 @@
 using Boo.Lang.Runtime;
-using UnityScript.Lang;
 
 public class Subtitle : VGUIText
 {

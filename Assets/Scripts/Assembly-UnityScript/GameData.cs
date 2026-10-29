@@ -484,36 +484,24 @@ public class GameData
 
 	private static void loadLevelPackValues(LevelPack pack)
 	{
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(pack.levelList);
-		while (enumerator.MoveNext())
+		foreach (LevelPack.LevelInfo levelInfo in pack.levelList)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is LevelPack.LevelInfo))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(LevelPack.LevelInfo));
-			}
-			LevelPack.LevelInfo levelInfo = (LevelPack.LevelInfo)obj;
 			int num = PlayerPrefs.GetInt("LEVEL_FLAGS_" + pack.fileName + "_" + levelInfo.fileName, 0);
-			UnityRuntimeServices.Update(enumerator, levelInfo);
 			if ((num & 1) != 0)
 			{
 				levelInfo.flags |= 1;
-				UnityRuntimeServices.Update(enumerator, levelInfo);
 			}
 			if ((num & LEVEL_FLAG_BUILT) != 0)
 			{
 				levelInfo.flags |= LEVEL_FLAG_BUILT;
-				UnityRuntimeServices.Update(enumerator, levelInfo);
 			}
 			if ((num & 8) != 0)
 			{
 				levelInfo.flags |= 8;
-				UnityRuntimeServices.Update(enumerator, levelInfo);
 			}
 			if (UNLOCK_LEVELS)
 			{
 				levelInfo.flags |= 1;
-				UnityRuntimeServices.Update(enumerator, levelInfo);
 			}
 		}
 		pack.flags = 4 & pack.flags;

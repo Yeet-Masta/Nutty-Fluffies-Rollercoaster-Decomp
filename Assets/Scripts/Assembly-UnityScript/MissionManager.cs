@@ -162,19 +162,10 @@ public class MissionManager
 			}
 			break;
 		}
-		IEnumerator enumerator2 = UnityRuntimeServices.GetEnumerator(list2);
-		while (enumerator2.MoveNext())
+		foreach (Mission mission2 in list2)
 		{
-			object obj2 = enumerator2.Current;
-			if (!(obj2 is Mission))
-			{
-				obj2 = RuntimeServices.Coerce(obj2, typeof(Mission));
-			}
-			Mission mission2 = (Mission)obj2;
 			missionList.Remove(mission2);
-			UnityRuntimeServices.Update(enumerator2, mission2);
 			missionList.Add(mission2);
-			UnityRuntimeServices.Update(enumerator2, mission2);
 		}
 		return list;
 	}

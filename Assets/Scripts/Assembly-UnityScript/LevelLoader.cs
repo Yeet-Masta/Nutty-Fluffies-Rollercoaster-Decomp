@@ -64,22 +64,13 @@ public class LevelLoader
 					levelData.usedObjectPacks.Add(objectPackData);
 				}
 			}
-			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(levelData.theme.settings.allowedObjectPacks);
-			while (enumerator.MoveNext())
+			foreach (string text in levelData.theme.settings.allowedObjectPacks)
 			{
-				object obj = enumerator.Current;
-				if (!(obj is string))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(string));
-				}
-				string text = (string)obj;
 				if (RuntimeServices.EqualityOperator(objects.getPackForName(text), null))
 				{
 					ObjectListLoader.getInstance().loadObjectList(objects, text);
-					UnityRuntimeServices.Update(enumerator, text);
 				}
 				objectPackData = objects.getPackForName(text);
-				UnityRuntimeServices.Update(enumerator, text);
 				if (!levelData.usedObjectPacks.Contains(objectPackData))
 				{
 					levelData.usedObjectPacks.Add(objectPackData);
@@ -282,20 +273,12 @@ public class LevelLoader
 				obj = RuntimeServices.Coerce(obj, typeof(LevelLayerData));
 			}
 			LevelLayerData levelLayerData = (LevelLayerData)obj;
-			IEnumerator enumerator2 = UnityRuntimeServices.GetEnumerator(levelLayerData.objectData);
 			UnityRuntimeServices.Update(enumerator, levelLayerData);
-			while (enumerator2.MoveNext())
+			foreach (LevelEntityData levelEntityData in levelLayerData.objectData)
 			{
-				object obj2 = enumerator2.Current;
-				if (!(obj2 is LevelEntityData))
-				{
-					obj2 = RuntimeServices.Coerce(obj2, typeof(LevelEntityData));
-				}
-				LevelEntityData levelEntityData = (LevelEntityData)obj2;
 				if (levelEntityData.referenceId > num)
 				{
 					num = levelEntityData.referenceId;
-					UnityRuntimeServices.Update(enumerator2, levelEntityData);
 				}
 			}
 		}
@@ -309,23 +292,14 @@ public class LevelLoader
 				obj3 = RuntimeServices.Coerce(obj3, typeof(LevelLayerData));
 			}
 			LevelLayerData levelLayerData2 = (LevelLayerData)obj3;
-			IEnumerator enumerator4 = UnityRuntimeServices.GetEnumerator(levelLayerData2.objectData);
 			UnityRuntimeServices.Update(enumerator3, levelLayerData2);
-			while (enumerator4.MoveNext())
+			foreach (LevelEntityData levelEntityData2 in levelLayerData2.objectData)
 			{
-				object obj4 = enumerator4.Current;
-				if (!(obj4 is LevelEntityData))
-				{
-					obj4 = RuntimeServices.Coerce(obj4, typeof(LevelEntityData));
-				}
-				LevelEntityData levelEntityData2 = (LevelEntityData)obj4;
 				if (list.Contains(levelEntityData2.referenceId))
 				{
 					num = (levelEntityData2.referenceId = num + 1);
-					UnityRuntimeServices.Update(enumerator4, levelEntityData2);
 				}
 				list.Add(levelEntityData2.referenceId);
-				UnityRuntimeServices.Update(enumerator4, levelEntityData2);
 			}
 		}
 	}

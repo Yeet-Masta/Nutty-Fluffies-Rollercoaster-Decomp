@@ -1,7 +1,4 @@
-using System.Collections;
-using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 public class StateMachine : MonoBehaviour
 {
@@ -15,17 +12,9 @@ public class StateMachine : MonoBehaviour
 
 	public virtual void Awake()
 	{
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(this.transform);
-		while (enumerator.MoveNext())
+		foreach (Transform transform in this.transform)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is Transform))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(Transform));
-			}
-			Transform transform = (Transform)obj;
 			transform.gameObject.SetActiveRecursively(false);
-			UnityRuntimeServices.Update(enumerator, transform);
 		}
 		if (automaticallyAddChildStates)
 		{

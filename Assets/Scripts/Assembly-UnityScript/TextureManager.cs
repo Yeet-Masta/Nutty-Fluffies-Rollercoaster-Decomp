@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 [Serializable]
 public class TextureManager
@@ -110,24 +108,15 @@ public class TextureManager
 
 	public virtual void purge()
 	{
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(textureCacheList.Values);
-		while (enumerator.MoveNext())
+		foreach (Texture2D texture2D in textureCacheList.Values)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is Texture2D))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(Texture2D));
-			}
-			Texture2D texture2D = (Texture2D)obj;
 			if (texture2D != errorTexture)
 			{
 				if (GameData.LOG)
 				{
 					Debug.Log("texture : " + texture2D.name);
-					UnityRuntimeServices.Update(enumerator, texture2D);
 				}
 				UnityEngine.Object.DestroyImmediate(texture2D);
-				UnityRuntimeServices.Update(enumerator, texture2D);
 			}
 		}
 		textureCacheList.Clear();

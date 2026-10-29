@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Boo.Lang.Runtime;
-using UnityScript.Lang;
 
 [Serializable]
 public class ObjectPackData
@@ -37,15 +34,8 @@ public class ObjectPackData
 		else
 		{
 			int num = 0;
-			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(objectList);
-			while (enumerator.MoveNext())
+			foreach (ObjectData objectData in objectList)
 			{
-				object obj = enumerator.Current;
-				if (!(obj is ObjectData))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(ObjectData));
-				}
-				ObjectData objectData = (ObjectData)obj;
 				if (objectData.matchesSceneryType(sceneryMode))
 				{
 					num++;

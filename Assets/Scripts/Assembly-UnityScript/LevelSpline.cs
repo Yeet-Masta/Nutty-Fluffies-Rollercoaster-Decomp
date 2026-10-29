@@ -47,12 +47,9 @@ public class LevelSpline : LevelEntity
 		if (!spline.testSelfIntersection())
 		{
 			list = new List<Vector3>();
-			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(splinePoints);
-			while (enumerator.MoveNext())
+			foreach (Vector2 vector in splinePoints)
 			{
-				Vector2 vector = (Vector2)enumerator.Current;
 				list.Add(vector);
-				UnityRuntimeServices.Update(enumerator, vector);
 			}
 		}
 		else

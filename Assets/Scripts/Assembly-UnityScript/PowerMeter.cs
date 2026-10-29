@@ -307,40 +307,24 @@ public class PowerMeter : MonoBehaviour
 		int num = 0;
 		int num2 = 0;
 		List<OnlineServiceManager.LeaderboardScore> list3 = new List<OnlineServiceManager.LeaderboardScore>();
-		IEnumerator enumerator2 = UnityRuntimeServices.GetEnumerator(list);
-		while (enumerator2.MoveNext())
+		foreach (OnlineServiceManager.LeaderboardScore leaderboardScore2 in list)
 		{
-			object obj2 = enumerator2.Current;
-			if (!(obj2 is OnlineServiceManager.LeaderboardScore))
-			{
-				obj2 = RuntimeServices.Coerce(obj2, typeof(OnlineServiceManager.LeaderboardScore));
-			}
-			OnlineServiceManager.LeaderboardScore leaderboardScore2 = (OnlineServiceManager.LeaderboardScore)obj2;
 			if (showResultEntry(leaderboardScore2.name, leaderboardScore2.score))
 			{
 				num++;
 				list3.Add(leaderboardScore2);
-				UnityRuntimeServices.Update(enumerator2, leaderboardScore2);
 			}
 			if (num >= 2)
 			{
 				break;
 			}
 		}
-		IEnumerator enumerator3 = UnityRuntimeServices.GetEnumerator(list2);
-		while (enumerator3.MoveNext())
+		foreach (OnlineServiceManager.LeaderboardScore leaderboardScore3 in list2)
 		{
-			object obj3 = enumerator3.Current;
-			if (!(obj3 is OnlineServiceManager.LeaderboardScore))
-			{
-				obj3 = RuntimeServices.Coerce(obj3, typeof(OnlineServiceManager.LeaderboardScore));
-			}
-			OnlineServiceManager.LeaderboardScore leaderboardScore3 = (OnlineServiceManager.LeaderboardScore)obj3;
 			if (showResultEntry(leaderboardScore3.name, leaderboardScore3.score))
 			{
 				num2++;
 				list3.Add(leaderboardScore3);
-				UnityRuntimeServices.Update(enumerator3, leaderboardScore3);
 			}
 			if (num + num2 >= 3)
 			{
@@ -349,22 +333,14 @@ public class PowerMeter : MonoBehaviour
 		}
 		if (num + num2 < 3)
 		{
-			IEnumerator enumerator4 = UnityRuntimeServices.GetEnumerator(list);
-			while (enumerator4.MoveNext())
+			foreach (OnlineServiceManager.LeaderboardScore leaderboardScore4 in list)
 			{
-				object obj4 = enumerator4.Current;
-				if (!(obj4 is OnlineServiceManager.LeaderboardScore))
-				{
-					obj4 = RuntimeServices.Coerce(obj4, typeof(OnlineServiceManager.LeaderboardScore));
-				}
-				OnlineServiceManager.LeaderboardScore leaderboardScore4 = (OnlineServiceManager.LeaderboardScore)obj4;
 				if (!list3.Contains(leaderboardScore4))
 				{
 					if (showResultEntry(leaderboardScore4.name, leaderboardScore4.score))
 					{
 						num++;
 						list3.Add(leaderboardScore4);
-						UnityRuntimeServices.Update(enumerator4, leaderboardScore4);
 					}
 					if (num >= 3)
 					{

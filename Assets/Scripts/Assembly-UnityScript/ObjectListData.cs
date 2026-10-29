@@ -50,17 +50,9 @@ public class ObjectListData
 	{
 		int num = 0;
 		objIDtoPackCache.Clear();
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(packList);
-		while (enumerator.MoveNext())
+		foreach (ObjectPackData objectPackData in packList)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is ObjectPackData))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(ObjectPackData));
-			}
-			ObjectPackData objectPackData = (ObjectPackData)obj;
 			ObjectData[] objects = objectPackData.getObjects();
-			UnityRuntimeServices.Update(enumerator, objectPackData);
 			int i = 0;
 			ObjectData[] array = objects;
 			for (int length = array.Length; i < length; i++)
@@ -147,17 +139,9 @@ public class ObjectListData
 		else
 		{
 			int num = 0;
-			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(packList);
-			while (enumerator.MoveNext())
+			foreach (ObjectPackData objectPackData in packList)
 			{
-				object obj = enumerator.Current;
-				if (!(obj is ObjectPackData))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(ObjectPackData));
-				}
-				ObjectPackData objectPackData = (ObjectPackData)obj;
 				num += objectPackData.getNumObjects(sceneryMode);
-				UnityRuntimeServices.Update(enumerator, objectPackData);
 			}
 			result = num;
 		}
@@ -194,17 +178,9 @@ public class ObjectListData
 	{
 		string[] array = new string[packList.Count];
 		int num = 0;
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(packList);
-		while (enumerator.MoveNext())
+		foreach (ObjectPackData objectPackData in packList)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is ObjectPackData))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(ObjectPackData));
-			}
-			ObjectPackData objectPackData = (ObjectPackData)obj;
 			array[num++] = objectPackData.name;
-			UnityRuntimeServices.Update(enumerator, objectPackData);
 		}
 		return array;
 	}
@@ -235,15 +211,8 @@ public class ObjectListData
 
 	public virtual void addPack(ObjectPackData cat)
 	{
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(packList);
-		while (enumerator.MoveNext())
+		foreach (ObjectPackData objectPackData in packList)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is ObjectPackData))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(ObjectPackData));
-			}
-			ObjectPackData objectPackData = (ObjectPackData)obj;
 			if (objectPackData.name == cat.name)
 			{
 				return;
@@ -260,17 +229,9 @@ public class ObjectListData
 	public virtual List<string> getSplineTextures()
 	{
 		List<string> list = new List<string>();
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(packList);
-		while (enumerator.MoveNext())
+		foreach (ObjectPackData objectPackData in packList)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is ObjectPackData))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(ObjectPackData));
-			}
-			ObjectPackData objectPackData = (ObjectPackData)obj;
 			list.AddRange(objectPackData.getSplineTextures());
-			UnityRuntimeServices.Update(enumerator, objectPackData);
 		}
 		return list;
 	}

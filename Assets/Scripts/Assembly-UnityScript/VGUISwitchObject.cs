@@ -1,7 +1,4 @@
-using System.Collections;
-using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 public class VGUISwitchObject : VGUIElement
 {
@@ -28,72 +25,40 @@ public class VGUISwitchObject : VGUIElement
 
 	public virtual void hideAll()
 	{
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(this.transform);
-		while (enumerator.MoveNext())
+		foreach (Transform transform in this.transform)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is Transform))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(Transform));
-			}
-			Transform transform = (Transform)obj;
 			transform.gameObject.SetActiveRecursively(false);
-			UnityRuntimeServices.Update(enumerator, transform);
 		}
 		activeObject = null;
 	}
 
 	public virtual void showAll()
 	{
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(this.transform);
-		while (enumerator.MoveNext())
+		foreach (Transform transform in this.transform)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is Transform))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(Transform));
-			}
-			Transform transform = (Transform)obj;
 			transform.gameObject.SetActiveRecursively(true);
-			UnityRuntimeServices.Update(enumerator, transform);
 		}
 	}
 
 	public virtual void switchTo(GameObject to)
 	{
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(this.transform);
-		while (enumerator.MoveNext())
+		foreach (Transform transform in this.transform)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is Transform))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(Transform));
-			}
-			Transform transform = (Transform)obj;
 			transform.gameObject.SetActiveRecursively(transform.gameObject == to);
-			UnityRuntimeServices.Update(enumerator, transform);
 		}
 		activeObject = to;
 	}
 
 	public virtual void switchToTopLevelOnly(GameObject to)
 	{
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(this.transform);
-		while (enumerator.MoveNext())
+		foreach (Transform transform in this.transform)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is Transform))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(Transform));
-			}
-			Transform transform = (Transform)obj;
 			if (transform.gameObject == to)
 			{
 				to.active = true;
 				continue;
 			}
 			transform.gameObject.SetActiveRecursively(false);
-			UnityRuntimeServices.Update(enumerator, transform);
 		}
 		activeObject = to;
 	}
@@ -102,21 +67,12 @@ public class VGUISwitchObject : VGUIElement
 	{
 		int num = 0;
 		activeObject = null;
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(this.transform);
-		while (enumerator.MoveNext())
+		foreach (Transform transform in this.transform)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is Transform))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(Transform));
-			}
-			Transform transform = (Transform)obj;
 			transform.gameObject.SetActiveRecursively(num == index);
-			UnityRuntimeServices.Update(enumerator, transform);
 			if (num == index)
 			{
 				activeObject = transform.gameObject;
-				UnityRuntimeServices.Update(enumerator, transform);
 			}
 			num++;
 		}
@@ -147,28 +103,18 @@ public class VGUISwitchObject : VGUIElement
 		bool flag = false;
 		Transform transform = null;
 		Transform transform2 = null;
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(this.transform);
-		while (enumerator.MoveNext())
+		foreach (Transform transform3 in this.transform)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is Transform))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(Transform));
-			}
-			Transform transform3 = (Transform)obj;
 			if (transform2 == null)
 			{
 				transform2 = transform3;
-				UnityRuntimeServices.Update(enumerator, transform3);
 			}
 			if (transform != null && transform.gameObject == activeObject)
 			{
 				flag = true;
 				switchTo(transform3.gameObject);
-				UnityRuntimeServices.Update(enumerator, transform3);
 			}
 			transform = transform3;
-			UnityRuntimeServices.Update(enumerator, transform3);
 		}
 		if (!flag)
 		{
@@ -181,24 +127,15 @@ public class VGUISwitchObject : VGUIElement
 		bool flag = false;
 		Transform transform = null;
 		Transform transform2 = null;
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(this.transform);
-		while (enumerator.MoveNext())
+		foreach (Transform transform3 in this.transform)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is Transform))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(Transform));
-			}
-			Transform transform3 = (Transform)obj;
 			transform2 = transform3;
-			UnityRuntimeServices.Update(enumerator, transform3);
 			if (transform != null && transform3.gameObject == activeObject)
 			{
 				flag = true;
 				switchTo(transform.gameObject);
 			}
 			transform = transform3;
-			UnityRuntimeServices.Update(enumerator, transform3);
 		}
 		if (!flag)
 		{

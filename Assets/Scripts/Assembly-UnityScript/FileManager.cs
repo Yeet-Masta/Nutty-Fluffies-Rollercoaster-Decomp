@@ -34,46 +34,21 @@ public class FileManager
 		addPacks("levelpacks", levelPackPaths);
 		addPacks("objectpacks", objectPackPaths);
 		addPacks("themepacks", themePackPaths);
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(levelPackPaths);
-		while (enumerator.MoveNext())
+		foreach (string text in levelPackPaths)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is string))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(string));
-			}
-			string text = (string)obj;
 			levelPackNames.Add(getFileName(text));
-			UnityRuntimeServices.Update(enumerator, text);
 		}
-		IEnumerator enumerator2 = UnityRuntimeServices.GetEnumerator(objectPackPaths);
-		while (enumerator2.MoveNext())
+		foreach (string text2 in objectPackPaths)
 		{
-			object obj2 = enumerator2.Current;
-			if (!(obj2 is string))
-			{
-				obj2 = RuntimeServices.Coerce(obj2, typeof(string));
-			}
-			string text2 = (string)obj2;
 			if (GameData.LOG)
 			{
 				Debug.Log("Object pack found: " + getFileName(text2));
-				UnityRuntimeServices.Update(enumerator2, text2);
 			}
 			objectPackNames.Add(getFileName(text2));
-			UnityRuntimeServices.Update(enumerator2, text2);
 		}
-		IEnumerator enumerator3 = UnityRuntimeServices.GetEnumerator(themePackPaths);
-		while (enumerator3.MoveNext())
+		foreach (string text3 in themePackPaths)
 		{
-			object obj3 = enumerator3.Current;
-			if (!(obj3 is string))
-			{
-				obj3 = RuntimeServices.Coerce(obj3, typeof(string));
-			}
-			string text3 = (string)obj3;
 			themePackNames.Add(getFileName(text3));
-			UnityRuntimeServices.Update(enumerator3, text3);
 		}
 	}
 

@@ -1,6 +1,5 @@
 using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 public class TrainPreview : MonoBehaviour
 {

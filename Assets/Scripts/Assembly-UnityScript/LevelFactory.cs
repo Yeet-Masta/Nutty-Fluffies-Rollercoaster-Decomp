@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 [Serializable]
 public class LevelFactory
@@ -40,45 +38,25 @@ public class LevelFactory
 		Dictionary<int, bool> dictionary = new Dictionary<int, bool>();
 		if (!RuntimeServices.EqualityOperator(data.theme, null))
 		{
-			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(data.theme.layerList);
-			while (enumerator.MoveNext())
+			foreach (LevelLayerData levelLayerData in data.theme.layerList)
 			{
-				object obj = enumerator.Current;
-				if (!(obj is LevelLayerData))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(LevelLayerData));
-				}
-				LevelLayerData levelLayerData = (LevelLayerData)obj;
 				LevelObjectFactory.USE_ALPHA_SHADER = true;
 				LevelLayer levelLayer = createLayer(level.gameObject, levelLayerData);
-				UnityRuntimeServices.Update(enumerator, levelLayerData);
 				createLayerObjects(levelLayer, objects, levelLayerData);
-				UnityRuntimeServices.Update(enumerator, levelLayerData);
 				if ((bool)levelLayer)
 				{
 					dictionary[levelLayerData.layer] = true;
-					UnityRuntimeServices.Update(enumerator, levelLayerData);
 				}
 			}
 			LevelObjectFactory.USE_ALPHA_SHADER = true;
 		}
-		IEnumerator enumerator2 = UnityRuntimeServices.GetEnumerator(data.layerData);
-		while (enumerator2.MoveNext())
+		foreach (LevelLayerData levelLayerData2 in data.layerData)
 		{
-			object obj2 = enumerator2.Current;
-			if (!(obj2 is LevelLayerData))
-			{
-				obj2 = RuntimeServices.Coerce(obj2, typeof(LevelLayerData));
-			}
-			LevelLayerData levelLayerData2 = (LevelLayerData)obj2;
 			if (dictionary.ContainsKey(levelLayerData2.layer))
 			{
 				levelLayerData2.themeInfo = null;
-				UnityRuntimeServices.Update(enumerator2, levelLayerData2);
 				LevelLayer layer = createLayer(level.gameObject, levelLayerData2);
-				UnityRuntimeServices.Update(enumerator2, levelLayerData2);
 				createLayerObjects(layer, objects, levelLayerData2);
-				UnityRuntimeServices.Update(enumerator2, levelLayerData2);
 			}
 		}
 		applyLayerZs(level);

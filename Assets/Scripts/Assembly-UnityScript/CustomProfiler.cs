@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 [Serializable]
 public class CustomProfiler
@@ -48,19 +46,11 @@ public class CustomProfiler
 		{
 			Debug.Log("=== PROFILED TIME ===");
 		}
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(totalTimeDict.Keys);
-		while (enumerator.MoveNext())
+		foreach (string text in totalTimeDict.Keys)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is string))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(string));
-			}
-			string text = (string)obj;
 			if (GameData.LOG)
 			{
 				Debug.Log(" > '" + text + "': " + totalTimeDict[text]);
-				UnityRuntimeServices.Update(enumerator, text);
 			}
 		}
 		if (GameData.LOG)

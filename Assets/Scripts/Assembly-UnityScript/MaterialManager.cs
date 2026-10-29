@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 [Serializable]
 public class MaterialManager
@@ -32,17 +30,9 @@ public class MaterialManager
 
 	public virtual void purge()
 	{
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(materialList.Values);
-		while (enumerator.MoveNext())
+		foreach (Material material in materialList.Values)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is Material))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(Material));
-			}
-			Material material = (Material)obj;
 			UnityEngine.Object.DestroyImmediate(material);
-			UnityRuntimeServices.Update(enumerator, material);
 		}
 		materialList.Clear();
 	}

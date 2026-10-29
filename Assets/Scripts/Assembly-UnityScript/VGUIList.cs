@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 public class VGUIList : VGUIElement
 {
@@ -34,17 +31,9 @@ public class VGUIList : VGUIElement
 
 	public virtual void clearList()
 	{
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(entryRefs);
-		while (enumerator.MoveNext())
+		foreach (GameObject gameObject in entryRefs)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is GameObject))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(GameObject));
-			}
-			GameObject gameObject = (GameObject)obj;
 			UnityEngine.Object.Destroy(gameObject.gameObject);
-			UnityRuntimeServices.Update(enumerator, gameObject);
 		}
 		entryRefs = new List<GameObject>();
 	}

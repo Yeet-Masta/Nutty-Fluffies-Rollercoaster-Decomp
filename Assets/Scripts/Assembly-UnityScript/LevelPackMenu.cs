@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 public class LevelPackMenu : BaseMenu
 {
@@ -26,17 +24,9 @@ public class LevelPackMenu : BaseMenu
 			{
 				UnityEngine.Object.Destroy(pages[i]);
 			}
-			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(extraPackButtons);
-			while (enumerator.MoveNext())
+			foreach (GameObject gameObject in extraPackButtons)
 			{
-				object obj = enumerator.Current;
-				if (!(obj is GameObject))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(GameObject));
-				}
-				GameObject gameObject = (GameObject)obj;
 				UnityEngine.Object.Destroy(gameObject);
-				UnityRuntimeServices.Update(enumerator, gameObject);
 			}
 			extraPackButtons = new List<GameObject>();
 		}

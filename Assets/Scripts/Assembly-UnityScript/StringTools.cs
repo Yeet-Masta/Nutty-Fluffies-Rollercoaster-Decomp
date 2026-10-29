@@ -1,5 +1,4 @@
 using System;
-using UnityScript.Lang;
 
 [Serializable]
 public class StringTools

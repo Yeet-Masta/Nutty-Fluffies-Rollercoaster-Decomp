@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 [Serializable]
 public class LevelObjectFactory
@@ -216,17 +214,9 @@ public class LevelObjectFactory
 					}
 					if (!RuntimeServices.EqualityOperator(data.childList, null))
 					{
-						IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(data.childList);
-						while (enumerator.MoveNext())
+						foreach (LevelEntityData levelEntityData in data.childList)
 						{
-							object obj = enumerator.Current;
-							if (!(obj is LevelEntityData))
-							{
-								obj = RuntimeServices.Coerce(obj, typeof(LevelEntityData));
-							}
-							LevelEntityData levelEntityData = (LevelEntityData)obj;
 							create(levelEntityData, levelObject.gameObject, objects);
-							UnityRuntimeServices.Update(enumerator, levelEntityData);
 						}
 					}
 					if (flag)
@@ -347,15 +337,8 @@ public class LevelObjectFactory
 			flag3 = CommonData.EDITOR_ACTIVE;
 		}
 		bool flag4 = flag3;
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(objectData.getParts());
-		while (enumerator.MoveNext())
+		foreach (ObjectPartData objectPartData in objectData.getParts())
 		{
-			object obj = enumerator.Current;
-			if (!(obj is ObjectPartData))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(ObjectPartData));
-			}
-			ObjectPartData objectPartData = (ObjectPartData)obj;
 			if (flag4)
 			{
 				if (!simulate)
@@ -363,19 +346,16 @@ public class LevelObjectFactory
 					if (objectPartData is ObjectPartBoxCollisionData)
 					{
 						createBoxCollision(@object ? @object.gameObject : null, objectPartData as ObjectPartBoxCollisionData, flag2);
-						UnityRuntimeServices.Update(enumerator, objectPartData);
 					}
 					else if (objectPartData is ObjectPartSphereCollisionData)
 					{
 						if (!USE_CAPSULE_COLLIDERS || flag2)
 						{
 							createSphereCollision(@object ? @object.gameObject : null, objectPartData as ObjectPartSphereCollisionData, flag2);
-							UnityRuntimeServices.Update(enumerator, objectPartData);
 						}
 						else
 						{
 							createCapsuleCollision(@object ? @object.gameObject : null, objectPartData as ObjectPartSphereCollisionData, flag2);
-							UnityRuntimeServices.Update(enumerator, objectPartData);
 						}
 					}
 				}
@@ -394,7 +374,6 @@ public class LevelObjectFactory
 				if (!simulate)
 				{
 					createTriggerPart(@object ? @object.gameObject : null, objectPartData as ObjectPartSphereTriggerData);
-					UnityRuntimeServices.Update(enumerator, objectPartData);
 				}
 				result = true;
 			}
@@ -403,7 +382,6 @@ public class LevelObjectFactory
 				if (!simulate)
 				{
 					createTriggerPart(@object ? @object.gameObject : null, objectPartData as ObjectPartBoxTriggerData);
-					UnityRuntimeServices.Update(enumerator, objectPartData);
 				}
 				result = true;
 			}
@@ -468,15 +446,8 @@ public class LevelObjectFactory
 		{
 			GameObject gameObject = null;
 			bool flag2 = !CommonData.EDITOR_ACTIVE;
-			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(objectData.getParts());
-			while (enumerator.MoveNext())
+			foreach (ObjectPartData objectPartData in objectData.getParts())
 			{
-				object obj = enumerator.Current;
-				if (!(obj is ObjectPartData))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(ObjectPartData));
-				}
-				ObjectPartData objectPartData = (ObjectPartData)obj;
 				if (objectPartData.type == 5 || objectPartData.type == 6)
 				{
 					flag2 = false;
@@ -959,12 +930,8 @@ public class LevelObjectFactory
 		float num = 1f / @object.transform.localScale.x;
 		float num2 = 1f / @object.transform.localScale.y;
 		Transform transform = @object.gameObject.transform;
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(transform);
-		while (enumerator.MoveNext())
+		foreach (Transform transform2 in transform)
 		{
-			object current = enumerator.Current;
-			Transform transform2 = current as Transform;
-			UnityRuntimeServices.Update(enumerator, current);
 			float x = num;
 			Vector3 localScale = transform2.localScale;
 			localScale.x = x;

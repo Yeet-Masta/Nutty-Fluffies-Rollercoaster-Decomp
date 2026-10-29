@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityScript.Lang;
 
 public class NotificationManager : MonoBehaviour
 {

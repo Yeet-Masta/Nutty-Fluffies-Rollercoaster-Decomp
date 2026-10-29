@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 [Serializable]
 public class CSpline2
@@ -37,17 +34,9 @@ public class CSpline2
 	public virtual CSpline2 getCopy()
 	{
 		CSpline2 cSpline = new CSpline2();
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(splineData);
-		while (enumerator.MoveNext())
+		foreach (CSplinePoint cSplinePoint in splineData)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is CSplinePoint))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(CSplinePoint));
-			}
-			CSplinePoint cSplinePoint = (CSplinePoint)obj;
 			cSpline.addPoint(new CSplinePoint(cSplinePoint));
-			UnityRuntimeServices.Update(enumerator, cSplinePoint);
 		}
 		return cSpline;
 	}

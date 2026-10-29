@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 public class LevelLayer : MonoBehaviour
 {
@@ -61,21 +58,11 @@ public class LevelLayer : MonoBehaviour
 
 	public virtual void createGatheredMesh()
 	{
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(gatherTable.Keys);
-		while (enumerator.MoveNext())
+		foreach (TextureIntKey textureIntKey in gatherTable.Keys)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is TextureIntKey))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(TextureIntKey));
-			}
-			TextureIntKey textureIntKey = (TextureIntKey)obj;
 			Texture texture = textureIntKey.texture;
-			UnityRuntimeServices.Update(enumerator, textureIntKey);
 			int val = textureIntKey.val;
-			UnityRuntimeServices.Update(enumerator, textureIntKey);
 			MeshGatherEntry meshGatherEntry = gatherTable[textureIntKey];
-			UnityRuntimeServices.Update(enumerator, textureIntKey);
 			for (int i = 0; i < meshGatherEntry.pts.Count; i++)
 			{
 				for (int j = 0; j < meshGatherEntry.pts.Count; j++)
@@ -101,15 +88,8 @@ public class LevelLayer : MonoBehaviour
 			Vector2[] array2 = new Vector2[meshGatherEntry.uvs.Count * 4];
 			int[] array3 = new int[meshGatherEntry.inds.Count * 6];
 			int num = 0;
-			IEnumerator enumerator2 = UnityRuntimeServices.GetEnumerator(meshGatherEntry.pts);
-			while (enumerator2.MoveNext())
+			foreach (Vector3[] array4 in meshGatherEntry.pts)
 			{
-				object obj2 = enumerator2.Current;
-				if (!(obj2 is Vector3[]))
-				{
-					obj2 = RuntimeServices.Coerce(obj2, typeof(Vector3[]));
-				}
-				Vector3[] array4 = (Vector3[])obj2;
 				int k = 0;
 				Vector3[] array5 = array4;
 				for (int length = array5.Length; k < length; k++)
@@ -118,15 +98,8 @@ public class LevelLayer : MonoBehaviour
 				}
 			}
 			num = 0;
-			IEnumerator enumerator3 = UnityRuntimeServices.GetEnumerator(meshGatherEntry.uvs);
-			while (enumerator3.MoveNext())
+			foreach (Vector2[] array6 in meshGatherEntry.uvs)
 			{
-				object obj3 = enumerator3.Current;
-				if (!(obj3 is Vector2[]))
-				{
-					obj3 = RuntimeServices.Coerce(obj3, typeof(Vector2[]));
-				}
-				Vector2[] array6 = (Vector2[])obj3;
 				int l = 0;
 				Vector2[] array7 = array6;
 				for (int length2 = array7.Length; l < length2; l++)
@@ -136,15 +109,8 @@ public class LevelLayer : MonoBehaviour
 			}
 			num = 0;
 			int num2 = 0;
-			IEnumerator enumerator4 = UnityRuntimeServices.GetEnumerator(meshGatherEntry.inds);
-			while (enumerator4.MoveNext())
+			foreach (int[] array8 in meshGatherEntry.inds)
 			{
-				object obj4 = enumerator4.Current;
-				if (!(obj4 is int[]))
-				{
-					obj4 = RuntimeServices.Coerce(obj4, typeof(int[]));
-				}
-				int[] array8 = (int[])obj4;
 				int m = 0;
 				int[] array9 = array8;
 				for (int length3 = array9.Length; m < length3; m++)

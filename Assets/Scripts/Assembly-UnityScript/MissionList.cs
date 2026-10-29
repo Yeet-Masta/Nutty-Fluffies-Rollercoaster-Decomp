@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 public class MissionList : VGUIList
 {
@@ -142,21 +140,12 @@ public class MissionList : VGUIList
 		}
 		List<Mission> missions = RollerCoasterMissions.getInstance().getMissions(GameData.MAX_ACTIVE_MISSIONS, false);
 		int num = 0;
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(missions);
-		while (enumerator.MoveNext())
+		foreach (Mission mission in missions)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is Mission))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(Mission));
-			}
-			Mission mission = (Mission)obj;
 			if (mission.testFlag(1))
 			{
 				num += mission.score;
-				UnityRuntimeServices.Update(enumerator, mission);
 				mission.flags |= 2;
-				UnityRuntimeServices.Update(enumerator, mission);
 			}
 		}
 		if (num > 0)

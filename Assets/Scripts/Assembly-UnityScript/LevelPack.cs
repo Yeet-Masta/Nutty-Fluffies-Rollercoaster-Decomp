@@ -196,15 +196,8 @@ public class LevelPack
 		else
 		{
 			float num = 0f;
-			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(levelList);
-			while (enumerator.MoveNext())
+			foreach (LevelInfo levelInfo in levelList)
 			{
-				object obj = enumerator.Current;
-				if (!(obj is LevelInfo))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(LevelInfo));
-				}
-				LevelInfo levelInfo = (LevelInfo)obj;
 				if (levelInfo.testFlag(8))
 				{
 					num++;

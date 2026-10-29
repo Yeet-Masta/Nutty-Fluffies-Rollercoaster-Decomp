@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityScript.Lang;
 
 public class TouchScreenController : Controller
 {

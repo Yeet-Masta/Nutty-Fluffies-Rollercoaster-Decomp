@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityScript.Lang;
 
 public class VGUIImagesTK2D : VGUIImage
 {

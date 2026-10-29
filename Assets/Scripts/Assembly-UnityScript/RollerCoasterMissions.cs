@@ -103,20 +103,12 @@ public class RollerCoasterMissions : MissionManager
 		bool flag = false;
 		completeCounter = 0;
 		List<Mission> missions = getInstance().getMissions(count, true);
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(missions);
-		while (enumerator.MoveNext())
+		foreach (Mission mission in missions)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is Mission))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(Mission));
-			}
-			Mission mission = (Mission)obj;
 			if (checkMission(mission))
 			{
 				flag = true;
 				setMissionCompleted(mission);
-				UnityRuntimeServices.Update(enumerator, mission);
 			}
 		}
 		bool flag2 = checkHighPriorityMissions();
@@ -513,19 +505,11 @@ public class RollerCoasterMissions : MissionManager
 				list2.Add(missions[i]);
 			}
 		}
-		IEnumerator enumerator2 = UnityRuntimeServices.GetEnumerator(list);
-		while (enumerator2.MoveNext())
+		foreach (Mission mission2 in list)
 		{
-			object obj2 = enumerator2.Current;
-			if (!(obj2 is Mission))
-			{
-				obj2 = RuntimeServices.Coerce(obj2, typeof(Mission));
-			}
-			Mission mission2 = (Mission)obj2;
 			if (list2.Count < count)
 			{
 				list2.Add(mission2);
-				UnityRuntimeServices.Update(enumerator2, mission2);
 			}
 		}
 		return list2;

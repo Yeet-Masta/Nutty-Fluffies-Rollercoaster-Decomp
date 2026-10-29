@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 [Serializable]
 public class ThemeLoader
@@ -32,38 +29,22 @@ public class ThemeLoader
 		themeData.settings.name = name;
 		themeData.settings.musicNames.Clear();
 		JSONObject field = json.GetField("music");
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(field.list);
-		while (enumerator.MoveNext())
+		foreach (JSONObject json2 in field.list)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is JSONObject))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(JSONObject));
-			}
-			JSONObject json2 = (JSONObject)obj;
 			if (json2.str != null && json2.str.Length > 0 && !themeData.settings.musicNames.Contains(json2.str))
 			{
 				themeData.settings.musicNames.Add(json2.str);
-				UnityRuntimeServices.Update(enumerator, json2);
 			}
 		}
 		themeData.settings.allowedObjectPacks.Clear();
 		JSONObject field2 = json.GetField("objectpacks");
 		if (field2 != null)
 		{
-			IEnumerator enumerator2 = UnityRuntimeServices.GetEnumerator(field2.list);
-			while (enumerator2.MoveNext())
+			foreach (JSONObject json3 in field2.list)
 			{
-				object obj2 = enumerator2.Current;
-				if (!(obj2 is JSONObject))
-				{
-					obj2 = RuntimeServices.Coerce(obj2, typeof(JSONObject));
-				}
-				JSONObject json3 = (JSONObject)obj2;
 				if (json3.str != null && json3.str.Length > 0 && !themeData.settings.allowedObjectPacks.Contains(json3.str))
 				{
 					themeData.settings.allowedObjectPacks.Add(json3.str);
-					UnityRuntimeServices.Update(enumerator2, json3);
 				}
 			}
 		}

@@ -46,17 +46,9 @@ public class MissionManager
 			JSONObject root = new JSONObject(json);
 			JSONObject field = root.GetField("missions");
 			float scoreFactor = PlayerPrefs.GetFloat("DP_MISSION_SCORE_FACTOR", 1f);
-			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(field.list);
-			while (enumerator.MoveNext())
+			foreach (JSONObject json2 in field.list)
 			{
-				object obj = enumerator.Current;
-				if (!(obj is JSONObject))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(JSONObject));
-				}
-				JSONObject json2 = (JSONObject)obj;
 				string str = json2.GetFieldSafe("description", new JSONObject(string.Empty)).str;
-				UnityRuntimeServices.Update(enumerator, json2);
 				int savedFlags = PlayerPrefs.GetInt("MISSION_" + str + "_FLAGS", 0);
 				if ((savedFlags & 2) == 0)
 				{
@@ -64,30 +56,19 @@ public class MissionManager
 					mission.id = str;
 					mission.flags = savedFlags;
 					mission.description = LocalizationManager.localize(json2.GetFieldSafe("description", new JSONObject(string.Empty)).str);
-					UnityRuntimeServices.Update(enumerator, json2);
 					mission.activeRounds = (int)json2.GetFieldSafe("activeRounds", new JSONObject(0f)).n;
-					UnityRuntimeServices.Update(enumerator, json2);
 					mission.time = (float)json2.GetFieldSafe("time", new JSONObject(0f)).n;
-					UnityRuntimeServices.Update(enumerator, json2);
 					mission.score = (int)(json2.GetFieldSafe("score", new JSONObject(0f)).n * (double)scoreFactor);
-					UnityRuntimeServices.Update(enumerator, json2);
 					mission.type = (int)json2.GetFieldSafe("type", new JSONObject(0f)).n;
-					UnityRuntimeServices.Update(enumerator, json2);
 					mission.value = (float)json2.GetFieldSafe("value", new JSONObject(0f)).n;
-					UnityRuntimeServices.Update(enumerator, json2);
 					mission.flags = (int)json2.GetFieldSafe("flags", new JSONObject(0f)).n;
-					UnityRuntimeServices.Update(enumerator, json2);
 					mission.featureUnlock = (int)json2.GetFieldSafe("featureUnlock", new JSONObject(0f)).n;
-					UnityRuntimeServices.Update(enumerator, json2);
 					mission.achievementKey = json2.GetFieldSafe("achievementKey", new JSONObject(string.Empty)).str;
-					UnityRuntimeServices.Update(enumerator, json2);
 					mission.originalScore = (int)json2.GetFieldSafe("score", new JSONObject(0f)).n;
-					UnityRuntimeServices.Update(enumerator, json2);
 					mission.flags |= savedFlags;
 					mission.attempts = PlayerPrefs.GetInt("MISSION_" + str + "_ATTEMPTS", 0);
 					list.Add(mission);
 					list2.Add(json2.GetFieldSafe("description", new JSONObject(string.Empty)).str);
-					UnityRuntimeServices.Update(enumerator, json2);
 				}
 			}
 			if (GameData.LOG)

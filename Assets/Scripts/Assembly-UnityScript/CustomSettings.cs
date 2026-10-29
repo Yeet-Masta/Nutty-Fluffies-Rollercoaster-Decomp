@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Boo.Lang.Runtime;
-using UnityScript.Lang;
 
 [Serializable]
 public class CustomSettings
@@ -32,19 +29,10 @@ public class CustomSettings
 		{
 			return;
 		}
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(fieldSafe.list);
-		while (enumerator.MoveNext())
+		foreach (JSONObject json in fieldSafe.list)
 		{
-			object obj = enumerator.Current;
-			if (!(obj is JSONObject))
-			{
-				obj = RuntimeServices.Coerce(obj, typeof(JSONObject));
-			}
-			JSONObject json = (JSONObject)obj;
 			string str = json.GetFieldSafe("key", new JSONObject(0f)).str;
-			UnityRuntimeServices.Update(enumerator, json);
 			string str2 = json.GetFieldSafe("value", new JSONObject(string.Empty)).str;
-			UnityRuntimeServices.Update(enumerator, json);
 			setValue(str, str2);
 		}
 	}

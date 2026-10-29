@@ -83,8 +83,8 @@ public class GeneralSoundEffects : MonoBehaviour
 		{
 			floatIndex = 0f;
 		}
-		int num = (int)Mathf.Floor(floatIndex * (float)clips.Length);
-		playSound(clips[num], vol);
+		int index = (int)Mathf.Floor(floatIndex * (float)clips.Length);
+		playSound(clips[index], vol);
 	}
 
 	public static void playSoundIfNotPlaying(AudioClip[] clips, float floatIndex, float vol)
@@ -97,10 +97,10 @@ public class GeneralSoundEffects : MonoBehaviour
 		{
 			floatIndex = 0f;
 		}
-		int num = (int)Mathf.Floor(floatIndex * (float)clips.Length);
-		if (!isPlaying(clips[num]))
+		int index = (int)Mathf.Floor(floatIndex * (float)clips.Length);
+		if (!isPlaying(clips[index]))
 		{
-			playSound(clips[num], vol);
+			playSound(clips[index], vol);
 		}
 	}
 
@@ -129,12 +129,12 @@ public class GeneralSoundEffects : MonoBehaviour
 
 	public static void loadAndPlayRandomSound(string[] clips)
 	{
-		int num = (int)(UnityEngine.Random.value * (float)clips.Length);
-		if (num >= clips.Length)
+		int index = (int)(UnityEngine.Random.value * (float)clips.Length);
+		if (index >= clips.Length)
 		{
-			num = clips.Length - 1;
+			index = clips.Length - 1;
 		}
-		loadAndPlaySound(clips[num]);
+		loadAndPlaySound(clips[index]);
 	}
 
 	public static void stopAllSounds(AudioClip[] clips)

@@ -5,43 +5,43 @@ public class StringTools
 {
 	public static bool stringContainsAny(string str, string[] arr)
 	{
-		int num = 0;
+		int index = 0;
 		int length = arr.Length;
-		while (num < length)
+		while (index < length)
 		{
-			if (str.IndexOf(arr[num]) != -1)
+			if (str.IndexOf(arr[index]) != -1)
 			{
 				return true;
 			}
-			num++;
+			index++;
 		}
 		return false;
 	}
 
 	public static UnityScript.Lang.Array getLines(string str, int lineLength)
 	{
-		UnityScript.Lang.Array array = new UnityScript.Lang.Array();
+		UnityScript.Lang.Array lines = new UnityScript.Lang.Array();
 		while (str.Length > lineLength)
 		{
 			bool flag = false;
-			for (int num = lineLength; num >= 0; num--)
+			for (int pos = lineLength; pos >= 0; pos--)
 			{
-				if (str.Substring(num, 1) == " ")
+				if (str.Substring(pos, 1) == " ")
 				{
-					array.Add(str.Substring(0, num));
-					str = str.Substring(num + 1);
+					lines.Add(str.Substring(0, pos));
+					str = str.Substring(pos + 1);
 					flag = true;
 					break;
 				}
 			}
 			if (!flag)
 			{
-				array.Add(str.Substring(0, lineLength));
+				lines.Add(str.Substring(0, lineLength));
 				str = str.Substring(lineLength + 1);
 			}
 		}
-		array.Add(str);
-		return array;
+		lines.Add(str);
+		return lines;
 	}
 
 	public static string wrapToLines(string str, int lineLength, int maxLines)

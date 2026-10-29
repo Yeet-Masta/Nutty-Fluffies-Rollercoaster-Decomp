@@ -37,18 +37,18 @@ public class DynamicPropertyLoader : MonoBehaviour
 		foreach (object key in j.keys)
 		{
 			string skey = key as string;
-			JSONObject obj = j.GetField(skey);
-			if (obj == null)
+			JSONObject property = j.GetField(skey);
+			if (property == null)
 			{
 				continue;
 			}
 			print("PROPERTY KEY: " + skey);
-			switch (obj.type)
+			switch (property.type)
 			{
 			case JSONObject.Type.STRING:
-				if (obj.str.Length != 0)
+				if (property.str.Length != 0)
 				{
-					PlayerPrefs.SetString(skey, obj.str);
+					PlayerPrefs.SetString(skey, property.str);
 				}
 				else
 				{
@@ -57,12 +57,12 @@ public class DynamicPropertyLoader : MonoBehaviour
 				}
 				break;
 			case JSONObject.Type.NUMBER:
-				if (isInteger(obj.n))
+				if (isInteger(property.n))
 				{
-					int vi = (int)obj.n;
+					int vi = (int)property.n;
 					if (vi != 0)
 					{
-						PlayerPrefs.SetInt(skey, (int)obj.n);
+						PlayerPrefs.SetInt(skey, (int)property.n);
 					}
 					else
 					{
@@ -73,10 +73,10 @@ public class DynamicPropertyLoader : MonoBehaviour
 				}
 				else
 				{
-					float vf = (float)obj.n;
+					float vf = (float)property.n;
 					if (vf != 0f)
 					{
-						PlayerPrefs.SetFloat(skey, (float)obj.n);
+						PlayerPrefs.SetFloat(skey, (float)property.n);
 					}
 					else
 					{
@@ -87,7 +87,7 @@ public class DynamicPropertyLoader : MonoBehaviour
 				}
 				break;
 			case JSONObject.Type.BOOL:
-				PlayerPrefs.SetInt(skey, obj.b ? 1 : 0);
+				PlayerPrefs.SetInt(skey, property.b ? 1 : 0);
 				break;
 			}
 		}
@@ -95,9 +95,9 @@ public class DynamicPropertyLoader : MonoBehaviour
 
 	private bool isInteger(double d)
 	{
-		int num = (int)d;
-		double num2 = num;
-		return d == num2;
+		int truncated = (int)d;
+		double truncatedValue = truncated;
+		return d == truncatedValue;
 	}
 
 	public virtual void setTimeoutHandler(WWW request)

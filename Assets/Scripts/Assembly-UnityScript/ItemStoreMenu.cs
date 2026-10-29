@@ -47,23 +47,23 @@ public class ItemStoreMenu : StoreBaseMenu
 	public override void activate()
 	{
 		int indexOfActiveTheme = GameData.getIndexOfActiveTheme();
-		string text = null;
+		string cartKey = null;
 		switch (indexOfActiveTheme)
 		{
 		case 1:
-			text = "DP_METAL_CART";
+			cartKey = "DP_METAL_CART";
 			break;
 		case 2:
-			text = "DP_LOOP_CART";
+			cartKey = "DP_LOOP_CART";
 			break;
 		case 3:
-			text = "DP_EXTREME_CART";
+			cartKey = "DP_EXTREME_CART";
 			break;
 		default:
-			text = "DP_WOOD_CART";
+			cartKey = "DP_WOOD_CART";
 			break;
 		}
-		items[5].itemKey = text;
+		items[5].itemKey = cartKey;
 		items[5].originalPrice = -1;
 		base.activate();
 		BaseMenuManager.getInstance().tokenAmount.setValueImmediately(GameData.getTokenAmount());
@@ -74,14 +74,14 @@ public class ItemStoreMenu : StoreBaseMenu
 		purchasedItems = 0;
 		trainPreview.prepare(GameData.TRAIN_DATA.specialCart);
 		trainPreview.setActiveCarts(cartNum, cartNum);
-		int num = 0;
+		int heartIndex = 0;
 		foreach (GameObject page in packContainer.pages)
 		{
 			Transform transform = page.transform.Find("BuyAnimalButton/Multiplier");
 			if (transform != null)
 			{
-				transform.gameObject.GetComponent<VGUITextTK2D>().setText(string.Empty + GameData.ANIMAL_HEART_VALUE[num] + "X");
-				num++;
+				transform.gameObject.GetComponent<VGUITextTK2D>().setText(string.Empty + GameData.ANIMAL_HEART_VALUE[heartIndex] + "X");
+				heartIndex++;
 			}
 		}
 		buyCartImage.activate(GameData.getIndexOfActiveTheme(), GameData.TRAIN_DATA.specialCart);
@@ -89,40 +89,40 @@ public class ItemStoreMenu : StoreBaseMenu
 		packContainer.setPageVisible(getItem("ITEM_ANIMAL_DOG").button.gameObject, GameData.isFeatureUnlocked(4), true);
 		packContainer.setPageVisible(getItem("ITEM_ANIMAL_PIG").button.gameObject, GameData.isFeatureUnlocked(8), true);
 		packContainer.setPageVisible(getItem("ITEM_ANIMAL_ELEPHANT").button.gameObject, GameData.isFeatureUnlocked(16), true);
-		packContainer.setPageVisible(getItem(text).button.gameObject, GameData.isFeatureUnlocked(GameData.FEATURE_BUY_CART), true);
-		int num2 = GameData.ANIMAL_NONE;
+		packContainer.setPageVisible(getItem(cartKey).button.gameObject, GameData.isFeatureUnlocked(GameData.FEATURE_BUY_CART), true);
+		int specialAnimal = GameData.ANIMAL_NONE;
 		if (GameData.isFeatureUnlocked(2) && PlayerPrefs.GetInt("HAD_CAT_IN_STORE", 0) == 0)
 		{
 			PlayerPrefs.SetInt("HAD_CAT_IN_STORE", 1);
-			num2 = 1;
+			specialAnimal = 1;
 		}
 		if (GameData.isFeatureUnlocked(4) && PlayerPrefs.GetInt("HAD_DOG_IN_STORE", 0) == 0)
 		{
 			PlayerPrefs.SetInt("HAD_DOG_IN_STORE", 1);
-			num2 = 2;
+			specialAnimal = 2;
 		}
 		if (GameData.isFeatureUnlocked(8) && PlayerPrefs.GetInt("HAD_PIG_IN_STORE", 0) == 0)
 		{
 			PlayerPrefs.SetInt("HAD_PIG_IN_STORE", 1);
-			num2 = 3;
+			specialAnimal = 3;
 		}
 		if (GameData.isFeatureUnlocked(16) && PlayerPrefs.GetInt("HAD_ELEPHANT_STORE", 0) == 0)
 		{
 			PlayerPrefs.SetInt("HAD_ELEPHANT_STORE", 1);
-			num2 = 4;
+			specialAnimal = 4;
 		}
 		for (int j = 0; j < GameData.TRAIN_DATA.cartList.Length; j++)
 		{
-			int num3 = GameData.TRAIN_DATA.cartList[j].animalIndex;
-			if (num2 != GameData.ANIMAL_NONE && j < GameData.TRAIN_DATA.cartList.Length - 1)
+			int cartAnimal = GameData.TRAIN_DATA.cartList[j].animalIndex;
+			if (specialAnimal != GameData.ANIMAL_NONE && j < GameData.TRAIN_DATA.cartList.Length - 1)
 			{
-				num3 = num2;
+				cartAnimal = specialAnimal;
 			}
-			if (num3 != GameData.ANIMAL_NONE)
+			if (cartAnimal != GameData.ANIMAL_NONE)
 			{
 				purchasedItems++;
-				addAnimalToCart(j, num3, false);
-				totalHeartsValue += GameData.ANIMAL_HEART_VALUE[num3];
+				addAnimalToCart(j, cartAnimal, false);
+				totalHeartsValue += GameData.ANIMAL_HEART_VALUE[cartAnimal];
 			}
 		}
 		totalPrice.setValueImmediately(0);
@@ -131,24 +131,24 @@ public class ItemStoreMenu : StoreBaseMenu
 		packContainer.invokeMethod = "updateItemDescription";
 		updateTrainDescription();
 		updateItemDescription();
-		int num4 = 0;
+		int startStep = 0;
 		int indexOfLastUnlockedButton = getIndexOfLastUnlockedButton();
 		switch (indexOfLastUnlockedButton)
 		{
 		case 1:
-			num4 = 0;
+			startStep = 0;
 			break;
 		case 2:
-			num4 = 1;
+			startStep = 1;
 			break;
 		case 3:
-			num4 = 1;
+			startStep = 1;
 			break;
 		default:
-			num4 = Mathf.Max(1, indexOfLastUnlockedButton - 2);
+			startStep = Mathf.Max(1, indexOfLastUnlockedButton - 2);
 			break;
 		}
-		packContainer.setCurrentStep(num4, false);
+		packContainer.setCurrentStep(startStep, false);
 		packContainer.immediatePosition();
 		if (RollerCoasterStatistics.getInstance().roundEarnedNewCart && GameManager.getInstance().restarts > 0)
 		{
@@ -196,15 +196,15 @@ public class ItemStoreMenu : StoreBaseMenu
 	private void updateItemDescription()
 	{
 		int currentStep = packContainer.getCurrentStep();
-		int num = 0;
+		int offset = 0;
 		for (int i = 0; i <= currentStep; i++)
 		{
 			if (!items[i].button.gameObject.active)
 			{
-				num++;
+				offset++;
 			}
 		}
-		updateItemDescription(currentStep + num);
+		updateItemDescription(currentStep + offset);
 		descriptionBouncer.bounce();
 	}
 
@@ -227,8 +227,8 @@ public class ItemStoreMenu : StoreBaseMenu
 		for (int i = 0; i < items.Length; i++)
 		{
 			MenuButton purchaseButton = items[i].button.purchaseButton;
-			bool flag = !GameData.canBuy(items[i].price) || purchasedItems >= cartNum;
-			purchaseButton.setDimmed(flag);
+			bool itemDimmed = !GameData.canBuy(items[i].price) || purchasedItems >= cartNum;
+			purchaseButton.setDimmed(itemDimmed);
 		}
 		if (storeButtonBlink != null)
 		{
@@ -242,11 +242,11 @@ public class ItemStoreMenu : StoreBaseMenu
 			}
 		}
 		MenuButton purchaseButton2 = items[5].button.purchaseButton;
-		bool flag2 = cartNum >= GameData.CART_LIMIT || !GameData.canBuy(items[5].price);
-		purchaseButton2.setLocked(flag2);
+		bool cartLocked = cartNum >= GameData.CART_LIMIT || !GameData.canBuy(items[5].price);
+		purchaseButton2.setLocked(cartLocked);
 		MenuButton purchaseButton3 = items[5].button.purchaseButton;
-		bool flag3 = cartNum >= GameData.CART_LIMIT || !GameData.canBuy(items[5].price);
-		purchaseButton3.setDimmed(flag3);
+		bool cartDimmed = cartNum >= GameData.CART_LIMIT || !GameData.canBuy(items[5].price);
+		purchaseButton3.setDimmed(cartDimmed);
 		GameObject cart = trainPreview.getCart(cartNum - 1);
 		if (paperEmitterCart != null)
 		{
@@ -260,21 +260,21 @@ public class ItemStoreMenu : StoreBaseMenu
 
 	private int getIndexOfLastUnlockedButton()
 	{
-		int num = 0;
-		int num2 = 0;
+		int index = 0;
+		int hidden = 0;
 		for (int i = 0; i < items.Length; i++)
 		{
 			if (!items[i].button.purchaseButton.isDimmed())
 			{
-				num = i;
+				index = i;
 			}
 			if (!items[i].button.gameObject.active)
 			{
-				num2++;
+				hidden++;
 			}
 		}
-		num -= num2;
-		return num + 1;
+		index -= hidden;
+		return index + 1;
 	}
 
 	private void addAnimalToCart(int cartIndex, int animal, bool payback)

@@ -71,21 +71,21 @@ public class TrainPreview : MonoBehaviour
 
 	public virtual void setActiveCarts(int activeCarts, int totalCarts)
 	{
-		float num = (float)(totalCarts - 1) * cartSpacing;
-		float num2 = originalScale;
-		if (!(num * originalScale <= maxWidth))
+		float trainWidth = (float)(totalCarts - 1) * cartSpacing;
+		float scale = originalScale;
+		if (!(trainWidth * originalScale <= maxWidth))
 		{
-			num2 = maxWidth / num;
+			scale = maxWidth / trainWidth;
 		}
-		float x = num2;
+		float x = scale;
 		Vector3 localScale = transform.localScale;
 		localScale.x = x;
 		transform.localScale = localScale;
-		float y = num2;
+		float y = scale;
 		Vector3 localScale2 = transform.localScale;
 		localScale2.y = y;
 		transform.localScale = localScale2;
-		float x2 = (0f - num) * 0.5f * transform.localScale.x;
+		float x2 = (0f - trainWidth) * 0.5f * transform.localScale.x;
 		Vector3 position = trainOverviewRoot.position;
 		position.x = x2;
 		trainOverviewRoot.position = position;

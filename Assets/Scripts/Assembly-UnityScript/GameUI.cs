@@ -45,9 +45,9 @@ public class GameUI : MonoBehaviour
 		resultScreen.activate(0f);
 		gameHud.deactivate();
 		finishBonusBadge.SetActiveRecursively(false);
-		foreach (GameObject item in specialIcon)
+		foreach (GameObject icon in specialIcon)
 		{
-			item.SetActiveRecursively(false);
+			icon.SetActiveRecursively(false);
 		}
 	}
 
@@ -66,9 +66,9 @@ public class GameUI : MonoBehaviour
 		fadeIn.reverse = false;
 		fadeIn.duration = 0.4f;
 		visibleScoreValue = 0;
-		foreach (GameObject item in specialIcon)
+		foreach (GameObject icon in specialIcon)
 		{
-			item.SetActiveRecursively(false);
+			icon.SetActiveRecursively(false);
 		}
 		finishBonusBadge.SetActiveRecursively(false);
 		activatePauseButton(false);
@@ -86,9 +86,9 @@ public class GameUI : MonoBehaviour
 		gameHud.deactivate();
 		crashScreen.deactivate();
 		finishBonusBadge.SetActiveRecursively(false);
-		foreach (GameObject item in specialIcon)
+		foreach (GameObject icon in specialIcon)
 		{
-			item.SetActiveRecursively(false);
+			icon.SetActiveRecursively(false);
 		}
 	}
 

@@ -157,8 +157,8 @@ public class CoinStoreMenu : StoreBaseMenu
 	public virtual void onPurchasePricesReceived()
 	{
 		StoreKitProduct storeKitProduct = null;
-		float num = 0f;
-		float num2 = 1E+11f;
+		float price = 0f;
+		float lowestRate = 1E+11f;
 		int i = 0;
 		IAPStoreItem[] array = iapItems;
 		for (int length = array.Length; i < length; i++)
@@ -173,13 +173,13 @@ public class CoinStoreMenu : StoreBaseMenu
 				parseIAPDescription(storeKitProduct.description, array[i].productID);
 				array[i].price = GameData.getTokenValue(array[i].productID);
 				array[i].originalPrice = array[i].price;
-				num = UnityBuiltins.parseFloat(storeKitProduct.price);
-				if (num != float.NaN)
+				price = UnityBuiltins.parseFloat(storeKitProduct.price);
+				if (price != float.NaN)
 				{
-					float num3 = (float)array[i].price / num;
-					if (!(num3 >= num2))
+					float rate = (float)array[i].price / price;
+					if (!(rate >= lowestRate))
 					{
-						num2 = num3;
+						lowestRate = rate;
 					}
 				}
 			}
@@ -198,19 +198,19 @@ public class CoinStoreMenu : StoreBaseMenu
 			{
 				array2[j].iapPriceText.setText(string.Empty + storeKitProduct.currencySymbol + " " + storeKitProduct.price);
 				array2[j].updatePriceText();
-				num = UnityBuiltins.parseFloat(storeKitProduct.price);
-				if (num != float.NaN)
+				price = UnityBuiltins.parseFloat(storeKitProduct.price);
+				if (price != float.NaN)
 				{
-					float num4 = (float)array2[j].price / num;
-					int num5 = (int)((num4 - num2) / num2 * 100f);
-					num5 = (int)(Mathf.Ceil((float)num5 / 10f) * 10f);
+					float itemRate = (float)array2[j].price / price;
+					int savePercent = (int)((itemRate - lowestRate) / lowestRate * 100f);
+					savePercent = (int)(Mathf.Ceil((float)savePercent / 10f) * 10f);
 					if (sale)
 					{
 						array2[j].button.setSavePercentage(0, 50);
 					}
 					else
 					{
-						array2[j].button.setSavePercentage(num5, 0);
+						array2[j].button.setSavePercentage(savePercent, 0);
 					}
 				}
 				foundProducts++;
@@ -224,17 +224,17 @@ public class CoinStoreMenu : StoreBaseMenu
 
 	private void parseIAPDescription(string text, string productId)
 	{
-		string[] array = null;
+		string[] words = null;
 		if (text != null)
 		{
-			array = text.Split(" "[0]);
+			words = text.Split(" "[0]);
 		}
-		if (array == null)
+		if (words == null)
 		{
 			return;
 		}
 		int i = 0;
-		string[] array2 = array;
+		string[] array2 = words;
 		for (int length = array2.Length; i < length; i++)
 		{
 			int result = 0;

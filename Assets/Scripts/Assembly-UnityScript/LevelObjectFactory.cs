@@ -174,8 +174,8 @@ public class LevelObjectFactory
 				}
 				else
 				{
-					bool flag = createObjectComponents(objectPackData, null, objectData, data, true);
-					if (flag)
+					bool canCreate = createObjectComponents(objectPackData, null, objectData, data, true);
+					if (canCreate)
 					{
 						levelObject = createObjectInstance(data, objects, objectData);
 						levelObject.objectId = data.objectId;
@@ -183,10 +183,10 @@ public class LevelObjectFactory
 						levelObject.transform.localScale = Vector3.one;
 						levelObject.flags = data.flags;
 					}
-					bool flag2 = false;
+					bool created = false;
 					if (objectData.getNumParts() != 0)
 					{
-						flag2 = createObjectComponents(objectPackData, levelObject, objectData, data, false);
+						created = createObjectComponents(objectPackData, levelObject, objectData, data, false);
 					}
 					if (data.childList != null)
 					{
@@ -195,11 +195,11 @@ public class LevelObjectFactory
 							create(levelEntityData, levelObject.gameObject, objects);
 						}
 					}
-					if (flag)
+					if (canCreate)
 					{
 						objectData.cloneRef = levelObject;
 					}
-					if (!flag2)
+					if (!created)
 					{
 						return null;
 					}
@@ -298,9 +298,9 @@ public class LevelObjectFactory
 	public virtual bool createObjectComponents(ObjectPackData pack, LevelObject @object, ObjectData objectData, LevelObjectData data, bool simulate)
 	{
 		bool result = false;
-		bool flag = (objectData.flags & ObjectData.FLAG_IS_OPTIMIZED) != 0;
-		bool flag2 = (data.flags & 0x20000) != 0;
-		float num = 0f;
+		bool optimized = (objectData.flags & ObjectData.FLAG_IS_OPTIMIZED) != 0;
+		bool dynamic = (data.flags & 0x20000) != 0;
+		float zAdd = 0f;
 		bool flag3 = (data.flags & 0x10000) != 0 || (data.flags & 0x800000) != 0 || CommonData.EDITOR_ACTIVE;
 		bool flag4 = flag3;
 		foreach (ObjectPartData objectPartData in objectData.getParts())
@@ -311,17 +311,17 @@ public class LevelObjectFactory
 				{
 					if (objectPartData is ObjectPartBoxCollisionData)
 					{
-						createBoxCollision(@object ? @object.gameObject : null, objectPartData as ObjectPartBoxCollisionData, flag2);
+						createBoxCollision(@object ? @object.gameObject : null, objectPartData as ObjectPartBoxCollisionData, dynamic);
 					}
 					else if (objectPartData is ObjectPartSphereCollisionData)
 					{
-						if (!USE_CAPSULE_COLLIDERS || flag2)
+						if (!USE_CAPSULE_COLLIDERS || dynamic)
 						{
-							createSphereCollision(@object ? @object.gameObject : null, objectPartData as ObjectPartSphereCollisionData, flag2);
+							createSphereCollision(@object ? @object.gameObject : null, objectPartData as ObjectPartSphereCollisionData, dynamic);
 						}
 						else
 						{
-							createCapsuleCollision(@object ? @object.gameObject : null, objectPartData as ObjectPartSphereCollisionData, flag2);
+							createCapsuleCollision(@object ? @object.gameObject : null, objectPartData as ObjectPartSphereCollisionData, dynamic);
 						}
 					}
 				}
@@ -329,11 +329,11 @@ public class LevelObjectFactory
 			}
 			if (objectPartData is ObjectPartTextureData)
 			{
-				if (createTexture(pack, @object ? @object.gameObject : null, objectPartData as ObjectPartTextureData, flag, num, objectData, data, simulate))
+				if (createTexture(pack, @object ? @object.gameObject : null, objectPartData as ObjectPartTextureData, optimized, zAdd, objectData, data, simulate))
 				{
 					result = true;
 				}
-				num += 0.05f;
+				zAdd += 0.05f;
 			}
 			else if (objectPartData is ObjectPartSphereTriggerData)
 			{
@@ -352,7 +352,7 @@ public class LevelObjectFactory
 				result = true;
 			}
 		}
-		if (flag && !simulate && @object != null)
+		if (optimized && !simulate && @object != null)
 		{
 			fixOptimizedScales(@object);
 		}
@@ -410,27 +410,27 @@ public class LevelObjectFactory
 		else
 		{
 			GameObject gameObject = null;
-			bool flag2 = !CommonData.EDITOR_ACTIVE;
+			bool gatherMesh = !CommonData.EDITOR_ACTIVE;
 			foreach (ObjectPartData objectPartData in objectData.getParts())
 			{
 				if (objectPartData.type == 5 || objectPartData.type == 6)
 				{
-					flag2 = false;
+					gatherMesh = false;
 				}
 			}
 			if (currentObjectData.scriptAttachment != null && currentObjectData.scriptAttachment.Length > 0)
 			{
-				flag2 = false;
+				gatherMesh = false;
 			}
 			if ((currentObjectData.flags & 0x20000) != 0)
 			{
-				flag2 = false;
+				gatherMesh = false;
 			}
 			if (data.allowStretch)
 			{
-				flag2 = false;
+				gatherMesh = false;
 			}
-			if (!flag2)
+			if (!gatherMesh)
 			{
 				if (!simulate)
 				{
@@ -492,26 +492,26 @@ public class LevelObjectFactory
 					mesh = new Mesh();
 					(((MeshFilter)gameObject.GetComponent(typeof(MeshFilter))) as MeshFilter).mesh = mesh;
 				}
-				Vector3[] array = new Vector3[4]
+				Vector3[] vertices = new Vector3[4]
 				{
 					new Vector3(-0.5f, -0.5f),
 					new Vector3(0.5f + (float)repeat, -0.5f),
 					new Vector3(-0.5f, 0.5f + (float)repeat2),
 					new Vector3(0.5f + (float)repeat, 0.5f + (float)repeat2)
 				};
-				Vector2[] array2 = new Vector2[4]
+				Vector2[] uvs = new Vector2[4]
 				{
 					new Vector2(uV.u1, 1f - uV.v2 * (float)(1 + repeat2)),
 					new Vector2(uV.u2 * (float)(1 + repeat), 1f - uV.v2 * (float)(1 + repeat2)),
 					new Vector2(uV.u1, 1f - uV.v1),
 					new Vector2(uV.u2 * (float)(1 + repeat), 1f - uV.v1)
 				};
-				int[] array3 = new int[6] { 2, 1, 0, 3, 1, 2 };
+				int[] triangles = new int[6] { 2, 1, 0, 3, 1, 2 };
 				if (gameObject != null)
 				{
-					mesh.vertices = array;
-					mesh.uv = array2;
-					mesh.triangles = array3;
+					mesh.vertices = vertices;
+					mesh.uv = uvs;
+					mesh.triangles = triangles;
 					applyLayerColorTo(gameObject);
 					float x2 = data.stretchedScale.x * data.textureSourceSize.x / 256f;
 					Vector3 localScale = gameObject.transform.localScale;
@@ -550,46 +550,46 @@ public class LevelObjectFactory
 					{
 						UnityEngine.Object.Destroy((MeshRenderer)parent.GetComponent(typeof(MeshRenderer)));
 					}
-					for (int i = 0; i < array.Length; i++)
+					for (int i = 0; i < vertices.Length; i++)
 					{
-						array[i].x = array[i].x * (data.stretchedScale.x * data.textureSourceSize.x / 256f);
-						array[i].y = array[i].y * (data.stretchedScale.y * data.textureSourceSize.y / 256f);
+						vertices[i].x = vertices[i].x * (data.stretchedScale.x * data.textureSourceSize.x / 256f);
+						vertices[i].y = vertices[i].y * (data.stretchedScale.y * data.textureSourceSize.y / 256f);
 						if (data.checkFlag(ObjectPartData.Flags.TEXTURE_FLIP_X))
 						{
-							array[i].x = array[i].x * -1f;
+							vertices[i].x = vertices[i].x * -1f;
 						}
 						if (data.checkFlag(ObjectPartData.Flags.TEXTURE_FLIP_Y))
 						{
-							array[i].y = array[i].y * -1f;
+							vertices[i].y = vertices[i].y * -1f;
 						}
-						Vector3 vector19 = array[i];
-						float f = data.rotation * ((float)Math.PI / 180f);
-						array[i].x = vector19.x * Mathf.Cos(f) - vector19.y * Mathf.Sin(f);
-						array[i].y = vector19.y * Mathf.Cos(f) + vector19.x * Mathf.Sin(f);
-						array[i].x = array[i].x + data.origin.x;
-						array[i].y = array[i].y + data.origin.y;
+						Vector3 partCorner = vertices[i];
+						float partAngle = data.rotation * ((float)Math.PI / 180f);
+						vertices[i].x = partCorner.x * Mathf.Cos(partAngle) - partCorner.y * Mathf.Sin(partAngle);
+						vertices[i].y = partCorner.y * Mathf.Cos(partAngle) + partCorner.x * Mathf.Sin(partAngle);
+						vertices[i].x = vertices[i].x + data.origin.x;
+						vertices[i].y = vertices[i].y + data.origin.y;
 						if (currentLayerObject.checkFlag(1))
 						{
-							array[i].x = array[i].x * 2f;
-							array[i].y = array[i].y * 2f;
+							vertices[i].x = vertices[i].x * 2f;
+							vertices[i].y = vertices[i].y * 2f;
 						}
 						if ((currentObjectData.flags & 0x80000) != 0)
 						{
-							array[i].x = array[i].x * -1f;
+							vertices[i].x = vertices[i].x * -1f;
 						}
 						if ((currentObjectData.flags & 0x100000) != 0)
 						{
-							array[i].y = array[i].y * -1f;
+							vertices[i].y = vertices[i].y * -1f;
 						}
-						Vector3 vector20 = array[i];
-						float f2 = levelObjectData.rotation * ((float)Math.PI / 180f);
-						array[i].x = vector20.x * Mathf.Cos(f2) - vector20.y * Mathf.Sin(f2);
-						array[i].y = vector20.y * Mathf.Cos(f2) + vector20.x * Mathf.Sin(f2);
-						array[i].x = array[i].x + levelObjectData.position.x;
-						array[i].y = array[i].y + levelObjectData.position.y;
-						array[i].z = zAdd;
+						Vector3 objectCorner = vertices[i];
+						float objectAngle = levelObjectData.rotation * ((float)Math.PI / 180f);
+						vertices[i].x = objectCorner.x * Mathf.Cos(objectAngle) - objectCorner.y * Mathf.Sin(objectAngle);
+						vertices[i].y = objectCorner.y * Mathf.Cos(objectAngle) + objectCorner.x * Mathf.Sin(objectAngle);
+						vertices[i].x = vertices[i].x + levelObjectData.position.x;
+						vertices[i].y = vertices[i].y + levelObjectData.position.y;
+						vertices[i].z = zAdd;
 					}
-					currentLayerObject.addTextureMesh(texture2D, currentObjectData.zDepth, zAdd, RENDER_QUEUE, array, array2, array3);
+					currentLayerObject.addTextureMesh(texture2D, currentObjectData.zDepth, zAdd, RENDER_QUEUE, vertices, uvs, triangles);
 				}
 			}
 			return flag;
@@ -806,14 +806,14 @@ public class LevelObjectFactory
 		}
 		CapsuleCollider capsuleCollider = gameObject.AddComponent<CapsuleCollider>();
 		capsuleCollider.radius = sphere.radius;
-		float num = 0f;
-		num = dynamic ? DYNAMIC_OBJECT_DEPTH : STATIC_OBJECT_DEPTH;
-		num -= capsuleCollider.radius * 2f;
-		if (!(num >= 0f))
+		float height = 0f;
+		height = dynamic ? DYNAMIC_OBJECT_DEPTH : STATIC_OBJECT_DEPTH;
+		height -= capsuleCollider.radius * 2f;
+		if (!(height >= 0f))
 		{
-			num = 0f;
+			height = 0f;
 		}
-		capsuleCollider.height = num;
+		capsuleCollider.height = height;
 		capsuleCollider.material = prefabs.physicMaterials[0];
 		gameObject.layer = currentObjectData.checkFlag(8388608) ? 0 : 12;
 		gameObject.transform.parent = parent.transform;
@@ -887,16 +887,16 @@ public class LevelObjectFactory
 
 	private void fixOptimizedScales(LevelObject @object)
 	{
-		float num = 1f / @object.transform.localScale.x;
-		float num2 = 1f / @object.transform.localScale.y;
+		float invScaleX = 1f / @object.transform.localScale.x;
+		float invScaleY = 1f / @object.transform.localScale.y;
 		Transform transform = @object.gameObject.transform;
 		foreach (Transform transform2 in transform)
 		{
-			float x = num;
+			float x = invScaleX;
 			Vector3 localScale = transform2.localScale;
 			localScale.x = x;
 			transform2.localScale = localScale;
-			float y = num2;
+			float y = invScaleY;
 			Vector3 localScale2 = transform2.localScale;
 			localScale2.y = y;
 			transform2.localScale = localScale2;
@@ -916,19 +916,19 @@ public class LevelObjectFactory
 			if (array[i] is BoxCollider)
 			{
 				BoxCollider boxCollider = array[i] as BoxCollider;
-				float x2 = boxCollider.size.x * num;
+				float x2 = boxCollider.size.x * invScaleX;
 				Vector3 size = boxCollider.size;
 				size.x = x2;
 				boxCollider.size = size;
-				float y2 = boxCollider.size.y * num2;
+				float y2 = boxCollider.size.y * invScaleY;
 				Vector3 size2 = boxCollider.size;
 				size2.y = y2;
 				boxCollider.size = size2;
-				float x3 = boxCollider.center.x * num;
+				float x3 = boxCollider.center.x * invScaleX;
 				Vector3 center = boxCollider.center;
 				center.x = x3;
 				boxCollider.center = center;
-				float y3 = boxCollider.center.y * num2;
+				float y3 = boxCollider.center.y * invScaleY;
 				Vector3 center2 = boxCollider.center;
 				center2.y = y3;
 				boxCollider.center = center2;
@@ -936,12 +936,12 @@ public class LevelObjectFactory
 			else if (array[i] is SphereCollider)
 			{
 				SphereCollider sphereCollider = array[i] as SphereCollider;
-				sphereCollider.radius *= num;
-				float x4 = sphereCollider.center.x * num;
+				sphereCollider.radius *= invScaleX;
+				float x4 = sphereCollider.center.x * invScaleX;
 				Vector3 center3 = sphereCollider.center;
 				center3.x = x4;
 				sphereCollider.center = center3;
-				float y4 = sphereCollider.center.y * num2;
+				float y4 = sphereCollider.center.y * invScaleY;
 				Vector3 center4 = sphereCollider.center;
 				center4.y = y4;
 				sphereCollider.center = center4;
@@ -949,12 +949,12 @@ public class LevelObjectFactory
 			else if (array[i] is CapsuleCollider)
 			{
 				CapsuleCollider capsuleCollider = array[i] as CapsuleCollider;
-				capsuleCollider.radius *= num;
-				float x5 = capsuleCollider.center.x * num;
+				capsuleCollider.radius *= invScaleX;
+				float x5 = capsuleCollider.center.x * invScaleX;
 				Vector3 center5 = capsuleCollider.center;
 				center5.x = x5;
 				capsuleCollider.center = center5;
-				float y5 = capsuleCollider.center.y * num2;
+				float y5 = capsuleCollider.center.y * invScaleY;
 				Vector3 center6 = capsuleCollider.center;
 				center6.y = y5;
 				capsuleCollider.center = center6;

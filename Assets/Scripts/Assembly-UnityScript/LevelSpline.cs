@@ -86,7 +86,7 @@ public class LevelSpline : LevelEntity
 		}
 		else
 		{
-			int num = 0;
+			int index = 0;
 			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(spline.splineData);
 			while (true)
 			{
@@ -98,7 +98,7 @@ public class LevelSpline : LevelEntity
 						obj = RuntimeServices.Coerce(obj, typeof(CSpline2.CSplinePoint));
 					}
 					CSpline2.CSplinePoint cSplinePoint = (CSpline2.CSplinePoint)obj;
-					if (cSplinePoint.position != (other as LevelSpline).spline.splineData[num++].position)
+					if (cSplinePoint.position != (other as LevelSpline).spline.splineData[index++].position)
 					{
 						result = 0;
 						break;
@@ -160,10 +160,10 @@ public class LevelSpline : LevelEntity
 
 	private void createGraphicMeshes(List<Vector3> vertices, int[] splitPts, float height)
 	{
-		int num = 1;
+		int sectionCount = 1;
 		if (!CommonData.EDITOR_ACTIVE)
 		{
-			num = splitPts.Length + 1;
+			sectionCount = splitPts.Length + 1;
 		}
 		else
 		{
@@ -178,71 +178,71 @@ public class LevelSpline : LevelEntity
 				}
 			}
 		}
-		graphicSections = new GameObject[num];
-		graphicMeshes = new Mesh[num];
-		graphicMeshQueue = new int[num];
-		float num2 = 0f;
-		int num3 = 0;
-		for (int j = 0; j < num; j++)
+		graphicSections = new GameObject[sectionCount];
+		graphicMeshes = new Mesh[sectionCount];
+		graphicMeshQueue = new int[sectionCount];
+		float distance = 0f;
+		int start = 0;
+		for (int j = 0; j < sectionCount; j++)
 		{
 			GameObject gameObject = LevelObjectFactory.getInstance().createSplineSection(this.gameObject);
-			int num4 = vertices.Count;
+			int count = vertices.Count;
 			if (!CommonData.EDITOR_ACTIVE)
 			{
-				num4 = (j >= num - 1 ? vertices.Count : splitPts[j]) - num3;
+				count = (j >= sectionCount - 1 ? vertices.Count : splitPts[j]) - start;
 			}
 			Mesh mesh = new Mesh();
 			graphicMeshes[j] = mesh;
 			MeshFilter component = gameObject.GetComponent<MeshFilter>();
-			Vector3[] array2 = new Vector3[num4 * 2];
-			Vector2[] array3 = new Vector2[num4 * 2];
+			Vector3[] meshVertices = new Vector3[count * 2];
+			Vector2[] meshUvs = new Vector2[count * 2];
 			MeshRenderer component2 = gameObject.GetComponent<MeshRenderer>();
 			component2.material = new Material(component2.material);
 			component2.sharedMaterial.renderQueue = 3000 - j * 2;
 			graphicMeshQueue[j] = component2.sharedMaterial.renderQueue;
 			bounding = new Rect(10000f, 10000f, -10000f, -10000f);
-			for (int k = num3; k < num3 + num4; k++)
+			for (int k = start; k < start + count; k++)
 			{
-				int num5 = (k - num3) * 2;
-				array2[num5].x = vertices[k].x;
-				array2[num5].y = vertices[k].y;
-				array2[num5].z = vertices[k].z + GRAPHIC_MESH_Z_OFFSET;
-				array2[num5 + 1].x = vertices[k].x;
-				array2[num5 + 1].y = vertices[k].y;
-				array2[num5 + 1].z = vertices[k].z + GRAPHIC_MESH_Z_OFFSET;
-				array3[num5].x = num2 / height;
-				array3[num5].y = 1f;
-				array3[num5 + 1].x = num2 / height;
-				array3[num5 + 1].y = 0f;
-				if (k < num3 + num4 - 1)
+				int vertexIndex = (k - start) * 2;
+				meshVertices[vertexIndex].x = vertices[k].x;
+				meshVertices[vertexIndex].y = vertices[k].y;
+				meshVertices[vertexIndex].z = vertices[k].z + GRAPHIC_MESH_Z_OFFSET;
+				meshVertices[vertexIndex + 1].x = vertices[k].x;
+				meshVertices[vertexIndex + 1].y = vertices[k].y;
+				meshVertices[vertexIndex + 1].z = vertices[k].z + GRAPHIC_MESH_Z_OFFSET;
+				meshUvs[vertexIndex].x = distance / height;
+				meshUvs[vertexIndex].y = 1f;
+				meshUvs[vertexIndex + 1].x = distance / height;
+				meshUvs[vertexIndex + 1].y = 0f;
+				if (k < start + count - 1)
 				{
-					num2 += ((Vector2)(vertices[k + 1] - vertices[k])).magnitude;
+					distance += ((Vector2)(vertices[k + 1] - vertices[k])).magnitude;
 				}
-				if (!(bounding.xMin <= array2[num5].x))
+				if (!(bounding.xMin <= meshVertices[vertexIndex].x))
 				{
-					bounding.xMin = array2[num5].x;
+					bounding.xMin = meshVertices[vertexIndex].x;
 				}
-				else if (!(bounding.xMax >= array2[num5].x))
+				else if (!(bounding.xMax >= meshVertices[vertexIndex].x))
 				{
-					bounding.xMax = array2[num5].x;
+					bounding.xMax = meshVertices[vertexIndex].x;
 				}
-				if (!(bounding.yMin <= array2[num5].y))
+				if (!(bounding.yMin <= meshVertices[vertexIndex].y))
 				{
-					bounding.yMin = array2[num5].y;
+					bounding.yMin = meshVertices[vertexIndex].y;
 				}
-				else if (!(bounding.yMax >= array2[num5].y))
+				else if (!(bounding.yMax >= meshVertices[vertexIndex].y))
 				{
-					bounding.yMax = array2[num5].y;
+					bounding.yMax = meshVertices[vertexIndex].y;
 				}
 			}
-			adjustVertices(vertices, num3, array2);
-			mesh.vertices = array2;
-			mesh.uv = array3;
-			mesh.triangles = createTriangleIndices(num4, false);
+			adjustVertices(vertices, start, meshVertices);
+			mesh.vertices = meshVertices;
+			mesh.uv = meshUvs;
+			mesh.triangles = createTriangleIndices(count, false);
 			mesh.RecalculateBounds();
 			component.mesh = mesh;
 			component.sharedMesh.RecalculateBounds();
-			num3 += num4 - 1;
+			start += count - 1;
 		}
 		if (!string.IsNullOrEmpty(texture) && texture.Length > 0)
 		{
@@ -263,18 +263,18 @@ public class LevelSpline : LevelEntity
 			{
 				collisionMesh.Clear();
 			}
-			Vector3[] array = new Vector3[vertices.Count * 2];
+			Vector3[] colliderVertices = new Vector3[vertices.Count * 2];
 			for (int i = 0; i < vertices.Count; i++)
 			{
-				int num = i * 2;
-				array[num].x = vertices[i].x;
-				array[num].y = vertices[i].y;
-				array[num].z = 0f - COLLIDER_WIDTH + vertices[i].z;
-				array[num + 1].x = vertices[i].x;
-				array[num + 1].y = vertices[i].y;
-				array[num + 1].z = COLLIDER_WIDTH + vertices[i].z;
+				int index = i * 2;
+				colliderVertices[index].x = vertices[i].x;
+				colliderVertices[index].y = vertices[i].y;
+				colliderVertices[index].z = 0f - COLLIDER_WIDTH + vertices[i].z;
+				colliderVertices[index + 1].x = vertices[i].x;
+				colliderVertices[index + 1].y = vertices[i].y;
+				colliderVertices[index + 1].z = COLLIDER_WIDTH + vertices[i].z;
 			}
-			collisionMesh.vertices = array;
+			collisionMesh.vertices = colliderVertices;
 			collisionMesh.triangles = createTriangleIndices(vertices.Count, true);
 		}
 		else
@@ -287,30 +287,30 @@ public class LevelSpline : LevelEntity
 
 	private int[] createTriangleIndices(int vertexCount, bool col)
 	{
-		int[] array = new int[(vertexCount - 1) * 6];
-		for (int i = 0; i < array.Length / 3; i += 2)
+		int[] indices = new int[(vertexCount - 1) * 6];
+		for (int i = 0; i < indices.Length / 3; i += 2)
 		{
-			int num = i * 3;
+			int index = i * 3;
 			if (col)
 			{
-				array[num] = i;
-				array[num + 1] = i + 1;
-				array[num + 2] = i + 2;
-				array[num + 3] = i + 2;
-				array[num + 4] = i + 1;
-				array[num + 5] = i + 3;
+				indices[index] = i;
+				indices[index + 1] = i + 1;
+				indices[index + 2] = i + 2;
+				indices[index + 3] = i + 2;
+				indices[index + 4] = i + 1;
+				indices[index + 5] = i + 3;
 			}
 			else
 			{
-				array[num] = i;
-				array[num + 1] = i + 2;
-				array[num + 2] = i + 1;
-				array[num + 3] = i + 2;
-				array[num + 4] = i + 3;
-				array[num + 5] = i + 1;
+				indices[index] = i;
+				indices[index + 1] = i + 2;
+				indices[index + 2] = i + 1;
+				indices[index + 3] = i + 2;
+				indices[index + 4] = i + 3;
+				indices[index + 5] = i + 1;
 			}
 		}
-		return array;
+		return indices;
 	}
 
 	private void adjustVertices(List<Vector3> splinePts, int startInd, Vector3[] vertices)
@@ -319,121 +319,121 @@ public class LevelSpline : LevelEntity
 		{
 			if (i + startInd > 0 && i + startInd < splinePts.Count - 1)
 			{
-				int num = i * 2;
-				Vector3 vector = splinePts[i + startInd] - splinePts[i - 1 + startInd];
-				Vector3 vector2 = splinePts[i + 1 + startInd] - splinePts[i + startInd];
-				float x = vector.x;
-				vector.x = vector.y;
-				vector.y = 0f - x;
-				x = vector2.x;
-				vector2.x = vector2.y;
-				vector2.y = 0f - x;
-				Vector3 vector3 = vector + vector2;
-				vector3.Normalize();
-				vertices[num + 1] = vertices[num] + vector3 * height;
+				int index = i * 2;
+				Vector3 normalIn = splinePts[i + startInd] - splinePts[i - 1 + startInd];
+				Vector3 normalOut = splinePts[i + 1 + startInd] - splinePts[i + startInd];
+				float x = normalIn.x;
+				normalIn.x = normalIn.y;
+				normalIn.y = 0f - x;
+				x = normalOut.x;
+				normalOut.x = normalOut.y;
+				normalOut.y = 0f - x;
+				Vector3 normal = normalIn + normalOut;
+				normal.Normalize();
+				vertices[index + 1] = vertices[index] + normal * height;
 			}
 		}
 		if (startInd == 0)
 		{
-			Vector3 vector4 = vertices[2] - vertices[0];
-			float x2 = vector4.x;
-			vector4.x = vector4.y;
-			vector4.y = 0f - x2;
-			vector4.Normalize();
-			vertices[1] = vertices[0] + vector4 * height;
+			Vector3 endNormal = vertices[2] - vertices[0];
+			float x2 = endNormal.x;
+			endNormal.x = endNormal.y;
+			endNormal.y = 0f - x2;
+			endNormal.Normalize();
+			vertices[1] = vertices[0] + endNormal * height;
 		}
 		if (startInd + vertices.Length / 2 == splinePts.Count)
 		{
-			Vector3 vector4 = vertices[vertices.Length - 2] - vertices[vertices.Length - 4];
-			float x2 = vector4.x;
-			vector4.x = vector4.y;
-			vector4.y = 0f - x2;
-			vector4.Normalize();
-			vertices[vertices.Length - 1] = vertices[vertices.Length - 2] + vector4 * height;
+			Vector3 endNormal = vertices[vertices.Length - 2] - vertices[vertices.Length - 4];
+			float x2 = endNormal.x;
+			endNormal.x = endNormal.y;
+			endNormal.y = 0f - x2;
+			endNormal.Normalize();
+			vertices[vertices.Length - 1] = vertices[vertices.Length - 2] + endNormal * height;
 		}
 	}
 
 	private List<Vector3> addZDepth(List<Vector2> vertices)
 	{
 		List<Vector3> list = new List<Vector3>();
-		float num = 0f;
-		list.Add(new Vector3(vertices[0].x, vertices[0].y, num));
+		float z = 0f;
+		list.Add(new Vector3(vertices[0].x, vertices[0].y, z));
 		for (int i = 1; i < vertices.Count - 1; i++)
 		{
-			Vector2 vector = vertices[i] - vertices[i - 1];
-			Vector2 vector2 = vertices[i + 1] - vertices[i];
-			vector.Normalize();
-			vector2.Normalize();
-			float num2 = (vector.x * vector2.y - vector.y * vector2.x) * DEPTH_FACTOR;
-			if (!(num2 >= 0f))
+			Vector2 dirIn = vertices[i] - vertices[i - 1];
+			Vector2 dirOut = vertices[i + 1] - vertices[i];
+			dirIn.Normalize();
+			dirOut.Normalize();
+			float zStep = (dirIn.x * dirOut.y - dirIn.y * dirOut.x) * DEPTH_FACTOR;
+			if (!(zStep >= 0f))
 			{
-				num2 = 0f - num2;
+				zStep = 0f - zStep;
 			}
-			num += num2;
-			list.Add(new Vector3(vertices[i].x, vertices[i].y, num));
+			z += zStep;
+			list.Add(new Vector3(vertices[i].x, vertices[i].y, z));
 		}
-		list.Add(new Vector3(vertices[vertices.Count - 1].x, vertices[vertices.Count - 1].y, num));
+		list.Add(new Vector3(vertices[vertices.Count - 1].x, vertices[vertices.Count - 1].y, z));
 		return list;
 	}
 
 	private void tweakZ(List<Vector3> vertices)
 	{
-		Vector3 vector = vertices[vertices.Count - 1] - vertices[0];
+		Vector3 span = vertices[vertices.Count - 1] - vertices[0];
 		float x = vertices[0].x;
 		for (int i = 1; i < vertices.Count; i++)
 		{
-			float num = vertices[i].x - x;
-			float x2 = vector.x;
-			float num2 = num / x2;
+			float dx = vertices[i].x - x;
+			float x2 = span.x;
+			float fraction = dx / x2;
 			Vector3 value = vertices[i];
-			value.z -= vector.z * num2;
+			value.z -= span.z * fraction;
 			vertices[i] = value;
 		}
 	}
 
 	private bool isSelfIntersecting(List<Vector2> vertices)
 	{
-		float num = vertices[0].x;
-		int num2 = 1;
-		while (num2 < vertices.Count)
+		float minX = vertices[0].x;
+		int index = 1;
+		while (index < vertices.Count)
 		{
-			float x = vertices[num2].x;
-			if (!(x >= num))
+			float x = vertices[index].x;
+			if (!(x >= minX))
 			{
 				return true;
 			}
-			num = x;
-			num2++;
+			minX = x;
+			index++;
 		}
 		return false;
 	}
 
 	private float getAngleDiff(float a2, float a1)
 	{
-		float num = a2 - a1;
-		if (!(num <= 180f))
+		float diff = a2 - a1;
+		if (!(diff <= 180f))
 		{
-			num -= 360f;
+			diff -= 360f;
 		}
-		else if (!(num >= -180f))
+		else if (!(diff >= -180f))
 		{
-			num += 360f;
+			diff += 360f;
 		}
-		return num;
+		return diff;
 	}
 
 	private bool angleInRange(float a, float aMin, float aMax)
 	{
-		bool flag;
+		bool inRange;
 		if (!(aMin <= aMax))
 		{
-			flag = !(a > aMax) || !(a < aMin);
+			inRange = !(a > aMax) || !(a < aMin);
 		}
 		else
 		{
-			flag = !(a < aMin) && !(a > aMax);
+			inRange = !(a < aMin) && !(a > aMax);
 		}
-		return flag;
+		return inRange;
 	}
 
 	private float getSectSize(float minAngle, float maxAngle)
@@ -452,40 +452,40 @@ public class LevelSpline : LevelEntity
 			pts.Clear();
 		}
 		List<Vector2> splinePoints = getSplinePoints(spl);
-		float num = 0f;
-		float num2 = 0f;
+		float maxAngle = 0f;
+		float minAngle = 0f;
 		float a = 0f;
 		for (int i = 1; i < splinePoints.Count; i++)
 		{
-			Vector2 vector = splinePoints[i - 1];
-			Vector2 vector2 = splinePoints[i];
-			Vector2 vector3 = vector2 - vector;
-			float num3 = Mathf.Atan2(vector3.y, vector3.x) * 57.29578f;
-			if (!(num3 >= 0f))
+			Vector2 prev = splinePoints[i - 1];
+			Vector2 point = splinePoints[i];
+			Vector2 delta = point - prev;
+			float angle = Mathf.Atan2(delta.y, delta.x) * 57.29578f;
+			if (!(angle >= 0f))
 			{
-				num3 += 360f;
+				angle += 360f;
 			}
-			else if (!(num3 <= 360f))
+			else if (!(angle <= 360f))
 			{
-				num3 -= 360f;
+				angle -= 360f;
 			}
 			if (i > 1)
 			{
-				float sectSize = getSectSize(num2, num);
-				float angleDiff = getAngleDiff(num3, a);
-				if (!angleInRange(num3, num2, num))
+				float sectSize = getSectSize(minAngle, maxAngle);
+				float angleDiff = getAngleDiff(angle, a);
+				if (!angleInRange(angle, minAngle, maxAngle))
 				{
-					float num4 = Mathf.Abs(getAngleDiff(num3, num2));
-					float num5 = Mathf.Abs(getAngleDiff(num3, num));
-					if (num4 < num5 || (num4 == num5 && !(angleDiff >= 0f)))
+					float diffToMin = Mathf.Abs(getAngleDiff(angle, minAngle));
+					float diffToMax = Mathf.Abs(getAngleDiff(angle, maxAngle));
+					if (diffToMin < diffToMax || (diffToMin == diffToMax && !(angleDiff >= 0f)))
 					{
-						num2 = num3;
+						minAngle = angle;
 					}
-					else if (num4 > num5 || (num4 == num5 && !(angleDiff <= 0f)))
+					else if (diffToMin > diffToMax || (diffToMin == diffToMax && !(angleDiff <= 0f)))
 					{
-						num = num3;
+						maxAngle = angle;
 					}
-					if (!(getSectSize(num2, num) < 180f) && !(sectSize >= 180f))
+					if (!(getSectSize(minAngle, maxAngle) < 180f) && !(sectSize >= 180f))
 					{
 						if (indices != null)
 						{
@@ -493,19 +493,19 @@ public class LevelSpline : LevelEntity
 						}
 						if (pts != null)
 						{
-							pts.Add(vector2);
+							pts.Add(point);
 						}
-						num2 = num3;
-						num = num3;
+						minAngle = angle;
+						maxAngle = angle;
 					}
 				}
 			}
 			else
 			{
-				num2 = num3;
-				num = num3;
+				minAngle = angle;
+				maxAngle = angle;
 			}
-			a = num3;
+			a = angle;
 		}
 	}
 }

@@ -56,11 +56,11 @@ public class LevelLayerData
 
 	public virtual string getDevicesDesc()
 	{
-		string text = string.Empty;
+		string desc = string.Empty;
 		for (int i = 0; i < Enum.GetValues(typeof(CommonData.DeviceGeneration)).Length; i++)
 		{
-			text = checkDevice(1 << i) ? (text + "- ") : (text + (CommonData.deviceChars[i] + " "));
+			desc = checkDevice(1 << i) ? (desc + "- ") : (desc + (CommonData.deviceChars[i] + " "));
 		}
-		return text;
+		return desc;
 	}
 }

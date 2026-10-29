@@ -92,14 +92,14 @@ public class LevelPack
 
 	public virtual int getLevelIndex(string name)
 	{
-		int num = 0;
+		int index = 0;
 		foreach (LevelInfo levelInfo in levelList)
 		{
 			if (levelInfo.fileName == name)
 			{
-				return num;
+				return index;
 			}
-			num++;
+			index++;
 		}
 		return -1;
 	}
@@ -162,16 +162,16 @@ public class LevelPack
 		}
 		else
 		{
-			float num = 0f;
+			float built = 0f;
 			foreach (LevelInfo levelInfo in levelList)
 			{
 				if (levelInfo.testFlag(8))
 				{
-					num++;
+					built++;
 				}
 			}
-			float num2 = num / (float)levelList.Count;
-			return (int)Mathf.Ceil(num2 * 100f);
+			float fraction = built / (float)levelList.Count;
+			return (int)Mathf.Ceil(fraction * 100f);
 		}
 	}
 
@@ -179,7 +179,7 @@ public class LevelPack
 	{
 		string rhs = FileManager.getInstance().locateLevelPack(name);
 		LevelPack levelPack = new LevelPack();
-		string text = null;
+		string json = null;
 		NFPortAssetFile wWW = NFPortAssetFile.Open("" + rhs + "/levelpack.json");
 		while (!wWW.isDone)
 		{
@@ -192,8 +192,8 @@ public class LevelPack
 		}
 		else
 		{
-			text = wWW.text;
-			JSONObject jSONObject = new JSONObject(text);
+			json = wWW.text;
+			JSONObject jSONObject = new JSONObject(json);
 			levelPack.flags = (int)jSONObject.GetFieldSafe("flags", new JSONObject(0f)).n;
 			levelPack.version = (int)jSONObject.GetFieldSafe("version", new JSONObject(0f)).n;
 			levelPack.priceMultiplier = (float)jSONObject.GetFieldSafe("priceMultiplier", new JSONObject(1f)).n;

@@ -11,24 +11,24 @@ public class Bits
 		}
 		else
 		{
-			int num = 0;
+			int index = 0;
 			while ((bit & 1) == 0)
 			{
 				bit >>= 1;
-				num++;
+				index++;
 			}
-			return num;
+			return index;
 		}
 	}
 
 	public static int GetMaskShift(int mask)
 	{
-		int num = 0;
+		int shift = 0;
 		while ((mask & 1) == 0)
 		{
 			mask >>= 1;
-			num++;
+			shift++;
 		}
-		return num;
+		return shift;
 	}
 }

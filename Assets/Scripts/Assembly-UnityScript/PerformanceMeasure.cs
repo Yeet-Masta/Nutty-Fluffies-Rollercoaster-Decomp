@@ -41,8 +41,8 @@ public class PerformanceMeasure : MonoBehaviour
 		{
 			Debug.Log("PERFORMANCE: " + list.Count);
 		}
-		bool flag = list.Count < 30;
-		PlayerPrefs.SetInt("ANDROID_LOW_DEF", flag ? 0 : 0);
+		bool slow = list.Count < 30;
+		PlayerPrefs.SetInt("ANDROID_LOW_DEF", slow ? 0 : 0);
 		CommonData.reinit();
 	}
 
@@ -74,11 +74,11 @@ public class PerformanceMeasure : MonoBehaviour
 		}
 		if (ENABLE_FPS_DEBUG)
 		{
-			float num = totalTime / (float)NUM_SAMPLES;
-			float num2 = 1f / num;
+			float frameTime = totalTime / (float)NUM_SAMPLES;
+			float fps = 1f / frameTime;
 			if (GameData.LOG)
 			{
-				Debug.Log("FPS: " + num2 + " (" + totalTime + " s, frame: " + Time.deltaTime * 1000f + "ms)");
+				Debug.Log("FPS: " + fps + " (" + totalTime + " s, frame: " + Time.deltaTime * 1000f + "ms)");
 			}
 		}
 	}

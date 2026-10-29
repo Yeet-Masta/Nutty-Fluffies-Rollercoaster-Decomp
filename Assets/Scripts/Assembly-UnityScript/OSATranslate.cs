@@ -29,38 +29,38 @@ public class OSATranslate : ObjectScript
 
 	public override void doUpdate()
 	{
-		float num = cachedTransform.lossyScale.x * Time.deltaTime;
-		cachedTransform.position += new Vector3(x * num, y * num, 0f);
+		float step = cachedTransform.lossyScale.x * Time.deltaTime;
+		cachedTransform.position += new Vector3(x * step, y * step, 0f);
 		if (w)
 		{
 			float orthographicSize = cameraRef.orthographicSize;
-			float num2 = orthographicSize * cameraRef.aspect;
-			if (!(x <= 0f) && !(cachedTransform.position.x <= cameraTrans.position.x + num2 + m * cachedTransform.lossyScale.x / 2f))
+			float halfWidth = orthographicSize * cameraRef.aspect;
+			if (!(x <= 0f) && !(cachedTransform.position.x <= cameraTrans.position.x + halfWidth + m * cachedTransform.lossyScale.x / 2f))
 			{
-				float num3 = cachedTransform.position.x - (num2 + m * cachedTransform.lossyScale.x / 2f) * 2f;
+				float wrappedX = cachedTransform.position.x - (halfWidth + m * cachedTransform.lossyScale.x / 2f) * 2f;
 				Vector3 position = cachedTransform.position;
-				position.x = num3;
+				position.x = wrappedX;
 				cachedTransform.position = position;
 			}
-			if (!(x >= 0f) && !(cachedTransform.position.x >= cameraTrans.position.x - num2 - m * cachedTransform.lossyScale.x / 2f))
+			if (!(x >= 0f) && !(cachedTransform.position.x >= cameraTrans.position.x - halfWidth - m * cachedTransform.lossyScale.x / 2f))
 			{
-				float num5 = cachedTransform.position.x + (num2 + m * cachedTransform.lossyScale.x / 2f) * 2f;
+				float wrappedX = cachedTransform.position.x + (halfWidth + m * cachedTransform.lossyScale.x / 2f) * 2f;
 				Vector3 position2 = cachedTransform.position;
-				position2.x = num5;
+				position2.x = wrappedX;
 				cachedTransform.position = position2;
 			}
 			if (!(y <= 0f) && !(cachedTransform.position.y <= cameraTrans.position.y + orthographicSize + m * cachedTransform.lossyScale.y / 2f))
 			{
-				float num7 = cachedTransform.position.y - (orthographicSize + m * cachedTransform.lossyScale.y / 2f) * 2f;
+				float wrappedY = cachedTransform.position.y - (orthographicSize + m * cachedTransform.lossyScale.y / 2f) * 2f;
 				Vector3 position3 = cachedTransform.position;
-				position3.y = num7;
+				position3.y = wrappedY;
 				cachedTransform.position = position3;
 			}
 			if (!(y >= 0f) && !(cachedTransform.position.y >= cameraTrans.position.y - orthographicSize - m * cachedTransform.lossyScale.y / 2f))
 			{
-				float num9 = cachedTransform.position.y + (orthographicSize + m * cachedTransform.lossyScale.y / 2f) * 2f;
+				float wrappedY = cachedTransform.position.y + (orthographicSize + m * cachedTransform.lossyScale.y / 2f) * 2f;
 				Vector3 position4 = cachedTransform.position;
-				position4.y = num9;
+				position4.y = wrappedY;
 				cachedTransform.position = position4;
 			}
 		}

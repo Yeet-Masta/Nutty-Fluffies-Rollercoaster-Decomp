@@ -84,34 +84,34 @@ public class LevelLayer : MonoBehaviour
 					}
 				}
 			}
-			Vector3[] array = new Vector3[meshGatherEntry.pts.Count * 4];
-			Vector2[] array2 = new Vector2[meshGatherEntry.uvs.Count * 4];
-			int[] array3 = new int[meshGatherEntry.inds.Count * 6];
-			int num = 0;
-			foreach (Vector3[] array4 in meshGatherEntry.pts)
+			Vector3[] vertices = new Vector3[meshGatherEntry.pts.Count * 4];
+			Vector2[] uvs = new Vector2[meshGatherEntry.uvs.Count * 4];
+			int[] triangles = new int[meshGatherEntry.inds.Count * 6];
+			int index = 0;
+			foreach (Vector3[] points in meshGatherEntry.pts)
 			{
-				foreach (Vector3 vector3 in array4)
+				foreach (Vector3 point in points)
 				{
-					array[num++] = vector3;
+					vertices[index++] = point;
 				}
 			}
-			num = 0;
-			foreach (Vector2[] array6 in meshGatherEntry.uvs)
+			index = 0;
+			foreach (Vector2[] uvSet in meshGatherEntry.uvs)
 			{
-				foreach (Vector2 vector2 in array6)
+				foreach (Vector2 uv in uvSet)
 				{
-					array2[num++] = vector2;
+					uvs[index++] = uv;
 				}
 			}
-			num = 0;
-			int num2 = 0;
-			foreach (int[] array8 in meshGatherEntry.inds)
+			index = 0;
+			int vertexOffset = 0;
+			foreach (int[] indices in meshGatherEntry.inds)
 			{
-				foreach (int item in array8)
+				foreach (int vertexIndex in indices)
 				{
-					array3[num++] = item + num2;
+					triangles[index++] = vertexIndex + vertexOffset;
 				}
-				num2 += 4;
+				vertexOffset += 4;
 			}
 			GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(LevelObjectFactory.getInstance().getPrefabs().objectTexturePrefab, Vector3.zero, Quaternion.identity);
 			gameObject.transform.parent = transform;
@@ -120,9 +120,9 @@ public class LevelLayer : MonoBehaviour
 			gameObject.GetComponent<Renderer>().sharedMaterial = MaterialManager.getInstance().getMaterialForUniqueID(texture as Texture2D, layer, true);
 			gameObject.GetComponent<Renderer>().sharedMaterial.renderQueue = meshGatherEntry.queue;
 			Mesh mesh = new Mesh();
-			mesh.vertices = array;
-			mesh.uv = array2;
-			mesh.triangles = array3;
+			mesh.vertices = vertices;
+			mesh.uv = uvs;
+			mesh.triangles = triangles;
 			(((MeshFilter)gameObject.GetComponent(typeof(MeshFilter))) as MeshFilter).mesh = mesh;
 			float z = 1f * (float)val;
 			Vector3 localPosition = gameObject.transform.localPosition;
@@ -148,12 +148,12 @@ public class LevelLayer : MonoBehaviour
 
 	public virtual string getDevicesDesc()
 	{
-		string text = string.Empty;
+		string desc = string.Empty;
 		for (int i = 0; i < Enum.GetValues(typeof(CommonData.DeviceGeneration)).Length; i++)
 		{
-			text = checkDevice(1 << i) ? (text + "- ") : (text + (CommonData.deviceChars[i] + " "));
+			desc = checkDevice(1 << i) ? (desc + "- ") : (desc + (CommonData.deviceChars[i] + " "));
 		}
-		return text;
+		return desc;
 	}
 
 	public virtual void setFlag(int flag, bool state)

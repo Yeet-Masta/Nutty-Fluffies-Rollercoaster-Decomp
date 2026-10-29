@@ -31,7 +31,7 @@ public class TextTemplate
 
 	public static string getString(string template, string[] values)
 	{
-		string text = template;
+		string result = template;
 		if (values != null)
 		{
 			for (int i = 0; i < values.Length && values[i] != null; i++)
@@ -39,10 +39,10 @@ public class TextTemplate
 				string oldValue = "%" + (i + 1);
 				if (values.Length > i)
 				{
-					text = text.Replace(oldValue, values[i]);
+					result = result.Replace(oldValue, values[i]);
 				}
 			}
 		}
-		return text;
+		return result;
 	}
 }

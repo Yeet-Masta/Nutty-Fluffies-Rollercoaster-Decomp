@@ -110,13 +110,13 @@ public class ObjectScript : MonoBehaviour, Parametrizable
 			return;
 		}
 		ParamList parameterList = getParameterList();
-		int num = 0;
-		string[] array = ((LevelEntity)gameObject.GetComponent(typeof(LevelEntity))).scriptParams.Split("|"[0]);
-		foreach (ParamList.Param item in parameterList.@params)
+		int paramIndex = 0;
+		string[] values = ((LevelEntity)gameObject.GetComponent(typeof(LevelEntity))).scriptParams.Split("|"[0]);
+		foreach (ParamList.Param param in parameterList.@params)
 		{
-			if (num < array.Length)
+			if (paramIndex < values.Length)
 			{
-				setParam(item.tag, array[num++]);
+				setParam(param.tag, values[paramIndex++]);
 			}
 		}
 	}

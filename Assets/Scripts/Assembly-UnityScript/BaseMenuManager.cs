@@ -91,14 +91,14 @@ public class BaseMenuManager : MonoBehaviour
 
 	public virtual void setStoreButtonVisible(bool visible)
 	{
-		bool flag = visible && GameData.canMakeInAppPurchases();
-		bool flag2 = flag;
-		storeButton.gameObject.SetActiveRecursively(flag2);
+		bool allowed = visible && GameData.canMakeInAppPurchases();
+		bool showStore = allowed;
+		storeButton.gameObject.SetActiveRecursively(showStore);
 		if (GameData.LOG)
 		{
-			Debug.Log("STORE BUTTON VISIBLITY TO: " + flag2);
+			Debug.Log("STORE BUTTON VISIBLITY TO: " + showStore);
 		}
-		if (!coinStoreButtonVisible && flag2)
+		if (!coinStoreButtonVisible && showStore)
 		{
 			AnimationManager.getInstance().alpha(storeButton.transform, 0f, 1f);
 		}

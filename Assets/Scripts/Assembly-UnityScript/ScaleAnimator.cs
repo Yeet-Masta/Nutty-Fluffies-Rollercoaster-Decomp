@@ -26,12 +26,12 @@ public class ScaleAnimator : VGUIAnimator
 	public override void Update()
 	{
 		float timeInterpolator = getTimeInterpolator();
-		Vector2 vector = from + (to - from) * timeInterpolator;
-		float x = vector.x;
+		Vector2 scale = from + (to - from) * timeInterpolator;
+		float x = scale.x;
 		Vector3 localScale = target.localScale;
 		localScale.x = x;
 		target.localScale = localScale;
-		float y = vector.y;
+		float y = scale.y;
 		Vector3 localScale2 = target.localScale;
 		localScale2.y = y;
 		target.localScale = localScale2;

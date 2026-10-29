@@ -46,12 +46,12 @@ public class ButtonPressAnimator : VGUIAnimator
 		float timeInterpolator = getTimeInterpolator();
 		if (target != null)
 		{
-			float num = (1f - Mathf.Sin(timeInterpolator * (float)Math.PI * 0.5f) * factor) * origScale;
-			float x = num;
+			float scale = (1f - Mathf.Sin(timeInterpolator * (float)Math.PI * 0.5f) * factor) * origScale;
+			float x = scale;
 			Vector3 localScale = target.localScale;
 			localScale.x = x;
 			target.localScale = localScale;
-			float y = num;
+			float y = scale;
 			Vector3 localScale2 = target.localScale;
 			localScale2.y = y;
 			target.localScale = localScale2;

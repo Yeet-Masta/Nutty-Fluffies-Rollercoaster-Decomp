@@ -72,14 +72,14 @@ public class VGUINotify : VGUIImageInvoker
 			CancelInvoke("deactivate");
 			activate();
 			GetComponent<Animation>().Stop();
-			float num = 0f;
+			float showTime = 0f;
 			if (showAnimation != null)
 			{
 				GetComponent<Animation>().Play("show");
-				num = showAnimation.length;
+				showTime = showAnimation.length;
 			}
-			Invoke("isShownNow", num);
-			Invoke("hide", duration + num);
+			Invoke("isShownNow", showTime);
+			Invoke("hide", duration + showTime);
 			visible = true;
 			inPlace = false;
 			lastShowTime = (int)Time.time;

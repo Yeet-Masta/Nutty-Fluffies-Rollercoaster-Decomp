@@ -12,12 +12,12 @@ public class MissionListEntry : MonoBehaviour
 
 	public virtual void setDescription(string text)
 	{
-		string[] array = text.Split("|"[0]);
+		string[] parts = text.Split("|"[0]);
 		for (int i = 0; i < description.Length; i++)
 		{
-			if (i < array.Length)
+			if (i < parts.Length)
 			{
-				description[i].setText(array[i]);
+				description[i].setText(parts[i]);
 			}
 			else
 			{

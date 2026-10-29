@@ -65,16 +65,16 @@ public class VGUISwitchObject : VGUIElement
 
 	public virtual void switchTo(int index)
 	{
-		int num = 0;
+		int childIndex = 0;
 		activeObject = null;
 		foreach (Transform transform in this.transform)
 		{
-			transform.gameObject.SetActiveRecursively(num == index);
-			if (num == index)
+			transform.gameObject.SetActiveRecursively(childIndex == index);
+			if (childIndex == index)
 			{
 				activeObject = transform.gameObject;
 			}
-			num++;
+			childIndex++;
 		}
 	}
 

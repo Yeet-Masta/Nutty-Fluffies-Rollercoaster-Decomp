@@ -26,9 +26,9 @@ public class OSAWaveTranslate : ObjectScript
 
 	public override void doFixedUpdate()
 	{
-		float num = Mathf.Sin((Time.time + o) * s);
-		float x = origPos.x + num * xa;
-		float y = origPos.y + num * ya;
+		float wave = Mathf.Sin((Time.time + o) * s);
+		float x = origPos.x + wave * xa;
+		float y = origPos.y + wave * ya;
 		cachedTransform.position = new Vector3(x, y, origPos.z);
 	}
 

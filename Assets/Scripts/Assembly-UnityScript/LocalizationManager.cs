@@ -104,21 +104,21 @@ public class LocalizationManager : MonoBehaviour
 		{
 			translation = new Dictionary<string, string>();
 			currentLanguage = language;
-			string text = FileManager.getInstance().locateAnyFile("language_" + language + ".txt");
-			if (text != null)
+			string path = FileManager.getInstance().locateAnyFile("language_" + language + ".txt");
+			if (path != null)
 			{
-				string text2 = FileManager.getInstance().loadFileText(text);
-				string[] array = text2.Split("\n"[0]);
+				string content = FileManager.getInstance().loadFileText(path);
+				string[] lines = content.Split("\n"[0]);
 				int i = 0;
-				string[] array2 = array;
+				string[] array2 = lines;
 				for (int length = array2.Length; i < length; i++)
 				{
-					string[] array3 = array2[i].Split("="[0]);
-					if (array3.Length == 2)
+					string[] parts = array2[i].Split("="[0]);
+					if (parts.Length == 2)
 					{
-						translation[array3[0].Trim()] = array3[1].Replace("\\n", "\n").Trim();
+						translation[parts[0].Trim()] = parts[1].Replace("\\n", "\n").Trim();
 					}
-					else if (array3.Length > 2)
+					else if (parts.Length > 2)
 					{
 						Debug.LogError("ILLEGAL LINE: " + array2[i]);
 					}

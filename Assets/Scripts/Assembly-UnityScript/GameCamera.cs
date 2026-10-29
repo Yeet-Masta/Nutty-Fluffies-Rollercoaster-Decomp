@@ -75,15 +75,15 @@ public class GameCamera : Camera2D
 			{
 				jumpZoom *= 0.9f;
 			}
-			float num = magnitude * speedZoomFactor;
+			float speedZoom = magnitude * speedZoomFactor;
 			float orthographicSize = cameraRef.orthographicSize;
-			orthographicSize += (initialViewSize + initialZoomAdjust + zoomAdjust + num + jumpZoom - orthographicSize) * zoomStiffness;
+			orthographicSize += (initialViewSize + initialZoomAdjust + zoomAdjust + speedZoom + jumpZoom - orthographicSize) * zoomStiffness;
 			if (!(orthographicSize <= limitedSize.y * 0.5f))
 			{
 				orthographicSize = limitedSize.y * 0.5f;
 			}
-			Vector3 vector = cameraTarget.right * speedOffsetFactor * magnitude;
-			speedOffset += (Vector2)((vector - (Vector3)speedOffset) * offsetStiffness);
+			Vector3 speedOffsetTarget = cameraTarget.right * speedOffsetFactor * magnitude;
+			speedOffset += (Vector2)((speedOffsetTarget - (Vector3)speedOffset) * offsetStiffness);
 			if (vehicle != null && !cart.sqHeightAvailable && vehicle.isFlying)
 			{
 				speedOffset.y -= jumpZoom * 0.05f;
@@ -91,90 +91,90 @@ public class GameCamera : Camera2D
 			halfHeight = orthographicSize;
 			halfWidth = orthographicSize * cameraRef.aspect;
 			float y = cameraTarget.position.y;
-			float num2 = halfHeight * 2f;
+			float viewHeight = halfHeight * 2f;
 			float x = tr.position.x;
 			float y2 = tr.position.y;
-			float num3 = cameraTarget.position.x + viewOffset.x + speedOffset.x;
-			float num4 = y + viewOffset.y + speedOffset.y;
-			x += (num3 - x) * viewStiffness;
-			y2 += (num4 - y2) * viewStiffness;
-			float num5 = 3.5f;
+			float targetX = cameraTarget.position.x + viewOffset.x + speedOffset.x;
+			float targetY = y + viewOffset.y + speedOffset.y;
+			x += (targetX - x) * viewStiffness;
+			y2 += (targetY - y2) * viewStiffness;
+			float margin = 3.5f;
 			float x2 = minLimit.x;
-			float num6 = lastCart.position.x - num5;
-			if (!(num6 >= x2))
+			float rightLimit = lastCart.position.x - margin;
+			if (!(rightLimit >= x2))
 			{
-				num6 = x2;
+				rightLimit = x2;
 			}
-			num6 += 2f * halfWidth;
-			if (!(num6 <= maxLimit.x))
+			rightLimit += 2f * halfWidth;
+			if (!(rightLimit <= maxLimit.x))
 			{
-				num6 = maxLimit.x;
+				rightLimit = maxLimit.x;
 			}
 			if (useDynamicY)
 			{
-				float num7 = calculateDynamicLimit();
-				dynamicYLimit += (num7 - dynamicYLimit) * 0.01f;
+				float dynamicLimit = calculateDynamicLimit();
+				dynamicYLimit += (dynamicLimit - dynamicYLimit) * 0.01f;
 				if (!(dynamicYLimit >= y + minOffsetAboveTarget))
 				{
 					dynamicYLimit = y + minOffsetAboveTarget;
 				}
 			}
 			float y3 = lastCart.position.y;
-			float num8 = dynamicYLimit;
-			float num9 = y3 - num2 + num5;
-			if (!(num8 <= y3 + num2 - num5))
+			float topLimit = dynamicYLimit;
+			float bottomLimit = y3 - viewHeight + margin;
+			if (!(topLimit <= y3 + viewHeight - margin))
 			{
-				num8 = y3 + num2 - num5;
+				topLimit = y3 + viewHeight - margin;
 			}
-			if (!(num8 <= maxLimit.y))
+			if (!(topLimit <= maxLimit.y))
 			{
-				num8 = maxLimit.y;
-				if (!(num9 <= num8 - num2))
+				topLimit = maxLimit.y;
+				if (!(bottomLimit <= topLimit - viewHeight))
 				{
-					num9 = num8 - num2;
+					bottomLimit = topLimit - viewHeight;
 				}
 			}
-			if (!(num9 >= minLimit.y))
+			if (!(bottomLimit >= minLimit.y))
 			{
-				num9 = minLimit.y;
+				bottomLimit = minLimit.y;
 			}
-			if (!(num8 + num2 >= num9))
+			if (!(topLimit + viewHeight >= bottomLimit))
 			{
-				num8 = num9 + num2;
+				topLimit = bottomLimit + viewHeight;
 			}
-			float num10 = y3 + num2 - num5;
-			if (!(num8 <= num10))
+			float maxTop = y3 + viewHeight - margin;
+			if (!(topLimit <= maxTop))
 			{
-				num8 = num10;
+				topLimit = maxTop;
 			}
-			if (!(num8 >= num9 + num2))
+			if (!(topLimit >= bottomLimit + viewHeight))
 			{
-				num8 = num9 + num2;
+				topLimit = bottomLimit + viewHeight;
 			}
 			if (!(x >= x2 + halfWidth))
 			{
 				x = x2 + halfWidth;
 			}
-			else if (!(x <= num6 - halfWidth))
+			else if (!(x <= rightLimit - halfWidth))
 			{
-				x = num6 - halfWidth;
+				x = rightLimit - halfWidth;
 			}
-			if (!(y2 >= num9 + halfHeight))
+			if (!(y2 >= bottomLimit + halfHeight))
 			{
-				y2 = num9 + halfHeight;
+				y2 = bottomLimit + halfHeight;
 			}
-			else if (!(y2 <= num8 - halfHeight))
+			else if (!(y2 <= topLimit - halfHeight))
 			{
-				y2 = num8 - halfHeight;
+				y2 = topLimit - halfHeight;
 			}
 			cameraRef.orthographicSize = orthographicSize;
 			tr.position = new Vector2(x, y2);
 		}
 		if (cameraTarget != null && !GameManager.getInstance().isPlaying() && !vehicle.hasCrashed)
 		{
-			float num12 = 0.01f;
-			cameraRef.orthographicSize = cameraRef.orthographicSize * (1f - num12) + 12f * num12;
-			tr.position = tr.position * (1f - num12) + num12 * cameraTarget.position;
+			float blend = 0.01f;
+			cameraRef.orthographicSize = cameraRef.orthographicSize * (1f - blend) + 12f * blend;
+			tr.position = tr.position * (1f - blend) + blend * cameraTarget.position;
 			float y4 = tr.position.y + 0.05f;
 			Vector3 position = tr.position;
 			position.y = y4;
@@ -189,19 +189,19 @@ public class GameCamera : Camera2D
 		float x = maxLimit.x;
 		float y2 = minLimit.y;
 		float orthographicSize = cameraRef.orthographicSize;
-		float num = orthographicSize;
-		float num2 = orthographicSize * cameraRef.aspect;
-		if (!(currentPosition.x <= x - num2))
+		float extentY = orthographicSize;
+		float extentX = orthographicSize * cameraRef.aspect;
+		if (!(currentPosition.x <= x - extentX))
 		{
-			currentPosition.x = x - num2;
+			currentPosition.x = x - extentX;
 		}
-		if (!(currentPosition.y >= y2 + num))
+		if (!(currentPosition.y >= y2 + extentY))
 		{
-			currentPosition.y = y2 + num;
+			currentPosition.y = y2 + extentY;
 		}
-		else if (!(currentPosition.y <= y - num))
+		else if (!(currentPosition.y <= y - extentY))
 		{
-			currentPosition.y = y - num;
+			currentPosition.y = y - extentY;
 		}
 		return currentPosition;
 	}
@@ -212,25 +212,25 @@ public class GameCamera : Camera2D
 		float yLimit = zlevel.getYLimit(x - 8f);
 		float yLimit2 = zlevel.getYLimit(x);
 		float yLimit3 = zlevel.getYLimit(x + 8f);
-		float num = yLimit * 0.3f + yLimit2 * 0.2f + yLimit3 * 0.5f;
-		if (!(num >= -1000f))
+		float limit = yLimit * 0.3f + yLimit2 * 0.2f + yLimit3 * 0.5f;
+		if (!(limit >= -1000f))
 		{
-			num = maxLimit.y;
+			limit = maxLimit.y;
 		}
-		float num2 = 15f;
+		float margin = 15f;
 		if (!(yLimit3 >= yLimit - 2f))
 		{
-			num2 = 5f;
+			margin = 5f;
 		}
-		if (!(num >= yLimit + num2))
+		if (!(limit >= yLimit + margin))
 		{
-			num = yLimit + num2;
+			limit = yLimit + margin;
 		}
-		if (!(num >= yLimit2 + num2))
+		if (!(limit >= yLimit2 + margin))
 		{
-			num = yLimit2 + num2;
+			limit = yLimit2 + margin;
 		}
-		return num;
+		return limit;
 	}
 
 	public virtual void setLimits(Vector2 topLeft, Vector2 bottomRight)

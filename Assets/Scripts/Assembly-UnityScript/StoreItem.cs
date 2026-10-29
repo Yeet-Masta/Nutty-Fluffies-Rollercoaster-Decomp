@@ -53,16 +53,16 @@ public class StoreItem
 
 	public static int getDefaultPrice(string id)
 	{
-		int num = 0;
+		int index = 0;
 		DefaultPrice[] dEFAULT_PRICES = DEFAULT_PRICES;
 		int length = dEFAULT_PRICES.Length;
-		while (num < length)
+		while (index < length)
 		{
-			if (dEFAULT_PRICES[num].id == id)
+			if (dEFAULT_PRICES[index].id == id)
 			{
-				return dEFAULT_PRICES[num].price;
+				return dEFAULT_PRICES[index].price;
 			}
-			num++;
+			index++;
 		}
 		if (GameData.LOG)
 		{

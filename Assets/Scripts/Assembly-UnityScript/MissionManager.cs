@@ -36,16 +36,16 @@ public class MissionManager
 	{
 		List<Mission> list = new List<Mission>();
 		List<string> list2 = new List<string>();
-		string text = FileManager.getInstance().loadFileText(file);
-		if (text == null)
+		string json = FileManager.getInstance().loadFileText(file);
+		if (json == null)
 		{
 			return list;
 		}
 		else
 		{
-			JSONObject jSONObject = new JSONObject(text);
+			JSONObject jSONObject = new JSONObject(json);
 			JSONObject field = jSONObject.GetField("missions");
-			float num = PlayerPrefs.GetFloat("DP_MISSION_SCORE_FACTOR", 1f);
+			float scoreFactor = PlayerPrefs.GetFloat("DP_MISSION_SCORE_FACTOR", 1f);
 			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(field.list);
 			while (enumerator.MoveNext())
 			{
@@ -57,19 +57,19 @@ public class MissionManager
 				JSONObject jSONObject2 = (JSONObject)obj;
 				string str = jSONObject2.GetFieldSafe("description", new JSONObject(string.Empty)).str;
 				UnityRuntimeServices.Update(enumerator, jSONObject2);
-				int num2 = PlayerPrefs.GetInt("MISSION_" + str + "_FLAGS", 0);
-				if ((num2 & 2) == 0)
+				int savedFlags = PlayerPrefs.GetInt("MISSION_" + str + "_FLAGS", 0);
+				if ((savedFlags & 2) == 0)
 				{
 					Mission mission = new Mission();
 					mission.id = str;
-					mission.flags = num2;
+					mission.flags = savedFlags;
 					mission.description = LocalizationManager.localize(jSONObject2.GetFieldSafe("description", new JSONObject(string.Empty)).str);
 					UnityRuntimeServices.Update(enumerator, jSONObject2);
 					mission.activeRounds = (int)jSONObject2.GetFieldSafe("activeRounds", new JSONObject(0f)).n;
 					UnityRuntimeServices.Update(enumerator, jSONObject2);
 					mission.time = (float)jSONObject2.GetFieldSafe("time", new JSONObject(0f)).n;
 					UnityRuntimeServices.Update(enumerator, jSONObject2);
-					mission.score = (int)(jSONObject2.GetFieldSafe("score", new JSONObject(0f)).n * (double)num);
+					mission.score = (int)(jSONObject2.GetFieldSafe("score", new JSONObject(0f)).n * (double)scoreFactor);
 					UnityRuntimeServices.Update(enumerator, jSONObject2);
 					mission.type = (int)jSONObject2.GetFieldSafe("type", new JSONObject(0f)).n;
 					UnityRuntimeServices.Update(enumerator, jSONObject2);
@@ -83,7 +83,7 @@ public class MissionManager
 					UnityRuntimeServices.Update(enumerator, jSONObject2);
 					mission.originalScore = (int)jSONObject2.GetFieldSafe("score", new JSONObject(0f)).n;
 					UnityRuntimeServices.Update(enumerator, jSONObject2);
-					mission.flags |= num2;
+					mission.flags |= savedFlags;
 					mission.attempts = PlayerPrefs.GetInt("MISSION_" + str + "_ATTEMPTS", 0);
 					list.Add(mission);
 					list2.Add(jSONObject2.GetFieldSafe("description", new JSONObject(string.Empty)).str);
@@ -102,7 +102,7 @@ public class MissionManager
 
 	public virtual void updateMissionScores()
 	{
-		float num = PlayerPrefs.GetFloat("DP_MISSION_SCORE_FACTOR", 1f);
+		float scoreFactor = PlayerPrefs.GetFloat("DP_MISSION_SCORE_FACTOR", 1f);
 		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(missionList);
 		while (enumerator.MoveNext())
 		{
@@ -112,7 +112,7 @@ public class MissionManager
 				obj = RuntimeServices.Coerce(obj, typeof(Mission));
 			}
 			Mission mission = (Mission)obj;
-			mission.score = (int)((float)mission.originalScore * num);
+			mission.score = (int)((float)mission.originalScore * scoreFactor);
 			UnityRuntimeServices.Update(enumerator, mission);
 		}
 	}
@@ -190,7 +190,7 @@ public class MissionManager
 
 	public virtual int getActiveCompletedMissionScore()
 	{
-		int num = 0;
+		int total = 0;
 		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(missionList);
 		while (enumerator.MoveNext())
 		{
@@ -202,10 +202,10 @@ public class MissionManager
 			Mission mission = (Mission)obj;
 			if ((mission.flags & 1) != 0 && (mission.flags & 2) == 0)
 			{
-				num += mission.score;
+				total += mission.score;
 				UnityRuntimeServices.Update(enumerator, mission);
 			}
 		}
-		return num;
+		return total;
 	}
 }

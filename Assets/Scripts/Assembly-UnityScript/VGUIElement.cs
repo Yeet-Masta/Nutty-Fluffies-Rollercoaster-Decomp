@@ -45,16 +45,16 @@ public class VGUIElement : MonoBehaviour
 	public virtual VGUIElement getChildElement(string name)
 	{
 		Component[] componentsInChildren = gameObject.GetComponentsInChildren(typeof(VGUIElement), true);
-		int num = 0;
+		int index = 0;
 		Component[] array = componentsInChildren;
 		int length = array.Length;
-		while (num < length)
+		while (index < length)
 		{
-			if (array[num].name == name)
+			if (array[index].name == name)
 			{
-				return array[num] as VGUIElement;
+				return array[index] as VGUIElement;
 			}
-			num++;
+			index++;
 		}
 		return null;
 	}

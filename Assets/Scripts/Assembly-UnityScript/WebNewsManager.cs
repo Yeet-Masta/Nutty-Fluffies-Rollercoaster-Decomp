@@ -158,17 +158,17 @@ public class WebNewsManager : MonoBehaviour
 
 	private void parseDiv(IEnumerator se)
 	{
-		string text = null;
-		string text2 = null;
+		string attribute = null;
+		string value = null;
 		while (!RuntimeServices.EqualityOperator(se.Current, ">"[0]))
 		{
-			text = string.Empty;
-			text2 = string.Empty;
+			attribute = string.Empty;
+			value = string.Empty;
 			if (!isWhiteSpace(RuntimeServices.UnboxChar(se.Current)))
 			{
 				while (!isWhiteSpace(RuntimeServices.UnboxChar(se.Current)) && !RuntimeServices.EqualityOperator(se.Current, "="[0]) && !RuntimeServices.EqualityOperator(se.Current, ">"[0]))
 				{
-					text += se.Current;
+					attribute += se.Current;
 					se.MoveNext();
 				}
 				while (isWhiteSpace(RuntimeServices.UnboxChar(se.Current)))
@@ -184,11 +184,11 @@ public class WebNewsManager : MonoBehaviour
 					}
 					while (!isWhiteSpace(RuntimeServices.UnboxChar(se.Current)) && !RuntimeServices.EqualityOperator(se.Current, ">"[0]))
 					{
-						text2 += se.Current;
+						value += se.Current;
 						se.MoveNext();
 					}
 				}
-				if (text == "id" && text2 == "\"version\"")
+				if (attribute == "id" && value == "\"version\"")
 				{
 					parseVersionText(se);
 				}
@@ -207,13 +207,13 @@ public class WebNewsManager : MonoBehaviour
 		{
 			se.MoveNext();
 		}
-		string text = string.Empty;
+		string tagName = string.Empty;
 		while (!isWhiteSpace(RuntimeServices.UnboxChar(se.Current)) && !RuntimeServices.EqualityOperator(se.Current, ">"[0]))
 		{
-			text += se.Current;
+			tagName += se.Current;
 			se.MoveNext();
 		}
-		if (text.ToLower() == "div")
+		if (tagName.ToLower() == "div")
 		{
 			parseDiv(se);
 		}

@@ -19,9 +19,9 @@ public class ControlTutorial : TutorialPage
 		}
 		if (specialCartType == -1 && specialExtra != null)
 		{
-			foreach (GameObject item in specialExtra)
+			foreach (GameObject extra in specialExtra)
 			{
-				item.SetActiveRecursively(false);
+				extra.SetActiveRecursively(false);
 			}
 		}
 		shown = false;

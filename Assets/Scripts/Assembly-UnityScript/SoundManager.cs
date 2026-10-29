@@ -55,9 +55,9 @@ public class SoundManager : MonoBehaviour
 
 	public virtual AudioClip playRandomSound(AudioClip[] clips)
 	{
-		int num = (int)(UnityEngine.Random.value * 123456f);
-		num %= clips.Length;
-		GeneralSoundEffects.playSound(clips[num]);
-		return clips[num];
+		int index = (int)(UnityEngine.Random.value * 123456f);
+		index %= clips.Length;
+		GeneralSoundEffects.playSound(clips[index]);
+		return clips[index];
 	}
 }

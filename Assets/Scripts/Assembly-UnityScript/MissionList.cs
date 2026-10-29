@@ -65,11 +65,11 @@ public class MissionList : VGUIList
 
 	private bool needsAnimation()
 	{
-		int num = animatedRow;
-		while (num < listedMissions.Count - 1)
+		int row = animatedRow;
+		while (row < listedMissions.Count - 1)
 		{
-			num++;
-			if (listedMissions[num].testFlag(1))
+			row++;
+			if (listedMissions[row].testFlag(1))
 			{
 				return true;
 			}
@@ -119,18 +119,18 @@ public class MissionList : VGUIList
 			return;
 		}
 		List<Mission> missions = RollerCoasterMissions.getInstance().getMissions(GameData.MAX_ACTIVE_MISSIONS, false);
-		int num = 0;
+		int reward = 0;
 		foreach (Mission mission in missions)
 		{
 			if (mission.testFlag(1))
 			{
-				num += mission.score;
+				reward += mission.score;
 				mission.flags |= 2;
 			}
 		}
-		if (num > 0)
+		if (reward > 0)
 		{
-			GameData.addTokens(num);
+			GameData.addTokens(reward);
 			BaseMenuManager.getInstance().updateTokenAmount();
 		}
 		wasActivated = false;

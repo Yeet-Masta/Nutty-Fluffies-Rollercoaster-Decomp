@@ -114,36 +114,36 @@ public class VGUIAnimator : MonoBehaviour
 			startTime = Time.realtimeSinceStartup;
 			firstUpdate = false;
 		}
-		float num = (Time.realtimeSinceStartup - startTime) / duration;
+		float t = (Time.realtimeSinceStartup - startTime) / duration;
 		if (reverse)
 		{
-			num = 1f - num;
-			if (!(num > 0f))
+			t = 1f - t;
+			if (!(t > 0f))
 			{
-				num = 0f;
+				t = 0f;
 			}
 		}
-		else if (!(num < 1f))
+		else if (!(t < 1f))
 		{
-			num = 1f;
+			t = 1f;
 		}
 		switch (interpolator)
 		{
 		case Interpolator.LINEAR:
-			return num;
+			return t;
 		case Interpolator.OVERSHOOT:
-			return getOvershootEaseOutInterpolator(num);
+			return getOvershootEaseOutInterpolator(t);
 		case Interpolator.EASE_IN_OUT:
-			return 0.5f - Mathf.Cos(num * (float)Math.PI) * 0.5f;
+			return 0.5f - Mathf.Cos(t * (float)Math.PI) * 0.5f;
 		default:
-			return num;
+			return t;
 		}
 	}
 
 	public virtual void checkComplete(float x)
 	{
-		float num = (Time.realtimeSinceStartup - startTime) / duration;
-		if ((!(num < 1f) && !reverse) || (!(1f - num > 0f) && reverse))
+		float t = (Time.realtimeSinceStartup - startTime) / duration;
+		if ((!(t < 1f) && !reverse) || (!(1f - t > 0f) && reverse))
 		{
 			deactivate();
 		}

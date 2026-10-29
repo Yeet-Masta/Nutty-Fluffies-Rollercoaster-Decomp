@@ -82,12 +82,12 @@ public class ResultList : VGUIList
 		Component[] array = componentsInChildren;
 		for (int length = array.Length; i < length; i++)
 		{
-			int num2 = GameManager.getInstance().getSpecialCartType();
-			if (num2 == 0 && ((CartImage)array[i]).gameObject.name != "CartImageFirst")
+			int specialCart = GameManager.getInstance().getSpecialCartType();
+			if (specialCart == 0 && ((CartImage)array[i]).gameObject.name != "CartImageFirst")
 			{
-				num2 = -1;
+				specialCart = -1;
 			}
-			((CartImage)array[i]).activate(GameManager.getInstance().getTrainType(), num2);
+			((CartImage)array[i]).activate(GameManager.getInstance().getTrainType(), specialCart);
 		}
 		listEnryAnimator.target = component.transform;
 		listEnryAnimator.activate();

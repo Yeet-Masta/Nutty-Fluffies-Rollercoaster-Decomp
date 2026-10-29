@@ -12,12 +12,12 @@ public class NarrativeCommand
 	public NarrativeCommand(int position, string text)
 	{
 		this.position = position;
-		string[] array = text.Split(" "[0]);
-		name = array[0];
-		parameters = new string[array.Length - 1];
-		for (int i = 1; i < array.Length; i++)
+		string[] words = text.Split(" "[0]);
+		name = words[0];
+		parameters = new string[words.Length - 1];
+		for (int i = 1; i < words.Length; i++)
 		{
-			parameters[i - 1] = array[i];
+			parameters[i - 1] = words[i];
 		}
 	}
 

@@ -55,9 +55,9 @@ public class Magnet : Special
 
 	public virtual void FixedUpdate()
 	{
-		int num = currentFrame % gridSize;
-		int num2 = currentFrame / gridSize;
-		effectMaterial.SetTextureOffset("_MainTex", new Vector2(frameStep * (float)num, frameStep * (float)num2));
+		int column = currentFrame % gridSize;
+		int row = currentFrame / gridSize;
+		effectMaterial.SetTextureOffset("_MainTex", new Vector2(frameStep * (float)column, frameStep * (float)row));
 		currentFrame++;
 		if (currentFrame >= gridSize * gridSize)
 		{
@@ -79,16 +79,16 @@ public class Magnet : Special
 			{
 				if (Physics.Raycast(carts[j].tr.position, -carts[j].tr.up, distanceTreshold, LevelSpline.SPLINE_LAYER))
 				{
-					float num3 = power;
+					float pull = power;
 					if (!(Vector3.Dot(carts[j].tr.up, carts[j].rb.velocity) >= 0f))
 					{
-						num3 *= 3f;
+						pull *= 3f;
 					}
 					if (!carts[j].rb.isKinematic && !(carts[j].rb.velocity.sqrMagnitude <= 600f))
 					{
 						carts[j].rb.velocity = carts[j].rb.velocity * 0.992f;
 					}
-					carts[j].wheels[0].rb.AddForce(-carts[j].tr.up * num3);
+					carts[j].wheels[0].rb.AddForce(-carts[j].tr.up * pull);
 				}
 			}
 		}

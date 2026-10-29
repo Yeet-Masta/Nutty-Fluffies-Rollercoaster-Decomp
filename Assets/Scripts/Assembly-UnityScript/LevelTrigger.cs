@@ -44,17 +44,17 @@ public class LevelTrigger : LevelEntity, Parametrizable
 			return;
 		}
 		ParamList parameterList = getParameterList();
-		int num = 0;
-		string[] array = sourceParams.Split("|"[0]);
-		if (array.Length > parameterList.@params.Length)
+		int paramIndex = 0;
+		string[] values = sourceParams.Split("|"[0]);
+		if (values.Length > parameterList.@params.Length)
 		{
 			return;
 		}
-		foreach (ParamList.Param item in parameterList.@params)
+		foreach (ParamList.Param param in parameterList.@params)
 		{
-			if (num < array.Length)
+			if (paramIndex < values.Length)
 			{
-				setParam(item.tag, array[num++]);
+				setParam(param.tag, values[paramIndex++]);
 			}
 		}
 	}

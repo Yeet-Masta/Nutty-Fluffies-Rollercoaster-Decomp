@@ -59,21 +59,21 @@ public class BlinkAnimator : VGUIAnimator
 	{
 		if (activated)
 		{
-			float num = (Time.realtimeSinceStartup - startTime) / duration;
-			if (!(num <= 1f))
+			float progress = (Time.realtimeSinceStartup - startTime) / duration;
+			if (!(progress <= 1f))
 			{
 				Invoke("activate", blinkRate);
 				activated = false;
-				num = 1f;
+				progress = 1f;
 			}
-			float num2 = initialScale + (0.5f - Mathf.Cos(num * (float)Math.PI * 2f) * 0.5f) * (scaleFactor - initialScale);
+			float scale = initialScale + (0.5f - Mathf.Cos(progress * (float)Math.PI * 2f) * 0.5f) * (scaleFactor - initialScale);
 			if (target != null)
 			{
-				float x = num2;
+				float x = scale;
 				Vector3 localScale = target.localScale;
 				localScale.x = x;
 				target.localScale = localScale;
-				float y = num2;
+				float y = scale;
 				Vector3 localScale2 = target.localScale;
 				localScale2.y = y;
 				target.localScale = localScale2;

@@ -76,8 +76,8 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 	public virtual void Start()
 	{
 		valueType = VGUIImageInvokerValueType.integer;
-		bool flag = !invokeOnStart || startAmount == 0;
-		bool silent = flag;
+		bool quiet = !invokeOnStart || startAmount == 0;
+		bool silent = quiet;
 		if (saveCurrentStepToPrefs)
 		{
 			setCurrentStep(PlayerPrefs.GetInt(saveCurrentStepPrefsName, firstActiveStep), silent);
@@ -222,13 +222,13 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 		}
 		for (int i = 0; i < pages.Length; i++)
 		{
-			bool flag = i == currentStep || i == lastStep;
-			bool flag2 = flag;
-			if (flag2 && !pages[i].active)
+			bool visible = i == currentStep || i == lastStep;
+			bool show = visible;
+			if (show && !pages[i].active)
 			{
 				pages[i].SetActiveRecursively(true);
 			}
-			if (!flag2)
+			if (!show)
 			{
 				pages[i].SetActiveRecursively(false);
 			}
@@ -245,15 +245,15 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 
 	public virtual int getAmountOfVisiblePages()
 	{
-		int num = 0;
+		int count = 0;
 		for (int i = 0; i < pages.Length; i++)
 		{
 			if (pages[i].active)
 			{
-				num++;
+				count++;
 			}
 		}
-		return num;
+		return count;
 	}
 
 	public virtual void setPage(GameObject page, int index)
@@ -272,18 +272,18 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 				continue;
 			}
 			UnityEngine.Object.Destroy(pages[i]);
-			GameObject[] array = new GameObject[pages.Length - 1];
-			int num = 0;
+			GameObject[] remaining = new GameObject[pages.Length - 1];
+			int index = 0;
 			for (int j = 0; j < pages.Length; j++)
 			{
 				if (j != i)
 				{
-					pages[j].transform.localPosition = new Vector3((float)num * oneStepLength, 0f, 0f);
-					array[num++] = pages[j];
+					pages[j].transform.localPosition = new Vector3((float)index * oneStepLength, 0f, 0f);
+					remaining[index++] = pages[j];
 				}
 			}
-			pages = array;
-			maxSteps = array.Length - 1;
+			pages = remaining;
+			maxSteps = remaining.Length - 1;
 			break;
 		}
 	}
@@ -301,21 +301,21 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 				break;
 			}
 		}
-		int num = 0;
-		int num2 = 0;
-		foreach (GameObject item in pages)
+		int visibleCount = 0;
+		int pageIndex = 0;
+		foreach (GameObject pageObject in pages)
 		{
-			if (item.active)
+			if (pageObject.active)
 			{
 				if (reorder)
 				{
-					pages[num2].transform.localPosition = new Vector3((float)num * oneStepLength, 0f, 0f);
+					pages[pageIndex].transform.localPosition = new Vector3((float)visibleCount * oneStepLength, 0f, 0f);
 				}
-				num++;
+				visibleCount++;
 			}
-			num2++;
+			pageIndex++;
 		}
-		maxSteps = num - 1;
+		maxSteps = visibleCount - 1;
 	}
 
 	public virtual void removePages()
@@ -341,8 +341,8 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 			if (!(Mathf.Abs(t.position.x - targetPos) <= scrollerNearEnoughtBias))
 			{
 				float x = t.position.x;
-				float num = stepSlideSpeed * Time.deltaTime;
-				float x2 = x * (1f - num) + targetPos * num;
+				float blend = stepSlideSpeed * Time.deltaTime;
+				float x2 = x * (1f - blend) + targetPos * blend;
 				Vector3 position = t.position;
 				position.x = x2;
 				t.position = position;
@@ -369,19 +369,19 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 	{
 		if (fingerIndex == 0)
 		{
-			float num = Mathf.Abs(dragStartX - transform.position.x);
-			if (!(num >= oneStepLength) && !(Mathf.Abs(scrollSpeed) <= fastSwipeTreshold))
+			float dragDistance = Mathf.Abs(dragStartX - transform.position.x);
+			if (!(dragDistance >= oneStepLength) && !(Mathf.Abs(scrollSpeed) <= fastSwipeTreshold))
 			{
-				num = oneStepLength;
+				dragDistance = oneStepLength;
 			}
-			float num2 = Mathf.Round(num / oneStepLength);
+			float steps = Mathf.Round(dragDistance / oneStepLength);
 			switch (direction)
 			{
 			case FingerGestures.SwipeDirection.Left:
-				scrollStepsRight((int)num2);
+				scrollStepsRight((int)steps);
 				break;
 			case FingerGestures.SwipeDirection.Right:
-				scrollStepsLeft((int)num2);
+				scrollStepsLeft((int)steps);
 				break;
 			}
 		}
@@ -391,8 +391,8 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 	{
 		if (fingerIndex == 0)
 		{
-			Vector2 vector = new Vector2(startPos.x / (float)Screen.width, startPos.y / (float)Screen.height);
-			if (!(vector.x < gestureStartAreaTopLeftNormalized.x) && !(vector.y < gestureStartAreaTopLeftNormalized.y) && !(vector.x > gestureStartAreaBottomRightNormalized.x) && vector.y <= gestureStartAreaBottomRightNormalized.y)
+			Vector2 normalizedStart = new Vector2(startPos.x / (float)Screen.width, startPos.y / (float)Screen.height);
+			if (!(normalizedStart.x < gestureStartAreaTopLeftNormalized.x) && !(normalizedStart.y < gestureStartAreaTopLeftNormalized.y) && !(normalizedStart.x > gestureStartAreaBottomRightNormalized.x) && normalizedStart.y <= gestureStartAreaBottomRightNormalized.y)
 			{
 				Vector3 worldPos = GetWorldPos(fingerPos);
 				dragAnchorX = transform.position.x - worldPos.x;

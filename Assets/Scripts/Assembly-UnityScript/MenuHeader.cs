@@ -13,19 +13,19 @@ public class MenuHeader : MonoBehaviour
 			gameObject.SetActiveRecursively(false);
 			return;
 		}
-		string text = LocalizationManager.localize(title);
-		string[] array = text.Split("\n"[0]);
+		string localized = LocalizationManager.localize(title);
+		string[] lines = localized.Split("\n"[0]);
 		gameObject.SetActiveRecursively(true);
-		if (array.Length == 1)
+		if (lines.Length == 1)
 		{
 			twoLine[0].setText(string.Empty);
 			twoLine[1].setText(string.Empty);
-			oneLine.setText(array[0]);
+			oneLine.setText(lines[0]);
 		}
-		else if (array.Length == 2)
+		else if (lines.Length == 2)
 		{
-			twoLine[0].setText(array[0]);
-			twoLine[1].setText(array[1]);
+			twoLine[0].setText(lines[0]);
+			twoLine[1].setText(lines[1]);
 			oneLine.setText(string.Empty);
 		}
 		else

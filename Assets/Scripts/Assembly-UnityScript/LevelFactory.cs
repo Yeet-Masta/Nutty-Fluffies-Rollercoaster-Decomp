@@ -82,28 +82,28 @@ public class LevelFactory
 
 	public virtual void applyLayerZs(Level level)
 	{
-		float num = 0f;
-		float num2 = 0f;
+		float nearZ = 0f;
+		float farZ = 0f;
 		Component[] componentsInChildren = level.gameObject.transform.GetComponentsInChildren(typeof(LevelLayer), true);
 		foreach (Component component in componentsInChildren)
 		{
 			LevelLayer levelLayer = component as LevelLayer;
-			float num3 = -levelLayer.layer * 100;
-			float z = num3;
+			float layerZ = -levelLayer.layer * 100;
+			float z = layerZ;
 			Vector3 localPosition = levelLayer.gameObject.transform.localPosition;
 			localPosition.z = z;
 			levelLayer.gameObject.transform.localPosition = localPosition;
-			if (!(num3 >= num))
+			if (!(layerZ >= nearZ))
 			{
-				num = num3;
+				nearZ = layerZ;
 			}
-			if (!(num3 <= num2))
+			if (!(layerZ <= farZ))
 			{
-				num2 = num3;
+				farZ = layerZ;
 			}
 		}
-		Camera.main.nearClipPlane = num - 100f;
-		Camera.main.farClipPlane = num2 + 100f;
+		Camera.main.nearClipPlane = nearZ - 100f;
+		Camera.main.farClipPlane = farZ + 100f;
 	}
 
 	public virtual void createLayerObjects(LevelLayer layer, ObjectListData objects, LevelLayerData layerData)
@@ -200,14 +200,14 @@ public class LevelFactory
 			}
 		}
 		Component[] componentsInChildren3 = level.gameObject.GetComponentsInChildren(typeof(LevelTrigger), true);
-		foreach (Component item in componentsInChildren3)
+		foreach (Component child in componentsInChildren3)
 		{
-			(item as LevelTrigger).prepare();
+			(child as LevelTrigger).prepare();
 		}
 		Component[] componentsInChildren4 = level.gameObject.GetComponentsInChildren(typeof(ObjectScript), true);
-		foreach (Component item in componentsInChildren4)
+		foreach (Component child in componentsInChildren4)
 		{
-			(item as ObjectScript).prepare();
+			(child as ObjectScript).prepare();
 		}
 	}
 

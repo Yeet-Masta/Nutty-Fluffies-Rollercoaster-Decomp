@@ -27,22 +27,22 @@ public class NarrativeCommandReader
 
 	public static UnityScript.Lang.Array findAllCommands(string from)
 	{
-		UnityScript.Lang.Array array = new UnityScript.Lang.Array();
-		for (int num = from.IndexOf("{"); num > -1; num = from.IndexOf("{", num))
+		UnityScript.Lang.Array commands = new UnityScript.Lang.Array();
+		for (int start = from.IndexOf("{"); start > -1; start = from.IndexOf("{", start))
 		{
-			int num2 = from.IndexOf("}", num);
-			array.Push(new NarrativeCommand(num + 1, from.Substring(num + 1, num2 - num - 1)));
-			from = from.Remove(num, num2 - num + 1);
+			int end = from.IndexOf("}", start);
+			commands.Push(new NarrativeCommand(start + 1, from.Substring(start + 1, end - start - 1)));
+			from = from.Remove(start, end - start + 1);
 		}
-		return array;
+		return commands;
 	}
 
 	public static string removeAllCommands(string from)
 	{
-		for (int num = from.IndexOf("{"); num > -1; num = from.IndexOf("{", num))
+		for (int start = from.IndexOf("{"); start > -1; start = from.IndexOf("{", start))
 		{
-			int num2 = from.IndexOf("}", num);
-			from = from.Remove(num, num2 - num + 1);
+			int end = from.IndexOf("}", start);
+			from = from.Remove(start, end - start + 1);
 		}
 		return from;
 	}

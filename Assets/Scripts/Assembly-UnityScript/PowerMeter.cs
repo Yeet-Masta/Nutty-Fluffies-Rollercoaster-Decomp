@@ -115,12 +115,12 @@ public class PowerMeter : MonoBehaviour
 	{
 		currentValue = value;
 		barAnimator.from.y = bar.localScale.y;
-		float num = currentValue;
-		if (!(num <= maxValue))
+		float clamped = currentValue;
+		if (!(clamped <= maxValue))
 		{
-			num = maxValue;
+			clamped = maxValue;
 		}
-		barAnimator.to.y = maxValue == 0f ? 0f : (num / maxValue * barMax);
+		barAnimator.to.y = maxValue == 0f ? 0f : (clamped / maxValue * barMax);
 		barAnimator.activate();
 		bar.GetComponent<Renderer>().enabled = true;
 	}
@@ -150,14 +150,14 @@ public class PowerMeter : MonoBehaviour
 	public virtual void lightInvoke()
 	{
 		lightPhase++;
-		int num = lightPhase & 1;
+		int phase = lightPhase & 1;
 		if (lightBarLevel >= 1)
 		{
 			foreach (VGUIImagesTK2D starLight in starLights1)
 			{
-				starLight.setImage(num);
+				starLight.setImage(phase);
 			}
-			int image = (num + 1) & 1;
+			int image = (phase + 1) & 1;
 			foreach (VGUIImagesTK2D starLight in starLights2)
 			{
 				starLight.setImage(image);
@@ -175,15 +175,15 @@ public class PowerMeter : MonoBehaviour
 	{
 		if (leftBarLights.Length != 0 && maxValue != 0f)
 		{
-			float num = currentValue;
-			int num2 = (int)(num * (float)leftBarLights.Length / maxValue);
-			if (num2 >= leftBarLights.Length)
+			float current = currentValue;
+			int lightLevel = (int)(current * (float)leftBarLights.Length / maxValue);
+			if (lightLevel >= leftBarLights.Length)
 			{
-				num2 = leftBarLights.Length - 1;
+				lightLevel = leftBarLights.Length - 1;
 			}
-			leftBarLights[num2].setImage(1);
-			rightBarLights[num2].setImage(1);
-			lightBarLevel = num2;
+			leftBarLights[lightLevel].setImage(1);
+			rightBarLights[lightLevel].setImage(1);
+			lightBarLevel = lightLevel;
 		}
 	}
 
@@ -192,32 +192,32 @@ public class PowerMeter : MonoBehaviour
 		int result;
 		if (resultEntryCounter < resultEntries.Length)
 		{
-			float num = value;
-			float num2 = num / maxValue;
-			if (!(num2 <= 1f))
+			float score = value;
+			float factor = score / maxValue;
+			if (!(factor <= 1f))
 			{
-				num2 = 1f;
+				factor = 1f;
 			}
 			if (GameData.LOG)
 			{
-				Debug.Log("FACTOR OF " + name + " = " + num2);
+				Debug.Log("FACTOR OF " + name + " = " + factor);
 			}
-			int num3 = 0;
+			int entryIndex = 0;
 			while (true)
 			{
-				if (num3 < resultEntryCounter)
+				if (entryIndex < resultEntryCounter)
 				{
-					if (!(Mathf.Abs(resultEntries[num3].scale - num2) >= 0.1f))
+					if (!(Mathf.Abs(resultEntries[entryIndex].scale - factor) >= 0.1f))
 					{
 						result = 0;
 						break;
 					}
-					num3++;
+					entryIndex++;
 					continue;
 				}
 				resultEntries[resultEntryCounter].playerName.setText(name);
-				resultEntries[resultEntryCounter].scale = num2;
-				resultEntries[resultEntryCounter].transform.localPosition = resultScaleStart + resultScaleDelta * num2;
+				resultEntries[resultEntryCounter].scale = factor;
+				resultEntries[resultEntryCounter].transform.localPosition = resultScaleStart + resultScaleDelta * factor;
 				resultEntryCounter++;
 				result = 1;
 				break;
@@ -232,12 +232,12 @@ public class PowerMeter : MonoBehaviour
 
 	public virtual void startResultEntryAnimations()
 	{
-		int num = 0;
+		int index = 0;
 		int i = 0;
 		ResultEntry[] array = resultEntries;
 		for (int length = array.Length; i < length; i++)
 		{
-			if (num < resultEntryCounter)
+			if (index < resultEntryCounter)
 			{
 				array[i].gameObject.SetActiveRecursively(true);
 				array[i].animator.activate();
@@ -246,7 +246,7 @@ public class PowerMeter : MonoBehaviour
 			{
 				array[i].gameObject.SetActiveRecursively(false);
 			}
-			num++;
+			index++;
 		}
 	}
 
@@ -289,17 +289,17 @@ public class PowerMeter : MonoBehaviour
 				}
 			}
 		}
-		int num = 0;
-		int num2 = 0;
+		int better = 0;
+		int worse = 0;
 		List<OnlineServiceManager.LeaderboardScore> list3 = new List<OnlineServiceManager.LeaderboardScore>();
 		foreach (OnlineServiceManager.LeaderboardScore leaderboardScore2 in list)
 		{
 			if (showResultEntry(leaderboardScore2.name, leaderboardScore2.score))
 			{
-				num++;
+				better++;
 				list3.Add(leaderboardScore2);
 			}
-			if (num >= 2)
+			if (better >= 2)
 			{
 				break;
 			}
@@ -308,15 +308,15 @@ public class PowerMeter : MonoBehaviour
 		{
 			if (showResultEntry(leaderboardScore3.name, leaderboardScore3.score))
 			{
-				num2++;
+				worse++;
 				list3.Add(leaderboardScore3);
 			}
-			if (num + num2 >= 3)
+			if (better + worse >= 3)
 			{
 				break;
 			}
 		}
-		if (num + num2 < 3)
+		if (better + worse < 3)
 		{
 			foreach (OnlineServiceManager.LeaderboardScore leaderboardScore4 in list)
 			{
@@ -324,10 +324,10 @@ public class PowerMeter : MonoBehaviour
 				{
 					if (showResultEntry(leaderboardScore4.name, leaderboardScore4.score))
 					{
-						num++;
+						better++;
 						list3.Add(leaderboardScore4);
 					}
-					if (num >= 3)
+					if (better >= 3)
 					{
 						break;
 					}
@@ -336,7 +336,7 @@ public class PowerMeter : MonoBehaviour
 		}
 		if (GameData.LOG)
 		{
-			Debug.Log("BETTER: " + num + ", WORSE: " + num2);
+			Debug.Log("BETTER: " + better + ", WORSE: " + worse);
 		}
 	}
 }

@@ -86,7 +86,7 @@ public class MessageBox : BaseMenu
 		{
 			disablePaperEmitters();
 		}
-		string[] array = message.Split("\n"[0]);
+		string[] lines = message.Split("\n"[0]);
 		base.activate();
 		titleText.setText(title);
 		continueButton.SetActiveRecursively(!errorMessage);
@@ -99,11 +99,11 @@ public class MessageBox : BaseMenu
 			tapjoyButton.SetActiveRecursively(false);
 		}
 		int i;
-		for (i = 0; i < array.Length && i < messageText.Length; i++)
+		for (i = 0; i < lines.Length && i < messageText.Length; i++)
 		{
-			messageText[i].setText(array[i]);
+			messageText[i].setText(lines[i]);
 		}
-		for (int j = array.Length; j < messageText.Length; j++)
+		for (int j = lines.Length; j < messageText.Length; j++)
 		{
 			messageText[i].setText(string.Empty);
 		}

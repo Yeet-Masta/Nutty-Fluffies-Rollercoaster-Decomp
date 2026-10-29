@@ -46,13 +46,13 @@ public class StoreBaseMenu : BaseMenu
 
 	public virtual StoreItemButton[] instantiateStoreButtons()
 	{
-		StoreItemButton[] array = new StoreItemButton[items.Length];
+		StoreItemButton[] buttons = new StoreItemButton[items.Length];
 		for (int i = 0; i < items.Length; i++)
 		{
 			GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(items[i].button.gameObject, Vector3.zero, Quaternion.identity);
-			array[i] = gameObject.GetComponent<StoreItemButton>() as StoreItemButton;
+			buttons[i] = gameObject.GetComponent<StoreItemButton>() as StoreItemButton;
 		}
-		return array;
+		return buttons;
 	}
 
 	public virtual void setPurchaseButtonsEnabled(bool enable)
@@ -65,16 +65,16 @@ public class StoreBaseMenu : BaseMenu
 
 	public virtual StoreItem getItem(string key)
 	{
-		int num = 0;
+		int index = 0;
 		StoreItem[] array = items;
 		int length = array.Length;
-		while (num < length)
+		while (index < length)
 		{
-			if (array[num].itemKey == key)
+			if (array[index].itemKey == key)
 			{
-				return array[num];
+				return array[index];
 			}
-			num++;
+			index++;
 		}
 		if (GameData.LOG)
 		{

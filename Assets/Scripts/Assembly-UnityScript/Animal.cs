@@ -181,10 +181,10 @@ public class Animal : MonoBehaviour
 	{
 		if (givesExtraHeartsFromBumps && GameManager.getInstance().isPlaying() && !(givesExtraHeartsXPos >= transform.position.x) && (power > EXTRA_HEART_FROM_BUMP_LIMIT || cartRef.airTime > EXTRA_HEART_FROM_BUMP_AIRTIME_LIMIT))
 		{
-			int num = 2;
-			if (extraHeartsGiven + num - 1 < MAXIMUM_EXTRA_HEARTS_FROM_BUMPS && !(Time.timeScale <= 0f))
+			int hearts = 2;
+			if (extraHeartsGiven + hearts - 1 < MAXIMUM_EXTRA_HEARTS_FROM_BUMPS && !(Time.timeScale <= 0f))
 			{
-				giveSpecialHearts(num);
+				giveSpecialHearts(hearts);
 			}
 		}
 	}
@@ -382,24 +382,24 @@ public class Animal : MonoBehaviour
 			}
 		}
 		stayCounter = 0;
-		float num2 = 0f;
+		float forwardImpulse = 0f;
 		if (!(cartRef.tr.position.x <= head.transform.position.x))
 		{
 			Vector3 localScale = tr.localScale;
 			localScale.x = 1f;
 			tr.localScale = localScale;
-			num2 = forwardForce;
+			forwardImpulse = forwardForce;
 		}
 		else
 		{
 			Vector3 localScale2 = tr.localScale;
 			localScale2.x = -1f;
 			tr.localScale = localScale2;
-			num2 = 0f - forwardForce;
+			forwardImpulse = 0f - forwardForce;
 		}
 		if (!(rb.velocity.sqrMagnitude >= 25f))
 		{
-			rb.AddForce(new Vector3(num2, jumpForce, 0f));
+			rb.AddForce(new Vector3(forwardImpulse, jumpForce, 0f));
 		}
 	}
 
@@ -437,14 +437,14 @@ public class Animal : MonoBehaviour
 			{
 				setExpression(1, false);
 			}
-			float num3 = Mathf.Min(1f, rb.velocity.magnitude / 20f);
-			float z2 = 60f + 80f * num3;
+			float speedFactor = Mathf.Min(1f, rb.velocity.magnitude / 20f);
+			float z2 = 60f + 80f * speedFactor;
 			Vector3 localEulerAngles2 = armTransform.localEulerAngles;
 			localEulerAngles2.z = z2;
 			armTransform.localEulerAngles = localEulerAngles2;
-			if (!(num3 <= 0.5f))
+			if (!(speedFactor <= 0.5f))
 			{
-				float y2 = startArmPosition.y + (num3 - 0.5f) * 1f;
+				float y2 = startArmPosition.y + (speedFactor - 0.5f) * 1f;
 				Vector3 localPosition2 = armTransform.localPosition;
 				localPosition2.y = y2;
 				armTransform.localPosition = localPosition2;
@@ -497,9 +497,9 @@ public class Animal : MonoBehaviour
 			Mesh sharedMesh = meshCollider.sharedMesh;
 			if (level.splineMeshVerticesCache.Count > 0)
 			{
-				Vector3[] array = level.splineMeshVerticesCache[sharedMesh];
-				int num = hitInfo.triangleIndex & -2;
-				float z = (array[num].z + array[num + 1].z + array[num + 2].z + array[num + 3].z) * 0.25f;
+				Vector3[] vertices = level.splineMeshVerticesCache[sharedMesh];
+				int quadIndex = hitInfo.triangleIndex & -2;
+				float z = (vertices[quadIndex].z + vertices[quadIndex + 1].z + vertices[quadIndex + 2].z + vertices[quadIndex + 3].z) * 0.25f;
 				Vector3 position = tr.position;
 				position.z = z;
 				tr.position = position;
@@ -515,12 +515,12 @@ public class Animal : MonoBehaviour
 			Vehicle vehicle = cartRef.trainRef;
 			if (!vehicle.@lock)
 			{
-				float num = vehicle.controller.throttle - vehicle.controller.brake;
-				headAngle = headAngle * 0.9f + num * 0.1f * 0.1f;
+				float drive = vehicle.controller.throttle - vehicle.controller.brake;
+				headAngle = headAngle * 0.9f + drive * 0.1f * 0.1f;
 			}
-			float num2 = 0.98f;
-			headDisplacer = (velocity.y - prevV.y) * (1f - num2) + headDisplacer * num2;
-			headAngle = (velocity.x - prevV.x) * (1f - num2) + headAngle * num2;
+			float smoothing = 0.98f;
+			headDisplacer = (velocity.y - prevV.y) * (1f - smoothing) + headDisplacer * smoothing;
+			headAngle = (velocity.x - prevV.x) * (1f - smoothing) + headAngle * smoothing;
 			headDisplacer = Mathf.Max(Mathf.Min(0.1f, headDisplacer), -0.1f);
 			headAngle = Mathf.Max(Mathf.Min(0.1f, headAngle), -0.1f);
 			float y = headInitialPosition.y - headDisplacer * 4f * cartRef.cachedUpVector.y;

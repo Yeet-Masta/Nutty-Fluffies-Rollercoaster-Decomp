@@ -66,13 +66,13 @@ public class OSATraveller : ObjectScript
 			}
 			return;
 		}
-		float num = (Time.time - lastChangeTime) / s;
-		if (!(num <= 1f))
+		float t = (Time.time - lastChangeTime) / s;
+		if (!(t <= 1f))
 		{
-			num = 1f;
+			t = 1f;
 		}
-		float num2 = 1f - (0.5f + 0.5f * Mathf.Cos(num * 3.14f));
-		cachedTransform.position = srcPos + (dstPos - srcPos) * num2;
+		float eased = 1f - (0.5f + 0.5f * Mathf.Cos(t * 3.14f));
+		cachedTransform.position = srcPos + (dstPos - srcPos) * eased;
 		if (Mathf.Abs(Time.time - lastChangeTime) < s)
 		{
 			return;

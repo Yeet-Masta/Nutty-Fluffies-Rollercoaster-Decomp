@@ -44,9 +44,9 @@ public class WalkingAnimal : MonoBehaviour
 		Vector3 localPosition = tr.localPosition;
 		localPosition.x = x;
 		tr.localPosition = localPosition;
-		int num2 = clones;
+		int count = clones;
 		clones = 0;
-		for (int i = 0; i < num2; i++)
+		for (int i = 0; i < count; i++)
 		{
 			GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(this.gameObject, tr.position, Quaternion.identity);
 			gameObject.transform.parent = tr.parent;

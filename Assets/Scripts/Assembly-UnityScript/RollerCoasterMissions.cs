@@ -81,10 +81,10 @@ public class RollerCoasterMissions : MissionManager
 		if (MissionManager.instance == null)
 		{
 			MissionManager.instance = new RollerCoasterMissions();
-			string text = FileManager.getInstance().locateAnyFile("missions.json");
-			if (text != null)
+			string path = FileManager.getInstance().locateAnyFile("missions.json");
+			if (path != null)
 			{
-				MissionManager.instance.load(text);
+				MissionManager.instance.load(path);
 				if (GameData.TEST_BUILD)
 				{
 					MissionManager.instance.resetMissions();
@@ -100,19 +100,19 @@ public class RollerCoasterMissions : MissionManager
 
 	public virtual bool checkMissions(int count)
 	{
-		bool flag = false;
+		bool completed = false;
 		completeCounter = 0;
 		List<Mission> missions = getInstance().getMissions(count, true);
 		foreach (Mission mission in missions)
 		{
 			if (checkMission(mission))
 			{
-				flag = true;
+				completed = true;
 				setMissionCompleted(mission);
 			}
 		}
-		bool flag2 = checkHighPriorityMissions();
-		return flag || flag2;
+		bool highPriorityCompleted = checkHighPriorityMissions();
+		return completed || highPriorityCompleted;
 	}
 
 	private bool checkHighPriorityMissions()
@@ -175,7 +175,7 @@ public class RollerCoasterMissions : MissionManager
 			RollerCoasterStatistics rollerCoasterStatistics = RollerCoasterStatistics.getInstance();
 			GameManager gameManager = GameManager.getInstance();
 			int passengerCartCount = gameManager.getVehicle().getPassengerCartCount();
-			int num = m.intValue();
+			int target = m.intValue();
 			gameManager.getTrainType();
 			int activeLevelPackIndex = GameData.getActiveLevelPackIndex();
 			if (!rollerCoasterStatistics.roundDidFinish && m.testFlag(Mission.FLAG_REQUIRE_FINISH))
@@ -184,151 +184,151 @@ public class RollerCoasterMissions : MissionManager
 			}
 			else
 			{
-				bool flag = false;
+				bool completed = false;
 				int specialCartType = GameManager.getInstance().getSpecialCartType();
 				switch (m.type)
 				{
 				case 1:
-					flag = passengerCartCount >= num;
+					completed = passengerCartCount >= target;
 					break;
 				case 2:
 				{
-					flag = passengerCartCount >= num && specialCartType == 1;
+					completed = passengerCartCount >= target && specialCartType == 1;
 					break;
 				}
 				case 3:
 				{
-					flag = passengerCartCount >= num && specialCartType == 0;
+					completed = passengerCartCount >= target && specialCartType == 0;
 					break;
 				}
 				case 4:
 				{
-					flag = passengerCartCount >= num && specialCartType == 2;
+					completed = passengerCartCount >= target && specialCartType == 2;
 					break;
 				}
 				case 5:
-					flag = rollerCoasterStatistics.roundJumpLength > m.value;
+					completed = rollerCoasterStatistics.roundJumpLength > m.value;
 					break;
 				case 6:
-					flag = rollerCoasterStatistics.roundJumpDuration > m.value;
+					completed = rollerCoasterStatistics.roundJumpDuration > m.value;
 					break;
 				case 7:
-					flag = gameManager.getScoreAmount() >= num;
+					completed = gameManager.getScoreAmount() >= target;
 					break;
 				case 8:
-					flag = rollerCoasterStatistics.roundPowerPercent > m.value;
+					completed = rollerCoasterStatistics.roundPowerPercent > m.value;
 					break;
 				case 9:
 				{
-					flag = specialCartType == 0 && rollerCoasterStatistics.roundSpecialUseCount >= num;
+					completed = specialCartType == 0 && rollerCoasterStatistics.roundSpecialUseCount >= target;
 					break;
 				}
 				case 10:
-					flag = !(rollerCoasterStatistics.roundCrashSpeed < m.value);
+					completed = !(rollerCoasterStatistics.roundCrashSpeed < m.value);
 					break;
 				case 11:
-					flag = rollerCoasterStatistics.roundDroppedItems >= num;
+					completed = rollerCoasterStatistics.roundDroppedItems >= target;
 					break;
 				case 12:
-					flag = rollerCoasterStatistics.roundsWithoutFail >= num;
+					completed = rollerCoasterStatistics.roundsWithoutFail >= target;
 					break;
 				case 13:
 				{
-					flag = activeLevelPackIndex == 0 && passengerCartCount >= num;
+					completed = activeLevelPackIndex == 0 && passengerCartCount >= target;
 					break;
 				}
 				case 14:
 				{
-					flag = activeLevelPackIndex == 1 && passengerCartCount >= num;
+					completed = activeLevelPackIndex == 1 && passengerCartCount >= target;
 					break;
 				}
 				case 15:
 				{
-					flag = activeLevelPackIndex == 2 && passengerCartCount >= num;
+					completed = activeLevelPackIndex == 2 && passengerCartCount >= target;
 					break;
 				}
 				case 16:
 				{
-					flag = activeLevelPackIndex == 3 && passengerCartCount >= num;
+					completed = activeLevelPackIndex == 3 && passengerCartCount >= target;
 					break;
 				}
 				case 17:
 				{
-					flag = activeLevelPackIndex == 0 && passengerCartCount >= num && isLastTrack();
+					completed = activeLevelPackIndex == 0 && passengerCartCount >= target && isLastTrack();
 					break;
 				}
 				case 18:
 				{
-					flag = activeLevelPackIndex == 1 && passengerCartCount >= num && isLastTrack();
+					completed = activeLevelPackIndex == 1 && passengerCartCount >= target && isLastTrack();
 					break;
 				}
 				case 19:
 				{
-					flag = activeLevelPackIndex == 2 && passengerCartCount >= num && isLastTrack();
+					completed = activeLevelPackIndex == 2 && passengerCartCount >= target && isLastTrack();
 					break;
 				}
 				case 20:
 				{
-					flag = activeLevelPackIndex == 3 && passengerCartCount >= num && isLastTrack();
+					completed = activeLevelPackIndex == 3 && passengerCartCount >= target && isLastTrack();
 					break;
 				}
 				case 21:
 				{
-					flag = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 0 && GameData.SELECTED_LEVEL_INDEX + 2 == num;
+					completed = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 0 && GameData.SELECTED_LEVEL_INDEX + 2 == target;
 					break;
 				}
 				case 22:
 				{
-					flag = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 1 && GameData.SELECTED_LEVEL_INDEX + 2 == num;
+					completed = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 1 && GameData.SELECTED_LEVEL_INDEX + 2 == target;
 					break;
 				}
 				case 23:
 				{
-					flag = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 2 && GameData.SELECTED_LEVEL_INDEX + 2 == num;
+					completed = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 2 && GameData.SELECTED_LEVEL_INDEX + 2 == target;
 					break;
 				}
 				case 24:
 				{
-					flag = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 3 && GameData.SELECTED_LEVEL_INDEX + 2 == num;
+					completed = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 3 && GameData.SELECTED_LEVEL_INDEX + 2 == target;
 					break;
 				}
 				case 25:
 				{
-					flag = activeLevelPackIndex == 0 && GameData.SELECTED_LEVEL_INDEX + 1 == num;
+					completed = activeLevelPackIndex == 0 && GameData.SELECTED_LEVEL_INDEX + 1 == target;
 					break;
 				}
 				case 26:
 				{
-					flag = activeLevelPackIndex == 1 && GameData.SELECTED_LEVEL_INDEX + 1 == num;
+					completed = activeLevelPackIndex == 1 && GameData.SELECTED_LEVEL_INDEX + 1 == target;
 					break;
 				}
 				case 27:
 				{
-					flag = activeLevelPackIndex == 2 && GameData.SELECTED_LEVEL_INDEX + 1 == num;
+					completed = activeLevelPackIndex == 2 && GameData.SELECTED_LEVEL_INDEX + 1 == target;
 					break;
 				}
 				case 28:
 				{
-					flag = activeLevelPackIndex == 3 && GameData.SELECTED_LEVEL_INDEX + 1 == num;
+					completed = activeLevelPackIndex == 3 && GameData.SELECTED_LEVEL_INDEX + 1 == target;
 					break;
 				}
 				case 29:
-					flag = gameManager.getVehicle().getNumberOfToys(0) >= num;
+					completed = gameManager.getVehicle().getNumberOfToys(0) >= target;
 					break;
 				case 30:
-					flag = gameManager.getVehicle().getNumberOfToys(1) >= num;
+					completed = gameManager.getVehicle().getNumberOfToys(1) >= target;
 					break;
 				case 31:
-					flag = gameManager.getVehicle().getNumberOfToys(2) >= num;
+					completed = gameManager.getVehicle().getNumberOfToys(2) >= target;
 					break;
 				case 32:
-					flag = gameManager.getVehicle().getNumberOfToys(3) >= num;
+					completed = gameManager.getVehicle().getNumberOfToys(3) >= target;
 					break;
 				case 33:
-					flag = gameManager.getVehicle().getNumberOfToys(4) >= num;
+					completed = gameManager.getVehicle().getNumberOfToys(4) >= target;
 					break;
 				}
-				return flag;
+				return completed;
 			}
 		}
 	}

@@ -388,11 +388,11 @@ public class GameManager : MonoBehaviour
 		CancelInvoke();
 		stat.finishLevel();
 		sm.playFinish();
-		float num = 0.5f;
+		float delay = 0.5f;
 		int maxAnimalIndex = vehicle.getMaxAnimalIndex();
-		num += 0.15f * (float)vehicle.getCartCount();
-		num += GameData.BONUS_VALUES[maxAnimalIndex + 1] * 0.15f;
-		Invoke("stopGame", Mathf.Max(1f, num));
+		delay += 0.15f * (float)vehicle.getCartCount();
+		delay += GameData.BONUS_VALUES[maxAnimalIndex + 1] * 0.15f;
+		Invoke("stopGame", Mathf.Max(1f, delay));
 		if (!CommonData.IN_EDITOR_MODE)
 		{
 			if (vehicle.getPassengerCartCount() < GameData.CART_LIMIT)
@@ -624,16 +624,16 @@ public class GameManager : MonoBehaviour
 		int length = GameData.TRAIN_DATA.cartList.Length;
 		if (!didCrash)
 		{
-			int num = (int)Mathf.Min(aNIMAL_REMOVE_AMOUNT_MAX, Mathf.Max(aNIMAL_REMOVE_AMOUNT_MIN, (float)length * aNIMAL_REMOVE_AMOUNT_MAX_PERCENT));
-			int num2 = 0;
+			int maxRemove = (int)Mathf.Min(aNIMAL_REMOVE_AMOUNT_MAX, Mathf.Max(aNIMAL_REMOVE_AMOUNT_MIN, (float)length * aNIMAL_REMOVE_AMOUNT_MAX_PERCENT));
+			int removed = 0;
 			for (int i = 1; i < vehicle.carts.Length; i++)
 			{
 				if (!vehicle.carts[i].hasAnimal())
 				{
-					if (num2 < num)
+					if (removed < maxRemove)
 					{
 						GameData.TRAIN_DATA.cartList[i - 1].animalIndex = GameData.ANIMAL_NONE;
-						num2++;
+						removed++;
 					}
 				}
 				else
@@ -644,18 +644,18 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			int num3 = (int)Mathf.Min(aNIMAL_REMOVE_AMOUNT_MAX, Mathf.Max(aNIMAL_REMOVE_AMOUNT_MIN, (float)length * aNIMAL_REMOVE_AMOUNT_MAX_PERCENT));
-			int num4 = 0;
-			int num5 = 0;
-			while (num3 > 0 && num5 < 30)
+			int toRemove = (int)Mathf.Min(aNIMAL_REMOVE_AMOUNT_MAX, Mathf.Max(aNIMAL_REMOVE_AMOUNT_MIN, (float)length * aNIMAL_REMOVE_AMOUNT_MAX_PERCENT));
+			int cartIndex = 0;
+			int attempts = 0;
+			while (toRemove > 0 && attempts < 30)
 			{
-				num5++;
-				if (!(UnityEngine.Random.value <= 0.5f) && GameData.TRAIN_DATA.cartList[num4].animalIndex != GameData.ANIMAL_NONE)
+				attempts++;
+				if (!(UnityEngine.Random.value <= 0.5f) && GameData.TRAIN_DATA.cartList[cartIndex].animalIndex != GameData.ANIMAL_NONE)
 				{
-					GameData.TRAIN_DATA.cartList[num4].animalIndex = GameData.ANIMAL_NONE;
-					num3--;
+					GameData.TRAIN_DATA.cartList[cartIndex].animalIndex = GameData.ANIMAL_NONE;
+					toRemove--;
 				}
-				num4 = (num4 + 1) % length;
+				cartIndex = (cartIndex + 1) % length;
 			}
 		}
 		GameData.saveTrain();

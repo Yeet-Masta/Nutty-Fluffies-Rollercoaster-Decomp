@@ -18,12 +18,12 @@ public class NewsPaperAnimator : VGUIAnimator
 	public override void Update()
 	{
 		float timeInterpolator = getTimeInterpolator();
-		Vector2 vector = Vector3.one * timeInterpolator;
-		float x = vector.x * 1f;
+		Vector2 scale = Vector3.one * timeInterpolator;
+		float x = scale.x * 1f;
 		Vector3 localScale = target.localScale;
 		localScale.x = x;
 		target.localScale = localScale;
-		float y = vector.y * 1f;
+		float y = scale.y * 1f;
 		Vector3 localScale2 = target.localScale;
 		localScale2.y = y;
 		target.localScale = localScale2;

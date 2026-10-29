@@ -32,15 +32,15 @@ public class ObjectPackData
 		}
 		else
 		{
-			int num = 0;
+			int count = 0;
 			foreach (ObjectData objectData in objectList)
 			{
 				if (objectData.matchesSceneryType(sceneryMode))
 				{
-					num++;
+					count++;
 				}
 			}
-			return num;
+			return count;
 		}
 	}
 
@@ -68,14 +68,14 @@ public class ObjectPackData
 
 	public virtual int getObjectIndexByID(int id)
 	{
-		int num = 0;
-		while (num < objectList.Count)
+		int index = 0;
+		while (index < objectList.Count)
 		{
-			if (objectList[num].id == id)
+			if (objectList[index].id == id)
 			{
-				return num;
+				return index;
 			}
-			num++;
+			index++;
 		}
 		return -1;
 	}

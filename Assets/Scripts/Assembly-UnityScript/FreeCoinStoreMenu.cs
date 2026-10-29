@@ -37,20 +37,20 @@ public class FreeCoinStoreMenu : CoinStoreMenu
 		items = iapItems;
 		for (int i = 0; i < 6; i++)
 		{
-			string text = "DP_PURCHASE_" + CommunityFeatures.FEATURE_KEY[i];
-			CommunityFeatures.FEATURE_VALUES[i] = StoreItem.getDefaultPrice(text);
-			StoreItem item = getItem(text);
+			string key = "DP_PURCHASE_" + CommunityFeatures.FEATURE_KEY[i];
+			CommunityFeatures.FEATURE_VALUES[i] = StoreItem.getDefaultPrice(key);
+			StoreItem item = getItem(key);
 			if (item == null)
 			{
 				continue;
 			}
-			bool flag = CommunityFeatures.getInstance().isAvailable(i);
+			bool available = CommunityFeatures.getInstance().isAvailable(i);
 			StoreItemButton button = item.button;
 			if (button == null)
 			{
 				continue;
 			}
-			if (flag)
+			if (available)
 			{
 				// Without the Tapjoy offer wall, two buttons move into the freed slots.
 				if (CommunityFeatures.FEATURE_KEY[i] == "TWITTER_POST")

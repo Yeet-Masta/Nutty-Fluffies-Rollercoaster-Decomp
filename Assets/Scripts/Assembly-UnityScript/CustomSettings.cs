@@ -51,8 +51,8 @@ public class CustomSettings
 
 	public virtual void loadBinary(BinaryReader rs)
 	{
-		int num = rs.ReadByte();
-		for (int i = 0; i < num; i++)
+		int count = rs.ReadByte();
+		for (int i = 0; i < count; i++)
 		{
 			string key = rs.ReadString();
 			string value = rs.ReadString();

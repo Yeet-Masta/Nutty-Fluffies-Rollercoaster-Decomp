@@ -44,8 +44,8 @@ public class LevelLoaderBinary
 			byte b2 = b;
 			if (b2 == 13)
 			{
-				int num = sr.ReadByte();
-				if (num < CURRENT_LEVEL_VERSION)
+				int version = sr.ReadByte();
+				if (version < CURRENT_LEVEL_VERSION)
 				{
 					Debug.LogWarning("Too old track format!");
 					return null;
@@ -77,12 +77,12 @@ public class LevelLoaderBinary
 			}
 			else if (b2 == 4)
 			{
-				int num2 = sr.ReadByte();
-				for (int i = 0; i < num2; i++)
+				int packCount = sr.ReadByte();
+				for (int i = 0; i < packCount; i++)
 				{
-					string text = sr.ReadString();
-					ObjectListLoader.getInstance().loadObjectList(objects, text);
-					objectPackData = objects.getPackForName(text);
+					string packName = sr.ReadString();
+					ObjectListLoader.getInstance().loadObjectList(objects, packName);
+					objectPackData = objects.getPackForName(packName);
 					levelData.usedObjectPacks.Add(objectPackData);
 				}
 			}
@@ -95,13 +95,13 @@ public class LevelLoaderBinary
 				loadLayers(sr, levelData.layerData, objects);
 			}
 		}
-		foreach (string text2 in levelData.theme.settings.allowedObjectPacks)
+		foreach (string allowedPack in levelData.theme.settings.allowedObjectPacks)
 		{
-			if (objects.getPackForName(text2) == null)
+			if (objects.getPackForName(allowedPack) == null)
 			{
-				ObjectListLoader.getInstance().loadObjectList(objects, text2);
+				ObjectListLoader.getInstance().loadObjectList(objects, allowedPack);
 			}
-			objectPackData = objects.getPackForName(text2);
+			objectPackData = objects.getPackForName(allowedPack);
 			if (!levelData.usedObjectPacks.Contains(objectPackData))
 			{
 				levelData.usedObjectPacks.Add(objectPackData);
@@ -139,7 +139,7 @@ public class LevelLoaderBinary
 
 	public virtual void loadLayers(BinaryReader sr, List<LevelLayerData> layerData, ObjectListData objectList)
 	{
-		int num = sr.ReadByte();
+		int layerCount = sr.ReadByte();
 		LevelLayerData levelLayerData = null;
 		float x = 0f;
 		float y = 0f;
@@ -148,13 +148,13 @@ public class LevelLoaderBinary
 		int flags = 0;
 		int devices = 0;
 		float rotation = 0f;
-		for (int i = 0; i < num; i++)
+		for (int i = 0; i < layerCount; i++)
 		{
-			int num2 = 0;
-			while (num2 != 10)
+			int tag = 0;
+			while (tag != 10)
 			{
-				num2 = sr.ReadByte();
-				switch (num2)
+				tag = sr.ReadByte();
+				switch (tag)
 				{
 				case 7:
 				{
@@ -177,15 +177,15 @@ public class LevelLoaderBinary
 					break;
 				case 9:
 				{
-					int num3 = sr.ReadInt32();
-					for (int j = 0; j < num3; j++)
+					int entityCount = sr.ReadInt32();
+					for (int j = 0; j < entityCount; j++)
 					{
 						LevelEntityData levelEntityData = null;
-						int num4 = 0;
+						int entityTag = 0;
 						do
 						{
-							num4 = sr.ReadByte();
-							if (num4 != 12)
+							entityTag = sr.ReadByte();
+							if (entityTag != 12)
 							{
 								continue;
 							}
@@ -193,23 +193,23 @@ public class LevelLoaderBinary
 							y = sr.ReadSingle();
 							scriptAttachment = sr.ReadString();
 							scriptParams = sr.ReadString();
-							float num6 = sr.ReadInt32();
+							float entityId = sr.ReadInt32();
 							flags = sr.ReadInt32();
 							devices = sr.ReadInt32();
 							rotation = sr.ReadSingle();
-							float num7 = (int)sr.ReadByte();
-							float num8 = num7;
-							if (num8 == 2f)
+							float typeValue = (int)sr.ReadByte();
+							float type = typeValue;
+							if (type == 2f)
 							{
 								int id = sr.ReadInt32();
 								int zDepth = sr.ReadSByte();
-								LevelObjectData levelObjectData = new LevelObjectData((int)num6, id);
+								LevelObjectData levelObjectData = new LevelObjectData((int)entityId, id);
 								levelObjectData.zDepth = zDepth;
 								levelEntityData = levelObjectData;
 							}
-							else if (num8 == 1f)
+							else if (type == 1f)
 							{
-								LevelTriggerData levelTriggerData = new LevelTriggerData((int)num6, sr.ReadByte());
+								LevelTriggerData levelTriggerData = new LevelTriggerData((int)entityId, sr.ReadByte());
 								levelEntityData = levelTriggerData;
 								levelTriggerData.size = new Vector2(sr.ReadSingle(), sr.ReadSingle());
 								levelTriggerData.triggerScript = sr.ReadString();
@@ -217,11 +217,11 @@ public class LevelLoaderBinary
 							}
 							else
 							{
-								if (num8 != 6f)
+								if (type != 6f)
 								{
 									continue;
 								}
-								LevelSplineData levelSplineData = new LevelSplineData((int)num6);
+								LevelSplineData levelSplineData = new LevelSplineData((int)entityId);
 								levelSplineData.height = sr.ReadSingle();
 								levelSplineData.texture = sr.ReadString();
 								bool flag = false;
@@ -247,7 +247,7 @@ public class LevelLoaderBinary
 								}
 							}
 						}
-						while (num4 != 14);
+						while (entityTag != 14);
 						if (levelEntityData != null)
 						{
 							levelEntityData.position.x = x;
@@ -269,7 +269,7 @@ public class LevelLoaderBinary
 
 	private void fixDuplicates(List<LevelLayerData> layerData)
 	{
-		int num = 0;
+		int maxId = 0;
 		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(layerData);
 		while (enumerator.MoveNext())
 		{
@@ -282,9 +282,9 @@ public class LevelLoaderBinary
 			UnityRuntimeServices.Update(enumerator, levelLayerData);
 			foreach (LevelEntityData levelEntityData in levelLayerData.objectData)
 			{
-				if (levelEntityData.referenceId > num)
+				if (levelEntityData.referenceId > maxId)
 				{
-					num = levelEntityData.referenceId;
+					maxId = levelEntityData.referenceId;
 				}
 			}
 		}
@@ -303,7 +303,7 @@ public class LevelLoaderBinary
 			{
 				if (list.Contains(levelEntityData2.referenceId))
 				{
-					num = (levelEntityData2.referenceId = num + 1);
+					maxId = (levelEntityData2.referenceId = maxId + 1);
 				}
 				list.Add(levelEntityData2.referenceId);
 			}
@@ -317,7 +317,7 @@ public class LevelLoaderBinary
 
 	public virtual void createTestLayerAndContents(List<LevelLayerData> layerData)
 	{
-		int num = 1;
+		int nextId = 1;
 		LevelLayerData levelLayerData = null;
 		levelLayerData = new LevelLayerData(-1);
 		levelLayerData.themeInfo.parallaxSpeed = new Vector2(0.9f, 0.9f);
@@ -331,24 +331,24 @@ public class LevelLoaderBinary
 		levelLayerData = new LevelLayerData(2);
 		levelLayerData.themeInfo.parallaxSpeed = new Vector2(1.2f, 1.2f);
 		layerData.Add(levelLayerData);
-		LevelObjectData levelObjectData = new LevelObjectData(num++, 1);
+		LevelObjectData levelObjectData = new LevelObjectData(nextId++, 1);
 		layerData[2].objectData.Add(levelObjectData);
 		levelObjectData.position = new Vector3(10f, 2f, 0f);
 		levelObjectData.flags = 65536;
-		levelObjectData = new LevelObjectData(num++, 1);
+		levelObjectData = new LevelObjectData(nextId++, 1);
 		layerData[0].objectData.Add(levelObjectData);
 		levelObjectData.position = new Vector3(-9.4f, 2f, 0f);
 		levelObjectData.rotation = 30f;
 		levelObjectData.flags = 196608;
-		levelObjectData = new LevelObjectData(num++, 1);
+		levelObjectData = new LevelObjectData(nextId++, 1);
 		layerData[1].objectData.Add(levelObjectData);
 		levelObjectData.position = new Vector3(-10f, -2f, 0f);
 		levelObjectData.flags = 65536;
-		levelObjectData = new LevelObjectData(num++, 2);
+		levelObjectData = new LevelObjectData(nextId++, 2);
 		layerData[0].objectData.Add(levelObjectData);
 		levelObjectData.position = new Vector3(5f, 2f, 0f);
 		levelObjectData.flags = 196608;
-		levelObjectData = new LevelObjectData(num++, 1);
+		levelObjectData = new LevelObjectData(nextId++, 1);
 		layerData[1].objectData.Add(levelObjectData);
 		levelObjectData.position = new Vector3(0f, 2f, 0f);
 		levelObjectData.flags = 65536;

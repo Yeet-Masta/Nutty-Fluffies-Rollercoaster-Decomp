@@ -11,15 +11,15 @@ public class LogoAnimationRunner : MonoBehaviour
 	public virtual void Start()
 	{
 		Application.targetFrameRate = GameData.targetFPS;
-		int num = 0;
+		int i = 0;
 		loadingMenu.gameObject.SetActiveRecursively(false);
-		for (num = 0; num < redlynxAnimators.Length; num++)
+		for (i = 0; i < redlynxAnimators.Length; i++)
 		{
-			redlynxAnimators[num].gameObject.active = false;
+			redlynxAnimators[i].gameObject.active = false;
 		}
-		for (num = 0; num < ubisoftAnimators.Length; num++)
+		for (i = 0; i < ubisoftAnimators.Length; i++)
 		{
-			ubisoftAnimators[num].gameObject.active = false;
+			ubisoftAnimators[i].gameObject.active = false;
 		}
 		Invoke("startRedlynxAnim", 2.45f);
 	}
@@ -36,27 +36,27 @@ public class LogoAnimationRunner : MonoBehaviour
 
 	public virtual void endRedlynxAnim()
 	{
-		int num = 0;
-		for (num = 0; num < redlynxAnimators.Length; num++)
+		int i = 0;
+		for (i = 0; i < redlynxAnimators.Length; i++)
 		{
-			redlynxAnimators[num].deactivate();
-			redlynxAnimators[num].reverse = true;
-			redlynxAnimators[num].activate();
+			redlynxAnimators[i].deactivate();
+			redlynxAnimators[i].reverse = true;
+			redlynxAnimators[i].activate();
 		}
 		Invoke("startUbisoftAnim", 0.35f);
 	}
 
 	public virtual void startUbisoftAnim()
 	{
-		int num = 0;
-		for (num = 0; num < redlynxAnimators.Length; num++)
+		int i = 0;
+		for (i = 0; i < redlynxAnimators.Length; i++)
 		{
-			redlynxAnimators[num].gameObject.active = false;
+			redlynxAnimators[i].gameObject.active = false;
 		}
-		for (num = 0; num < ubisoftAnimators.Length; num++)
+		for (i = 0; i < ubisoftAnimators.Length; i++)
 		{
-			ubisoftAnimators[num].gameObject.active = true;
-			ubisoftAnimators[num].activate();
+			ubisoftAnimators[i].gameObject.active = true;
+			ubisoftAnimators[i].activate();
 		}
 		Invoke("endUbisoftAnim", 1.75f);
 	}
@@ -74,10 +74,10 @@ public class LogoAnimationRunner : MonoBehaviour
 
 	public virtual void showLoading()
 	{
-		int num = 0;
-		for (num = 0; num < ubisoftAnimators.Length; num++)
+		int i = 0;
+		for (i = 0; i < ubisoftAnimators.Length; i++)
 		{
-			ubisoftAnimators[num].gameObject.active = false;
+			ubisoftAnimators[i].gameObject.active = false;
 		}
 		loadingMenu.activate();
 	}

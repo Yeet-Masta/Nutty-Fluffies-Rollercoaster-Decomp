@@ -26,12 +26,12 @@ public class MenuBackground : MonoBehaviour
 				position2.x = x;
 				balloons[i].position = position2;
 				balloonPhase[i] = 44f * UnityEngine.Random.value;
-				float num3 = 0.25f + 0.75f * UnityEngine.Random.value;
-				float x2 = num3;
+				float scale = 0.25f + 0.75f * UnityEngine.Random.value;
+				float x2 = scale;
 				Vector3 localScale = balloons[i].localScale;
 				localScale.x = x2;
 				balloons[i].localScale = localScale;
-				float y2 = num3;
+				float y2 = scale;
 				Vector3 localScale2 = balloons[i].localScale;
 				localScale2.y = y2;
 				balloons[i].localScale = localScale2;

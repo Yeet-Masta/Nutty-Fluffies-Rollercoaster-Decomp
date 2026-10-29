@@ -45,29 +45,29 @@ public class ObjectListData
 
 	public virtual void recacheObjectIDs()
 	{
-		int num = 0;
+		int packIndex = 0;
 		objIDtoPackCache.Clear();
 		foreach (ObjectPackData objectPackData in packList)
 		{
 			ObjectData[] objects = objectPackData.getObjects();
 			foreach (ObjectData objectData in objects)
 			{
-				objIDtoPackCache.Add(objectData.id, num);
+				objIDtoPackCache.Add(objectData.id, packIndex);
 			}
-			num++;
+			packIndex++;
 		}
 	}
 
 	public virtual int getPackIndexForPackName(string packName)
 	{
-		int num = 0;
+		int index = 0;
 		foreach (ObjectPackData objectPackData in packList)
 		{
 			if (objectPackData.name == packName)
 			{
-				return num;
+				return index;
 			}
-			num++;
+			index++;
 		}
 		return -1;
 	}
@@ -102,12 +102,12 @@ public class ObjectListData
 		}
 		else
 		{
-			int num = 0;
+			int total = 0;
 			foreach (ObjectPackData objectPackData in packList)
 			{
-				num += objectPackData.getNumObjects(sceneryMode);
+				total += objectPackData.getNumObjects(sceneryMode);
 			}
-			return num;
+			return total;
 		}
 	}
 
@@ -139,13 +139,13 @@ public class ObjectListData
 
 	public virtual string[] getPackNames()
 	{
-		string[] array = new string[packList.Count];
-		int num = 0;
+		string[] names = new string[packList.Count];
+		int index = 0;
 		foreach (ObjectPackData objectPackData in packList)
 		{
-			array[num++] = objectPackData.name;
+			names[index++] = objectPackData.name;
 		}
-		return array;
+		return names;
 	}
 
 	public virtual void addObject(string packName, ObjectData obj)
@@ -220,37 +220,37 @@ public class ObjectListData
 	public virtual ObjectData getIndObjectInPack(int packIndex, int objIndexInPack, int sceneryMode)
 	{
 		ObjectPackData objectPackData = packList[packIndex];
-		int num = 0;
+		int matchIndex = 0;
 		ObjectData[] objects = objectPackData.getObjects();
-		int num2 = 0;
+		int objIndex = 0;
 		ObjectData[] array = objects;
 		int length = array.Length;
-		while (num2 < length)
+		while (objIndex < length)
 		{
-			if (array[num2].matchesSceneryType(sceneryMode))
+			if (array[objIndex].matchesSceneryType(sceneryMode))
 			{
-				if (num == objIndexInPack)
+				if (matchIndex == objIndexInPack)
 				{
-					return array[num2];
+					return array[objIndex];
 				}
-				num++;
+				matchIndex++;
 			}
-			num2++;
+			objIndex++;
 		}
 		return null;
 	}
 
 	public virtual ObjectData getIndObject(int globalIndex)
 	{
-		int num = 0;
+		int offset = 0;
 		foreach (ObjectPackData objectPackData in packList)
 		{
 			int numObjects = objectPackData.getNumObjects(3);
-			if (globalIndex >= num && globalIndex < num + numObjects)
+			if (globalIndex >= offset && globalIndex < offset + numObjects)
 			{
-				return objectPackData.getObjectByIndex(globalIndex - num);
+				return objectPackData.getObjectByIndex(globalIndex - offset);
 			}
-			num += numObjects;
+			offset += numObjects;
 		}
 		return null;
 	}

@@ -79,14 +79,14 @@ public class OneShotAudio : MonoBehaviour
 
 	public static bool isPlaying(AudioClip clip)
 	{
-		int num = 0;
-		while (num < amount)
+		int index = 0;
+		while (index < amount)
 		{
-			if (sources[num].clip == clip && sources[num].isPlaying)
+			if (sources[index].clip == clip && sources[index].isPlaying)
 			{
 				return true;
 			}
-			num++;
+			index++;
 		}
 		return false;
 	}

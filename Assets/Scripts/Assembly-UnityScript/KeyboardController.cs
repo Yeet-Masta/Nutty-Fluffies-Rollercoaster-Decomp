@@ -31,14 +31,14 @@ public class KeyboardController : Controller
 				.gameObject.transform;
 			Vector3 right = transform.right;
 			Vector2 lhs = new Vector2(right.x, right.y);
-			float num = Vector2.Dot(lhs, mouseDelta);
+			float forward = Vector2.Dot(lhs, mouseDelta);
 			float magnitude = mouseDelta.magnitude;
-			if (num > 0f || (vehicle.isInLoop() && !vehicle.isReversing()))
+			if (forward > 0f || (vehicle.isInLoop() && !vehicle.isReversing()))
 			{
 				throttle = Mathf.Min(1f, magnitude * 0.1f);
 				brake = 0f;
 			}
-			else if (!(num >= 0f))
+			else if (!(forward >= 0f))
 			{
 				brake = Mathf.Min(1f, magnitude * 0.1f);
 				throttle = 0f;

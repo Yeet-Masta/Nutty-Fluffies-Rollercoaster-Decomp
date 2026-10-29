@@ -21,13 +21,13 @@ public class TargetHandler
 		{
 			return;
 		}
-		string[] array = param.Split(","[0]);
+		string[] ids = param.Split(","[0]);
 		List<GameObject> list = new List<GameObject>();
 		Level level = (Level)UnityEngine.Object.FindObjectOfType(typeof(Level));
 		LevelLayer layerForNumber = level.getLayerForNumber(0);
-		foreach (string text in array)
+		foreach (string id in ids)
 		{
-			int uniqueID = Convert.ToInt32(text);
+			int uniqueID = Convert.ToInt32(id);
 			LevelEntity levelEntity = level.findEntity(uniqueID, layerForNumber.gameObject);
 			if ((bool)levelEntity && (bool)levelEntity.gameObject)
 			{
@@ -41,16 +41,16 @@ public class TargetHandler
 	{
 		if (targetObjects != null && targetObjects.Length > 0)
 		{
-			string text = string.Empty;
+			string ids = string.Empty;
 			foreach (GameObject targetObject in targetObjects)
 			{
-				if (text.Length > 0)
+				if (ids.Length > 0)
 				{
-					text += ",";
+					ids += ",";
 				}
-				text += ((LevelEntity)targetObject.GetComponent(typeof(LevelEntity))).referenceId;
+				ids += ((LevelEntity)targetObject.GetComponent(typeof(LevelEntity))).referenceId;
 			}
-			return text;
+			return ids;
 		}
 		else
 		{

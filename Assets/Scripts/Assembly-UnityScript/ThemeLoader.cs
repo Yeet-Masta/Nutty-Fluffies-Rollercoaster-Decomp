@@ -75,17 +75,17 @@ public class ThemeLoader
 
 	public virtual ThemeData loadTheme(string name)
 	{
-		string text = null;
+		string json = null;
 		try
 		{
 			string path = FileManager.getInstance().locateTheme(name);
-			text = FileManager.getInstance().loadFileText(path);
+			json = FileManager.getInstance().loadFileText(path);
 		}
 		catch (Exception ex)
 		{
 			Debug.LogWarning("Could not open theme '" + name + "': " + ex);
 			return null;
 		}
-		return loadThemeFromString(text, name);
+		return loadThemeFromString(json, name);
 	}
 }

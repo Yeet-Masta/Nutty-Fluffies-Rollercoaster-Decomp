@@ -216,18 +216,18 @@ public class Cart : MonoBehaviour
 				position2.z = z;
 				tr.position = position2;
 			}
-			Vector3 vector3 = tr.position - hitInfo.point;
-			int num2 = hitInfo.triangleIndex >> 1;
-			sqHeight = vector3.sqrMagnitude;
+			Vector3 toHit = tr.position - hitInfo.point;
+			int segment = hitInfo.triangleIndex >> 1;
+			sqHeight = toHit.sqrMagnitude;
 			sqHeightAvailable = true;
-			if (currentSegment == num2)
+			if (currentSegment == segment)
 			{
 				return;
 			}
 			LevelSpline component = hitInfo.transform.gameObject.GetComponent<LevelSpline>();
 			if (component != null)
 			{
-				int renderQueueLevel = component.getRenderQueueLevel(num2);
+				int renderQueueLevel = component.getRenderQueueLevel(segment);
 				if (renderQueueLevel != currentRenderQueue)
 				{
 					foreach (MeshRenderer renderer in renderers)
@@ -237,7 +237,7 @@ public class Cart : MonoBehaviour
 					currentRenderQueue = renderQueueLevel;
 				}
 			}
-			currentSegment = num2;
+			currentSegment = segment;
 		}
 		else
 		{
@@ -265,8 +265,8 @@ public class Cart : MonoBehaviour
 		{
 			contactCounter--;
 		}
-		bool flag = contactCounter > 0;
-		if (!hasContact && flag)
+		bool touching = contactCounter > 0;
+		if (!hasContact && touching)
 		{
 			float maxImpactSpeed = wheels[0].maxImpactSpeed;
 			wheels[0].maxImpactSpeed = 0f;
@@ -276,7 +276,7 @@ public class Cart : MonoBehaviour
 			}
 			wheelSparcCounter = 5;
 		}
-		hasContact = flag;
+		hasContact = touching;
 		if (!hasContact)
 		{
 			airTime++;
@@ -299,9 +299,9 @@ public class Cart : MonoBehaviour
 		}
 		if (hasContact && !(UnityEngine.Random.value <= 0.8f))
 		{
-			float num = Mathf.Min(20f, rb.velocity.magnitude) * 5f;
-			rb.AddForceAtPosition(tr.up * num, tr.position + tr.right * 4f);
-			rb.AddForceAtPosition(tr.right * ((0f - num) * 0.25f), tr.position);
+			float downforce = Mathf.Min(20f, rb.velocity.magnitude) * 5f;
+			rb.AddForceAtPosition(tr.up * downforce, tr.position + tr.right * 4f);
+			rb.AddForceAtPosition(tr.right * ((0f - downforce) * 0.25f), tr.position);
 		}
 	}
 
@@ -337,9 +337,9 @@ public class Cart : MonoBehaviour
 		}
 		else
 		{
-			Vector3[] array = level.splineMeshVerticesCache[mesh];
+			Vector3[] vertices = level.splineMeshVerticesCache[mesh];
 			index &= -2;
-			return (array[index].z + array[index + 1].z + array[index + 2].z + array[index + 3].z) * 0.25f;
+			return (vertices[index].z + vertices[index + 1].z + vertices[index + 2].z + vertices[index + 3].z) * 0.25f;
 		}
 	}
 

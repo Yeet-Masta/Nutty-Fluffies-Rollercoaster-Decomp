@@ -20,35 +20,35 @@ public class VehicleFactory
 		Vector3 position2 = new Vector3(position.x, position.y, 0f);
 		int trainType = data.trainType;
 		Vehicle vehicle = ((Vehicle)UnityEngine.Object.Instantiate(RollerCoasterPrefabs.getInstance().trains[trainType], position2, Quaternion.identity)) as Vehicle;
-		float num = (0f - (vehicle.cartPrefab.GetComponent<Collider>() as CapsuleCollider).height) * 0.9f;
+		float spacing = (0f - (vehicle.cartPrefab.GetComponent<Collider>() as CapsuleCollider).height) * 0.9f;
 		vehicle.transform.parent = parent.transform;
 		vehicle.carts = new Cart[data.cartList.Length + 1];
-		position.x += num * (float)(data.cartList.Length + 1);
+		position.x += spacing * (float)(data.cartList.Length + 1);
 		vehicle.carts[0] = createCart(position, vehicle.driverCartPrefab, trainType);
 		vehicle.carts[0].transform.parent = vehicle.transform;
 		(vehicle.carts[0] as DriverCart).rocket.SetActiveRecursively(false);
-		position.x -= num;
-		int num2 = 0;
-		for (num2 = 0; num2 < data.cartList.Length - 1; num2++)
+		position.x -= spacing;
+		int i = 0;
+		for (i = 0; i < data.cartList.Length - 1; i++)
 		{
 			Cart cart = createCart(position, vehicle.cartPrefab, trainType);
-			createAnimal(data.cartList[num2].animalIndex, cart);
+			createAnimal(data.cartList[i].animalIndex, cart);
 			cart.transform.parent = vehicle.transform;
 			cart.jumpRocket.SetActiveRecursively(false);
 			cart.magnet.SetActiveRecursively(false);
-			position.x -= num;
-			vehicle.carts[num2 + 1] = cart;
+			position.x -= spacing;
+			vehicle.carts[i + 1] = cart;
 		}
-		int num3 = vehicle.carts.Length - 1;
-		vehicle.carts[num3] = createCart(position, vehicle.frontCartPrefab, trainType);
-		vehicle.carts[num3].transform.parent = vehicle.transform;
-		vehicle.carts[num3].jumpRocket.SetActiveRecursively(false);
-		vehicle.carts[num3].magnet.SetActiveRecursively(false);
-		createAnimal(data.cartList[num3 - 1].animalIndex, vehicle.carts[num3]);
-		for (num2 = 0; num2 < vehicle.carts.Length - 1; num2++)
+		int frontIndex = vehicle.carts.Length - 1;
+		vehicle.carts[frontIndex] = createCart(position, vehicle.frontCartPrefab, trainType);
+		vehicle.carts[frontIndex].transform.parent = vehicle.transform;
+		vehicle.carts[frontIndex].jumpRocket.SetActiveRecursively(false);
+		vehicle.carts[frontIndex].magnet.SetActiveRecursively(false);
+		createAnimal(data.cartList[frontIndex - 1].animalIndex, vehicle.carts[frontIndex]);
+		for (i = 0; i < vehicle.carts.Length - 1; i++)
 		{
-			vehicle.carts[num2].indexInVehicle = num2;
-			createConnectJoints(vehicle.carts[num2], vehicle.carts[num2 + 1], num2);
+			vehicle.carts[i].indexInVehicle = i;
+			createConnectJoints(vehicle.carts[i], vehicle.carts[i + 1], i);
 		}
 		addSpecials(data.specialCart, vehicle);
 		vehicle.prepare();
@@ -147,9 +147,9 @@ public class VehicleFactory
 			cart.animal = gameObject.GetComponent<Animal>();
 			cart.animal.cartRef = cart;
 			cart.heartValue = GameData.ANIMAL_HEART_VALUE[prefabIndex];
-			foreach (Component item in gameObject.GetComponentsInChildren(typeof(Rigidbody)))
+			foreach (Component body in gameObject.GetComponentsInChildren(typeof(Rigidbody)))
 			{
-				(item as Rigidbody).solverIterations = 1;
+				(body as Rigidbody).solverIterations = 1;
 			}
 		}
 	}

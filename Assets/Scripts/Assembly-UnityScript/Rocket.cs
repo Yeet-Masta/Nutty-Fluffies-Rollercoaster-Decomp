@@ -52,17 +52,17 @@ public class Rocket : Special
 		{
 			Cart lastCart = trainRef.getLastCart();
 			Vector3 velocity = lastCart.rb.velocity;
-			float num = 1f;
-			num += (20f - Mathf.Min(20f, velocity.magnitude)) * 0.5f;
+			float boost = 1f;
+			boost += (20f - Mathf.Min(20f, velocity.magnitude)) * 0.5f;
 			if (!(lastCart.transform.InverseTransformDirection(velocity).x >= 0f))
 			{
-				num = 10f;
+				boost = 10f;
 			}
 			int i = 0;
 			Cart[] carts = trainRef.carts;
 			for (int length = carts.Length; i < length; i++)
 			{
-				Vector3 force = carts[i].tr.right * power * num - carts[i].tr.up * downForce;
+				Vector3 force = carts[i].tr.right * power * boost - carts[i].tr.up * downForce;
 				carts[i].rb.AddForce(force);
 			}
 		}
@@ -76,8 +76,8 @@ public class Rocket : Special
 
 	public virtual void Update()
 	{
-		int num = currentFlameFrame / frameTime;
-		flameMaterial.SetTextureOffset("_MainTex", new Vector2(frameStep * (float)num, 0f));
+		int frame = currentFlameFrame / frameTime;
+		flameMaterial.SetTextureOffset("_MainTex", new Vector2(frameStep * (float)frame, 0f));
 		flameMaterial.renderQueue = trainRef.carts[0].currentRenderQueue;
 		currentFlameFrame++;
 		if (currentFlameFrame >= loopEnd * frameTime)

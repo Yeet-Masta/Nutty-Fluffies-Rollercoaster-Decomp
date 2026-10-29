@@ -34,10 +34,10 @@ public class GameData
 		public static VehicleData createTestTrain(int specialCart)
 		{
 			VehicleData vehicleData = new VehicleData();
-			int num = 8;
+			int cartCount = 8;
 			vehicleData.trainType = 0;
-			vehicleData.cartList = new CartData[num];
-			for (int i = 0; i < num; i++)
+			vehicleData.cartList = new CartData[cartCount];
+			for (int i = 0; i < cartCount; i++)
 			{
 				vehicleData.cartList[i] = new CartData();
 				vehicleData.cartList[i].animalIndex = i % 5;
@@ -369,7 +369,7 @@ public class GameData
 	public static void reloadLevelPacks()
 	{
 		LEVEL_PACKS = LevelPack.getLevelPackList();
-		int num = 0;
+		int count = 0;
 		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(LEVEL_PACKS);
 		while (enumerator.MoveNext())
 		{
@@ -381,7 +381,7 @@ public class GameData
 			LevelPack levelPack = (LevelPack)obj;
 			loadLevelPackValues(levelPack);
 			UnityRuntimeServices.Update(enumerator, levelPack);
-			num++;
+			count++;
 		}
 		LEVEL_PACKS[0].flags = LEVEL_PACKS[0].flags | 1;
 		LEVEL_PACKS[0].levelList[0].flags = LEVEL_PACKS[0].levelList[0].flags | 1;
@@ -454,12 +454,12 @@ public class GameData
 		{
 		}
 		int startingCartAmount = getStartingCartAmount(i, levelIndex);
-		int num = PlayerPrefs.GetInt("LEVEL_CART_NUM_" + pack.fileName + "_" + pack.levelList[levelIndex].fileName, startingCartAmount);
-		if (num > CART_LIMIT)
+		int carts = PlayerPrefs.GetInt("LEVEL_CART_NUM_" + pack.fileName + "_" + pack.levelList[levelIndex].fileName, startingCartAmount);
+		if (carts > CART_LIMIT)
 		{
-			num = CART_LIMIT;
+			carts = CART_LIMIT;
 		}
-		return num;
+		return carts;
 	}
 
 	public static void setNumberOfCarts(LevelPack pack, int levelIndex, int num)
@@ -486,16 +486,16 @@ public class GameData
 	{
 		foreach (LevelPack.LevelInfo levelInfo in pack.levelList)
 		{
-			int num = PlayerPrefs.GetInt("LEVEL_FLAGS_" + pack.fileName + "_" + levelInfo.fileName, 0);
-			if ((num & 1) != 0)
+			int flags = PlayerPrefs.GetInt("LEVEL_FLAGS_" + pack.fileName + "_" + levelInfo.fileName, 0);
+			if ((flags & 1) != 0)
 			{
 				levelInfo.flags |= 1;
 			}
-			if ((num & LEVEL_FLAG_BUILT) != 0)
+			if ((flags & LEVEL_FLAG_BUILT) != 0)
 			{
 				levelInfo.flags |= LEVEL_FLAG_BUILT;
 			}
-			if ((num & 8) != 0)
+			if ((flags & 8) != 0)
 			{
 				levelInfo.flags |= 8;
 			}
@@ -559,23 +559,23 @@ public class GameData
 	public static bool isNextLevelOrLevelpackUnlocked()
 	{
 		LevelPack activeLevelPack = getActiveLevelPack();
-		int num = SELECTED_LEVEL_INDEX + 1;
-		if (num >= activeLevelPack.levelList.Count)
+		int nextLevel = SELECTED_LEVEL_INDEX + 1;
+		if (nextLevel >= activeLevelPack.levelList.Count)
 		{
-			int num2 = ACTIVE_LEVEL_PACK + 1;
-			if (num2 >= LEVEL_PACKS.Count)
+			int nextPack = ACTIVE_LEVEL_PACK + 1;
+			if (nextPack >= LEVEL_PACKS.Count)
 			{
 				return true;
 			}
 			else
 			{
-				activeLevelPack = LEVEL_PACKS[num2];
+				activeLevelPack = LEVEL_PACKS[nextPack];
 				return activeLevelPack.isUnlocked();
 			}
 		}
 		else
 		{
-			return activeLevelPack.getLevelInfo(num).isUnlocked();
+			return activeLevelPack.getLevelInfo(nextLevel).isUnlocked();
 		}
 	}
 
@@ -634,12 +634,12 @@ public class GameData
 	{
 		if (INAPP_PURCHASE_TOKENS.ContainsKey(productId))
 		{
-			int num = 1;
+			int multiplier = 1;
 			if (isFeatureUnlocked(8192))
 			{
-				num = 2;
+				multiplier = 2;
 			}
-			return INAPP_PURCHASE_TOKENS[productId] * num;
+			return INAPP_PURCHASE_TOKENS[productId] * multiplier;
 		}
 		else
 		{
@@ -656,15 +656,15 @@ public class GameData
 		}
 		else
 		{
-			float num = 0f;
-			float num2 = 0f;
+			float earned = 0f;
+			float possible = 0f;
 			for (int i = 0; i < levelPack.levelList.Count; i++)
 			{
 				int startingCartAmount = getStartingCartAmount(index, i);
-				num2 += (float)(CART_LIMIT - startingCartAmount);
-				num += (float)(getNumberOfCarts(levelPack, i) - startingCartAmount);
+				possible += (float)(CART_LIMIT - startingCartAmount);
+				earned += (float)(getNumberOfCarts(levelPack, i) - startingCartAmount);
 			}
-			return (int)Mathf.Ceil(num * 100f / num2);
+			return (int)Mathf.Ceil(earned * 100f / possible);
 		}
 	}
 
@@ -676,32 +676,32 @@ public class GameData
 		}
 		else
 		{
-			float num = CART_LIMIT;
-			int num2 = PlayerPrefs.GetInt("LEVEL_FINISH_CART_NUM_" + levelPack.fileName + "_" + levelPack.levelList[index].fileName, 0);
-			return (int)Mathf.Ceil((float)num2 * 100f / num);
+			float cartLimit = CART_LIMIT;
+			int finishedCarts = PlayerPrefs.GetInt("LEVEL_FINISH_CART_NUM_" + levelPack.fileName + "_" + levelPack.levelList[index].fileName, 0);
+			return (int)Mathf.Ceil((float)finishedCarts * 100f / cartLimit);
 		}
 	}
 
 	public static string formatTokenValue(string value)
 	{
-		int num = value.Length - 3;
-		if (num < 0)
+		int pos = value.Length - 3;
+		if (pos < 0)
 		{
 			return value;
 		}
 		else
 		{
-			string text = string.Empty;
-			while (num >= 0)
+			string formatted = string.Empty;
+			while (pos >= 0)
 			{
-				text = value.Substring(num, 3) + " " + text;
-				num -= 3;
+				formatted = value.Substring(pos, 3) + " " + formatted;
+				pos -= 3;
 			}
-			if (num > -3)
+			if (pos > -3)
 			{
-				text = value.Substring(0, 3 + num) + " " + text;
+				formatted = value.Substring(0, 3 + pos) + " " + formatted;
 			}
-			return text;
+			return formatted;
 		}
 	}
 
@@ -764,14 +764,14 @@ public class GameData
 
 	public static int getTrackPrice(int levelPack, int level)
 	{
-		float num = DEFAULT_PRICES[0].price;
+		float basePrice = DEFAULT_PRICES[0].price;
 		float priceMultiplier = getPriceMultiplier(levelPack, level);
-		float num2 = num * priceMultiplier;
+		float price = basePrice * priceMultiplier;
 		if (levelPack < LEVEL_PRICE_INCREMENT_MULTIPLIERS.Length)
 		{
-			num2 += LEVEL_PRICE_INCREMENT_MULTIPLIERS[levelPack] * (float)level * num;
+			price += LEVEL_PRICE_INCREMENT_MULTIPLIERS[levelPack] * (float)level * basePrice;
 		}
-		return (int)num2;
+		return (int)price;
 	}
 
 	public static bool hasEnoughMoneyToUnlockNextTrack(int cash)
@@ -808,20 +808,20 @@ public class GameData
 		int numberOfCarts = getNumberOfCarts(levelPack, levelIndex);
 		string lhs = "LEVEL_ANIMAL_" + levelPack.fileName + "_" + levelPack.levelList[levelIndex].fileName;
 		VehicleData vehicleData = new VehicleData();
-		int num = 0;
+		int cartIndex = 0;
 		vehicleData.cartList = new CartData[numberOfCarts];
-		for (num = 0; num < numberOfCarts; num++)
+		for (cartIndex = 0; cartIndex < numberOfCarts; cartIndex++)
 		{
-			vehicleData.cartList[num] = new CartData();
-			vehicleData.cartList[num].animalIndex = PlayerPrefs.GetInt(lhs + num, ANIMAL_NONE);
+			vehicleData.cartList[cartIndex] = new CartData();
+			vehicleData.cartList[cartIndex].animalIndex = PlayerPrefs.GetInt(lhs + cartIndex, ANIMAL_NONE);
 		}
 		vehicleData.trainType = getIndexOfActiveTheme();
 		vehicleData.specialCart = getSelectedLevel().settings.getIntValue("specialcart", Vehicle.CART_NORMAL);
 		if (!isFeatureUnlocked(0x1E | FEATURE_BUY_CART))
 		{
-			for (num = 0; num < numberOfCarts; num++)
+			for (cartIndex = 0; cartIndex < numberOfCarts; cartIndex++)
 			{
-				vehicleData.cartList[num].animalIndex = 0;
+				vehicleData.cartList[cartIndex].animalIndex = 0;
 			}
 			saveTrain();
 		}
@@ -844,15 +844,15 @@ public class GameData
 
 	public static int getNumberOfAnimalsInTrainData(int animalIndex)
 	{
-		int num = 0;
+		int count = 0;
 		for (int i = 0; i < TRAIN_DATA.cartList.Length; i++)
 		{
 			if (TRAIN_DATA.cartList[i].animalIndex == animalIndex)
 			{
-				num++;
+				count++;
 			}
 		}
-		return num;
+		return count;
 	}
 
 	public static void saveHeartRecord(int hearts, int maximum)
@@ -899,27 +899,27 @@ public class GameData
 
 	public static string genLeaderboard(int pack, int index)
 	{
-		string text = string.Empty;
+		string id = string.Empty;
 		switch (pack)
 		{
 		case 0:
-			text = "woodtrack_" + (index + 1);
+			id = "woodtrack_" + (index + 1);
 			break;
 		case 1:
-			text = "metaltrack_" + (index + 1);
+			id = "metaltrack_" + (index + 1);
 			break;
 		case 2:
-			text = "looptrack_" + (index + 1);
+			id = "looptrack_" + (index + 1);
 			break;
 		case 3:
-			text = "extremetrack_" + (index + 1);
+			id = "extremetrack_" + (index + 1);
 			break;
 		}
 		if (LOG)
 		{
-			Debug.Log("LB: " + text);
+			Debug.Log("LB: " + id);
 		}
-		return text;
+		return id;
 	}
 
 	public static bool hasInternet()

@@ -43,21 +43,21 @@ public class CSpline2
 
 	public virtual Vector2 interpolate(float t)
 	{
-		float num = Mathf.Floor(t);
-		if (!(num >= 0f) && !(num < (float)splineData.Count))
+		float segment = Mathf.Floor(t);
+		if (!(segment >= 0f) && !(segment < (float)splineData.Count))
 		{
 			Debug.Log("invalid segment");
-			num = 0f;
+			segment = 0f;
 			t = 0f;
 		}
-		int num2 = (int)(num + 1f);
-		if (num2 >= splineData.Count)
+		int nextIndex = (int)(segment + 1f);
+		if (nextIndex >= splineData.Count)
 		{
-			num2 = (int)num;
+			nextIndex = (int)segment;
 		}
-		CSplinePoint cSplinePoint = splineData[(int)num];
-		CSplinePoint cSplinePoint2 = splineData[num2];
-		return CubicInterpolation.interpolate(t - num, cSplinePoint.position, cSplinePoint.tangentOut, cSplinePoint2.position, cSplinePoint2.tangentIn);
+		CSplinePoint cSplinePoint = splineData[(int)segment];
+		CSplinePoint cSplinePoint2 = splineData[nextIndex];
+		return CubicInterpolation.interpolate(t - segment, cSplinePoint.position, cSplinePoint.tangentOut, cSplinePoint2.position, cSplinePoint2.tangentIn);
 	}
 
 	public virtual void setPointPosition(int index, Vector2 pos)
@@ -118,28 +118,28 @@ public class CSpline2
 	public virtual List<Vector2> convertToVertices(float vertexTreshold, float step, float maxSegmentLength)
 	{
 		List<Vector2> list = new List<Vector2>();
-		float num = maxSegmentLength * maxSegmentLength;
+		float maxSegmentLengthSq = maxSegmentLength * maxSegmentLength;
 		for (int i = 0; i < splineData.Count - 1; i++)
 		{
-			float num2 = step;
+			float t = step;
 			Vector2 rhs = splineData[i].tangentOut;
 			rhs.Normalize();
-			Vector2 vector = splineData[i].position;
-			Vector2 vector2 = vector;
-			list.Add(vector);
-			for (; num2 < 1f; num2 += step)
+			Vector2 lastVertex = splineData[i].position;
+			Vector2 lastSample = lastVertex;
+			list.Add(lastVertex);
+			for (; t < 1f; t += step)
 			{
-				Vector2 vector3 = interpolate((float)i + num2);
-				Vector2 vector4 = vector3 - vector;
-				Vector2 vector5 = vector3 - vector2;
-				vector4.Normalize();
-				if (vector5.sqrMagnitude > num || !(Vector2.Dot(vector4, rhs) >= 1f - vertexTreshold))
+				Vector2 sample = interpolate((float)i + t);
+				Vector2 direction = sample - lastVertex;
+				Vector2 sampleDelta = sample - lastSample;
+				direction.Normalize();
+				if (sampleDelta.sqrMagnitude > maxSegmentLengthSq || !(Vector2.Dot(direction, rhs) >= 1f - vertexTreshold))
 				{
-					list.Add(vector3);
-					rhs = vector4;
-					vector2 = vector3;
+					list.Add(sample);
+					rhs = direction;
+					lastSample = sample;
 				}
-				vector = vector3;
+				lastVertex = sample;
 			}
 		}
 		CSplinePoint cSplinePoint = splineData[splineData.Count - 1];
@@ -149,30 +149,30 @@ public class CSpline2
 
 	private static bool lineLineIntersection(Vector2 aStart, Vector2 aEnd, Vector2 bStart, Vector2 bEnd)
 	{
-		float num = (aEnd.y - aStart.y) * (bEnd.x - bStart.x) - (aEnd.x - aStart.x) * (bEnd.y - bStart.y);
-		int num2;
-		if (!(num <= -1E-05f) && !(num >= 1E-05f))
+		float denominator = (aEnd.y - aStart.y) * (bEnd.x - bStart.x) - (aEnd.x - aStart.x) * (bEnd.y - bStart.y);
+		int intersects;
+		if (!(denominator <= -1E-05f) && !(denominator >= 1E-05f))
 		{
-			num2 = 0;
+			intersects = 0;
 		}
 		else
 		{
-			float num3 = ((aEnd.x - aStart.x) * (bStart.y - aStart.y) - (aEnd.y - aStart.y) * (bStart.x - aStart.x)) / num;
-			if (num3 < 0f || !(num3 <= 1f))
+			float ua = ((aEnd.x - aStart.x) * (bStart.y - aStart.y) - (aEnd.y - aStart.y) * (bStart.x - aStart.x)) / denominator;
+			if (ua < 0f || !(ua <= 1f))
 			{
-				num2 = 0;
+				intersects = 0;
 			}
 			else
 			{
-				float num4 = ((bEnd.x - bStart.x) * (bStart.y - aStart.y) - (bEnd.y - bStart.y) * (bStart.x - aStart.x)) / num;
-				num2 = num4 < 0f ? 0 : 1;
-				if (num2 != 0)
+				float ub = ((bEnd.x - bStart.x) * (bStart.y - aStart.y) - (bEnd.y - bStart.y) * (bStart.x - aStart.x)) / denominator;
+				intersects = ub < 0f ? 0 : 1;
+				if (intersects != 0)
 				{
-					num2 = num4 > 1f ? 0 : 1;
+					intersects = ub > 1f ? 0 : 1;
 				}
 			}
 		}
-		return (byte)num2 != 0;
+		return (byte)intersects != 0;
 	}
 
 	public virtual bool testSelfIntersection()

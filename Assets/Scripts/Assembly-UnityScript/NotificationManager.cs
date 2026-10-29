@@ -47,19 +47,19 @@ public class NotificationManager : MonoBehaviour
 		{
 			return;
 		}
-		long num = DateTime.Now.Ticks / 10000000L;
-		long num2 = long.Parse(PlayerPrefs.GetString("QUIT_TIME", "0"));
-		if ((int)num2 != 0 && !activated)
+		long now = DateTime.Now.Ticks / 10000000L;
+		long quitTime = long.Parse(PlayerPrefs.GetString("QUIT_TIME", "0"));
+		if ((int)quitTime != 0 && !activated)
 		{
-			long num3 = num - num2;
-			int days = (int)(num3 / SECONDS_IN_DAY);
-			int num4 = (int)getRevenue(days);
-			if (num4 > 0 && MenuManager.getInstance() != null)
+			long elapsed = now - quitTime;
+			int days = (int)(elapsed / SECONDS_IN_DAY);
+			int revenue = (int)getRevenue(days);
+			if (revenue > 0 && MenuManager.getInstance() != null)
 			{
 				GeneralSoundEffects.playSound(MenuManager.getInstance().cashSound);
-				string message = LocalizationManager.localize("REVENUE_TEXT").Replace("%d", string.Empty + GameData.formatTokenValue(string.Empty + num4));
+				string message = LocalizationManager.localize("REVENUE_TEXT").Replace("%d", string.Empty + GameData.formatTokenValue(string.Empty + revenue));
 				MenuManager.getInstance().showMessage(LocalizationManager.localize("REVENUE_TITLE"), message, MenuManager.getInstance().cashImage);
-				GameData.addTokens(num4);
+				GameData.addTokens(revenue);
 				MenuManager.getInstance().updateTokenAmount();
 			}
 			activated = true;
@@ -101,30 +101,30 @@ public class NotificationManager : MonoBehaviour
 	{
 		if (didStart)
 		{
-			long num = DateTime.Now.Ticks / 10000000L;
-			PlayerPrefs.SetString("QUIT_TIME", string.Empty + num);
+			long now = DateTime.Now.Ticks / 10000000L;
+			PlayerPrefs.SetString("QUIT_TIME", string.Empty + now);
 		}
 	}
 
 	private void createRevenueNotification(int number, int days)
 	{
-		int num = (int)getRevenue(days);
-		if (num > 0)
+		int revenue = (int)getRevenue(days);
+		if (revenue > 0)
 		{
-			LocalizationManager.localize("REVENUE_TEXT_MESSAGE_" + number).Replace("%d", string.Empty + GameData.formatTokenValue(string.Empty + num));
+			LocalizationManager.localize("REVENUE_TEXT_MESSAGE_" + number).Replace("%d", string.Empty + GameData.formatTokenValue(string.Empty + revenue));
 		}
 	}
 
 	private float getRevenue(int days)
 	{
-		int num = GameData.NOTIFICATION_DAYS.Length - 1;
-		while (num >= 0)
+		int index = GameData.NOTIFICATION_DAYS.Length - 1;
+		while (index >= 0)
 		{
-			if (days >= GameData.NOTIFICATION_DAYS[num])
+			if (days >= GameData.NOTIFICATION_DAYS[index])
 			{
-				return Mathf.Min((num + 1) * GameData.TRACK_REVENUE, GameData.TRACK_REVENUE_MAX);
+				return Mathf.Min((index + 1) * GameData.TRACK_REVENUE, GameData.TRACK_REVENUE_MAX);
 			}
-			num--;
+			index--;
 		}
 		return 0f;
 	}

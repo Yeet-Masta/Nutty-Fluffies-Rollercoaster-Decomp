@@ -36,7 +36,7 @@ public class VGUITextNative : VGUIText
 			textureHeight <<= 1;
 		}
 		mesh.Clear();
-		Vector3[] array = new Vector3[4]
+		Vector3[] vertices = new Vector3[4]
 		{
 			new Vector3(0f, 0f, 0f),
 			new Vector3(1f, 0f, 0f),
@@ -52,13 +52,13 @@ public class VGUITextNative : VGUIText
 		};
 		int[] triangles = new int[6] { 3, 1, 0, 2, 1, 3 };
 		int i = 0;
-		Vector3[] array2 = array;
+		Vector3[] array2 = vertices;
 		for (int length = array2.Length; i < length; i++)
 		{
 			array2[i].x = array2[i].x * ((float)textureWidth / 1024f);
 			array2[i].y = array2[i].y * ((float)textureHeight / 1024f);
 		}
-		mesh.vertices = array;
+		mesh.vertices = vertices;
 		mesh.uv = uv;
 		mesh.triangles = triangles;
 		mesh.RecalculateBounds();

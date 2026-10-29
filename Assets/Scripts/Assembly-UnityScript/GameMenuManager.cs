@@ -29,7 +29,7 @@ public class GameMenuManager : BaseMenuManager
 	public virtual void Start()
 	{
 		wasInPauseMenu = false;
-		bool flag = GameData.isFeatureUnlocked(0x1E | GameData.FEATURE_BUY_CART);
+		bool canBuyCarts = GameData.isFeatureUnlocked(0x1E | GameData.FEATURE_BUY_CART);
 		BaseMenu.anim = AnimationManager.getInstance();
 		BaseMenu.mmgr = this;
 		GameData.createTrainForLevel();
@@ -38,7 +38,7 @@ public class GameMenuManager : BaseMenuManager
 			GameManager.getInstance().loadLevel();
 			hasCreatedLevel = true;
 		}
-		if (flag)
+		if (canBuyCarts)
 		{
 			menuSwitcher.activateMenu(itemStore);
 			fadeIn.invokeRef = gameObject;
@@ -184,8 +184,8 @@ public class GameMenuManager : BaseMenuManager
 
 	public override void onNextMenu()
 	{
-		bool flag = GameData.isFeatureUnlocked(0x1E | GameData.FEATURE_BUY_CART);
-		if (menuSwitcher.activeMenu.nextMenu == itemStore && !flag)
+		bool canBuyCarts = GameData.isFeatureUnlocked(0x1E | GameData.FEATURE_BUY_CART);
+		if (menuSwitcher.activeMenu.nextMenu == itemStore && !canBuyCarts)
 		{
 			startGame();
 		}

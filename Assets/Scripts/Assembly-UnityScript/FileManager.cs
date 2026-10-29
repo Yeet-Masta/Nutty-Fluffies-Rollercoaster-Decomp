@@ -34,21 +34,21 @@ public class FileManager
 		addPacks("levelpacks", levelPackPaths);
 		addPacks("objectpacks", objectPackPaths);
 		addPacks("themepacks", themePackPaths);
-		foreach (string text in levelPackPaths)
+		foreach (string path in levelPackPaths)
 		{
-			levelPackNames.Add(getFileName(text));
+			levelPackNames.Add(getFileName(path));
 		}
-		foreach (string text2 in objectPackPaths)
+		foreach (string path in objectPackPaths)
 		{
 			if (GameData.LOG)
 			{
-				Debug.Log("Object pack found: " + getFileName(text2));
+				Debug.Log("Object pack found: " + getFileName(path));
 			}
-			objectPackNames.Add(getFileName(text2));
+			objectPackNames.Add(getFileName(path));
 		}
-		foreach (string text3 in themePackPaths)
+		foreach (string path in themePackPaths)
 		{
-			themePackNames.Add(getFileName(text3));
+			themePackNames.Add(getFileName(path));
 		}
 	}
 
@@ -113,13 +113,13 @@ public class FileManager
 
 	public virtual string locateTexture(string name, TextureManager.TextureType type)
 	{
-		string text = null;
-		foreach (string text2 in objectPackPaths)
+		string path = null;
+		foreach (string packPath in objectPackPaths)
 		{
-			text = text2 + "/textures/" + CommonData.getDevicePath() + "/" + TextureManager.texturePathForType(type) + "/" + name;
-			if (loadWWWFile(text) != null)
+			path = packPath + "/textures/" + CommonData.getDevicePath() + "/" + TextureManager.texturePathForType(type) + "/" + name;
+			if (loadWWWFile(path) != null)
 			{
-				return text;
+				return path;
 			}
 		}
 		Debug.LogWarning("Did not find texture (" + TextureManager.texturePathForType(type) + ") '" + name + "'!");
@@ -145,10 +145,10 @@ public class FileManager
 					{
 						obj = RuntimeServices.Coerce(obj, typeof(string));
 					}
-					string text = (string)obj;
-					if (getFileName(text) == name)
+					string path = (string)obj;
+					if (getFileName(path) == name)
 					{
-						result = text;
+						result = path;
 						break;
 					}
 					continue;
@@ -180,10 +180,10 @@ public class FileManager
 					{
 						obj = RuntimeServices.Coerce(obj, typeof(string));
 					}
-					string text = (string)obj;
-					if (getFileName(text) == name)
+					string path = (string)obj;
+					if (getFileName(path) == name)
 					{
-						result = text;
+						result = path;
 						break;
 					}
 					continue;
@@ -204,8 +204,8 @@ public class FileManager
 		}
 		else
 		{
-			string text = locateLevelPack(pack);
-			return string.IsNullOrEmpty(text) ? string.Empty : (text + "/levels/" + name + ".json");
+			string packPath = locateLevelPack(pack);
+			return string.IsNullOrEmpty(packPath) ? string.Empty : (packPath + "/levels/" + name + ".json");
 		}
 	}
 
@@ -228,10 +228,10 @@ public class FileManager
 					{
 						obj = RuntimeServices.Coerce(obj, typeof(string));
 					}
-					string text = (string)obj;
-					if (getFileName(text) == name)
+					string path = (string)obj;
+					if (getFileName(path) == name)
 					{
-						result = text + "/theme.json";
+						result = path + "/theme.json";
 						break;
 					}
 					continue;
@@ -289,11 +289,11 @@ public class FileManager
 		{
 		}
 		StringReader stringReader = new StringReader(wWW.text);
-		string text = stringReader.ReadLine();
-		while (text != null)
+		string line = stringReader.ReadLine();
+		while (line != null)
 		{
-			packList.Add("GameResources/" + dir + "/" + text);
-			text = stringReader.ReadLine();
+			packList.Add("GameResources/" + dir + "/" + line);
+			line = stringReader.ReadLine();
 		}
 		packList.AddRange(getFoldersFullPaths(getDataDirectory() + "/" + dir));
 		packList.AddRange(getFoldersFullPaths(getPersistentDataDirectory() + "/" + dir));

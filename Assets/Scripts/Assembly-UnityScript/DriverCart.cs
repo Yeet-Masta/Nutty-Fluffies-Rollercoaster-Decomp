@@ -32,32 +32,32 @@ public class DriverCart : Cart
 		{
 			return;
 		}
-		float num = 90f;
+		float handleAngle = 90f;
 		if (!rb.isKinematic)
 		{
-			float num2 = trainRef.controller.brake;
-			if (!(num2 <= 1f))
+			float brake = trainRef.controller.brake;
+			if (!(brake <= 1f))
 			{
-				num2 = 1f;
+				brake = 1f;
 			}
-			if (!(num2 <= 0.1f))
+			if (!(brake <= 0.1f))
 			{
-				num += num2 * handleAngleFactor;
+				handleAngle += brake * handleAngleFactor;
 			}
 			else if (!(trainRef.controller.throttle <= 0.1f))
 			{
-				num -= trainRef.controller.throttle * handleAngleFactor;
+				handleAngle -= trainRef.controller.throttle * handleAngleFactor;
 			}
-			if (!(num <= 180f))
+			if (!(handleAngle <= 180f))
 			{
-				num = 180f;
+				handleAngle = 180f;
 			}
-			else if (!(num >= 45f))
+			else if (!(handleAngle >= 45f))
 			{
-				num = 45f;
+				handleAngle = 45f;
 			}
 		}
-		float z = brakeHandle.localEulerAngles.z + (num - brakeHandle.localEulerAngles.z) * 0.2f;
+		float z = brakeHandle.localEulerAngles.z + (handleAngle - brakeHandle.localEulerAngles.z) * 0.2f;
 		Vector3 localEulerAngles = brakeHandle.localEulerAngles;
 		localEulerAngles.z = z;
 		brakeHandle.localEulerAngles = localEulerAngles;

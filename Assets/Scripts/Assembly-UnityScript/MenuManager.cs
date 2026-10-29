@@ -128,9 +128,9 @@ public class MenuManager : BaseMenuManager
 		WAS_IN_STORY = false;
 		WAS_PLAYING = false;
 		VersionChecker.getInstance().getVersion(GameData.VERSION_CHECK_URL, gameObject);
-		bool flag = GameData.isFeatureUnlocked(2);
-		bool flag2 = PlayerPrefs.GetInt("CHRISTMASUPDATE_INFO_SHOWN", 0) > 0;
-		if (flag && !flag2)
+		bool featureUnlocked = GameData.isFeatureUnlocked(2);
+		bool infoShown = PlayerPrefs.GetInt("CHRISTMASUPDATE_INFO_SHOWN", 0) > 0;
+		if (featureUnlocked && !infoShown)
 		{
 			showMessage(TextData.COMMUNITY_TITLE_OFFER2, TextData.CHRISTMAS_PACKAGE_UNLOCK_TEXT, featureImages[12]);
 			PlayerPrefs.SetInt("CHRISTMASUPDATE_INFO_SHOWN", 1);
@@ -180,19 +180,19 @@ public class MenuManager : BaseMenuManager
 
 	public virtual void onToggleQuality()
 	{
-		int num = PlayerPrefs.GetInt("ANDROID_LOW_DEF");
+		int lowDef = PlayerPrefs.GetInt("ANDROID_LOW_DEF");
 		quality = (tk2dTextMesh)GameObject.Find("Text").GetComponent(typeof(tk2dTextMesh));
-		if (num == 0)
+		if (lowDef == 0)
 		{
-			num = 1;
+			lowDef = 1;
 			quality.setText("HD");
 		}
 		else
 		{
-			num = 0;
+			lowDef = 0;
 			quality.setText("SD");
 		}
-		PlayerPrefs.SetInt("ANDROID_LOW_DEF", num);
+		PlayerPrefs.SetInt("ANDROID_LOW_DEF", lowDef);
 		CommonData.reinit();
 	}
 
@@ -324,10 +324,10 @@ public class MenuManager : BaseMenuManager
 
 	private void setAspectRatio(int index)
 	{
-		int num = 768;
-		int width = (int)(ASPECT_FACTORS[index] * (float)num);
+		int height = 768;
+		int width = (int)(ASPECT_FACTORS[index] * (float)height);
 		currentAspect = index;
-		Screen.SetResolution(width, num, Screen.fullScreenMode);
+		Screen.SetResolution(width, height, Screen.fullScreenMode);
 		PlayerPrefs.SetInt("ASPECT_RATION", currentAspect);
 		Application.LoadLevel("MenuScene");
 	}

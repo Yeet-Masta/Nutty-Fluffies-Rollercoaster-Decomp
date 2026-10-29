@@ -93,17 +93,17 @@ public class CommunityFeatures : MonoBehaviour
 
 	private void updateInternalInterval()
 	{
-		int num = 0;
+		int enabledCount = 0;
 		for (int i = 0; i < FEATURE_OFFER_ORDER.Length; i++)
 		{
 			if (isEnabled(FEATURE_OFFER_ORDER[i]))
 			{
-				num++;
+				enabledCount++;
 			}
 		}
-		if (num > 0)
+		if (enabledCount > 0)
 		{
-			internalOfferInterval = Mathf.Min(15, offerInterval * (FEATURE_OFFER_ORDER.Length + 1) - num * offerInterval);
+			internalOfferInterval = Mathf.Min(15, offerInterval * (FEATURE_OFFER_ORDER.Length + 1) - enabledCount * offerInterval);
 		}
 		else
 		{
@@ -113,44 +113,44 @@ public class CommunityFeatures : MonoBehaviour
 
 	public virtual bool isEnabled(int feature)
 	{
-		int num = PlayerPrefs.GetInt(FEATURE_KEY[feature] + "_COUNTER", 0);
-		int num2;
+		int useCount = PlayerPrefs.GetInt(FEATURE_KEY[feature] + "_COUNTER", 0);
+		int allowed;
 		if (!isAvailable(feature))
 		{
-			num2 = 0;
+			allowed = 0;
 		}
 		else if (feature == 4 && !GameData.canMakeInAppPurchases())
 		{
-			num2 = 0;
+			allowed = 0;
 		}
 		else
 		{
-			num2 = num < featureUseLimits[feature] ? 1 : 0;
-			if (num2 == 0)
+			allowed = useCount < featureUseLimits[feature] ? 1 : 0;
+			if (allowed == 0)
 			{
-				num2 = featureUseLimits[feature] == 0 ? 1 : 0;
+				allowed = featureUseLimits[feature] == 0 ? 1 : 0;
 			}
 		}
-		return (byte)num2 != 0;
+		return (byte)allowed != 0;
 	}
 
 	private bool isEnabledForOffer(int feature)
 	{
-		int num;
+		int allowed;
 		if (!isEnabled(feature))
 		{
-			num = 0;
+			allowed = 0;
 		}
 		else
 		{
-			int num2 = PlayerPrefs.GetInt(FEATURE_KEY[feature] + "_SHOW", 0);
-			num = num2 < featureShowLimits[feature] ? 1 : 0;
-			if (num == 0)
+			int showCount = PlayerPrefs.GetInt(FEATURE_KEY[feature] + "_SHOW", 0);
+			allowed = showCount < featureShowLimits[feature] ? 1 : 0;
+			if (allowed == 0)
 			{
-				num = featureShowLimits[feature] == 0 ? 1 : 0;
+				allowed = featureShowLimits[feature] == 0 ? 1 : 0;
 			}
 		}
-		return (byte)num != 0;
+		return (byte)allowed != 0;
 	}
 
 	public virtual bool isAvailable(int feature)
@@ -206,25 +206,25 @@ public class CommunityFeatures : MonoBehaviour
 		{
 			return;
 		}
-		int num = FEATURE_VALUES[offerMode];
+		int reward = FEATURE_VALUES[offerMode];
 		string message = null;
 		string title = null;
 		switch (offerMode)
 		{
 		case 0:
-			message = TextData.COMMUNITY_TEXT_OFFER_TWITTER.Replace("%d", string.Empty + num);
+			message = TextData.COMMUNITY_TEXT_OFFER_TWITTER.Replace("%d", string.Empty + reward);
 			title = TextData.COMMUNITY_TITLE_OFFER1;
 			break;
 		case 1:
-			message = TextData.COMMUNITY_TEXT_OFFER_POST_FACEBOOK.Replace("%d", string.Empty + num);
+			message = TextData.COMMUNITY_TEXT_OFFER_POST_FACEBOOK.Replace("%d", string.Empty + reward);
 			title = TextData.COMMUNITY_TITLE_OFFER2;
 			break;
 		case 2:
-			message = TextData.COMMUNITY_TEXT_OFFER_LIKE_FACEBOOK.Replace("%d", string.Empty + num);
+			message = TextData.COMMUNITY_TEXT_OFFER_LIKE_FACEBOOK.Replace("%d", string.Empty + reward);
 			title = TextData.COMMUNITY_TITLE_OFFER1;
 			break;
 		case 3:
-			message = TextData.COMMUNITY_TEXT_OFFER_EMAIL.Replace("%d", string.Empty + num);
+			message = TextData.COMMUNITY_TEXT_OFFER_EMAIL.Replace("%d", string.Empty + reward);
 			title = TextData.COMMUNITY_TITLE_OFFER2;
 			break;
 		case 4:
@@ -407,9 +407,9 @@ public class CommunityFeatures : MonoBehaviour
 
 	private void incrementCounter(string key)
 	{
-		int num = PlayerPrefs.GetInt(key, 0);
-		num++;
-		PlayerPrefs.SetInt(key, num);
+		int count = PlayerPrefs.GetInt(key, 0);
+		count++;
+		PlayerPrefs.SetInt(key, count);
 		PlayerPrefs.Save();
 	}
 

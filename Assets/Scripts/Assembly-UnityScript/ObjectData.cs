@@ -60,18 +60,18 @@ public class ObjectData
 
 	public virtual string getDevicesDesc()
 	{
-		string text = string.Empty;
+		string desc = string.Empty;
 		for (int i = 0; i < Enum.GetValues(typeof(CommonData.DeviceGeneration)).Length; i++)
 		{
-			text = checkDevice(1 << i) ? (text + "- ") : (text + (CommonData.deviceChars[i] + " "));
+			desc = checkDevice(1 << i) ? (desc + "- ") : (desc + (CommonData.deviceChars[i] + " "));
 		}
-		return text;
+		return desc;
 	}
 
 	public virtual bool matchesSceneryType(int sceneryType)
 	{
-		bool flag = checkFlag(FLAG_IS_SCENERY);
-		return sceneryType == 3 || (sceneryType == 2 && flag) || (sceneryType == 1 && !flag);
+		bool isScenery = checkFlag(FLAG_IS_SCENERY);
+		return sceneryType == 3 || (sceneryType == 2 && isScenery) || (sceneryType == 1 && !isScenery);
 	}
 
 	public virtual void setFlag(int flag, bool state)

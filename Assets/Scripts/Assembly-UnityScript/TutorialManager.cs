@@ -80,20 +80,20 @@ public class TutorialManager : MonoBehaviour
 			{
 				isTutorialEnable = true;
 				currentPage = null;
-				int num = 0;
+				int index = 0;
 				TutorialPage[] array = tutorialPages;
 				int length = array.Length;
 				while (true)
 				{
-					if (num < length)
+					if (index < length)
 					{
-						if (array[num].key != key)
+						if (array[index].key != key)
 						{
-							num++;
+							index++;
 							continue;
 						}
-						currentPage = array[num];
-						if (array[num].shown)
+						currentPage = array[index];
+						if (array[index].shown)
 						{
 							result = 0;
 							break;
@@ -175,8 +175,8 @@ public class TutorialManager : MonoBehaviour
 			int intValue = GameData.getSelectedLevel().settings.getIntValue("specialcart", Vehicle.CART_NORMAL);
 			if (intValue != Vehicle.CART_NORMAL)
 			{
-				int num = PlayerPrefs.GetInt("TUTORIAL_SHOWN_PAGE_SPECIAL_" + intValue, 0);
-				PlayerPrefs.SetInt("TUTORIAL_SHOWN_PAGE_SPECIAL_" + intValue, num + 1);
+				int shownCount = PlayerPrefs.GetInt("TUTORIAL_SHOWN_PAGE_SPECIAL_" + intValue, 0);
+				PlayerPrefs.SetInt("TUTORIAL_SHOWN_PAGE_SPECIAL_" + intValue, shownCount + 1);
 			}
 			if (currentPage.showNextPageKey != null && currentPage.showNextPageKey != string.Empty && (!currentPage.showNextPageOnlyWithSpecial || (currentPage.showNextPageOnlyWithSpecial && GameData.getSpecialCartType() != Vehicle.CART_NORMAL)))
 			{

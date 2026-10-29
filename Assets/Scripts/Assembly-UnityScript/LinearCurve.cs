@@ -9,8 +9,8 @@ public class LinearCurve
 
 	public virtual float getValue(float t)
 	{
-		Vector2 vector = default(Vector2);
-		Vector2 vector2 = default(Vector2);
+		Vector2 from = default(Vector2);
+		Vector2 to = default(Vector2);
 		float result;
 		if (!(controlPoints[0].x <= t))
 		{
@@ -18,26 +18,26 @@ public class LinearCurve
 		}
 		else
 		{
-			int num = 0;
+			int index = 0;
 			while (true)
 			{
-				if (num < controlPoints.Count)
+				if (index < controlPoints.Count)
 				{
-					if (!(controlPoints[num].x >= t))
+					if (!(controlPoints[index].x >= t))
 					{
-						vector = controlPoints[num];
-						if (num >= controlPoints.Count - 1)
+						from = controlPoints[index];
+						if (index >= controlPoints.Count - 1)
 						{
-							result = vector.y;
+							result = from.y;
 							break;
 						}
-						vector2 = controlPoints[num + 1];
+						to = controlPoints[index + 1];
 					}
-					num++;
+					index++;
 					continue;
 				}
-				Vector2 vector3 = vector2 - vector;
-				result = vector.y + vector3.y * (t - vector.x) / vector3.x;
+				Vector2 delta = to - from;
+				result = from.y + delta.y * (t - from.x) / delta.x;
 				break;
 			}
 		}

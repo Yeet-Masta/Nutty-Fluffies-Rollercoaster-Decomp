@@ -46,14 +46,14 @@ public class TextureManager
 
 		public virtual bool load(string descFile)
 		{
-			string text = FileManager.getInstance().loadFileText(descFile);
-			if (text == null)
+			string json = FileManager.getInstance().loadFileText(descFile);
+			if (json == null)
 			{
 				return false;
 			}
 			else
 			{
-				JSONObject jSONObject = new JSONObject(text);
+				JSONObject jSONObject = new JSONObject(json);
 				filename = jSONObject.GetFieldSafe("img", new JSONObject("\"none\"")).str;
 				uv.scaleX = (float)jSONObject.GetFieldSafe("scalex", new JSONObject(1f)).n;
 				uv.scaleY = (float)jSONObject.GetFieldSafe("scaley", new JSONObject(1f)).n;
@@ -147,8 +147,8 @@ public class TextureManager
 		else
 		{
 			Texture2D texture2D = new Texture2D(4, 4, TextureFormat.ARGB4444, true);
-			byte[] array = FileManager.getInstance().loadFileBytes(fileName);
-			if (array == null)
+			byte[] bytes = FileManager.getInstance().loadFileBytes(fileName);
+			if (bytes == null)
 			{
 				if (GameData.LOG)
 				{
@@ -158,7 +158,7 @@ public class TextureManager
 			}
 			else
 			{
-				texture2D.LoadImage(array);
+				texture2D.LoadImage(bytes);
 				texture2D.filterMode = FilterMode.Bilinear;
 				texture2D.anisoLevel = 1;
 				texture2D.name = fileName;
@@ -181,8 +181,8 @@ public class TextureManager
 		else
 		{
 			Texture2D texture2D = new Texture2D(4, 4, TextureFormat.ARGB4444, false);
-			byte[] array = FileManager.getInstance().loadFileBytes(fileName);
-			if (array == null)
+			byte[] bytes = FileManager.getInstance().loadFileBytes(fileName);
+			if (bytes == null)
 			{
 				if (GameData.LOG)
 				{
@@ -192,7 +192,7 @@ public class TextureManager
 			}
 			else
 			{
-				texture2D.LoadImage(array);
+				texture2D.LoadImage(bytes);
 				texture2D.filterMode = FilterMode.Bilinear;
 				texture2D.anisoLevel = 1;
 				texture2D.name = fileName;
@@ -206,11 +206,11 @@ public class TextureManager
 	{
 		CustomProfiler.begin("createTexture");
 		TextureDescriptor textureDescriptor = null;
-		string text = fullTexturePath + ".txt";
+		string descFile = fullTexturePath + ".txt";
 		TextureCacheEntry textureCacheEntry = null;
-		if (textureDescriptorList.ContainsKey(text))
+		if (textureDescriptorList.ContainsKey(descFile))
 		{
-			textureCacheEntry = textureDescriptorList[text];
+			textureCacheEntry = textureDescriptorList[descFile];
 			if (uvs != null && textureCacheEntry.uvs != null)
 			{
 				uvs.copyFrom(textureCacheEntry.uvs);
@@ -221,7 +221,7 @@ public class TextureManager
 		else
 		{
 			textureDescriptor = new TextureDescriptor();
-			if (textureDescriptor.load(text))
+			if (textureDescriptor.load(descFile))
 			{
 				fullTexturePath = FileManager.getDirectoryName(fullTexturePath) + "/" + textureDescriptor.filename;
 			}
@@ -242,7 +242,7 @@ public class TextureManager
 				{
 					uvs.copyFrom(textureDescriptor.uv);
 				}
-				textureDescriptorList.Add(text, textureCacheEntry);
+				textureDescriptorList.Add(descFile, textureCacheEntry);
 			}
 			CustomProfiler.end("createTexture");
 			return texture2D;

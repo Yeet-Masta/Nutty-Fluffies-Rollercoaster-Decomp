@@ -102,22 +102,22 @@ public class Narrative : VGUISwitchObject
 			fileStream = File.OpenRead(fileName);
 			streamReader = new StreamReader(fileStream);
 		}
-		string text = string.Empty;
-		string text2 = streamReader.ReadLine();
-		while (text2 != null)
+		string paragraph = string.Empty;
+		string line = streamReader.ReadLine();
+		while (line != null)
 		{
-			if (text2.Trim().Length == 0)
+			if (line.Trim().Length == 0)
 			{
-				appendLine(text);
-				text = string.Empty;
+				appendLine(paragraph);
+				paragraph = string.Empty;
 			}
 			else
 			{
-				text += text2 + "\n";
+				paragraph += line + "\n";
 			}
-			text2 = streamReader.ReadLine();
+			line = streamReader.ReadLine();
 		}
-		appendLine(text);
+		appendLine(paragraph);
 		streamReader.Close();
 		if (fileStream != null)
 		{
@@ -147,11 +147,11 @@ public class Narrative : VGUISwitchObject
 				obj = RuntimeServices.Coerce(obj, typeof(NarrativeCommand));
 			}
 			NarrativeCommand narrativeCommand = (NarrativeCommand)obj;
-			float num = (float)narrativeCommand.position * currentLine.duration / (float)currentLine.textContent.Length;
+			float delay = (float)narrativeCommand.position * currentLine.duration / (float)currentLine.textContent.Length;
 			UnityRuntimeServices.Update(enumerator, narrativeCommand);
-			if (!(num <= 0.25f))
+			if (!(delay <= 0.25f))
 			{
-				Invoke(narrativeCommand.name, num);
+				Invoke(narrativeCommand.name, delay);
 				UnityRuntimeServices.Update(enumerator, narrativeCommand);
 			}
 			else

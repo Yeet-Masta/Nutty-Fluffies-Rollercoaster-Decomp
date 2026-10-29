@@ -156,9 +156,9 @@ public class Vehicle : MonoBehaviour
 
 	public virtual void handleUpdatePhysicsAndControls()
 	{
-		bool flag = controller.isCurrentControlTouchBased();
+		bool touchControls = controller.isCurrentControlTouchBased();
 		ticker2++;
-		if (flag)
+		if (touchControls)
 		{
 			engineForce = originalEngineForce * 6f;
 			brakeForce = originalBrakeForce * 4f;
@@ -170,13 +170,13 @@ public class Vehicle : MonoBehaviour
 		}
 		Vector3 right = primaryTr.right;
 		Vector3 velocity = primaryRigidbody.velocity;
-		float num = Vector3.Dot(velocity, right);
-		float num2 = 0f;
-		reversing = num < 0f;
+		float speed = Vector3.Dot(velocity, right);
+		float force = 0f;
+		reversing = speed < 0f;
 		trainSpeedSquared = velocity.sqrMagnitude;
 		if (!(controller.brake <= 0.1f) && !@lock)
 		{
-			if ((num > 2f || !(controller.brake <= 1f)) && !flag)
+			if ((speed > 2f || !(controller.brake <= 1f)) && !touchControls)
 			{
 				applyBrake(brakeForce);
 				if (carts[0].hasContact)
@@ -186,13 +186,13 @@ public class Vehicle : MonoBehaviour
 			}
 			else
 			{
-				num2 = engineForce + engineForce * Mathf.Max(0f, 5f - Mathf.Max(0f, 0f - num));
-				if (flag)
+				force = engineForce + engineForce * Mathf.Max(0f, 5f - Mathf.Max(0f, 0f - speed));
+				if (touchControls)
 				{
-					num2 = engineForce + engineForce * 6f;
+					force = engineForce + engineForce * 6f;
 				}
-				applyTorque(0f - num2, num);
-				if (flag && !(num <= 2f))
+				applyTorque(0f - force, speed);
+				if (touchControls && !(speed <= 2f))
 				{
 					int i = 0;
 					Cart[] array = carts;
@@ -206,12 +206,12 @@ public class Vehicle : MonoBehaviour
 				}
 			}
 		}
-		bool flag2 = trainSpeedSquared < minimumSpeed * minimumSpeed;
-		if (!flag)
+		bool tooSlow = trainSpeedSquared < minimumSpeed * minimumSpeed;
+		if (!touchControls)
 		{
 			if (!chainPulling)
 			{
-				if (carts[0].hasContact && !(controller.throttle <= 0.5f) && !(right.y <= 0.25f) && flag2)
+				if (carts[0].hasContact && !(controller.throttle <= 0.5f) && !(right.y <= 0.25f) && tooSlow)
 				{
 					applyForce(chainPullForce * right.y);
 					chainPulling = true;
@@ -219,7 +219,7 @@ public class Vehicle : MonoBehaviour
 			}
 			else
 			{
-				if (flag2)
+				if (tooSlow)
 				{
 					applyForce(chainPullForce);
 				}
@@ -238,13 +238,13 @@ public class Vehicle : MonoBehaviour
 			}
 			if (!chainPulling)
 			{
-				num2 = engineForce + engineForce * Mathf.Max(0f, 15f - Mathf.Max(0f, num));
-				if (flag)
+				force = engineForce + engineForce * Mathf.Max(0f, 15f - Mathf.Max(0f, speed));
+				if (touchControls)
 				{
-					num2 = engineForce * engineForceLevelMultiply;
+					force = engineForce * engineForceLevelMultiply;
 				}
-				applyTorque(controller.throttle * num2, num);
-				if (flag)
+				applyTorque(controller.throttle * force, speed);
+				if (touchControls)
 				{
 					int j = 0;
 					Cart[] array2 = carts;
@@ -283,7 +283,7 @@ public class Vehicle : MonoBehaviour
 				ticker = 0;
 			}
 			cartsInAir = 0;
-			int num4 = 0;
+			int cartIndex = 0;
 			foreach (Cart cart in carts)
 			{
 				if (!cart.hasContact)
@@ -292,21 +292,21 @@ public class Vehicle : MonoBehaviour
 				}
 			}
 			bool flag3 = false;
-			for (num4 = 0; num4 < cartCount; num4++)
+			for (cartIndex = 0; cartIndex < cartCount; cartIndex++)
 			{
-				if (ticker == num4 >> 1)
+				if (ticker == cartIndex >> 1)
 				{
-					carts[num4].updateCart();
-					if (!(carts[num4].tr.up.y >= 0f) && carts[num4].hasContact)
+					carts[cartIndex].updateCart();
+					if (!(carts[cartIndex].tr.up.y >= 0f) && carts[cartIndex].hasContact)
 					{
 						flag3 = true;
 					}
 				}
-				if (!carts[num4].hasContact && !disableDefaultMagnet && num4 < cartCount - 2 && !((float)num4 >= (float)cartCount * 0.5f - (float)cartsInAir * 0.6f))
+				if (!carts[cartIndex].hasContact && !disableDefaultMagnet && cartIndex < cartCount - 2 && !((float)cartIndex >= (float)cartCount * 0.5f - (float)cartsInAir * 0.6f))
 				{
-					if (!(Vector3.Dot(carts[num4].tr.up, carts[num4 + 1].tr.right) <= -0.2f))
+					if (!(Vector3.Dot(carts[cartIndex].tr.up, carts[cartIndex + 1].tr.right) <= -0.2f))
 					{
-						carts[num4].applyDefaultMagnet();
+						carts[cartIndex].applyDefaultMagnet();
 					}
 				}
 			}
@@ -327,38 +327,38 @@ public class Vehicle : MonoBehaviour
 		}
 		else
 		{
-			for (int num4 = 0; num4 < cartCount; num4++)
+			for (int cartIndex = 0; cartIndex < cartCount; cartIndex++)
 			{
-				carts[num4].raycastTrack();
+				carts[cartIndex].raycastTrack();
 			}
 		}
 	}
 
 	public virtual void applySeparatePower(Cart cart1, Cart cart2)
 	{
-		Vector3 vector = cart2.tr.position - cart1.tr.position;
-		vector.Normalize();
-		vector *= 60f;
-		cart1.rb.AddForce(-vector);
-		cart2.rb.AddForce(vector);
+		Vector3 push = cart2.tr.position - cart1.tr.position;
+		push.Normalize();
+		push *= 60f;
+		cart1.rb.AddForce(-push);
+		cart2.rb.AddForce(push);
 	}
 
 	public virtual void handleUpdateSounds()
 	{
-		float num = 0f;
-		int num2 = 0;
+		float speed = 0f;
+		int contactCount = 0;
 		for (int i = 0; i < cartCount; i++)
 		{
 			if (carts[i].hasContact)
 			{
-				num += carts[i].rb.velocity.sqrMagnitude * 2f;
-				num2++;
+				speed += carts[i].rb.velocity.sqrMagnitude * 2f;
+				contactCount++;
 			}
 		}
-		if (num2 > 0)
+		if (contactCount > 0)
 		{
-			num = Mathf.Sqrt(num);
-			num = num / (float)num2 * soundControllerFactor;
+			speed = Mathf.Sqrt(speed);
+			speed = speed / (float)contactCount * soundControllerFactor;
 			if (isFlying)
 			{
 				st.endJump(primaryTr.position);
@@ -382,17 +382,17 @@ public class Vehicle : MonoBehaviour
 		if (hasCrashed)
 		{
 			num3 = 0f;
-			num = 0f;
+			speed = 0f;
 		}
-		soundController.setValue(num);
+		soundController.setValue(speed);
 		if (isFlying)
 		{
-			float num4 = primaryRigidbody.velocity.x * 0.1f;
-			if (!(num4 >= 0f))
+			float flyingSpeed = primaryRigidbody.velocity.x * 0.1f;
+			if (!(flyingSpeed >= 0f))
 			{
-				num4 = 0f - num4;
+				flyingSpeed = 0f - flyingSpeed;
 			}
-			soundController.setFlying(true, num4);
+			soundController.setFlying(true, flyingSpeed);
 		}
 		else if (chainPulling)
 		{
@@ -447,15 +447,15 @@ public class Vehicle : MonoBehaviour
 	private void checkState()
 	{
 		bool flag = false;
-		float num = 0f;
-		float num2 = screamSpeedTreshold * screamSpeedTreshold;
-		if (!goingFast && !(trainSpeedSquared <= num2))
+		float screamPower = 0f;
+		float speedThresholdSq = screamSpeedTreshold * screamSpeedTreshold;
+		if (!goingFast && !(trainSpeedSquared <= speedThresholdSq))
 		{
 			goingFast = true;
 			flag = true;
-			num += 0.8f;
+			screamPower += 0.8f;
 		}
-		else if (goingFast && !(trainSpeedSquared >= num2))
+		else if (goingFast && !(trainSpeedSquared >= speedThresholdSq))
 		{
 			goingFast = false;
 		}
@@ -463,7 +463,7 @@ public class Vehicle : MonoBehaviour
 		{
 			upsideDown = true;
 			flag = true;
-			num += 0.8f;
+			screamPower += 0.8f;
 		}
 		else if (upsideDown && !(primaryTr.up.y <= 0f))
 		{
@@ -473,7 +473,7 @@ public class Vehicle : MonoBehaviour
 		{
 			falling = true;
 			flag = true;
-			num += 0.8f;
+			screamPower += 0.8f;
 		}
 		else if (falling && !(primaryRigidbody.velocity.y <= 0f - screamFallingTreshold))
 		{
@@ -483,7 +483,7 @@ public class Vehicle : MonoBehaviour
 		{
 			fallingFromJump = true;
 			flag = true;
-			num += 0.8f;
+			screamPower += 0.8f;
 		}
 		else if (fallingFromJump)
 		{
@@ -497,11 +497,11 @@ public class Vehicle : MonoBehaviour
 		{
 			if (upsideDown)
 			{
-				RollerCoasterSounds.getInstance().playScream(num);
+				RollerCoasterSounds.getInstance().playScream(screamPower);
 			}
 			else
 			{
-				RollerCoasterSounds.getInstance().playScreamWithOneAnimal(0, num);
+				RollerCoasterSounds.getInstance().playScreamWithOneAnimal(0, screamPower);
 			}
 		}
 	}
@@ -510,20 +510,20 @@ public class Vehicle : MonoBehaviour
 	{
 		controller.isCurrentControlTouchBased();
 		int num = 0;
-		float num2 = 0f;
+		float force = 0f;
 		int i = 0;
 		Cart[] array = carts;
 		for (int length = array.Length; i < length; i++)
 		{
-			int num3 = (int)Vector3.Dot(array[i].transform.right, array[i].rb.velocity);
-			num2 = amount * 50f;
-			if ((!(amount <= 0f) && num3 < 30) || (!(amount >= 0f) && num3 > -30))
+			int forwardSpeed = (int)Vector3.Dot(array[i].transform.right, array[i].rb.velocity);
+			force = amount * 50f;
+			if ((!(amount <= 0f) && forwardSpeed < 30) || (!(amount >= 0f) && forwardSpeed > -30))
 			{
-				array[i].rb.AddForce(array[i].transform.right * num2);
+				array[i].rb.AddForce(array[i].transform.right * force);
 			}
 			else
 			{
-				array[i].rb.AddForce(array[i].transform.right * num2 * 0.05f);
+				array[i].rb.AddForce(array[i].transform.right * force * 0.05f);
 			}
 			num++;
 		}
@@ -541,9 +541,9 @@ public class Vehicle : MonoBehaviour
 
 	private void applyBrake(float amount)
 	{
-		bool flag = controller.isCurrentControlTouchBased();
+		bool touchControls = controller.isCurrentControlTouchBased();
 		amount = 1f - amount;
-		float num = 1f;
+		float factor = 1f;
 		int num2 = 0;
 		int i = 0;
 		Cart[] array = carts;
@@ -551,9 +551,9 @@ public class Vehicle : MonoBehaviour
 		{
 			if (!array[i].rb.isKinematic)
 			{
-				num = flag ? (1f - 0.05f * amount) : (1f - 0.01f * amount);
+				factor = touchControls ? (1f - 0.05f * amount) : (1f - 0.01f * amount);
 			}
-			array[i].rb.velocity = array[i].rb.velocity * num;
+			array[i].rb.velocity = array[i].rb.velocity * factor;
 			num2++;
 		}
 	}
@@ -581,7 +581,7 @@ public class Vehicle : MonoBehaviour
 	private bool checkCrash()
 	{
 		bool result = false;
-		int num = 0;
+		int i = 0;
 		foreach (Cart cart in carts)
 		{
 			if (cart.crashed)
@@ -590,19 +590,19 @@ public class Vehicle : MonoBehaviour
 				break;
 			}
 		}
-		for (num = 1; num < cartCount; num++)
+		for (i = 1; i < cartCount; i++)
 		{
-			Vector3 up = carts[num - 1].tr.up;
-			Vector3 up2 = carts[num].tr.up;
+			Vector3 up = carts[i - 1].tr.up;
+			Vector3 up2 = carts[i].tr.up;
 			if (!(Vector3.Dot(up, up2) >= -0.6f))
 			{
-				if (carts[num].joint != null)
+				if (carts[i].joint != null)
 				{
-					UnityEngine.Object.Destroy(carts[num].joint);
+					UnityEngine.Object.Destroy(carts[i].joint);
 				}
 				result = true;
-				carts[num].setCrashed();
-				carts[num - 1].setCrashed();
+				carts[i].setCrashed();
+				carts[i - 1].setCrashed();
 			}
 		}
 		return result;
@@ -615,17 +615,17 @@ public class Vehicle : MonoBehaviour
 
 	public virtual int getCartScoreInCheckPoint(Cart cart, int type)
 	{
-		int num = 0;
+		int score = 0;
 		float magnitude = cart.rb.velocity.magnitude;
 		if (type == 0 && !(cart.height <= heightBonusTreshold))
 		{
-			num += 1 * cart.heartValue;
+			score += 1 * cart.heartValue;
 		}
 		else if (type == 1 && !(magnitude <= speedBonusTreshold))
 		{
-			num += 1 * cart.heartValue;
+			score += 1 * cart.heartValue;
 		}
-		return num;
+		return score;
 	}
 
 	public virtual void stopSounds()
@@ -655,16 +655,16 @@ public class Vehicle : MonoBehaviour
 
 	public virtual int getMaxAnimalIndex()
 	{
-		int num = 0;
+		int maxIndex = 0;
 		for (int i = 1; i < cartCount; i++)
 		{
 			int animalIndex = carts[i].animalIndex;
-			if (num < animalIndex)
+			if (maxIndex < animalIndex)
 			{
-				num = animalIndex;
+				maxIndex = animalIndex;
 			}
 		}
-		return num;
+		return maxIndex;
 	}
 
 	public virtual bool activateSpecial()
@@ -684,15 +684,15 @@ public class Vehicle : MonoBehaviour
 
 	public virtual int getNumberOfToys(int toyType)
 	{
-		int num = 0;
+		int count = 0;
 		for (int i = 1; i < cartCount; i++)
 		{
 			if (carts[i].getAnimalType() == toyType)
 			{
-				num++;
+				count++;
 			}
 		}
-		return num;
+		return count;
 	}
 
 	public virtual void lockMotion()
@@ -702,18 +702,18 @@ public class Vehicle : MonoBehaviour
 
 	public virtual Cart findEmptyCart()
 	{
-		int[] array = new int[cartCount];
-		int num = 0;
+		int[] emptyCarts = new int[cartCount];
+		int emptyCount = 0;
 		for (int i = 1; i < cartCount; i++)
 		{
 			if (!carts[i].hasAnimal())
 			{
-				array[num] = i;
-				num++;
+				emptyCarts[emptyCount] = i;
+				emptyCount++;
 			}
 		}
-		int a = (int)(UnityEngine.Random.value * (float)num);
-		return carts[Mathf.Max(a, num - 1)];
+		int a = (int)(UnityEngine.Random.value * (float)emptyCount);
+		return carts[Mathf.Max(a, emptyCount - 1)];
 	}
 
 	public virtual void onFinish()

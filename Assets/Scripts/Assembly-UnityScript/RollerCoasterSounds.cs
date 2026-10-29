@@ -216,21 +216,21 @@ public class RollerCoasterSounds : SoundManager
 		{
 			return;
 		}
-		int num = (int)(4321f * UnityEngine.Random.value % (float)count);
+		int pick = (int)(4321f * UnityEngine.Random.value % (float)count);
 		for (int i = 0; i < screamSource.Length; i++)
 		{
-			if (vehicle.getNumberOfToys(availableAnimals[num % count]) > 0)
+			if (vehicle.getNumberOfToys(availableAnimals[pick % count]) > 0)
 			{
-				int num2 = availableAnimals[num % count] * 2 + lastScream % 2;
-				float length = screamSound[num2].length;
+				int soundIndex = availableAnimals[pick % count] * 2 + lastScream % 2;
+				float length = screamSound[soundIndex].length;
 				screamTimeTreshold = Time.time + length + length * 0.5f * UnityEngine.Random.value;
-				screamSource[i].clip = screamSound[num2];
+				screamSource[i].clip = screamSound[soundIndex];
 				screamSource[i].volume = power * 0.5f;
 				screamSource[i].Play();
 			}
 			if (count > 1)
 			{
-				num = (int)(1f + 4321f * UnityEngine.Random.value % (float)(count - 1));
+				pick = (int)(1f + 4321f * UnityEngine.Random.value % (float)(count - 1));
 			}
 		}
 		lastScream++;
@@ -246,10 +246,10 @@ public class RollerCoasterSounds : SoundManager
 			}
 			if (vehicle.getNumberOfToys(animalIndex) > 0)
 			{
-				int num = animalIndex * 2 + lastScream % 2;
-				float length = screamSound[num].length;
+				int soundIndex = animalIndex * 2 + lastScream % 2;
+				float length = screamSound[soundIndex].length;
 				screamTimeTreshold = Time.time + length + length * 0.5f * UnityEngine.Random.value;
-				screamSource[0].clip = screamSound[num];
+				screamSource[0].clip = screamSound[soundIndex];
 				screamSource[0].volume = power * 0.5f;
 				screamSource[0].Play();
 			}
@@ -261,10 +261,10 @@ public class RollerCoasterSounds : SoundManager
 	{
 		if (!(Time.time <= screamTimeTreshold))
 		{
-			int num = (int)((float)(animalIndex * 2) + UnityEngine.Random.value * 12345f % 2f);
-			float length = screamSound[num].length;
+			int soundIndex = (int)((float)(animalIndex * 2) + UnityEngine.Random.value * 12345f % 2f);
+			float length = screamSound[soundIndex].length;
 			screamTimeTreshold = Time.time + length + length * 0.5f * UnityEngine.Random.value;
-			screamSource[0].clip = screamSound[num];
+			screamSource[0].clip = screamSound[soundIndex];
 			screamSource[0].volume = 0.75f;
 			screamSource[0].Play();
 		}

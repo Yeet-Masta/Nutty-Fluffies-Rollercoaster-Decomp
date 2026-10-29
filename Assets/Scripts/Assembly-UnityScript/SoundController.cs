@@ -69,37 +69,37 @@ public class SoundController : MonoBehaviour
 		controlValue += (value - controlValue) * 0.1f;
 		float value2 = masterVolumeCurve.getValue(controlValue);
 		float value3 = volumeCurve.getValue(controlValue);
-		float num = pitchCurve.getValue(controlValue);
-		float num2 = value3 * value2;
-		if (!(num2 >= 0f))
+		float pitch = pitchCurve.getValue(controlValue);
+		float volume = value3 * value2;
+		if (!(volume >= 0f))
 		{
-			num2 = 0f;
+			volume = 0f;
 		}
-		else if (!(num2 <= 1f))
+		else if (!(volume <= 1f))
 		{
-			num2 = 1f;
+			volume = 1f;
 		}
-		soundSource.volume = num2;
-		num2 = (1f - value3) * value2;
-		if (!(num2 >= 0f))
+		soundSource.volume = volume;
+		volume = (1f - value3) * value2;
+		if (!(volume >= 0f))
 		{
-			num2 = 0f;
+			volume = 0f;
 		}
-		else if (!(num2 <= 1f))
+		else if (!(volume <= 1f))
 		{
-			num2 = 1f;
+			volume = 1f;
 		}
-		complementSource.volume = num2;
-		if (!(num >= 0f))
+		complementSource.volume = volume;
+		if (!(pitch >= 0f))
 		{
-			num = 0f;
+			pitch = 0f;
 		}
-		else if (!(num <= 1f))
+		else if (!(pitch <= 1f))
 		{
-			num = 1f;
+			pitch = 1f;
 		}
-		soundSource.pitch = num;
-		complementSource.pitch = num;
+		soundSource.pitch = pitch;
+		complementSource.pitch = pitch;
 	}
 
 	public virtual void setBraking(float volume)

@@ -53,20 +53,20 @@ public class LevelButton : MenuButton
 	public virtual void activate(LevelPack.LevelInfo level, int index, int price)
 	{
 		int cartType = level.settings.getIntValue("wagontype", 0);
-		int num = level.settings.getIntValue("specialcart", Vehicle.CART_NORMAL);
-		bool flag = level.isUnlocked();
-		bool flag2 = level.testFlag(GameData.LEVEL_FLAG_BUILT);
-		bool flag3 = GameData.canBuy(price);
-		@lock.GetComponent<Renderer>().enabled = !flag;
-		setLocked(!flag);
+		int specialCart = level.settings.getIntValue("specialcart", Vehicle.CART_NORMAL);
+		bool unlocked = level.isUnlocked();
+		bool built = level.testFlag(GameData.LEVEL_FLAG_BUILT);
+		bool affordable = GameData.canBuy(price);
+		@lock.GetComponent<Renderer>().enabled = !unlocked;
+		setLocked(!unlocked);
 		GameObject gameObject = buyGraphic;
-		bool flag4 = flag && !flag2 && flag3;
-		gameObject.SetActiveRecursively(flag4);
-		cartImage.gameObject.SetActiveRecursively(flag2);
+		bool canBuild = unlocked && !built && affordable;
+		gameObject.SetActiveRecursively(canBuild);
+		cartImage.gameObject.SetActiveRecursively(built);
 		int activeLevelPackIndex = GameData.getActiveLevelPackIndex();
 		GameObject gameObject2 = priceData;
-		bool flag5 = flag2 || !flag;
-		gameObject2.SetActiveRecursively(!flag5);
+		bool builtOrLocked = built || !unlocked;
+		gameObject2.SetActiveRecursively(!builtOrLocked);
 		priceText.setText(string.Empty + price);
 		namePadge.SetActiveRecursively(false);
 		ldboardname = GameData.genLeaderboard(activeLevelPackIndex, index);
@@ -81,11 +81,11 @@ public class LevelButton : MenuButton
 			needCoinsText[1].setText(LocalizationManager.localize(TextData.BUTTON_LEVEL_NEED_COINS2));
 			localized = true;
 		}
-		progress.gameObject.SetActiveRecursively(flag2);
-		if (flag2)
+		progress.gameObject.SetActiveRecursively(built);
+		if (built)
 		{
-			pressSound = pressSounds[num + 1];
-			cartImage.activate(cartType, num);
+			pressSound = pressSounds[specialCart + 1];
+			cartImage.activate(cartType, specialCart);
 			int numberOfCarts = GameData.getNumberOfCarts(GameData.getActiveLevelPack(), index);
 			cartCount.setText("X" + numberOfCarts);
 			if (numberOfCarts < GameData.CART_LIMIT)
@@ -107,15 +107,15 @@ public class LevelButton : MenuButton
 		levelImage.GetComponent<Renderer>().material.mainTexture = TextureManager.getInstance().loadFileWithOutMipmap(fileName);
 		getCoins.SetActiveRecursively(false);
 		GameObject gameObject3 = needMoreCoins;
-		bool flag6 = !flag3 && flag && !flag2;
-		gameObject3.SetActiveRecursively(flag6);
-		if (!flag2)
+		bool tooExpensive = !affordable && unlocked && !built;
+		gameObject3.SetActiveRecursively(tooExpensive);
+		if (!built)
 		{
-			if (!flag3 || !flag)
+			if (!affordable || !unlocked)
 			{
 				SpriteUtil.setColor(levelImage.GetComponent<Renderer>(), 0.3f, 0.3f, 0.3f);
 			}
-			if (flag3 && flag)
+			if (affordable && unlocked)
 			{
 				activateBlinkAnimation();
 			}

@@ -17,8 +17,8 @@ public class OSAPendulum : ObjectScript
 	{
 		if (CommonData.getDeviceGeneration() != CommonData.DeviceGeneration.GEN_ANDROID_LOW)
 		{
-			float num = Mathf.Sin((Time.time + o) * s) * a;
-			float z = originalAngleDegrees + num;
+			float swing = Mathf.Sin((Time.time + o) * s) * a;
+			float z = originalAngleDegrees + swing;
 			Vector3 localEulerAngles = cachedTransform.localEulerAngles;
 			localEulerAngles.z = z;
 			cachedTransform.localEulerAngles = localEulerAngles;

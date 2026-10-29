@@ -25,17 +25,17 @@ public class VersionChecker : MonoBehaviour
 			return;
 		}
 		hasChecked = true;
-		int num = PlayerPrefs.GetInt("UPDATE_CHECK_COUNTER", 0);
-		num++;
-		if (num > checkInterval)
+		int counter = PlayerPrefs.GetInt("UPDATE_CHECK_COUNTER", 0);
+		counter++;
+		if (counter > checkInterval)
 		{
 			if (GameData.LOG)
 			{
 				Debug.Log("Getting version: " + infoUrl);
 			}
-			num = 0;
+			counter = 0;
 		}
-		PlayerPrefs.SetInt("UPDATE_CHECK_COUNTER", num);
+		PlayerPrefs.SetInt("UPDATE_CHECK_COUNTER", counter);
 		PlayerPrefs.Save();
 	}
 }

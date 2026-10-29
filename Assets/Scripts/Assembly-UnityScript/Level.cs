@@ -65,7 +65,7 @@ public class Level : MonoBehaviour
 	{
 		Vector3 position = cameraTransform.position;
 		float zoomFactor = myCamera.getZoomFactor();
-		int num = 0;
+		int layerIndex = 0;
 		int i = 0;
 		LevelLayer[] array = layers;
 		for (int length = array.Length; i < length; i++)
@@ -73,16 +73,16 @@ public class Level : MonoBehaviour
 			float x = array[i].parallaxFactor.x;
 			if (array[i].layer != 0)
 			{
-				float num2 = 1f;
-				num2 = zoomFactor / (1f + x * (zoomFactor - 1f));
-				float num3 = position.x * (0f - (x - 1f));
-				float num4 = position.y * (0f - (x - 1f));
-				num3 += (position.x - num3) * (1f - num2);
-				num4 += (position.y - num4) * (1f - num2);
-				layerTransforms[num].localPosition = new Vector3(num3, num4, -array[i].layer * 100);
-				layerTransforms[num].localScale = new Vector3(num2, num2, 1f);
+				float scale = 1f;
+				scale = zoomFactor / (1f + x * (zoomFactor - 1f));
+				float offsetX = position.x * (0f - (x - 1f));
+				float offsetY = position.y * (0f - (x - 1f));
+				offsetX += (position.x - offsetX) * (1f - scale);
+				offsetY += (position.y - offsetY) * (1f - scale);
+				layerTransforms[layerIndex].localPosition = new Vector3(offsetX, offsetY, -array[i].layer * 100);
+				layerTransforms[layerIndex].localScale = new Vector3(scale, scale, 1f);
 			}
-			num++;
+			layerIndex++;
 		}
 	}
 
@@ -105,16 +105,16 @@ public class Level : MonoBehaviour
 
 	public virtual LevelLayer getLayerForNumber(int num)
 	{
-		int num2 = 0;
-		LevelLayer[] array = getLayers();
-		int length = array.Length;
-		while (num2 < length)
+		int index = 0;
+		LevelLayer[] allLayers = getLayers();
+		int length = allLayers.Length;
+		while (index < length)
 		{
-			if (array[num2].layer == num)
+			if (allLayers[index].layer == num)
 			{
-				return array[num2];
+				return allLayers[index];
 			}
-			num2++;
+			index++;
 		}
 		return null;
 	}
@@ -122,17 +122,17 @@ public class Level : MonoBehaviour
 	public virtual LevelEntity findEntity(int uniqueID, GameObject customRoot)
 	{
 		Component[] componentsInChildren = (customRoot ? customRoot : gameObject).GetComponentsInChildren(typeof(LevelEntity), true);
-		int num = 0;
+		int index = 0;
 		Component[] array = componentsInChildren;
 		int length = array.Length;
-		while (num < length)
+		while (index < length)
 		{
-			LevelEntity levelEntity = array[num] as LevelEntity;
+			LevelEntity levelEntity = array[index] as LevelEntity;
 			if (levelEntity.referenceId == uniqueID)
 			{
 				return levelEntity;
 			}
-			num++;
+			index++;
 		}
 		Debug.Log("Did not find entity for ID " + uniqueID);
 		return null;
@@ -154,10 +154,10 @@ public class Level : MonoBehaviour
 		foreach (Component component in componentsInChildren)
 		{
 			LevelEntity levelEntity = component as LevelEntity;
-			int num = levelEntity.referenceId & ~LevelEntityData.REFERENCE_ID_BIT_THEME;
-			if (num > maxId)
+			int id = levelEntity.referenceId & ~LevelEntityData.REFERENCE_ID_BIT_THEME;
+			if (id > maxId)
 			{
-				maxId = num;
+				maxId = id;
 			}
 		}
 		return maxId + 1;

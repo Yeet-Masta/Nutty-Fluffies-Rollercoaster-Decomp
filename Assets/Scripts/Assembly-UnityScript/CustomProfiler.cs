@@ -27,14 +27,14 @@ public class CustomProfiler
 	{
 		if (interTimeDict != null)
 		{
-			float num = Time.realtimeSinceStartup - interTimeDict[elem];
+			float elapsed = Time.realtimeSinceStartup - interTimeDict[elem];
 			if (totalTimeDict.ContainsKey(elem))
 			{
-				totalTimeDict[elem] += num;
+				totalTimeDict[elem] += elapsed;
 			}
 			else
 			{
-				totalTimeDict[elem] = num;
+				totalTimeDict[elem] = elapsed;
 			}
 		}
 	}
@@ -45,11 +45,11 @@ public class CustomProfiler
 		{
 			Debug.Log("=== PROFILED TIME ===");
 		}
-		foreach (string text in totalTimeDict.Keys)
+		foreach (string key in totalTimeDict.Keys)
 		{
 			if (GameData.LOG)
 			{
-				Debug.Log(" > '" + text + "': " + totalTimeDict[text]);
+				Debug.Log(" > '" + key + "': " + totalTimeDict[key]);
 			}
 		}
 		if (GameData.LOG)

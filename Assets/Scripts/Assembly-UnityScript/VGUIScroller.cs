@@ -54,65 +54,65 @@ public class VGUIScroller : VGUIElement
 
 	public override void Update()
 	{
-		Vector2 vector = tr.localPosition;
+		Vector2 pos = tr.localPosition;
 		if (!dragging)
 		{
-			vector += scrollSpeed;
+			pos += scrollSpeed;
 			scrollSpeed *= 1f - stiffness;
-			if (!(vector.x >= minLimit.x))
+			if (!(pos.x >= minLimit.x))
 			{
-				vector.x += (minLimit.x - vector.x) * stiffness;
+				pos.x += (minLimit.x - pos.x) * stiffness;
 			}
-			else if (!(vector.x <= maxLimit.x))
+			else if (!(pos.x <= maxLimit.x))
 			{
-				vector.x += (maxLimit.x - vector.x) * stiffness;
+				pos.x += (maxLimit.x - pos.x) * stiffness;
 			}
-			if (!(vector.y >= minLimit.y))
+			if (!(pos.y >= minLimit.y))
 			{
-				vector.y += (minLimit.y - vector.y) * stiffness;
+				pos.y += (minLimit.y - pos.y) * stiffness;
 			}
-			else if (!(vector.y <= maxLimit.y))
+			else if (!(pos.y <= maxLimit.y))
 			{
-				vector.y += (maxLimit.y - vector.y) * stiffness;
+				pos.y += (maxLimit.y - pos.y) * stiffness;
 			}
 		}
 		else
 		{
-			float num = 0f;
+			float overshoot = 0f;
 			Vector3 worldPos = GetWorldPos(Input.mousePosition);
 			if (horizontalScroll)
 			{
-				float num2 = worldPos.x - startPos.x;
-				vector.x = initialPos.x + num2;
-				if (!(vector.x >= minLimit.x))
+				float dx = worldPos.x - startPos.x;
+				pos.x = initialPos.x + dx;
+				if (!(pos.x >= minLimit.x))
 				{
-					num = vector.x - minLimit.x;
-					vector.x = minLimit.x + num * 0.5f;
+					overshoot = pos.x - minLimit.x;
+					pos.x = minLimit.x + overshoot * 0.5f;
 				}
-				else if (!(vector.x <= maxLimit.x))
+				else if (!(pos.x <= maxLimit.x))
 				{
-					num = vector.x - maxLimit.x;
-					vector.x = maxLimit.x + num * 0.5f;
+					overshoot = pos.x - maxLimit.x;
+					pos.x = maxLimit.x + overshoot * 0.5f;
 				}
 			}
 			if (verticalScroll)
 			{
-				float num3 = worldPos.y - startPos.y;
-				vector.y = initialPos.y + num3;
-				if (!(vector.y >= minLimit.y))
+				float dy = worldPos.y - startPos.y;
+				pos.y = initialPos.y + dy;
+				if (!(pos.y >= minLimit.y))
 				{
-					num = vector.y - minLimit.y;
-					vector.y = minLimit.y + num * 0.5f;
+					overshoot = pos.y - minLimit.y;
+					pos.y = minLimit.y + overshoot * 0.5f;
 				}
-				else if (!(vector.y <= maxLimit.y))
+				else if (!(pos.y <= maxLimit.y))
 				{
-					num = vector.y - maxLimit.y;
-					vector.y = maxLimit.y + num * 0.5f;
+					overshoot = pos.y - maxLimit.y;
+					pos.y = maxLimit.y + overshoot * 0.5f;
 				}
 			}
-			scrollSpeed += (vector - (Vector2)tr.localPosition) * stiffness;
+			scrollSpeed += (pos - (Vector2)tr.localPosition) * stiffness;
 		}
-		tr.localPosition = vector;
+		tr.localPosition = pos;
 	}
 
 	public static Vector3 GetWorldPos(Vector2 screenPos)

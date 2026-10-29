@@ -7,9 +7,9 @@ public class MaterialSwapper : MonoBehaviour
 	public virtual void Start()
 	{
 		object[] componentsInChildren = gameObject.GetComponentsInChildren(typeof(Renderer), true);
-		foreach (object item in componentsInChildren)
+		foreach (object component in componentsInChildren)
 		{
-			Renderer renderer = item as Renderer;
+			Renderer renderer = component as Renderer;
 			renderer.material = newMaterial;
 		}
 	}

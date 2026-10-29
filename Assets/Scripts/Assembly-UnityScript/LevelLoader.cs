@@ -51,9 +51,9 @@ public class LevelLoader
 			ObjectPackData objectPackData = null;
 			if (str2 != null && str2.Length > 0)
 			{
-				string[] array = str2.Split(","[0]);
+				string[] packNames = str2.Split(","[0]);
 				int i = 0;
-				string[] array2 = array;
+				string[] array2 = packNames;
 				for (int length = array2.Length; i < length; i++)
 				{
 					ObjectListLoader.getInstance().loadObjectList(objects, array2[i]);
@@ -61,13 +61,13 @@ public class LevelLoader
 					levelData.usedObjectPacks.Add(objectPackData);
 				}
 			}
-			foreach (string text in levelData.theme.settings.allowedObjectPacks)
+			foreach (string packName in levelData.theme.settings.allowedObjectPacks)
 			{
-				if (objects.getPackForName(text) == null)
+				if (objects.getPackForName(packName) == null)
 				{
-					ObjectListLoader.getInstance().loadObjectList(objects, text);
+					ObjectListLoader.getInstance().loadObjectList(objects, packName);
 				}
-				objectPackData = objects.getPackForName(text);
+				objectPackData = objects.getPackForName(packName);
 				if (!levelData.usedObjectPacks.Contains(objectPackData))
 				{
 					levelData.usedObjectPacks.Add(objectPackData);
@@ -81,19 +81,19 @@ public class LevelLoader
 
 	public virtual LevelData load(string packName, string trackName, ObjectListData objects)
 	{
-		string text = null;
+		string json = null;
 		CustomProfiler.start();
 		CustomProfiler.begin("LevelLoader::load");
 		string path = FileManager.getInstance().locateLevel(packName, trackName);
-		text = FileManager.getInstance().loadFileText(path);
-		if (string.IsNullOrEmpty(text))
+		json = FileManager.getInstance().loadFileText(path);
+		if (string.IsNullOrEmpty(json))
 		{
 			Debug.LogWarning("Could not open track '" + trackName + "'");
 			return null;
 		}
 		else
 		{
-			LevelData levelData = loadFromString(text, objects);
+			LevelData levelData = loadFromString(json, objects);
 			levelData.fileName = trackName;
 			CustomProfiler.end("LevelLoader::load");
 			CustomProfiler.report();
@@ -151,9 +151,9 @@ public class LevelLoader
 				UnityRuntimeServices.Update(enumerator2, jSONObject2);
 				double n = jSONObject2.GetFieldSafe("dev", new JSONObject(0f)).n;
 				UnityRuntimeServices.Update(enumerator2, jSONObject2);
-				float num = (float)jSONObject2.GetField("type").n;
+				float typeValue = (float)jSONObject2.GetField("type").n;
 				UnityRuntimeServices.Update(enumerator2, jSONObject2);
-				float num2 = (float)jSONObject2.GetField("id").n;
+				float id = (float)jSONObject2.GetField("id").n;
 				UnityRuntimeServices.Update(enumerator2, jSONObject2);
 				int flags = (int)jSONObject2.GetFieldSafe("flags", new JSONObject(0f)).n;
 				UnityRuntimeServices.Update(enumerator2, jSONObject2);
@@ -164,20 +164,20 @@ public class LevelLoader
 				string str2 = jSONObject2.GetFieldSafe("osaparams", new JSONObject(string.Empty)).str;
 				UnityRuntimeServices.Update(enumerator2, jSONObject2);
 				LevelEntityData levelEntityData = null;
-				float num3 = num;
-				if (num3 == 2f)
+				float type = typeValue;
+				if (type == 2f)
 				{
-					float num4 = (float)jSONObject2.GetField("object").n;
+					float objectId = (float)jSONObject2.GetField("object").n;
 					UnityRuntimeServices.Update(enumerator2, jSONObject2);
-					float num5 = (float)jSONObject2.GetFieldSafe("z", new JSONObject(0f)).n;
+					float z = (float)jSONObject2.GetFieldSafe("z", new JSONObject(0f)).n;
 					UnityRuntimeServices.Update(enumerator2, jSONObject2);
-					LevelObjectData levelObjectData = new LevelObjectData((int)num2, (int)num4);
-					levelObjectData.zDepth = (int)num5;
+					LevelObjectData levelObjectData = new LevelObjectData((int)id, (int)objectId);
+					levelObjectData.zDepth = (int)z;
 					levelEntityData = levelObjectData;
 				}
-				else if (num3 == 1f)
+				else if (type == 1f)
 				{
-					LevelTriggerData levelTriggerData = new LevelTriggerData((int)num2, (int)jSONObject2.GetField("triggertype").n);
+					LevelTriggerData levelTriggerData = new LevelTriggerData((int)id, (int)jSONObject2.GetField("triggertype").n);
 					UnityRuntimeServices.Update(enumerator2, jSONObject2);
 					levelEntityData = levelTriggerData;
 					levelTriggerData.size = new Vector2((float)jSONObject2.GetFieldSafe("width", new JSONObject(1f)).n, (float)jSONObject2.GetFieldSafe("height", new JSONObject(1f)).n);
@@ -187,10 +187,10 @@ public class LevelLoader
 					levelTriggerData.triggerParam = jSONObject2.GetFieldSafe("param", new JSONObject(string.Empty)).str;
 					UnityRuntimeServices.Update(enumerator2, jSONObject2);
 				}
-				else if (num3 == 6f)
+				else if (type == 6f)
 				{
 					Debug.Log("loading spline data");
-					LevelSplineData levelSplineData = new LevelSplineData((int)num2);
+					LevelSplineData levelSplineData = new LevelSplineData((int)id);
 					levelSplineData.height = (float)jSONObject2.GetFieldSafe("height", new JSONObject(0.5f)).n;
 					UnityRuntimeServices.Update(enumerator2, jSONObject2);
 					levelSplineData.texture = jSONObject2.GetFieldSafe("texture", new JSONObject("\"Junglecoaster_track.png\"")).str;
@@ -255,7 +255,7 @@ public class LevelLoader
 
 	private void fixDuplicates(List<LevelLayerData> layerData)
 	{
-		int num = 0;
+		int maxId = 0;
 		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(layerData);
 		while (enumerator.MoveNext())
 		{
@@ -268,9 +268,9 @@ public class LevelLoader
 			UnityRuntimeServices.Update(enumerator, levelLayerData);
 			foreach (LevelEntityData levelEntityData in levelLayerData.objectData)
 			{
-				if (levelEntityData.referenceId > num)
+				if (levelEntityData.referenceId > maxId)
 				{
-					num = levelEntityData.referenceId;
+					maxId = levelEntityData.referenceId;
 				}
 			}
 		}
@@ -289,7 +289,7 @@ public class LevelLoader
 			{
 				if (list.Contains(levelEntityData2.referenceId))
 				{
-					num = (levelEntityData2.referenceId = num + 1);
+					maxId = (levelEntityData2.referenceId = maxId + 1);
 				}
 				list.Add(levelEntityData2.referenceId);
 			}
@@ -303,7 +303,7 @@ public class LevelLoader
 
 	public virtual void createTestLayerAndContents(List<LevelLayerData> layerData)
 	{
-		int num = 1;
+		int nextId = 1;
 		LevelLayerData levelLayerData = null;
 		levelLayerData = new LevelLayerData(-1);
 		levelLayerData.themeInfo.parallaxSpeed = new Vector2(0.9f, 0.9f);
@@ -317,24 +317,24 @@ public class LevelLoader
 		levelLayerData = new LevelLayerData(2);
 		levelLayerData.themeInfo.parallaxSpeed = new Vector2(1.2f, 1.2f);
 		layerData.Add(levelLayerData);
-		LevelObjectData levelObjectData = new LevelObjectData(num++, 1);
+		LevelObjectData levelObjectData = new LevelObjectData(nextId++, 1);
 		layerData[2].objectData.Add(levelObjectData);
 		levelObjectData.position = new Vector3(10f, 2f, 0f);
 		levelObjectData.flags = 65536;
-		levelObjectData = new LevelObjectData(num++, 1);
+		levelObjectData = new LevelObjectData(nextId++, 1);
 		layerData[0].objectData.Add(levelObjectData);
 		levelObjectData.position = new Vector3(-9.4f, 2f, 0f);
 		levelObjectData.rotation = 30f;
 		levelObjectData.flags = 196608;
-		levelObjectData = new LevelObjectData(num++, 1);
+		levelObjectData = new LevelObjectData(nextId++, 1);
 		layerData[1].objectData.Add(levelObjectData);
 		levelObjectData.position = new Vector3(-10f, -2f, 0f);
 		levelObjectData.flags = 65536;
-		levelObjectData = new LevelObjectData(num++, 2);
+		levelObjectData = new LevelObjectData(nextId++, 2);
 		layerData[0].objectData.Add(levelObjectData);
 		levelObjectData.position = new Vector3(5f, 2f, 0f);
 		levelObjectData.flags = 196608;
-		levelObjectData = new LevelObjectData(num++, 1);
+		levelObjectData = new LevelObjectData(nextId++, 1);
 		layerData[1].objectData.Add(levelObjectData);
 		levelObjectData.position = new Vector3(0f, 2f, 0f);
 		levelObjectData.flags = 65536;

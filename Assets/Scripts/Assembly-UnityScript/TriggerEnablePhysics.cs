@@ -28,9 +28,9 @@ public class TriggerEnablePhysics : LevelTriggerActivatable
 		GameObject[] targetObjects = targetHandler.targetObjects;
 		for (int length = targetObjects.Length; i < length; i++)
 		{
-			Component[] array = null;
-			array = targetObjects[i].gameObject.GetComponentsInChildren(typeof(Rigidbody));
-			foreach (Component component in array)
+			Component[] bodies = null;
+			bodies = targetObjects[i].gameObject.GetComponentsInChildren(typeof(Rigidbody));
+			foreach (Component component in bodies)
 			{
 				Rigidbody rigidbody = component as Rigidbody;
 				rigidbody.useGravity = true;
@@ -58,9 +58,9 @@ public class TriggerEnablePhysics : LevelTriggerActivatable
 		handler.playerTrigger = true;
 		foreach (GameObject targetObject in targetHandler.targetObjects)
 		{
-			Component[] array = null;
-			array = targetObject.gameObject.GetComponentsInChildren(typeof(Rigidbody));
-			foreach (Component component in array)
+			Component[] bodies = null;
+			bodies = targetObject.gameObject.GetComponentsInChildren(typeof(Rigidbody));
+			foreach (Component component in bodies)
 			{
 				Rigidbody rigidbody = component as Rigidbody;
 				rigidbody.useGravity = false;

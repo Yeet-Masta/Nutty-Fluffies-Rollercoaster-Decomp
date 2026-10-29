@@ -50,15 +50,15 @@ public class LevelMenu : StoreBaseMenu
 		LevelPack levelPack = GameData.getActiveLevelPack();
 		if (activeLevelPackIndex < GameData.getLevelPackCount() - 1 && selectedLevelIndex == levelPack.getLevelCount() - 1 && !wasActive)
 		{
-			int num = activeLevelPackIndex + 1;
-			if (GameData.getLevelPack(num).isUnlocked() && !GameData.getLevelPack(num).isExternal())
+			int nextPack = activeLevelPackIndex + 1;
+			if (GameData.getLevelPack(nextPack).isUnlocked() && !GameData.getLevelPack(nextPack).isExternal())
 			{
-				float num2 = GameData.getTrackPrice(num, 0);
-				LevelPack levelPack2 = GameData.getLevelPack(num);
-				if (!levelPack2.getLevelInfo(0).testFlag(GameData.LEVEL_FLAG_BUILT) && GameData.canBuy((int)num2))
+				float price = GameData.getTrackPrice(nextPack, 0);
+				LevelPack levelPack2 = GameData.getLevelPack(nextPack);
+				if (!levelPack2.getLevelInfo(0).testFlag(GameData.LEVEL_FLAG_BUILT) && GameData.canBuy((int)price))
 				{
 					levelPack = levelPack2;
-					GameData.setActiveLevelPack(num);
+					GameData.setActiveLevelPack(nextPack);
 				}
 			}
 		}
@@ -67,22 +67,22 @@ public class LevelMenu : StoreBaseMenu
 		GetComponentsInChildren(typeof(VGUIButton), true);
 		createLevelPages(levelCount);
 		createLevelButtons(levelCount);
-		int num3 = PlayerPrefs.GetInt("LEVEL_MENU_SELECTION" + GameData.getActiveLevelPackIndex(), 0);
-		int num4 = levelGrid.maxRows * levelGrid.maxColumns;
+		int page = PlayerPrefs.GetInt("LEVEL_MENU_SELECTION" + GameData.getActiveLevelPackIndex(), 0);
+		int buttonsPerPage = levelGrid.maxRows * levelGrid.maxColumns;
 		for (int i = 0; i < levelCount; i++)
 		{
 			if (!levelPack.getLevelInfo(i).testFlag(1))
 			{
-				num3 = (i - 1) / num4;
+				page = (i - 1) / buttonsPerPage;
 				break;
 			}
 		}
-		if (num3 < 0 || num3 >= packContainer.pages.Length)
+		if (page < 0 || page >= packContainer.pages.Length)
 		{
-			num3 = 0;
+			page = 0;
 		}
-		packContainer.firstActiveStep = num3;
-		packContainer.setCurrentStep(num3, true);
+		packContainer.firstActiveStep = page;
+		packContainer.setCurrentStep(page, true);
 		packContainer.immediatePosition();
 		wasActive = true;
 		setPurchaseBlink();
@@ -98,21 +98,21 @@ public class LevelMenu : StoreBaseMenu
 	{
 		LevelPack activeLevelPack = GameData.getActiveLevelPack();
 		int levelCount = activeLevelPack.getLevelCount();
-		bool flag = false;
+		bool blink = false;
 		for (int i = 0; i < levelCount; i++)
 		{
 			LevelPack.LevelInfo levelInfo = activeLevelPack.getLevelInfo(i);
 			if (levelInfo.isUnlocked() && !levelInfo.testFlag(GameData.LEVEL_FLAG_BUILT))
 			{
-				float num = (float)items[0].price * GameData.getPriceMultiplier(GameData.getActiveLevelPackIndex(), i);
-				if (!GameData.canBuy((int)num))
+				float price = (float)items[0].price * GameData.getPriceMultiplier(GameData.getActiveLevelPackIndex(), i);
+				if (!GameData.canBuy((int)price))
 				{
-					flag = true;
+					blink = true;
 					break;
 				}
 			}
 		}
-		if (flag)
+		if (blink)
 		{
 			storeButtonBlink.activate();
 		}
@@ -147,18 +147,18 @@ public class LevelMenu : StoreBaseMenu
 	private void createLevelButtons(int levelCount)
 	{
 		createdButtons.Clear();
-		int num = levelGrid.maxRows * levelGrid.maxColumns;
+		int buttonsPerPage = levelGrid.maxRows * levelGrid.maxColumns;
 		int activeLevelPackIndex = GameData.getActiveLevelPackIndex();
 		for (int i = 0; i < levelCount; i++)
 		{
-			VGUIGrid component = packContainer.pages[i / num].GetComponent<VGUIGrid>();
+			VGUIGrid component = packContainer.pages[i / buttonsPerPage].GetComponent<VGUIGrid>();
 			LevelButton component2 = component.createEntry().GetComponent<LevelButton>();
 			component2.gameObject.name = "LevelButton";
 			component2.intValue = i;
 			component2.invokeObject = gameObject;
 			LevelPack.LevelInfo levelInfo = GameData.getActiveLevelPack().getLevelInfo(i);
-			float num2 = GameData.getTrackPrice(activeLevelPackIndex, i);
-			component2.activate(levelInfo, i, (int)num2);
+			float price = GameData.getTrackPrice(activeLevelPackIndex, i);
+			component2.activate(levelInfo, i, (int)price);
 			createdButtons.Add(component2.gameObject);
 		}
 	}
@@ -166,17 +166,17 @@ public class LevelMenu : StoreBaseMenu
 	private void createLevelPages(int levels)
 	{
 		packContainer.removePages();
-		int num = levelGrid.maxRows * levelGrid.maxColumns;
-		int num2 = levels / num;
-		if (num2 * num < levels)
+		int buttonsPerPage = levelGrid.maxRows * levelGrid.maxColumns;
+		int pageCount = levels / buttonsPerPage;
+		if (pageCount * buttonsPerPage < levels)
 		{
-			num2++;
+			pageCount++;
 		}
-		packContainer.pages = new GameObject[num2];
-		packContainer.maxSteps = num2 - 1;
+		packContainer.pages = new GameObject[pageCount];
+		packContainer.maxSteps = pageCount - 1;
 		packContainer.setCurrentStep(0, true);
 		Vector3 zero = Vector3.zero;
-		for (int i = 0; i < num2; i++)
+		for (int i = 0; i < pageCount; i++)
 		{
 			packContainer.pages[i] = (GameObject)UnityEngine.Object.Instantiate(levelGrid.gameObject, zero, Quaternion.identity);
 			packContainer.pages[i].transform.parent = packContainer.transform;
@@ -243,13 +243,13 @@ public class LevelMenu : StoreBaseMenu
 			{
 				return;
 			}
-			float num = GameData.getTrackPrice(GameData.getActiveLevelPackIndex(), levelIndex);
-			if (GameData.canBuy((int)num))
+			float price = GameData.getTrackPrice(GameData.getActiveLevelPackIndex(), levelIndex);
+			if (GameData.canBuy((int)price))
 			{
 				int intValue = packContainer.intValue;
 				PlayerPrefs.SetInt("LEVEL_MENU_SELECTION" + GameData.getActiveLevelPackIndex(), packContainer.intValue);
 				PlayerPrefs.Save();
-				GameData.addTokens((int)(0f - num));
+				GameData.addTokens((int)(0f - price));
 				GameData.buildLevel(levelIndex);
 				BaseMenu.mmgr.updateTokenAmount();
 				activate();

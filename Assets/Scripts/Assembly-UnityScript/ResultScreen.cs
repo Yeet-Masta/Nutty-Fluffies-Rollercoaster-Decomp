@@ -116,15 +116,15 @@ public class ResultScreen : VGUIElement
 		Time.timeScale = 1f;
 		AnimationManager.getInstance().alpha(content, 0f, 1f);
 		bgAnimator.activate();
-		float num2 = getEstimatedScoreWithMaxCarts(scoreAmount);
-		float num3 = maxScore;
-		scorePercent = num2 / num3;
+		float estimatedScore = getEstimatedScoreWithMaxCarts(scoreAmount);
+		float best = maxScore;
+		scorePercent = estimatedScore / best;
 		RollerCoasterStatistics.getInstance().finish(scorePercent, scorePercent > 0.9f);
 		RollerCoasterMissions.getInstance().checkMissions(GameData.MAX_ACTIVE_MISSIONS);
 		bool roundDidFinish = RollerCoasterStatistics.getInstance().roundDidFinish;
 		RollerCoasterSounds instance = RollerCoasterSounds.getInstance();
-		bool flag = scorePercent > 0.9f && roundDidFinish;
-		instance.playResultMusic(flag);
+		bool greatResult = scorePercent > 0.9f && roundDidFinish;
+		instance.playResultMusic(greatResult);
 		if (roundDidFinish)
 		{
 			OnlineServiceManager.getInstance().submitLeaderboardScore(GameData.genLeaderboard(GameData.getActiveLevelPackIndex(), GameData.getSelectedLevelIndex()), scoreAmount);
@@ -151,8 +151,8 @@ public class ResultScreen : VGUIElement
 		}
 		if (!CommonData.IN_EDITOR_MODE)
 		{
-			bool flag2 = GameData.hasInternet() && CommunityFeatures.getInstance().isAvailable(0) && CommunityFeatures.getInstance().isAvailable(1);
-			bool activeRecursively = flag2;
+			bool canShare = GameData.hasInternet() && CommunityFeatures.getInstance().isAvailable(0) && CommunityFeatures.getInstance().isAvailable(1);
+			bool activeRecursively = canShare;
 			twitterButton.gameObject.SetActiveRecursively(activeRecursively);
 			facebookButton.gameObject.SetActiveRecursively(activeRecursively);
 			facebookButton.setDimmed(false);
@@ -221,10 +221,10 @@ public class ResultScreen : VGUIElement
 		if (!CommonData.IN_EDITOR_MODE)
 		{
 			continuePresses++;
-			bool flag = GameData.isNextLevelOrLevelpackUnlocked();
+			bool nextUnlocked = GameData.isNextLevelOrLevelpackUnlocked();
 			int cash = MissionManager.getInstance().getActiveCompletedMissionScore() + GameData.getTokenAmount();
 			enoughtMoneyForNext = GameData.hasEnoughMoneyToUnlockNextTrack(cash);
-			if (!flag)
+			if (!nextUnlocked)
 			{
 				GameMenuManager.getInstance().showErrorMessage(TextData.RESULT_TITLE_CARTS_NEEDED, TextData.RESULT_TEXT_CARTS_NEEDED, cartImage);
 				enoughtMoneyForNext = true;
@@ -406,20 +406,20 @@ public class ResultScreen : VGUIElement
 
 	public virtual void showTotalCoinsEarned()
 	{
-		float num = resultList.tokenSum.setValue((int)Mathf.Round(tokenSum));
-		Invoke("addCoinsToTotalCoins", num + 0.25f);
+		float countDuration = resultList.tokenSum.setValue((int)Mathf.Round(tokenSum));
+		Invoke("addCoinsToTotalCoins", countDuration + 0.25f);
 		showContinueAndMenuButtons();
 		int cash = MissionManager.getInstance().getActiveCompletedMissionScore() + GameData.getTokenAmount();
-		bool flag = GameData.isNextLevelOrLevelpackUnlocked();
-		bool flag2 = GameData.hasEnoughMoneyToUnlockNextTrack(cash);
-		if (!flag)
+		bool nextUnlocked = GameData.isNextLevelOrLevelpackUnlocked();
+		bool canUnlockNext = GameData.hasEnoughMoneyToUnlockNextTrack(cash);
+		if (!nextUnlocked)
 		{
 			continueButtonPriceText.gameObject.transform.parent.gameObject.SetActiveRecursively(false);
 		}
 		else
 		{
 			continueButtonLock.SetActiveRecursively(false);
-			if (flag2)
+			if (canUnlockNext)
 			{
 				continueButtonPriceText.gameObject.transform.parent.gameObject.SetActiveRecursively(false);
 			}
@@ -428,19 +428,19 @@ public class ResultScreen : VGUIElement
 				continueButtonPriceText.setText(string.Empty + GameData.getNextTrackPrice());
 			}
 		}
-		continueButton.setDimmed(!flag);
+		continueButton.setDimmed(!nextUnlocked);
 	}
 
 	public virtual void addCoinsToTotalCoins()
 	{
 		if (!CommonData.IN_EDITOR_MODE)
 		{
-			float num = BaseMenuManager.getInstance().updateTokenAmount();
+			float duration = BaseMenuManager.getInstance().updateTokenAmount();
 			if (GameData.LOG)
 			{
-				Debug.Log("TIME " + num);
+				Debug.Log("TIME " + duration);
 			}
-			Invoke("playMoneyDropSound", num + 0.25f);
+			Invoke("playMoneyDropSound", duration + 0.25f);
 			BaseMenuManager.getInstance().setStoreButtonVisible(true);
 		}
 	}
@@ -473,9 +473,9 @@ public class ResultScreen : VGUIElement
 
 	public virtual int getEstimatedScoreWithMaxCarts(int currentScore)
 	{
-		float num = currentScore;
-		num /= (float)maxScoreWithCurrentSetup;
-		num *= (float)maxScore;
+		float score = currentScore;
+		score /= (float)maxScoreWithCurrentSetup;
+		score *= (float)maxScore;
 		if (GameData.LOG)
 		{
 			if (GameData.LOG)
@@ -491,73 +491,73 @@ public class ResultScreen : VGUIElement
 				Debug.Log("MAX WITH ALL \t\t\t" + maxScore);
 			}
 		}
-		return (int)Mathf.Round(num);
+		return (int)Mathf.Round(score);
 	}
 
 	public virtual int getMaxScoreWithCurrentSetup()
 	{
-		int num = calculateCheckPointHearts();
-		int num2 = calculateLevelHearts();
+		int checkPointHearts = calculateCheckPointHearts();
+		int levelHearts = calculateLevelHearts();
 		int passengerCartCount = GameManager.getInstance().getVehicle().getPassengerCartCount();
 		Vehicle vehicle = GameManager.getInstance().getVehicle();
-		int num3 = 0;
+		int score = 0;
 		for (int i = 1; i < passengerCartCount + 1; i++)
 		{
 			Cart cart = vehicle.carts[i];
-			int num4 = cart.heartValue;
-			if (num4 == 0)
+			int heartValue = cart.heartValue;
+			if (heartValue == 0)
 			{
-				num4 = GameData.ANIMAL_HEART_VALUE[0];
+				heartValue = GameData.ANIMAL_HEART_VALUE[0];
 			}
-			num3 += num4 * num;
+			score += heartValue * checkPointHearts;
 			if (cart.hasAnimal())
 			{
-				num3 = (int)((float)num3 + GameData.BONUS_VALUES[1 + cart.animalIndex]);
-				int num5 = 0;
+				score = (int)((float)score + GameData.BONUS_VALUES[1 + cart.animalIndex]);
+				int extraHearts = 0;
 				if (cart.animal.givesExtraHeartsFromBumps)
 				{
-					num5 = Animal.MAXIMUM_EXTRA_HEARTS_FROM_BUMPS;
+					extraHearts = Animal.MAXIMUM_EXTRA_HEARTS_FROM_BUMPS;
 				}
 				if (cart.animal.givesExtraHeartsWhenInAir)
 				{
-					num5 = Animal.MAXIMUM_EXTRA_HEARTS_FROM_AIR;
+					extraHearts = Animal.MAXIMUM_EXTRA_HEARTS_FROM_AIR;
 				}
 				if (cart.animal.givesExtraHeartsWhenDropped)
 				{
-					num5 = Animal.MAXIMUM_EXTRA_HEARTS_FROM_DROPPING;
+					extraHearts = Animal.MAXIMUM_EXTRA_HEARTS_FROM_DROPPING;
 				}
-				num3 = (int)((float)num3 + (float)num5 * 0.15f);
+				score = (int)((float)score + (float)extraHearts * 0.15f);
 			}
 			else
 			{
-				num3 = (int)((float)num3 + GameData.BONUS_VALUES[1]);
-				num3 = (int)((float)num3 + 0.15f * (float)Mathf.Min(Mathf.Min(Animal.MAXIMUM_EXTRA_HEARTS_FROM_BUMPS, Animal.MAXIMUM_EXTRA_HEARTS_FROM_AIR), Animal.MAXIMUM_EXTRA_HEARTS_FROM_DROPPING));
+				score = (int)((float)score + GameData.BONUS_VALUES[1]);
+				score = (int)((float)score + 0.15f * (float)Mathf.Min(Mathf.Min(Animal.MAXIMUM_EXTRA_HEARTS_FROM_BUMPS, Animal.MAXIMUM_EXTRA_HEARTS_FROM_AIR), Animal.MAXIMUM_EXTRA_HEARTS_FROM_DROPPING));
 			}
 		}
-		return num3 + num2;
+		return score + levelHearts;
 	}
 
 	public virtual int getMaxScoreWithBestSetup()
 	{
-		int num = calculateCheckPointHearts();
-		int num2 = calculateLevelHearts();
+		int checkPointHearts = calculateCheckPointHearts();
+		int levelHearts = calculateLevelHearts();
 		int cART_LIMIT = GameData.CART_LIMIT;
 		GameManager.getInstance().getVehicle();
-		int num3 = 0;
+		int score = 0;
 		for (int i = 0; i < cART_LIMIT; i++)
 		{
-			int num4 = GameData.ANIMAL_HEART_VALUE[4];
-			num3 += num4 * num;
-			num3 = (int)((float)num3 + GameData.BONUS_VALUES[5]);
-			num3 = (int)((float)num3 + 0.15f * (float)Mathf.Max(Mathf.Max(Animal.MAXIMUM_EXTRA_HEARTS_FROM_BUMPS, Animal.MAXIMUM_EXTRA_HEARTS_FROM_AIR), Animal.MAXIMUM_EXTRA_HEARTS_FROM_DROPPING));
+			int heartValue = GameData.ANIMAL_HEART_VALUE[4];
+			score += heartValue * checkPointHearts;
+			score = (int)((float)score + GameData.BONUS_VALUES[5]);
+			score = (int)((float)score + 0.15f * (float)Mathf.Max(Mathf.Max(Animal.MAXIMUM_EXTRA_HEARTS_FROM_BUMPS, Animal.MAXIMUM_EXTRA_HEARTS_FROM_AIR), Animal.MAXIMUM_EXTRA_HEARTS_FROM_DROPPING));
 		}
-		return num3 + num2;
+		return score + levelHearts;
 	}
 
 	private int calculateCheckPointHearts()
 	{
 		Component[] componentsInChildren = GameManager.getInstance().getGameRoot().GetComponentsInChildren(typeof(TriggerCheckPoint), true);
-		int num = 0;
+		int hearts = 0;
 		foreach (Component component in componentsInChildren)
 		{
 			TriggerCheckPoint triggerCheckPoint = component as TriggerCheckPoint;
@@ -565,30 +565,30 @@ public class ResultScreen : VGUIElement
 			{
 				if (triggerCheckPoint.kind == 0)
 				{
-					num++;
+					hearts++;
 				}
 				else if (triggerCheckPoint.kind == 1)
 				{
-					num++;
+					hearts++;
 				}
 			}
 		}
-		return num;
+		return hearts;
 	}
 
 	private int calculateLevelHearts()
 	{
 		Component[] componentsInChildren = GameManager.getInstance().getGameRoot().GetComponentsInChildren(typeof(TriggerCoin), true);
-		int num = 0;
+		int hearts = 0;
 		foreach (Component component in componentsInChildren)
 		{
 			TriggerCoin triggerCoin = component as TriggerCoin;
 			if (triggerCoin != null)
 			{
-				num += triggerCoin.amount;
+				hearts += triggerCoin.amount;
 			}
 		}
-		return num;
+		return hearts;
 	}
 
 	public virtual void setVisible(bool visible)

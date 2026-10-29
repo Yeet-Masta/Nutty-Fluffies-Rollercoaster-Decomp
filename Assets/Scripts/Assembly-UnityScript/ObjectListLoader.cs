@@ -34,16 +34,16 @@ public class ObjectListLoader
 
 	public virtual void loadObjectList(ObjectListData toData, string objectPackName)
 	{
-		string text = FileManager.getInstance().locateObjectPack(objectPackName);
+		string packPath = FileManager.getInstance().locateObjectPack(objectPackName);
 		ObjectPackData objectPackData = new ObjectPackData(objectPackName);
-		objectPackData.fullPath = text;
+		objectPackData.fullPath = packPath;
 		toData.addPack(objectPackData);
-		string text2 = FileManager.getInstance().loadFileText(text + "/objects.json");
-		if (text2 == null)
+		string json = FileManager.getInstance().loadFileText(packPath + "/objects.json");
+		if (json == null)
 		{
 			return;
 		}
-		JSONObject jSONObject = new JSONObject(text2);
+		JSONObject jSONObject = new JSONObject(json);
 		JSONObject field = jSONObject.GetField("splinetextures");
 		if ((bool)field)
 		{
@@ -100,9 +100,9 @@ public class ObjectListLoader
 					}
 					JSONObject jSONObject4 = (JSONObject)obj3;
 					ObjectPartData objectPartData = null;
-					float num = (float)jSONObject4.GetField("x").n;
+					float posX = (float)jSONObject4.GetField("x").n;
 					UnityRuntimeServices.Update(enumerator3, jSONObject4);
-					float num2 = (float)jSONObject4.GetField("y").n;
+					float posY = (float)jSONObject4.GetField("y").n;
 					UnityRuntimeServices.Update(enumerator3, jSONObject4);
 					int flags = (int)jSONObject4.GetFieldSafe("flags", new JSONObject(0f)).n;
 					UnityRuntimeServices.Update(enumerator3, jSONObject4);
@@ -112,7 +112,7 @@ public class ObjectListLoader
 					UnityRuntimeServices.Update(enumerator3, jSONObject4);
 					if (n == 1.0)
 					{
-						ObjectPartTextureData objectPartTextureData = new ObjectPartTextureData(jSONObject4.GetField("texture").str, new Vector2(num, num2), rotation);
+						ObjectPartTextureData objectPartTextureData = new ObjectPartTextureData(jSONObject4.GetField("texture").str, new Vector2(posX, posY), rotation);
 						UnityRuntimeServices.Update(enumerator3, jSONObject4);
 						if (jSONObject4.HasField("r"))
 						{
@@ -153,19 +153,19 @@ public class ObjectListLoader
 					}
 					else if (n == 2.0)
 					{
-						ObjectPartBoxCollisionData objectPartBoxCollisionData = new ObjectPartBoxCollisionData(new Rect(num, num2, (float)jSONObject4.GetField("width").n, (float)jSONObject4.GetField("height").n), rotation);
+						ObjectPartBoxCollisionData objectPartBoxCollisionData = new ObjectPartBoxCollisionData(new Rect(posX, posY, (float)jSONObject4.GetField("width").n, (float)jSONObject4.GetField("height").n), rotation);
 						UnityRuntimeServices.Update(enumerator3, jSONObject4);
 						objectPartData = objectPartBoxCollisionData;
 					}
 					else if (n == 3.0)
 					{
-						ObjectPartSphereCollisionData objectPartSphereCollisionData = new ObjectPartSphereCollisionData(new Vector2(num, num2), (float)jSONObject4.GetField("radius").n);
+						ObjectPartSphereCollisionData objectPartSphereCollisionData = new ObjectPartSphereCollisionData(new Vector2(posX, posY), (float)jSONObject4.GetField("radius").n);
 						UnityRuntimeServices.Update(enumerator3, jSONObject4);
 						objectPartData = objectPartSphereCollisionData;
 					}
 					else if (n == 5.0)
 					{
-						ObjectPartBoxTriggerData objectPartBoxTriggerData = new ObjectPartBoxTriggerData(new Rect(num, num2, (float)jSONObject4.GetFieldSafe("width", new JSONObject(1f)).n, (float)jSONObject4.GetFieldSafe("height", new JSONObject(1f)).n), rotation);
+						ObjectPartBoxTriggerData objectPartBoxTriggerData = new ObjectPartBoxTriggerData(new Rect(posX, posY, (float)jSONObject4.GetFieldSafe("width", new JSONObject(1f)).n, (float)jSONObject4.GetFieldSafe("height", new JSONObject(1f)).n), rotation);
 						UnityRuntimeServices.Update(enumerator3, jSONObject4);
 						objectPartBoxTriggerData.script = jSONObject4.GetFieldSafe("script", new JSONObject(string.Empty)).str;
 						UnityRuntimeServices.Update(enumerator3, jSONObject4);
@@ -175,7 +175,7 @@ public class ObjectListLoader
 					}
 					else if (n == 6.0)
 					{
-						ObjectPartSphereTriggerData objectPartSphereTriggerData = new ObjectPartSphereTriggerData(new Vector2(num, num2), (float)jSONObject4.GetFieldSafe("radius", new JSONObject(1f)).n);
+						ObjectPartSphereTriggerData objectPartSphereTriggerData = new ObjectPartSphereTriggerData(new Vector2(posX, posY), (float)jSONObject4.GetFieldSafe("radius", new JSONObject(1f)).n);
 						UnityRuntimeServices.Update(enumerator3, jSONObject4);
 						objectPartSphereTriggerData.script = jSONObject4.GetFieldSafe("script", new JSONObject(string.Empty)).str;
 						UnityRuntimeServices.Update(enumerator3, jSONObject4);

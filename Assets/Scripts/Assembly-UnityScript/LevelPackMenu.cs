@@ -27,18 +27,18 @@ public class LevelPackMenu : BaseMenu
 			}
 			extraPackButtons = new List<GameObject>();
 		}
-		int num = 0;
+		int pageCount = 0;
 		for (int j = 0; j < GameData.getLevelPackCount(); j++)
 		{
 			if (!GameData.getLevelPack(j).isExternal())
 			{
-				num++;
+				pageCount++;
 			}
 		}
 		Vector3 zero = Vector3.zero;
-		packContainer.pages = new GameObject[num];
-		packContainer.maxSteps = num - 1;
-		for (int k = 0; k < num; k++)
+		packContainer.pages = new GameObject[pageCount];
+		packContainer.maxSteps = pageCount - 1;
+		for (int k = 0; k < pageCount; k++)
 		{
 			if (!GameData.getLevelPack(k).isExternal())
 			{
@@ -115,13 +115,13 @@ public class LevelPackMenu : BaseMenu
 		packContainer.pages[2].GetComponent<LevelPackButton>().setLocked(!GameData.isFeatureUnlocked(2048));
 		packContainer.pages[3].GetComponent<LevelPackButton>().setLocked(!GameData.isFeatureUnlocked(4096));
 		packContainer.Start();
-		int num12 = PlayerPrefs.GetInt("LEVEL_PACK_SELECTION", 0);
-		if (num12 < 0 || num12 >= num)
+		int selected = PlayerPrefs.GetInt("LEVEL_PACK_SELECTION", 0);
+		if (selected < 0 || selected >= pageCount)
 		{
-			num12 = 0;
+			selected = 0;
 		}
-		packContainer.firstActiveStep = num12;
-		packContainer.setCurrentStep(num12, true);
+		packContainer.firstActiveStep = selected;
+		packContainer.setCurrentStep(selected, true);
 		packContainer.immediatePosition();
 		wasActive = true;
 	}
@@ -157,20 +157,20 @@ public class LevelPackMenu : BaseMenu
 		GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(levelPackButton.gameObject, position, Quaternion.identity);
 		LevelPackButton component = gameObject.GetComponent<LevelPackButton>();
 		bool activeRecursively = GameData.getLevelPack(levelIndex).isUnlocked();
-		string text = FileManager.getInstance().locateLevelPack(GameData.getLevelPack(levelIndex).fileName) + "/icons/" + CommonData.getIconPath() + "/pack-icon.png";
+		string iconPath = FileManager.getInstance().locateLevelPack(GameData.getLevelPack(levelIndex).fileName) + "/icons/" + CommonData.getIconPath() + "/pack-icon.png";
 		Renderer renderer = component.graphic.GetComponent<Renderer>();
-		renderer.material.mainTexture = TextureManager.getInstance().loadFileWithOutMipmap(text);
+		renderer.material.mainTexture = TextureManager.getInstance().loadFileWithOutMipmap(iconPath);
 		if (renderer.material.mainTexture == null)
 		{
-			Debug.LogWarning("Texture " + text + " not found");
+			Debug.LogWarning("Texture " + iconPath + " not found");
 		}
 		component.progress.setText(string.Empty + GameData.getLevelPackProgress(levelIndex) + "%");
 		component.progress.gameObject.SetActiveRecursively(activeRecursively);
 		component.invokeObject = this.gameObject;
 		component.invokeMethod = "onSelectLevelPack";
 		component.intValue = levelIndex;
-		string text2 = LocalizationManager.localize(GameData.getLevelPack(levelIndex).fileName.ToUpper());
-		component.levelName.setText(text2);
+		string title = LocalizationManager.localize(GameData.getLevelPack(levelIndex).fileName.ToUpper());
+		component.levelName.setText(title);
 		return gameObject;
 	}
 }

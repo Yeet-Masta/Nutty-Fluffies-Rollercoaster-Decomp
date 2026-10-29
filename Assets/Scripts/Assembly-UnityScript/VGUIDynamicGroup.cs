@@ -67,9 +67,9 @@ public class VGUIDynamicGroup : VGUIElement
 		// through their NaN bounds, scrambled the draw order of all sprites.
 		if (cameraRef != null && cameraRef.pixelWidth > 0 && cameraRef.pixelHeight > 0 && (horizontalLock == HorizontalLock.LEFT || horizontalLock == HorizontalLock.RIGHT))
 		{
-			float num = (float)cameraRef.pixelHeight / (float)cameraRef.pixelWidth;
-			float num2 = referenceAspectRatio / num;
-			float x = initialPosition.x * num2;
+			float aspect = (float)cameraRef.pixelHeight / (float)cameraRef.pixelWidth;
+			float scale = referenceAspectRatio / aspect;
+			float x = initialPosition.x * scale;
 			Vector3 localPosition = transform.localPosition;
 			localPosition.x = x;
 			transform.localPosition = localPosition;

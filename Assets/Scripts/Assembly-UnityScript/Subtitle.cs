@@ -16,20 +16,20 @@ public class Subtitle : VGUIText
 	{
 		CancelInvoke();
 		currentChunk = -1;
-		string text = line.textContent;
+		string content = line.textContent;
 		if (removeLineBrakes)
 		{
-			text = text.Replace("\n", " ");
-			text = text.Replace("\r", string.Empty);
+			content = content.Replace("\n", " ");
+			content = content.Replace("\r", string.Empty);
 		}
-		chunks = StringTools.getLines(text.Trim(), maxChars);
-		float num = line.duration / (float)text.Length;
+		chunks = StringTools.getLines(content.Trim(), maxChars);
+		float timePerChar = line.duration / (float)content.Length;
 		showNextChunk();
-		float num2 = (float)(chunks[0] as string).Length * num;
+		float delay = (float)(chunks[0] as string).Length * timePerChar;
 		for (int i = 1; i < chunks.length; i++)
 		{
-			Invoke("showNextChunk", num2 - 0.3f);
-			num2 += (float)(chunks[i] as string).Length * num;
+			Invoke("showNextChunk", delay - 0.3f);
+			delay += (float)(chunks[i] as string).Length * timePerChar;
 		}
 		Invoke("clearText", line.duration);
 	}

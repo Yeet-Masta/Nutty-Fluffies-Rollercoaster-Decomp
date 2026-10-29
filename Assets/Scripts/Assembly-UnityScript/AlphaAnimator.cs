@@ -23,10 +23,10 @@ public class AlphaAnimator : VGUIAnimator
 		rendererList = new List<Renderer>();
 		complete = false;
 		object[] componentsInChildren = target.gameObject.GetComponentsInChildren(typeof(Renderer), true);
-		foreach (object item2 in componentsInChildren)
+		foreach (object child in componentsInChildren)
 		{
-			Renderer item = item2 as Renderer;
-			rendererList.Add(item);
+			Renderer childRenderer = child as Renderer;
+			rendererList.Add(childRenderer);
 		}
 		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(rendererList);
 		while (enumerator.MoveNext())

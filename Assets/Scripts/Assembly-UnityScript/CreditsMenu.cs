@@ -28,25 +28,25 @@ public class CreditsMenu : BaseMenu
 			return;
 		}
 		isLoaded = true;
-		string text = FileManager.getInstance().locateAnyFile("Credits_text.txt");
+		string path = FileManager.getInstance().locateAnyFile("Credits_text.txt");
 		bool flag = false;
-		string text2 = "0";
-		string text3 = "0";
-		if (text != null)
+		string titleMarker = "0";
+		string textMarker = "0";
+		if (path != null)
 		{
-			string text4 = FileManager.getInstance().loadFileText(text);
-			string[] array = text4.Split("\n"[0]);
-			text2 = array[1];
-			text3 = array[2];
+			string content = FileManager.getInstance().loadFileText(path);
+			string[] lines = content.Split("\n"[0]);
+			titleMarker = lines[1];
+			textMarker = lines[2];
 			int i = 0;
-			string[] array2 = array;
+			string[] array2 = lines;
 			for (int length = array2.Length; i < length; i++)
 			{
-				if (array2[i] == text2)
+				if (array2[i] == titleMarker)
 				{
 					flag = true;
 				}
-				else if (array2[i] == text3)
+				else if (array2[i] == textMarker)
 				{
 					currentY += 0.08f;
 					flag = true;

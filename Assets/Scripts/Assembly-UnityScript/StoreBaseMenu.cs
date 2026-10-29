@@ -8,14 +8,9 @@ public class StoreBaseMenu : BaseMenu
 
 	public bool updatePricesInActivation;
 
-	public float priceFactor;
+	public float priceFactor = 1f;
 
 	public bool ignoreCommonPriceFactor;
-
-	public StoreBaseMenu()
-	{
-		priceFactor = 1f;
-	}
 
 	public override void Awake()
 	{

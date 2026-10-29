@@ -32,12 +32,7 @@ public class CSpline2
 		}
 	}
 
-	public List<CSplinePoint> splineData;
-
-	public CSpline2()
-	{
-		splineData = new List<CSplinePoint>();
-	}
+	public List<CSplinePoint> splineData = new List<CSplinePoint>();
 
 	public virtual CSpline2 getCopy()
 	{

@@ -6,11 +6,11 @@ using UnityScript.Lang;
 
 public class Narrative : VGUISwitchObject
 {
-	public string autoLoadLinesFrom;
+	public string autoLoadLinesFrom = string.Empty;
 
-	public bool loadFromResources;
+	public bool loadFromResources = true;
 
-	public bool beginOnAwake;
+	public bool beginOnAwake = true;
 
 	public Subtitle subtitle;
 
@@ -18,20 +18,11 @@ public class Narrative : VGUISwitchObject
 
 	private UnityScript.Lang.Array lines;
 
-	private int currentLineIndex;
+	private int currentLineIndex = -1;
 
 	private NarrativeLine currentLine;
 
-	private int currentCommandIndex;
-
-	public Narrative()
-	{
-		autoLoadLinesFrom = string.Empty;
-		loadFromResources = true;
-		beginOnAwake = true;
-		currentLineIndex = -1;
-		currentCommandIndex = -1;
-	}
+	private int currentCommandIndex = -1;
 
 	public virtual void Start()
 	{

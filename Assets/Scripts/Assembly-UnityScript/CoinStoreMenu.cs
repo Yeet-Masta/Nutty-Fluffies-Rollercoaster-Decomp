@@ -18,23 +18,17 @@ public class CoinStoreMenu : StoreBaseMenu
 
 	private int foundProducts;
 
-	protected bool requstProducts;
+	protected bool requstProducts = true;
 
 	public tk2dTextMesh doubleCoinInfoText;
 
 	public GameObject doubleCoinStar;
 
-	private bool bugi;
+	private bool bugi = true;
 
 	private bool offerWallMessageDisplayed;
 
 	private bool back;
-
-	public CoinStoreMenu()
-	{
-		requstProducts = true;
-		bugi = true;
-	}
 
 	public override void Update()
 	{

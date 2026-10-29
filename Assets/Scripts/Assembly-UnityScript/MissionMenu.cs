@@ -15,12 +15,7 @@ public class MissionMenu : BaseMenu
 
 	private bool wasActive;
 
-	private bool handleBackKey;
-
-	public MissionMenu()
-	{
-		handleBackKey = true;
-	}
+	private bool handleBackKey = true;
 
 	public override void activate()
 	{

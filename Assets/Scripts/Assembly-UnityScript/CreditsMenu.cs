@@ -8,14 +8,9 @@ public class CreditsMenu : BaseMenu
 
 	private tk2dTextMesh Texts2;
 
-	private float currentY;
+	private float currentY = 0.18f;
 
 	public static bool isLoaded;
-
-	public CreditsMenu()
-	{
-		currentY = 0.18f;
-	}
 
 	public override void activate()
 	{

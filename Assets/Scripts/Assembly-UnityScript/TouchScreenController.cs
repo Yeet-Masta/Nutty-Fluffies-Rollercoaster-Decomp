@@ -5,14 +5,9 @@ public class TouchScreenController : Controller
 {
 	private bool usingSpecial;
 
-	private int specialTouchId;
+	private int specialTouchId = -1;
 
 	private int swipeDetectionRange;
-
-	public TouchScreenController()
-	{
-		specialTouchId = -1;
-	}
 
 	public override void Awake()
 	{

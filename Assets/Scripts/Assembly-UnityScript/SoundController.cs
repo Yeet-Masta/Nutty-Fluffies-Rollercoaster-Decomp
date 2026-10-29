@@ -26,28 +26,19 @@ public class SoundController : MonoBehaviour
 
 	public Vector2[] brakePitchControlPoints;
 
-	private LinearCurve volumeCurve;
+	private LinearCurve volumeCurve = new LinearCurve();
 
-	private LinearCurve pitchCurve;
+	private LinearCurve pitchCurve = new LinearCurve();
 
-	private LinearCurve masterVolumeCurve;
+	private LinearCurve masterVolumeCurve = new LinearCurve();
 
-	private LinearCurve brakeVolumeCurve;
+	private LinearCurve brakeVolumeCurve = new LinearCurve();
 
-	private LinearCurve brakePitchCurve;
+	private LinearCurve brakePitchCurve = new LinearCurve();
 
 	private float chainPullStart;
 
 	private float chainPullStopDelay;
-
-	public SoundController()
-	{
-		volumeCurve = new LinearCurve();
-		pitchCurve = new LinearCurve();
-		masterVolumeCurve = new LinearCurve();
-		brakeVolumeCurve = new LinearCurve();
-		brakePitchCurve = new LinearCurve();
-	}
 
 	public virtual void Awake()
 	{

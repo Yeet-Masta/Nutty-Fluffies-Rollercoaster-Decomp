@@ -13,21 +13,21 @@ public class Level : MonoBehaviour
 		}
 	}
 
-	public Vector2 startPoint;
+	public Vector2 startPoint = new Vector2(0f, 0f);
 
-	public Vector2 topLeftLimit;
+	public Vector2 topLeftLimit = new Vector2(-10f, -10f);
 
-	public Vector2 bottomRightLimit;
+	public Vector2 bottomRightLimit = new Vector2(10f, 10f);
 
-	public int maxId;
+	public int maxId = 1;
 
 	public ThemeSettings themeSettings;
 
-	public CustomSettings customSettings;
+	public CustomSettings customSettings = new CustomSettings();
 
-	public string fileName;
+	public string fileName = "Untitled";
 
-	public string oldLeaderboardDoNotUse;
+	public string oldLeaderboardDoNotUse = string.Empty;
 
 	private LevelLayer[] layers;
 
@@ -37,21 +37,9 @@ public class Level : MonoBehaviour
 
 	private Transform cameraTransform;
 
-	public Dictionary<Mesh, Vector3[]> splineMeshVerticesCache;
+	public Dictionary<Mesh, Vector3[]> splineMeshVerticesCache = new Dictionary<Mesh, Vector3[]>();
 
 	public bool hasKilledChildren;
-
-	public Level()
-	{
-		startPoint = new Vector2(0f, 0f);
-		topLeftLimit = new Vector2(-10f, -10f);
-		bottomRightLimit = new Vector2(10f, 10f);
-		maxId = 1;
-		customSettings = new CustomSettings();
-		fileName = "Untitled";
-		oldLeaderboardDoNotUse = string.Empty;
-		splineMeshVerticesCache = new Dictionary<Mesh, Vector3[]>();
-	}
 
 	public virtual void Awake()
 	{

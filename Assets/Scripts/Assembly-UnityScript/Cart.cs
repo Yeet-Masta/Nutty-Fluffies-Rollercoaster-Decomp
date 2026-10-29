@@ -43,13 +43,13 @@ public class Cart : MonoBehaviour
 
 	public int airTime;
 
-	private int contactCounter;
+	private int contactCounter = -1;
 
 	[HideInInspector]
 	public Joint toyJoint;
 
 	[HideInInspector]
-	public int animalIndex;
+	public int animalIndex = -1;
 
 	[HideInInspector]
 	public Vehicle trainRef;
@@ -60,17 +60,17 @@ public class Cart : MonoBehaviour
 	[HideInInspector]
 	public int indexInVehicle;
 
-	private int currentSegment;
+	private int currentSegment = -1;
 
-	private int currentTriangle;
+	private int currentTriangle = -1;
 
 	[HideInInspector]
-	public float targetZ;
+	public float targetZ = -1f;
 
 	[HideInInspector]
 	public Vector2 cachedUpVector;
 
-	private List<int> visitedTriggers;
+	private List<int> visitedTriggers = new List<int>();
 
 	private MeshRenderer[] renderers;
 
@@ -85,16 +85,6 @@ public class Cart : MonoBehaviour
 	private static Level level;
 
 	private static EffectManager effectMgr;
-
-	public Cart()
-	{
-		contactCounter = -1;
-		animalIndex = -1;
-		currentSegment = -1;
-		currentTriangle = -1;
-		targetZ = -1f;
-		visitedTriggers = new List<int>();
-	}
 
 	public virtual void prepare()
 	{

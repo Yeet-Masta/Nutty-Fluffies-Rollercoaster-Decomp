@@ -10,7 +10,7 @@ public class CommunityFeatures : MonoBehaviour
 
 	public MessageBox messageBox;
 
-	public int offerInterval;
+	public int offerInterval = 5;
 
 	public static string COMMUNITY_TEXT_STORE_POST_FACEBOOK = "I love Nutty Fluffies! You should try it too!";
 
@@ -28,9 +28,9 @@ public class CommunityFeatures : MonoBehaviour
 
 	public static int[] FEATURE_VALUES = new int[6] { -1, -1, -1, -1, 0, 0 };
 
-	public int[] featureUseLimits;
+	public int[] featureUseLimits = new int[6] { 1, 1, 1, 1, 0, 0 };
 
-	public int[] featureShowLimits;
+	public int[] featureShowLimits = new int[6] { 2, 2, 3, 2, 0, 0 };
 
 	public GameObject[] featureGraphics;
 
@@ -55,13 +55,6 @@ public class CommunityFeatures : MonoBehaviour
 	private int internalOfferInterval;
 
 	public static bool showingOffer;
-
-	public CommunityFeatures()
-	{
-		offerInterval = 5;
-		featureUseLimits = new int[6] { 1, 1, 1, 1, 0, 0 };
-		featureShowLimits = new int[6] { 2, 2, 3, 2, 0, 0 };
-	}
 
 	public static CommunityFeatures getInstance()
 	{

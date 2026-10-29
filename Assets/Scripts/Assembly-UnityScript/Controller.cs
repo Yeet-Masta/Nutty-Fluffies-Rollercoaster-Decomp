@@ -6,30 +6,19 @@ public class Controller : MonoBehaviour
 
 	public float brake;
 
-	public float throttleSensitivity;
+	public float throttleSensitivity = 0.2f;
 
-	public float brakeSensitivity;
+	public float brakeSensitivity = 0.05f;
 
-	public float returnSensitivity;
+	public float returnSensitivity = 0.2f;
 
-	public float centerSize;
+	public float centerSize = 0.1f;
 
-	private bool acceleratePressed;
+	private bool acceleratePressed = true;
 
-	private bool deacceleratePressed;
+	private bool deacceleratePressed = true;
 
-	protected Vector3 lastTouchDirection;
-
-	public Controller()
-	{
-		throttleSensitivity = 0.2f;
-		brakeSensitivity = 0.05f;
-		returnSensitivity = 0.2f;
-		centerSize = 0.1f;
-		acceleratePressed = true;
-		deacceleratePressed = true;
-		lastTouchDirection = new Vector3(0f, 0f, 0f);
-	}
+	protected Vector3 lastTouchDirection = new Vector3(0f, 0f, 0f);
 
 	public virtual void Awake()
 	{

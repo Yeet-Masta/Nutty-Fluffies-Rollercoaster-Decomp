@@ -29,12 +29,7 @@ public class ResultList : VGUIList
 
 	private float thisY;
 
-	private bool firstTime;
-
-	public ResultList()
-	{
-		firstTime = true;
-	}
+	private bool firstTime = true;
 
 	public override void activate()
 	{

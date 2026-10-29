@@ -8,17 +8,11 @@ public class Camera2D : MonoBehaviour
 
 	protected Camera cameraRef;
 
-	protected Vector2 minLimit;
+	protected Vector2 minLimit = new Vector2(-1000f, -1000f);
 
-	protected Vector2 maxLimit;
+	protected Vector2 maxLimit = new Vector2(1000f, 1000f);
 
 	protected Vector2 limitedSize;
-
-	public Camera2D()
-	{
-		minLimit = new Vector2(-1000f, -1000f);
-		maxLimit = new Vector2(1000f, 1000f);
-	}
 
 	public virtual void Awake()
 	{

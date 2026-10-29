@@ -31,12 +31,7 @@ public class WebNewsManager : MonoBehaviour
 
 	private bool ready;
 
-	private string tempVersion;
-
-	public WebNewsManager()
-	{
-		tempVersion = string.Empty;
-	}
+	private string tempVersion = string.Empty;
 
 	public static WebNewsManager getInstance()
 	{

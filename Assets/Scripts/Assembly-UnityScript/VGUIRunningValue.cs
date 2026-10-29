@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class VGUIRunningValue : VGUIText
 {
-	public float duration;
+	public float duration = 0.5f;
 
-	public float stepDuration;
+	public float stepDuration = 0.03f;
 
-	public float initialDelay;
+	public float initialDelay = 1f;
 
 	public AudioClip stepSoundUp;
 
@@ -16,7 +16,7 @@ public class VGUIRunningValue : VGUIText
 
 	private int valueFrom;
 
-	private int valueTo;
+	private int valueTo = 1;
 
 	private float currentValue;
 
@@ -26,16 +26,7 @@ public class VGUIRunningValue : VGUIText
 
 	private float valueStep;
 
-	private float soundPitch;
-
-	public VGUIRunningValue()
-	{
-		duration = 0.5f;
-		stepDuration = 0.03f;
-		initialDelay = 1f;
-		valueTo = 1;
-		soundPitch = 1f;
-	}
+	private float soundPitch = 1f;
 
 	public virtual float setValue(int from, int to)
 	{

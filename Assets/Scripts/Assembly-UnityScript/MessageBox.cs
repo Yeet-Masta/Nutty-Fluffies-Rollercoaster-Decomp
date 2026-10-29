@@ -45,18 +45,13 @@ public class MessageBox : BaseMenu
 
 	private bool activated;
 
-	private List<MessageQueueEntry> queue;
+	private List<MessageQueueEntry> queue = new List<MessageQueueEntry>();
 
 	private bool runEmitters;
 
 	private GameObject callbackObject;
 
 	private string callbackMethod;
-
-	public MessageBox()
-	{
-		queue = new List<MessageQueueEntry>();
-	}
 
 	public virtual void activate(string title, string message, GameObject image, bool closeButton, bool errorMessage)
 	{

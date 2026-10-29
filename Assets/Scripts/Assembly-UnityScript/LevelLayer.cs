@@ -10,50 +10,34 @@ public class LevelLayer : MonoBehaviour
 	[Serializable]
 	public class MeshGatherEntry
 	{
-		public List<Vector3[]> pts;
+		public List<Vector3[]> pts = new List<Vector3[]>();
 
-		public List<Vector2[]> uvs;
+		public List<Vector2[]> uvs = new List<Vector2[]>();
 
-		public List<int[]> inds;
+		public List<int[]> inds = new List<int[]>();
 
-		public List<float> zs;
+		public List<float> zs = new List<float>();
 
 		public int queue;
-
-		public MeshGatherEntry()
-		{
-			pts = new List<Vector3[]>();
-			uvs = new List<Vector2[]>();
-			inds = new List<int[]>();
-			zs = new List<float>();
-		}
 	}
 
 	public const int FLAG_DISABLE_SCALE = 1;
 
-	public int referenceId;
+	public int referenceId = -1;
 
 	public int layer;
 
-	public Vector2 parallaxFactor;
+	public Vector2 parallaxFactor = Vector2.one;
 
 	public string layerName;
 
-	public Vector3 colorMultiplier;
+	public Vector3 colorMultiplier = Vector3.one;
 
 	public int layerFlags;
 
 	public int deviceList;
 
-	private Dictionary<TextureIntKey, MeshGatherEntry> gatherTable;
-
-	public LevelLayer()
-	{
-		referenceId = -1;
-		parallaxFactor = Vector2.one;
-		colorMultiplier = Vector3.one;
-		gatherTable = new Dictionary<TextureIntKey, MeshGatherEntry>();
-	}
+	private Dictionary<TextureIntKey, MeshGatherEntry> gatherTable = new Dictionary<TextureIntKey, MeshGatherEntry>();
 
 	public virtual void addTextureMesh(Texture tex, int zDepth, float zAdd, int queue, Vector3[] pts, Vector2[] uvs, int[] inds)
 	{

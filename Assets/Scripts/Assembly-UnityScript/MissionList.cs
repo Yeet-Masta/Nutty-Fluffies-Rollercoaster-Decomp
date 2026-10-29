@@ -18,7 +18,7 @@ public class MissionList : VGUIList
 
 	public GameObject continueButton;
 
-	private int animatedRow;
+	private int animatedRow = -1;
 
 	private Mission animatingMission;
 
@@ -29,11 +29,6 @@ public class MissionList : VGUIList
 	private bool wasActivated;
 
 	private bool animatingEntry;
-
-	public MissionList()
-	{
-		animatedRow = -1;
-	}
 
 	public override void Awake()
 	{

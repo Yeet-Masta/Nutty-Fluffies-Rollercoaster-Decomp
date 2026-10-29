@@ -9,15 +9,9 @@ public class ThemeData
 {
 	public const string DEFAULT_THEME_NAME = "woodTrackTheme";
 
-	public ThemeSettings settings;
+	public ThemeSettings settings = new ThemeSettings();
 
-	public List<LevelLayerData> layerList;
-
-	public ThemeData()
-	{
-		settings = new ThemeSettings();
-		layerList = new List<LevelLayerData>();
-	}
+	public List<LevelLayerData> layerList = new List<LevelLayerData>();
 
 	public virtual LevelLayerData getLayerForNumber(int num)
 	{

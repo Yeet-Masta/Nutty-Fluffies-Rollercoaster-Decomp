@@ -10,15 +10,15 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 
 	public int firstActiveStep;
 
-	public float stepSlideSpeed;
+	public float stepSlideSpeed = 0.5f;
 
-	public float scrollerNearEnoughtBias;
+	public float scrollerNearEnoughtBias = 0.01f;
 
 	public VGUIButton scrollLeftButton;
 
 	public VGUIButton scrollRightButton;
 
-	public bool hideOtherThanCurrentPages;
+	public bool hideOtherThanCurrentPages = true;
 
 	public GameObject[] pages;
 
@@ -26,13 +26,13 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 
 	public string saveCurrentStepPrefsName;
 
-	public bool invokeOnStart;
+	public bool invokeOnStart = true;
 
 	public Camera cameraRef;
 
-	public float stiffness;
+	public float stiffness = 0.1f;
 
-	public float fastSwipeTreshold;
+	public float fastSwipeTreshold = 0.02f;
 
 	private int currentStep;
 
@@ -48,11 +48,11 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 
 	private int pageCount;
 
-	public bool useGestures;
+	public bool useGestures = true;
 
-	public Vector2 gestureStartAreaTopLeftNormalized;
+	public Vector2 gestureStartAreaTopLeftNormalized = new Vector2(0f, 0f);
 
-	public Vector2 gestureStartAreaBottomRightNormalized;
+	public Vector2 gestureStartAreaBottomRightNormalized = new Vector2(1f, 1f);
 
 	private bool dragging;
 
@@ -65,19 +65,6 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 	private float scrollSpeed;
 
 	private Vector2 dragStartPos;
-
-	public VGUIScrollingContainer()
-	{
-		stepSlideSpeed = 0.5f;
-		scrollerNearEnoughtBias = 0.01f;
-		hideOtherThanCurrentPages = true;
-		invokeOnStart = true;
-		stiffness = 0.1f;
-		fastSwipeTreshold = 0.02f;
-		useGestures = true;
-		gestureStartAreaTopLeftNormalized = new Vector2(0f, 0f);
-		gestureStartAreaBottomRightNormalized = new Vector2(1f, 1f);
-	}
 
 	public override void Awake()
 	{

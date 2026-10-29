@@ -2,12 +2,7 @@ using UnityEngine;
 
 public class NewsPaperAnimator : VGUIAnimator
 {
-	public float startAngle;
-
-	public NewsPaperAnimator()
-	{
-		startAngle = 2400f;
-	}
+	public float startAngle = 2400f;
 
 	public override void activate()
 	{

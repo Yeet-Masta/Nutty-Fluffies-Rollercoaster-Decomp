@@ -4,16 +4,11 @@ public class ObjectEmitter : MonoBehaviour
 {
 	public GameObject @object;
 
-	public int poolSize;
+	public int poolSize = 10;
 
 	private GameObject[] objectPool;
 
 	private float initialScale;
-
-	public ObjectEmitter()
-	{
-		poolSize = 10;
-	}
 
 	public virtual void Awake()
 	{

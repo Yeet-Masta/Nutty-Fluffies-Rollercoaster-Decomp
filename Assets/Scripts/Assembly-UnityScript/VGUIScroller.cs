@@ -4,13 +4,13 @@ public class VGUIScroller : VGUIElement
 {
 	public bool horizontalScroll;
 
-	public bool verticalScroll;
+	public bool verticalScroll = true;
 
-	public Vector2 minLimit;
+	public Vector2 minLimit = new Vector2(-1f, -1f);
 
-	public Vector2 maxLimit;
+	public Vector2 maxLimit = new Vector2(1f, 1f);
 
-	public float stiffness;
+	public float stiffness = 0.1f;
 
 	private bool dragging;
 
@@ -21,14 +21,6 @@ public class VGUIScroller : VGUIElement
 	private Transform tr;
 
 	private Vector2 scrollSpeed;
-
-	public VGUIScroller()
-	{
-		verticalScroll = true;
-		minLimit = new Vector2(-1f, -1f);
-		maxLimit = new Vector2(1f, 1f);
-		stiffness = 0.1f;
-	}
 
 	public override void Awake()
 	{

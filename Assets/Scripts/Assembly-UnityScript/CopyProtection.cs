@@ -77,17 +77,11 @@ public class CopyProtection : MonoBehaviour
 
 	public bool networkCheck;
 
-	public int expireYear;
+	public int expireYear = 2012;
 
-	public int expireMonth;
+	public int expireMonth = 9;
 
 	private WWW timeoutRequest;
-
-	public CopyProtection()
-	{
-		expireYear = 2012;
-		expireMonth = 9;
-	}
 
 	public virtual void Start()
 	{

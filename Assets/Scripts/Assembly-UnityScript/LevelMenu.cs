@@ -31,12 +31,7 @@ public class LevelMenu : StoreBaseMenu
 
 	public ParticleEmitter[] paperEmitters;
 
-	private List<GameObject> createdButtons;
-
-	public LevelMenu()
-	{
-		createdButtons = new List<GameObject>();
-	}
+	private List<GameObject> createdButtons = new List<GameObject>();
 
 	public override void activate()
 	{

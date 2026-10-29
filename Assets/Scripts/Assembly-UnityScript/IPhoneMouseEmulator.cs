@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class IPhoneMouseEmulator : MonoBehaviour
 {
-	public float rayDepth;
+	public float rayDepth = 100f;
 
-	public int layerMaskOfColliders;
+	public int layerMaskOfColliders = -1;
 
 	public bool simulateDraggingWithUpdateRays;
 
 	public bool simulateDraggingWith3DRays;
 
-	public bool fixedUpdateDragging;
+	public bool fixedUpdateDragging = true;
 
 	public bool updateOnlyOnMobile;
 
@@ -28,18 +28,9 @@ public class IPhoneMouseEmulator : MonoBehaviour
 
 	private Vector2 lastMouseDownPosition;
 
-	private Vector3 sim3DFrom;
+	private Vector3 sim3DFrom = default(Vector3);
 
-	private Vector3 sim3DTo;
-
-	public IPhoneMouseEmulator()
-	{
-		rayDepth = 100f;
-		layerMaskOfColliders = -1;
-		fixedUpdateDragging = true;
-		sim3DFrom = default(Vector3);
-		sim3DTo = default(Vector3);
-	}
+	private Vector3 sim3DTo = default(Vector3);
 
 	public virtual void Awake()
 	{

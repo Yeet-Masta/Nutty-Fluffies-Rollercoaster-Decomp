@@ -8,7 +8,7 @@ public class VGUIImageInvoker : VGUIImage
 
 	public float invokeTime;
 
-	public VGUIImageInvokerValueType valueType;
+	public VGUIImageInvokerValueType valueType = VGUIImageInvokerValueType.none;
 
 	public int intValue;
 
@@ -17,11 +17,6 @@ public class VGUIImageInvoker : VGUIImage
 	public bool booleanValue;
 
 	public float floatValue;
-
-	public VGUIImageInvoker()
-	{
-		valueType = VGUIImageInvokerValueType.none;
-	}
 
 	public virtual bool activateInvoke(bool blocking)
 	{

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Magnet : Special
 {
-	public float distanceTreshold;
+	public float distanceTreshold = 3f;
 
 	public GameObject magnetGraphic;
 
@@ -17,11 +17,6 @@ public class Magnet : Special
 	private Renderer[] effectRenderers;
 
 	private int tick;
-
-	public Magnet()
-	{
-		distanceTreshold = 3f;
-	}
 
 	public override void Start()
 	{

@@ -8,17 +8,11 @@ public class DriverCart : Cart
 
 	public Transform rocketFlame;
 
-	public float handleAngleFactor;
+	public float handleAngleFactor = 22f;
 
 	public DriverAnimal driver;
 
-	private float downPull;
-
-	public DriverCart()
-	{
-		handleAngleFactor = 22f;
-		downPull = 25f;
-	}
+	private float downPull = 25f;
 
 	public virtual void calculateAverageDownpull()
 	{

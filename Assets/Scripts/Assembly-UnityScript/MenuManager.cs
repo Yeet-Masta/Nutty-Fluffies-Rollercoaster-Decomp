@@ -87,21 +87,15 @@ public class MenuManager : BaseMenuManager
 
 	private bool isStartingGame;
 
-	private string[] ASPECTS;
+	private string[] ASPECTS = new string[4] { "4:3", "3:2", "16:9", "16:10" };
 
-	private float[] ASPECT_FACTORS;
+	private float[] ASPECT_FACTORS = new float[4] { 1.3333334f, 1.5f, 1.7777778f, 1.6f };
 
 	private bool languagePopup;
 
 	private bool aspectPopup;
 
 	private static int currentAspect;
-
-	public MenuManager()
-	{
-		ASPECTS = new string[4] { "4:3", "3:2", "16:9", "16:10" };
-		ASPECT_FACTORS = new float[4] { 1.3333334f, 1.5f, 1.7777778f, 1.6f };
-	}
 
 	public new static MenuManager getInstance()
 	{

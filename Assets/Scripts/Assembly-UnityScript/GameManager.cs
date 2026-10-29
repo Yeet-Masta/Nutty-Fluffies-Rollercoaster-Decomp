@@ -112,10 +112,6 @@ public class GameManager : MonoBehaviour
 
 	private bool m_back;
 
-	public GameManager()
-	{
-	}
-
 	public static GameManager getInstance()
 	{
 		return instance;

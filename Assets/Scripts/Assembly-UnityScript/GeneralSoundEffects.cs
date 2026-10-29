@@ -3,25 +3,17 @@ using UnityScript.Lang;
 
 public class GeneralSoundEffects : MonoBehaviour
 {
-	public int oneShotSoundAmount;
+	public int oneShotSoundAmount = 2;
 
-	public int oneShotSoundAmount2g;
+	public int oneShotSoundAmount2g = 2;
 
-	public Vector3 playPosition;
+	public Vector3 playPosition = default(Vector3);
 
-	public float playVolume;
+	public float playVolume = 1f;
 
 	public float playFalloff;
 
 	protected static GeneralSoundEffects instance;
-
-	public GeneralSoundEffects()
-	{
-		oneShotSoundAmount = 2;
-		oneShotSoundAmount2g = 2;
-		playPosition = default(Vector3);
-		playVolume = 1f;
-	}
 
 	public static void playSound(AudioClip a)
 	{

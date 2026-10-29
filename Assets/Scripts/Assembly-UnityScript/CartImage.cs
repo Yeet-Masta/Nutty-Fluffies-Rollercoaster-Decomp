@@ -12,14 +12,9 @@ public class CartImage : MonoBehaviour
 
 	public GameObject removedImage;
 
-	private Renderer[] renderers;
+	private Renderer[] renderers = new Renderer[4];
 
 	private bool showRemoveImage;
-
-	public CartImage()
-	{
-		renderers = new Renderer[4];
-	}
 
 	public virtual void activate(int cartType, int special)
 	{

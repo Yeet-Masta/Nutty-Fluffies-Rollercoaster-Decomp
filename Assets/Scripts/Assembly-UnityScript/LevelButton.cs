@@ -42,19 +42,13 @@ public class LevelButton : MenuButton
 
 	private string ldboardname;
 
-	private int heartRecord;
+	private int heartRecord = -1;
 
-	private int heartRecordPercentage;
+	private int heartRecordPercentage = -1;
 
 	private bool localized;
 
 	public GameObject[] previewImages;
-
-	public LevelButton()
-	{
-		heartRecord = -1;
-		heartRecordPercentage = -1;
-	}
 
 	public virtual void activate(LevelPack.LevelInfo level, int index, int price)
 	{

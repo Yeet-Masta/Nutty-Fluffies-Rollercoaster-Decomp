@@ -12,12 +12,7 @@ public class LevelPackMenu : BaseMenu
 
 	private bool wasActive;
 
-	private List<GameObject> extraPackButtons;
-
-	public LevelPackMenu()
-	{
-		extraPackButtons = new List<GameObject>();
-	}
+	private List<GameObject> extraPackButtons = new List<GameObject>();
 
 	public override void activate()
 	{

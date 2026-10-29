@@ -26,11 +26,10 @@ public class OnlineServiceManager
 
 	private string currentLeaderboard;
 
-	public bool DEBUG_MODE;
+	public bool DEBUG_MODE = true;
 
 	private OnlineServiceManager()
 	{
-		DEBUG_MODE = true;
 	}
 
 	public static OnlineServiceManager getInstance()

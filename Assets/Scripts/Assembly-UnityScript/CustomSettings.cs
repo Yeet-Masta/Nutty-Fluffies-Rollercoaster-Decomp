@@ -8,12 +8,7 @@ using UnityScript.Lang;
 [Serializable]
 public class CustomSettings
 {
-	public Dictionary<string, string> list;
-
-	public CustomSettings()
-	{
-		list = new Dictionary<string, string>();
-	}
+	public Dictionary<string, string> list = new Dictionary<string, string>();
 
 	public virtual void setValue(string key, string value)
 	{

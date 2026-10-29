@@ -5,21 +5,15 @@ public class ButtonPressAnimator : VGUIAnimator
 {
 	private float origScale;
 
-	private int origScaleStorePoint;
+	private int origScaleStorePoint = -1;
 
 	private Transform origScaleSource;
 
-	public float factor;
+	public float factor = 1f;
 
 	public AudioClip pressClick;
 
 	public AudioClip releaseClick;
-
-	public ButtonPressAnimator()
-	{
-		origScaleStorePoint = -1;
-		factor = 1f;
-	}
 
 	protected override void activateInternal()
 	{

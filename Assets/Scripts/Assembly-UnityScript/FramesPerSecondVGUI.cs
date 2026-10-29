@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FramesPerSecondVGUI : MonoBehaviour
 {
-	public float updateInterval;
+	public float updateInterval = 0.5f;
 
 	public VGUIText screenText;
 
@@ -11,11 +11,6 @@ public class FramesPerSecondVGUI : MonoBehaviour
 	private int frames;
 
 	private float fps;
-
-	public FramesPerSecondVGUI()
-	{
-		updateInterval = 0.5f;
-	}
 
 	public virtual void Start()
 	{

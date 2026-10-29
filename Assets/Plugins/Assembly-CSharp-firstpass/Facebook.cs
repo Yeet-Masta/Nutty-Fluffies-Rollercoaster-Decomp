@@ -16,9 +16,6 @@ public class Facebook : P31RestKit
 		{ return default; }
 	}
 
-	public Facebook()
-	{ }
-
 	protected override IEnumerator send(string path, HTTPVerb httpVerb, Dictionary<string, object> parameters, Action<string, object> onComplete)
 	{ yield break; }
 

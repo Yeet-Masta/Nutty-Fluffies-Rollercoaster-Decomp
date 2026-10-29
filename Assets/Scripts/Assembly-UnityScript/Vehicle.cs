@@ -12,9 +12,9 @@ public class Vehicle : MonoBehaviour
 
 	public const int MAX_PUSH_SPEED = 30;
 
-	public float maxPushSpeedSliding;
+	public float maxPushSpeedSliding = 30f;
 
-	public float minimumSpeed;
+	public float minimumSpeed = 1f;
 
 	public Controller controller;
 
@@ -32,7 +32,7 @@ public class Vehicle : MonoBehaviour
 
 	private float originalBrakeForce;
 
-	public float chainPullForce;
+	public float chainPullForce = 1f;
 
 	public Cart cartPrefab;
 
@@ -48,7 +48,7 @@ public class Vehicle : MonoBehaviour
 
 	public SoundController soundController;
 
-	public float soundControllerFactor;
+	public float soundControllerFactor = 0.02f;
 
 	public float speedBonusTreshold;
 
@@ -56,13 +56,13 @@ public class Vehicle : MonoBehaviour
 
 	public float gBonusTreshold;
 
-	public float screamSpeedTreshold;
+	public float screamSpeedTreshold = 20f;
 
-	public float screamFallingTreshold;
+	public float screamFallingTreshold = 24f;
 
-	public float screamProbablility;
+	public float screamProbablility = 1f;
 
-	public float screamFallingFromJumpTreshold;
+	public float screamFallingFromJumpTreshold = -1f;
 
 	[HideInInspector]
 	public bool upsideDown;
@@ -105,28 +105,14 @@ public class Vehicle : MonoBehaviour
 
 	private int inLoopCounter;
 
-	private float engineForceLevelMultiply;
+	private float engineForceLevelMultiply = 15f;
 
 	public bool applySeparatePowerToCarts;
 
 	[HideInInspector]
-	public bool @lock;
+	public bool @lock = true;
 
 	private int ticker2;
-
-	public Vehicle()
-	{
-		maxPushSpeedSliding = 30f;
-		minimumSpeed = 1f;
-		chainPullForce = 1f;
-		soundControllerFactor = 0.02f;
-		screamSpeedTreshold = 20f;
-		screamFallingTreshold = 24f;
-		screamProbablility = 1f;
-		screamFallingFromJumpTreshold = -1f;
-		engineForceLevelMultiply = 15f;
-		@lock = true;
-	}
 
 	public virtual void prepare()
 	{

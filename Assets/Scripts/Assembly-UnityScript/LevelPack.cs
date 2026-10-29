@@ -15,12 +15,7 @@ public class LevelPack
 
 		public int flags;
 
-		public CustomSettings settings;
-
-		public LevelInfo()
-		{
-			settings = new CustomSettings();
-		}
+		public CustomSettings settings = new CustomSettings();
 
 		public virtual bool isUnlocked()
 		{
@@ -54,7 +49,7 @@ public class LevelPack
 
 	public string packName;
 
-	public List<LevelInfo> levelList;
+	public List<LevelInfo> levelList = new List<LevelInfo>();
 
 	public int flags;
 
@@ -63,11 +58,6 @@ public class LevelPack
 	public float priceMultiplier;
 
 	private static List<LevelPack> levelPacks;
-
-	public LevelPack()
-	{
-		levelList = new List<LevelInfo>();
-	}
 
 	public static void refreshPacks()
 	{

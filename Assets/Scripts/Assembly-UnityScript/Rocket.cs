@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Rocket : Special
 {
-	public float downForce;
+	public float downForce = 0.1f;
 
 	public GameObject flameGraphic;
 
@@ -18,17 +18,11 @@ public class Rocket : Special
 
 	private Material flameMaterial;
 
-	public int frameTime;
+	public int frameTime = 2;
 
 	public Transform smokeSpot;
 
 	private int smokeCounter;
-
-	public Rocket()
-	{
-		downForce = 0.1f;
-		frameTime = 2;
-	}
 
 	public override void Start()
 	{

@@ -8,9 +8,9 @@ public class VGUINotify : VGUIImageInvoker
 
 	public float showOnAwakeDelay;
 
-	public bool mouseclickSkips;
+	public bool mouseclickSkips = true;
 
-	public bool skippingImmediatesInvoke;
+	public bool skippingImmediatesInvoke = true;
 
 	public AnimationClip showAnimation;
 
@@ -27,12 +27,6 @@ public class VGUINotify : VGUIImageInvoker
 	private bool inPlace;
 
 	private int lastShowTime;
-
-	public VGUINotify()
-	{
-		mouseclickSkips = true;
-		skippingImmediatesInvoke = true;
-	}
 
 	public override void Awake()
 	{

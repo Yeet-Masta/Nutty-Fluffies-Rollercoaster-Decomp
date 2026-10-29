@@ -5,12 +5,7 @@ using UnityEngine;
 [Serializable]
 public class LinearCurve
 {
-	public List<Vector2> controlPoints;
-
-	public LinearCurve()
-	{
-		controlPoints = new List<Vector2>();
-	}
+	public List<Vector2> controlPoints = new List<Vector2>();
 
 	public virtual float getValue(float t)
 	{

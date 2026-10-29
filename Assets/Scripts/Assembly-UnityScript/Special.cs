@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Special : MonoBehaviour
 {
-	public float duration;
+	public float duration = 1f;
 
-	public float power;
+	public float power = 500f;
 
-	public float rechargeTime;
+	public float rechargeTime = 5f;
 
 	[HideInInspector]
 	public float startTime;
@@ -15,17 +15,9 @@ public class Special : MonoBehaviour
 	public Vehicle trainRef;
 
 	[HideInInspector]
-	public bool ready;
+	public bool ready = true;
 
 	public AudioSource loopSource;
-
-	public Special()
-	{
-		duration = 1f;
-		power = 500f;
-		rechargeTime = 5f;
-		ready = true;
-	}
 
 	public virtual void Start()
 	{

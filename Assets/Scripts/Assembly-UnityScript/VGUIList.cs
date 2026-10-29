@@ -8,15 +8,9 @@ public class VGUIList : VGUIElement
 {
 	public GameObject entryPrefab;
 
-	public float verticalSpacing;
+	public float verticalSpacing = 0.2f;
 
-	protected List<GameObject> entryRefs;
-
-	public VGUIList()
-	{
-		verticalSpacing = 0.2f;
-		entryRefs = new List<GameObject>();
-	}
+	protected List<GameObject> entryRefs = new List<GameObject>();
 
 	public virtual GameObject createEntry()
 	{

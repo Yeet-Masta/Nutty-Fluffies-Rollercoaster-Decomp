@@ -2,16 +2,11 @@ using UnityEngine;
 
 public class LevelTrigger : LevelEntity, Parametrizable
 {
-	public TriggerHandler handler;
+	public TriggerHandler handler = new TriggerHandler();
 
 	public string sourceParams;
 
 	public TargetHandler targetHandler;
-
-	public LevelTrigger()
-	{
-		handler = new TriggerHandler();
-	}
 
 	public virtual void OnTriggerEnter(Collider other)
 	{

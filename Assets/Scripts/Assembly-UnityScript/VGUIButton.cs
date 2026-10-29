@@ -7,7 +7,7 @@ public class VGUIButton : VGUIImageInvoker
 {
 	public bool runAnimation;
 
-	public float animationSpeed;
+	public float animationSpeed = 1f;
 
 	public AudioClip pressSound;
 
@@ -24,11 +24,6 @@ public class VGUIButton : VGUIImageInvoker
 	protected bool mouseDownInsideThisButton;
 
 	protected VGUIScrollingContainer scrollingContainer;
-
-	public VGUIButton()
-	{
-		animationSpeed = 1f;
-	}
 
 	public virtual void Start()
 	{

@@ -30,17 +30,11 @@ public class WalkingAnimal : MonoBehaviour
 
 	public int typeIndex;
 
-	public int clones;
+	public int clones = 4;
 
 	private float y;
 
-	private float speed;
-
-	public WalkingAnimal()
-	{
-		clones = 4;
-		speed = 0.3f;
-	}
+	private float speed = 0.3f;
 
 	public virtual void Awake()
 	{

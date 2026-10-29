@@ -21,11 +21,11 @@ public class VGUIDynamicGroup : VGUIElement
 
 	public static bool DYNAMIC_RESIZE = true;
 
-	public HorizontalLock horizontalLock;
+	public HorizontalLock horizontalLock = HorizontalLock.CENTER;
 
-	public VerticalLock verticalLock;
+	public VerticalLock verticalLock = VerticalLock.CENTER;
 
-	public bool keepRelativePosition;
+	public bool keepRelativePosition = true;
 
 	public bool constantScale;
 
@@ -39,21 +39,13 @@ public class VGUIDynamicGroup : VGUIElement
 
 	public Vector3 coordInViewPort;
 
-	public Vector2 referenceSize;
+	public Vector2 referenceSize = new Vector2(480f, 320f);
 
 	private Vector3 initialPosition;
 
 	private Vector2 screenSize;
 
 	private float referenceAspectRatio;
-
-	public VGUIDynamicGroup()
-	{
-		horizontalLock = HorizontalLock.CENTER;
-		verticalLock = VerticalLock.CENTER;
-		keepRelativePosition = true;
-		referenceSize = new Vector2(480f, 320f);
-	}
 
 	public override void Awake()
 	{

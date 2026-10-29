@@ -9,14 +9,9 @@ public class BlinkAnimator : VGUIAnimator
 
 	public float scaleFactor;
 
-	public bool selfActivate;
+	public bool selfActivate = true;
 
 	private bool activated;
-
-	public BlinkAnimator()
-	{
-		selfActivate = true;
-	}
 
 	public override void Awake()
 	{

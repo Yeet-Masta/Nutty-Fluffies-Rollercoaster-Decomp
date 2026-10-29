@@ -22,12 +22,7 @@ public class SharingManager : MonoBehaviour
 
 	public string shareLinkTitle;
 
-	public List<GameObject> shareListeners;
-
-	public SharingManager()
-	{
-		shareListeners = new List<GameObject>();
-	}
+	public List<GameObject> shareListeners = new List<GameObject>();
 
 	public static SharingManager getInstance()
 	{

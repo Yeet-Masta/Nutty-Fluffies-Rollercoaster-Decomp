@@ -2,18 +2,11 @@ using UnityEngine;
 
 public class VGUIGrid : VGUIList
 {
-	public float horizontalSpacing;
+	public float horizontalSpacing = 0.32f;
 
-	public int maxColumns;
+	public int maxColumns = 2;
 
-	public int maxRows;
-
-	public VGUIGrid()
-	{
-		horizontalSpacing = 0.32f;
-		maxColumns = 2;
-		maxRows = 2;
-	}
+	public int maxRows = 2;
 
 	public override Vector3 calculatePosition()
 	{

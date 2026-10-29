@@ -10,11 +10,10 @@ public class MaterialManager
 {
 	private static MaterialManager instance;
 
-	private Dictionary<MaterialKey, Material> materialList;
+	private Dictionary<MaterialKey, Material> materialList = new Dictionary<MaterialKey, Material>();
 
 	private MaterialManager()
 	{
-		materialList = new Dictionary<MaterialKey, Material>();
 	}
 
 	public static MaterialManager getInstance()

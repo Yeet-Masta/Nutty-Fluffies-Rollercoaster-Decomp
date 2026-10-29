@@ -3,23 +3,15 @@ using UnityScript.Lang;
 
 public class Subtitle : VGUIText
 {
-	public int maxChars;
+	public int maxChars = 100;
 
-	public int maxLines;
+	public int maxLines = 2;
 
-	public bool removeLineBrakes;
+	public bool removeLineBrakes = true;
 
 	private UnityScript.Lang.Array chunks;
 
-	private int currentChunk;
-
-	public Subtitle()
-	{
-		maxChars = 100;
-		maxLines = 2;
-		removeLineBrakes = true;
-		currentChunk = -1;
-	}
+	private int currentChunk = -1;
 
 	public virtual void startDisplaying(NarrativeLine line)
 	{

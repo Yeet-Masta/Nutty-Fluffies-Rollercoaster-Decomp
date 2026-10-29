@@ -82,28 +82,19 @@ public class DragRigidbody : MonoBehaviour
 		}
 	}
 
-	public float spring;
+	public float spring = 50f;
 
-	public float damper;
+	public float damper = 5f;
 
-	public float drag;
+	public float drag = 10f;
 
-	public float angularDrag;
+	public float angularDrag = 5f;
 
-	public float distance;
+	public float distance = 0.2f;
 
 	public bool attachToCenterOfMass;
 
 	private SpringJoint springJoint;
-
-	public DragRigidbody()
-	{
-		spring = 50f;
-		damper = 5f;
-		drag = 10f;
-		angularDrag = 5f;
-		distance = 0.2f;
-	}
 
 	public virtual void Update()
 	{

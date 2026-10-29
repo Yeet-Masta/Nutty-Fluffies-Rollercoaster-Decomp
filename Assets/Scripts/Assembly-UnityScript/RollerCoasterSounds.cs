@@ -55,13 +55,13 @@ public class RollerCoasterSounds : SoundManager
 
 	private int lastScream;
 
-	private int musicIndex;
+	private int musicIndex = -1;
 
 	public AudioSource[] screamSource;
 
 	public AudioSource specialSource;
 
-	private List<int> availableAnimals;
+	private List<int> availableAnimals = new List<int>();
 
 	private const int SCREAMS_PER_ANIMAL = 2;
 
@@ -71,23 +71,15 @@ public class RollerCoasterSounds : SoundManager
 
 	private float lastSpecialScoreTime;
 
-	private float scorePitch;
+	private float scorePitch = 1f;
 
-	private float specialScorePitch;
+	private float specialScorePitch = 1f;
 
 	private string currentMusic;
 
 	private float lastCollisionPlay;
 
 	private bool specialWasPlaying;
-
-	public RollerCoasterSounds()
-	{
-		musicIndex = -1;
-		availableAnimals = new List<int>();
-		scorePitch = 1f;
-		specialScorePitch = 1f;
-	}
 
 	public new static RollerCoasterSounds getInstance()
 	{

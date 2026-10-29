@@ -10,33 +10,21 @@ public class LevelData
 {
 	public ThemeData theme;
 
-	public List<LevelLayerData> layerData;
+	public List<LevelLayerData> layerData = new List<LevelLayerData>();
 
-	public Vector2 startPoint;
+	public Vector2 startPoint = new Vector2(0f, 0f);
 
-	public Vector2 topLeftLimit;
+	public Vector2 topLeftLimit = new Vector2(-10f, -10f);
 
-	public Vector2 bottomRightLimit;
+	public Vector2 bottomRightLimit = new Vector2(10f, 10f);
 
-	public string fileName;
+	public string fileName = "Untitled";
 
-	public List<ObjectPackData> usedObjectPacks;
+	public List<ObjectPackData> usedObjectPacks = new List<ObjectPackData>();
 
-	public CustomSettings customSettings;
+	public CustomSettings customSettings = new CustomSettings();
 
-	public string oldLeaderboardDoNotUse;
-
-	public LevelData()
-	{
-		layerData = new List<LevelLayerData>();
-		startPoint = new Vector2(0f, 0f);
-		topLeftLimit = new Vector2(-10f, -10f);
-		bottomRightLimit = new Vector2(10f, 10f);
-		fileName = "Untitled";
-		usedObjectPacks = new List<ObjectPackData>();
-		customSettings = new CustomSettings();
-		oldLeaderboardDoNotUse = string.Empty;
-	}
+	public string oldLeaderboardDoNotUse = string.Empty;
 
 	public virtual void recalcUsedObjectPacks(ObjectListData odata)
 	{

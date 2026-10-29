@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class LevelEntity : MonoBehaviour, EditableGameObject
 {
-	public int referenceId;
+	public int referenceId = -1;
 
 	public int flags;
 
 	public int deviceList;
 
-	public string scriptParams;
-
-	public LevelEntity()
-	{
-		referenceId = -1;
-		scriptParams = string.Empty;
-	}
+	public string scriptParams = string.Empty;
 
 	public virtual void Awake()
 	{

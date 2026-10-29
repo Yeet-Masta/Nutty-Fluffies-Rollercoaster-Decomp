@@ -2,12 +2,7 @@ using UnityEngine;
 
 public class LevelCoin : MonoBehaviour
 {
-	public TriggerHandler handler;
-
-	public LevelCoin()
-	{
-		handler = new TriggerHandler();
-	}
+	public TriggerHandler handler = new TriggerHandler();
 
 	public virtual void Awake()
 	{

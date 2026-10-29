@@ -4,21 +4,13 @@ using System.Collections.Generic;
 [Serializable]
 public class ThemeSettings
 {
-	public string name;
+	public string name = "UntitledTheme";
 
-	public List<string> musicNames;
+	public List<string> musicNames = new List<string>();
 
-	public List<string> allowedObjectPacks;
+	public List<string> allowedObjectPacks = new List<string>();
 
-	public CustomSettings customSettings;
-
-	public ThemeSettings()
-	{
-		name = "UntitledTheme";
-		musicNames = new List<string>();
-		allowedObjectPacks = new List<string>();
-		customSettings = new CustomSettings();
-	}
+	public CustomSettings customSettings = new CustomSettings();
 
 	public virtual bool isPackAllowed(string pack)
 	{

@@ -11,15 +11,9 @@ public class BackgroundShade : MonoBehaviour
 
 	public MeshRenderer meshRendere;
 
-	public int columns;
+	public int columns = 18;
 
-	public float sectorWidth;
-
-	public BackgroundShade()
-	{
-		columns = 18;
-		sectorWidth = 0.2f;
-	}
+	public float sectorWidth = 0.2f;
 
 	public virtual void Awake()
 	{

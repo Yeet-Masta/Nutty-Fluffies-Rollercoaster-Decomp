@@ -6,21 +6,21 @@ public class GameCamera : Camera2D
 
 	public Vector2 viewOffset;
 
-	public float viewStiffness;
+	public float viewStiffness = 0.1f;
 
-	public float zoomStiffness;
+	public float zoomStiffness = 0.01f;
 
-	public float speedZoomFactor;
+	public float speedZoomFactor = 1.1f;
 
-	public float speedOffsetFactor;
+	public float speedOffsetFactor = 1.5f;
 
-	public float offsetStiffness;
+	public float offsetStiffness = 0.01f;
 
-	public float zoomOutPerCart;
+	public float zoomOutPerCart = 0.3f;
 
-	public bool useDynamicY;
+	public bool useDynamicY = true;
 
-	public float minOffsetAboveTarget;
+	public float minOffsetAboveTarget = 4f;
 
 	[HideInInspector]
 	public Transform lastCart;
@@ -40,18 +40,6 @@ public class GameCamera : Camera2D
 	private float jumpZoom;
 
 	public float dynamicYLimit;
-
-	public GameCamera()
-	{
-		viewStiffness = 0.1f;
-		zoomStiffness = 0.01f;
-		speedZoomFactor = 1.1f;
-		speedOffsetFactor = 1.5f;
-		offsetStiffness = 0.01f;
-		zoomOutPerCart = 0.3f;
-		useDynamicY = true;
-		minOffsetAboveTarget = 4f;
-	}
 
 	public override void Awake()
 	{

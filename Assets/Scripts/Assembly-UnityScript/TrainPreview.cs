@@ -4,17 +4,17 @@ using UnityScript.Lang;
 
 public class TrainPreview : MonoBehaviour
 {
-	public float cartSpacing;
+	public float cartSpacing = 0.15f;
 
-	public float maxWidth;
+	public float maxWidth = 1f;
 
 	public CartImage cartImage;
 
 	public Transform trainOverviewRoot;
 
-	public float disabledAlpha;
+	public float disabledAlpha = 0.3f;
 
-	public float imageScaler;
+	public float imageScaler = 1f;
 
 	private CartImage[] activeCart;
 
@@ -22,18 +22,9 @@ public class TrainPreview : MonoBehaviour
 
 	private float originalScale;
 
-	private float originalCartScale;
+	private float originalCartScale = 1f;
 
 	private int specialCartType;
-
-	public TrainPreview()
-	{
-		cartSpacing = 0.15f;
-		maxWidth = 1f;
-		disabledAlpha = 0.3f;
-		imageScaler = 1f;
-		originalCartScale = 1f;
-	}
 
 	public virtual void prepare(int cartType)
 	{

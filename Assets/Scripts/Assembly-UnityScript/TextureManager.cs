@@ -45,12 +45,7 @@ public class TextureManager
 	{
 		public string filename;
 
-		public UV uv;
-
-		public TextureDescriptor()
-		{
-			uv = new UV();
-		}
+		public UV uv = new UV();
 
 		public virtual bool load(string descFile)
 		{

@@ -36,7 +36,7 @@ public class Animal : MonoBehaviour
 
 	public static int EXTRA_HEART_FROM_BUMP_AIRTIME_LIMIT = 10;
 
-	public bool upsideDownBrakeForceModify;
+	public bool upsideDownBrakeForceModify = true;
 
 	public bool givesExtraHeartsFromBumps;
 
@@ -54,7 +54,7 @@ public class Animal : MonoBehaviour
 
 	private bool givingExtraHearts;
 
-	private float gaveExtraHeartsTime;
+	private float gaveExtraHeartsTime = -100f;
 
 	public Transform head;
 
@@ -80,7 +80,7 @@ public class Animal : MonoBehaviour
 
 	public GameObject[] expression;
 
-	public float colliderSize;
+	public float colliderSize = 0.5f;
 
 	[HideInInspector]
 	public Cart cartRef;
@@ -103,7 +103,7 @@ public class Animal : MonoBehaviour
 
 	private float headScale;
 
-	private float expressionSetTime;
+	private float expressionSetTime = -1000f;
 
 	private Vector3 headInitialPosition;
 
@@ -115,20 +115,11 @@ public class Animal : MonoBehaviour
 
 	private float droppedTime;
 
-	private int nextExp;
+	private int nextExp = -1;
 
 	private float headDisplacer;
 
 	private float headAngle;
-
-	public Animal()
-	{
-		upsideDownBrakeForceModify = true;
-		gaveExtraHeartsTime = -100f;
-		colliderSize = 0.5f;
-		expressionSetTime = -1000f;
-		nextExp = -1;
-	}
 
 	public virtual void Awake()
 	{

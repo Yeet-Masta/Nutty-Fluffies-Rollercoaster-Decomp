@@ -2,15 +2,9 @@ using UnityEngine;
 
 public class LevelObject : LevelEntity
 {
-	public int objectId;
+	public int objectId = 1;
 
-	public Vector3 initialPosition;
-
-	public LevelObject()
-	{
-		objectId = 1;
-		initialPosition = Vector3.zero;
-	}
+	public Vector3 initialPosition = Vector3.zero;
 
 	public virtual void setZstep(int zStep)
 	{

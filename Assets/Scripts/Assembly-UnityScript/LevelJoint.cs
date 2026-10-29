@@ -1,9 +1,4 @@
 public class LevelJoint : LevelEntity
 {
-	public int connectReferenceId;
-
-	public LevelJoint()
-	{
-		connectReferenceId = -2;
-	}
+	public int connectReferenceId = -2;
 }

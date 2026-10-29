@@ -2,19 +2,13 @@ using UnityEngine;
 
 public class KeyboardController : Controller
 {
-	private Vector2 lastMousePos;
+	private Vector2 lastMousePos = new Vector2(0f, 0f);
 
-	private Vector2 mouseDelta;
+	private Vector2 mouseDelta = new Vector2(0f, 0f);
 
 	private bool lastControlWasSwipe;
 
 	private bool usingSpecial;
-
-	public KeyboardController()
-	{
-		lastMousePos = new Vector2(0f, 0f);
-		mouseDelta = new Vector2(0f, 0f);
-	}
 
 	public override void Awake()
 	{

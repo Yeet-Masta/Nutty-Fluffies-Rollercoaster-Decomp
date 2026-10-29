@@ -16,21 +16,15 @@ public class Wheel : MonoBehaviour
 
 	public Transform tr;
 
-	public float impactSpeed;
+	public float impactSpeed = -1f;
 
 	public float maxImpactSpeed;
 
 	public float speedBeforeImpact;
 
-	public Vector3 impactNormal;
+	public Vector3 impactNormal = Vector3.up;
 
 	public Cart cartRef;
-
-	public Wheel()
-	{
-		impactSpeed = -1f;
-		impactNormal = Vector3.up;
-	}
 
 	public virtual void Awake()
 	{

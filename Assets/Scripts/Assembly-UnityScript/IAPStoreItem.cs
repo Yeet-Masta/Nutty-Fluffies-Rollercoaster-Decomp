@@ -11,10 +11,5 @@ public class IAPStoreItem : StoreItem
 
 	public VGUIText iapPriceText;
 
-	public bool active;
-
-	public IAPStoreItem()
-	{
-		active = true;
-	}
+	public bool active = true;
 }

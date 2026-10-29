@@ -13,31 +13,24 @@ public class VGUIAnimator : MonoBehaviour
 
 	public GameObject invokeRef;
 
-	public string completeInvoke;
+	public string completeInvoke = "onAnimationComplete";
 
 	public float activationDelay;
 
 	[HideInInspector]
 	public float startTime;
 
-	public float duration;
+	public float duration = 1f;
 
 	public Transform target;
 
 	public bool reverse;
 
-	public Interpolator interpolator;
+	public Interpolator interpolator = Interpolator.LINEAR;
 
 	public AudioClip activationSound;
 
 	private bool firstUpdate;
-
-	public VGUIAnimator()
-	{
-		completeInvoke = "onAnimationComplete";
-		duration = 1f;
-		interpolator = Interpolator.LINEAR;
-	}
 
 	public virtual void Awake()
 	{

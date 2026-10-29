@@ -5,11 +5,11 @@ public class Hover : Special
 {
 	private float phase;
 
-	public float phaseSpeed;
+	public float phaseSpeed = 0.1f;
 
-	public float phaseCartOffset;
+	public float phaseCartOffset = 0.6f;
 
-	public float forwardPower;
+	public float forwardPower = 50f;
 
 	public float linearPowerDamping;
 
@@ -23,21 +23,13 @@ public class Hover : Special
 
 	public int loopEnd;
 
-	public int frameTime;
+	public int frameTime = 2;
 
 	private int currentFlameFrame;
 
 	private float frameStep;
 
 	private Renderer[] flameRenderers;
-
-	public Hover()
-	{
-		phaseSpeed = 0.1f;
-		phaseCartOffset = 0.6f;
-		forwardPower = 50f;
-		frameTime = 2;
-	}
 
 	public override void Start()
 	{

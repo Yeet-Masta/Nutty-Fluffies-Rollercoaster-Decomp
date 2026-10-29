@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Boo.Lang.Runtime;
 using UnityEngine;
 
 public class LocalizationManager : MonoBehaviour

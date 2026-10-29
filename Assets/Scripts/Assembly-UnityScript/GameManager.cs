@@ -1,44 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Boo.Lang;
-using Boo.Lang.Runtime;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-	[Serializable]
-	internal sealed class _0024resetResolution_00241487 : GenericGenerator<object>
-	{
-		[Serializable]
-		internal sealed class _0024 : GenericGeneratorEnumerator<object>, IEnumerator
-		{
-			public override bool MoveNext()
-			{
-				int result;
-				switch (_state)
-				{
-				default:
-					Screen.SetResolution(GameData.actualDeviceResolution.width, GameData.actualDeviceResolution.height, Screen.fullScreenMode);
-					result = YieldDefault(2) ? 1 : 0;
-					break;
-				case 2:
-					YieldDefault(1);
-					goto case 1;
-				case 1:
-					result = 0;
-					break;
-				}
-				return (byte)result != 0;
-			}
-		}
-
-		public override IEnumerator<object> GetEnumerator()
-		{
-			return new _0024();
-		}
-	}
-
 	public const int STATE_NONE = 0;
 
 	public const int STATE_START = 1;
@@ -390,7 +354,8 @@ public class GameManager : MonoBehaviour
 
 	private IEnumerator resetResolution()
 	{
-		return new _0024resetResolution_00241487().GetEnumerator();
+		Screen.SetResolution(GameData.actualDeviceResolution.width, GameData.actualDeviceResolution.height, Screen.fullScreenMode);
+		yield return null;
 	}
 
 	private void returnToMenuScene()

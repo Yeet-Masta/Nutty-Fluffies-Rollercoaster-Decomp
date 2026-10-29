@@ -1,5 +1,4 @@
 using System;
-using Boo.Lang.Runtime;
 
 [Serializable]
 public class TextTemplate

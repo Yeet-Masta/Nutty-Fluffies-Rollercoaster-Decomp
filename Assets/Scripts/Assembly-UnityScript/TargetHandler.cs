@@ -5,28 +5,6 @@ using UnityEngine;
 [Serializable]
 public class TargetHandler
 {
-	[Serializable]
-	internal class _0024removeTargetObject_0024locals_00241478
-	{
-		internal int _0024refId;
-	}
-
-	[Serializable]
-	internal class _0024removeTargetObject_0024closure_0024265
-	{
-		internal _0024removeTargetObject_0024locals_00241478 _0024_0024locals_00241480;
-
-		public _0024removeTargetObject_0024closure_0024265(_0024removeTargetObject_0024locals_00241478 _0024_0024locals_00241480)
-		{
-			this._0024_0024locals_00241480 = _0024_0024locals_00241480;
-		}
-
-		public bool Invoke(GameObject o)
-		{
-			return ((LevelEntity)o.GetComponent(typeof(LevelEntity))).referenceId == _0024_0024locals_00241480._0024refId;
-		}
-	}
-
 	public GameObject[] targetObjects;
 
 	public GameObject go;
@@ -88,10 +66,8 @@ public class TargetHandler
 
 	public virtual void removeTargetObject(int refId)
 	{
-		_0024removeTargetObject_0024locals_00241478 obj = new _0024removeTargetObject_0024locals_00241478();
-		obj._0024refId = refId;
 		List<GameObject> list = new List<GameObject>(targetObjects);
-		list.RemoveAll(new _0024removeTargetObject_0024closure_0024265(obj).Invoke);
+		list.RemoveAll((GameObject o) => ((LevelEntity)o.GetComponent(typeof(LevelEntity))).referenceId == refId);
 		targetObjects = list.ToArray();
 	}
 }

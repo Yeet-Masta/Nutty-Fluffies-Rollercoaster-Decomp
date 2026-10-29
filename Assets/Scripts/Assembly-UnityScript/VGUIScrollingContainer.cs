@@ -1,4 +1,3 @@
-using Boo.Lang.Runtime;
 using UnityEngine;
 
 public class VGUIScrollingContainer : VGUIImageInvoker

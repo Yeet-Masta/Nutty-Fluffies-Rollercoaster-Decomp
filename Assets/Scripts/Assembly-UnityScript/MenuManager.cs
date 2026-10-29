@@ -1,56 +1,7 @@
-using System;
 using UnityEngine;
 
 public class MenuManager : BaseMenuManager
 {
-	[Serializable]
-	internal class _0024OnGUI_0024locals_00241479
-	{
-		internal int _0024languageId;
-
-		internal int _0024aspectSelection;
-	}
-
-	[Serializable]
-	internal class _0024OnGUI_0024closure_0024286
-	{
-		internal _0024OnGUI_0024locals_00241479 _0024_0024locals_00241481;
-
-		public _0024OnGUI_0024closure_0024286(_0024OnGUI_0024locals_00241479 _0024_0024locals_00241481)
-		{
-			this._0024_0024locals_00241481 = _0024_0024locals_00241481;
-		}
-
-		public void Invoke()
-		{
-			if (GameData.LOG)
-			{
-				MonoBehaviour.print("SETTING LANG TO: " + LocalizationManager.LANGUAGES[_0024_0024locals_00241481._0024languageId]);
-			}
-			LocalizationManager.getInstance().setLanguage(LocalizationManager.LANGUAGES[_0024_0024locals_00241481._0024languageId]);
-			Application.LoadLevel("MenuScene");
-		}
-	}
-
-	[Serializable]
-	internal class _0024OnGUI_0024closure_0024287
-	{
-		internal MenuManager _0024this_00241482;
-
-		internal _0024OnGUI_0024locals_00241479 _0024_0024locals_00241483;
-
-		public _0024OnGUI_0024closure_0024287(MenuManager _0024this_00241482, _0024OnGUI_0024locals_00241479 _0024_0024locals_00241483)
-		{
-			this._0024this_00241482 = _0024this_00241482;
-			this._0024_0024locals_00241483 = _0024_0024locals_00241483;
-		}
-
-		public void Invoke()
-		{
-			_0024this_00241482.setAspectRatio(_0024_0024locals_00241483._0024aspectSelection);
-		}
-	}
-
 	private static bool WAS_PLAYING;
 
 	private static bool WAS_IN_STORY;
@@ -351,17 +302,23 @@ public class MenuManager : BaseMenuManager
 
 	public virtual void OnGUI()
 	{
-		_0024OnGUI_0024locals_00241479 obj = new _0024OnGUI_0024locals_00241479();
 		if (GameData.LOCALIZATION_TEST && menuSwitcher.activeMenu == mainMenu)
 		{
-			obj._0024languageId = 0;
-			if (Popup.List(new Rect(Screen.width - 68, 84f, 64f, 20f), ref languagePopup, ref obj._0024languageId, "Lang: " + LocalizationManager.getInstance().getLanguage(), LocalizationManager.LANGUAGES, GUI.skin.button, new _0024OnGUI_0024closure_0024286(obj).Invoke, CustomLayoutOption.MinWidth(64f)))
+			int languageId = 0;
+			Popup.List(new Rect(Screen.width - 68, 84f, 64f, 20f), ref languagePopup, ref languageId, "Lang: " + LocalizationManager.getInstance().getLanguage(), LocalizationManager.LANGUAGES, GUI.skin.button, delegate
 			{
-			}
-			obj._0024aspectSelection = 0;
-			if (!Popup.List(new Rect(Screen.width - 140, 84f, 64f, 20f), ref aspectPopup, ref obj._0024aspectSelection, string.Empty + ASPECTS[currentAspect], ASPECTS, GUI.skin.button, new _0024OnGUI_0024closure_0024287(this, obj).Invoke, CustomLayoutOption.MinWidth(64f)))
+				if (GameData.LOG)
+				{
+					print("SETTING LANG TO: " + LocalizationManager.LANGUAGES[languageId]);
+				}
+				LocalizationManager.getInstance().setLanguage(LocalizationManager.LANGUAGES[languageId]);
+				Application.LoadLevel("MenuScene");
+			}, CustomLayoutOption.MinWidth(64f));
+			int aspectSelection = 0;
+			Popup.List(new Rect(Screen.width - 140, 84f, 64f, 20f), ref aspectPopup, ref aspectSelection, string.Empty + ASPECTS[currentAspect], ASPECTS, GUI.skin.button, delegate
 			{
-			}
+				setAspectRatio(aspectSelection);
+			}, CustomLayoutOption.MinWidth(64f));
 		}
 	}
 

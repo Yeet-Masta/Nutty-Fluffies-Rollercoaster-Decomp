@@ -1,159 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Boo.Lang;
-using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 public class DynamicPropertyLoader : MonoBehaviour
 {
-	[Serializable]
-	internal sealed class _0024loadProperties_00241517 : GenericGenerator<WWW>
-	{
-		[Serializable]
-		internal sealed class _0024 : GenericGeneratorEnumerator<WWW>, IEnumerator
-		{
-			internal WWW _0024download_00241518;
-
-			internal JSONObject _0024j_00241519;
-
-			internal object _0024key_00241520;
-
-			internal string _0024skey_00241521;
-
-			internal JSONObject _0024obj_00241522;
-
-			internal JSONObject.Type _0024_0024switch_0024218_00241523;
-
-			internal int _0024vi_00241524;
-
-			internal float _0024vf_00241525;
-
-			internal IEnumerator _0024_0024iterator_0024364_00241526;
-
-			internal DynamicPropertyLoader _0024self__00241527;
-
-			public _0024(DynamicPropertyLoader self_)
-			{
-				_0024self__00241527 = self_;
-			}
-
-			public override bool MoveNext()
-			{
-				int result;
-				switch (_state)
-				{
-				default:
-					_0024download_00241518 = new WWW(_0024self__00241527.getPropertyURL());
-					if (GameData.LOG)
-					{
-						Debug.Log("Getting dynamic properties: " + _0024self__00241527.getPropertyURL());
-					}
-					_0024self__00241527.Invoke("handleTimeout", 30f);
-					result = Yield(2, _0024download_00241518) ? 1 : 0;
-					break;
-				case 2:
-					_0024self__00241527.CancelInvoke();
-					if (!string.IsNullOrEmpty(_0024download_00241518.error))
-					{
-						MonoBehaviour.print("Error downloading dynamic properties: " + _0024download_00241518.error);
-					}
-					else
-					{
-						_0024j_00241519 = new JSONObject(_0024download_00241518.text);
-						MonoBehaviour.print("got jsonobject with " + _0024j_00241519.keys.Count + " keys");
-						_0024_0024iterator_0024364_00241526 = UnityRuntimeServices.GetEnumerator(_0024j_00241519.keys);
-						while (_0024_0024iterator_0024364_00241526.MoveNext())
-						{
-							_0024key_00241520 = _0024_0024iterator_0024364_00241526.Current;
-							_0024skey_00241521 = _0024key_00241520 as string;
-							UnityRuntimeServices.Update(_0024_0024iterator_0024364_00241526, _0024key_00241520);
-							_0024obj_00241522 = _0024j_00241519.GetField(_0024key_00241520 as string);
-							UnityRuntimeServices.Update(_0024_0024iterator_0024364_00241526, _0024key_00241520);
-							if (_0024obj_00241522 == null)
-							{
-								continue;
-							}
-							MonoBehaviour.print("PROPERTY KEY: " + _0024skey_00241521);
-							_0024_0024switch_0024218_00241523 = _0024obj_00241522.type;
-							if (_0024_0024switch_0024218_00241523 == JSONObject.Type.STRING)
-							{
-								if (_0024obj_00241522.str.Length != 0)
-								{
-									PlayerPrefs.SetString(_0024skey_00241521, _0024obj_00241522.str);
-									continue;
-								}
-								PlayerPrefs.DeleteKey(_0024skey_00241521);
-								MonoBehaviour.print("DELETING KEY: " + _0024skey_00241521);
-							}
-							else if (_0024_0024switch_0024218_00241523 == JSONObject.Type.NUMBER)
-							{
-								if (_0024self__00241527.isInteger(_0024obj_00241522.n))
-								{
-									_0024vi_00241524 = (int)_0024obj_00241522.n;
-									if (_0024vi_00241524 != 0)
-									{
-										PlayerPrefs.SetInt(_0024skey_00241521, (int)_0024obj_00241522.n);
-									}
-									else
-									{
-										PlayerPrefs.DeleteKey(_0024skey_00241521);
-										MonoBehaviour.print("DELETING KEY: " + _0024skey_00241521);
-									}
-									MonoBehaviour.print("updating key " + _0024skey_00241521 + " for integer " + _0024vi_00241524);
-								}
-								else
-								{
-									_0024vf_00241525 = (float)_0024obj_00241522.n;
-									if (_0024vf_00241525 != 0f)
-									{
-										PlayerPrefs.SetFloat(_0024skey_00241521, (float)_0024obj_00241522.n);
-									}
-									else
-									{
-										PlayerPrefs.DeleteKey(_0024skey_00241521);
-										MonoBehaviour.print("DELETING KEY: " + _0024skey_00241521);
-									}
-									MonoBehaviour.print("updating key " + _0024skey_00241521 + " for float " + _0024vf_00241525);
-								}
-							}
-							else if (_0024_0024switch_0024218_00241523 == JSONObject.Type.BOOL)
-							{
-								if (_0024obj_00241522.b)
-								{
-									PlayerPrefs.SetInt(_0024skey_00241521, 1);
-								}
-								else
-								{
-									PlayerPrefs.SetInt(_0024skey_00241521, 0);
-								}
-							}
-						}
-					}
-					YieldDefault(1);
-					goto case 1;
-				case 1:
-					result = 0;
-					break;
-				}
-				return (byte)result != 0;
-			}
-		}
-
-		internal DynamicPropertyLoader _0024self__00241528;
-
-		public _0024loadProperties_00241517(DynamicPropertyLoader self_)
-		{
-			_0024self__00241528 = self_;
-		}
-
-		public override IEnumerator<WWW> GetEnumerator()
-		{
-			return new _0024(_0024self__00241528);
-		}
-	}
-
 	public string propertyURL;
 
 	private WWW timeoutRequest;
@@ -170,7 +19,78 @@ public class DynamicPropertyLoader : MonoBehaviour
 
 	public virtual IEnumerator loadProperties()
 	{
-		return new _0024loadProperties_00241517(this).GetEnumerator();
+		WWW download = new WWW(getPropertyURL());
+		if (GameData.LOG)
+		{
+			Debug.Log("Getting dynamic properties: " + getPropertyURL());
+		}
+		Invoke("handleTimeout", 30f);
+		yield return download;
+		CancelInvoke();
+		if (!string.IsNullOrEmpty(download.error))
+		{
+			print("Error downloading dynamic properties: " + download.error);
+			yield break;
+		}
+		JSONObject j = new JSONObject(download.text);
+		print("got jsonobject with " + j.keys.Count + " keys");
+		foreach (object key in j.keys)
+		{
+			string skey = key as string;
+			JSONObject obj = j.GetField(skey);
+			if (obj == null)
+			{
+				continue;
+			}
+			print("PROPERTY KEY: " + skey);
+			switch (obj.type)
+			{
+			case JSONObject.Type.STRING:
+				if (obj.str.Length != 0)
+				{
+					PlayerPrefs.SetString(skey, obj.str);
+				}
+				else
+				{
+					PlayerPrefs.DeleteKey(skey);
+					print("DELETING KEY: " + skey);
+				}
+				break;
+			case JSONObject.Type.NUMBER:
+				if (isInteger(obj.n))
+				{
+					int vi = (int)obj.n;
+					if (vi != 0)
+					{
+						PlayerPrefs.SetInt(skey, (int)obj.n);
+					}
+					else
+					{
+						PlayerPrefs.DeleteKey(skey);
+						print("DELETING KEY: " + skey);
+					}
+					print("updating key " + skey + " for integer " + vi);
+				}
+				else
+				{
+					float vf = (float)obj.n;
+					if (vf != 0f)
+					{
+						PlayerPrefs.SetFloat(skey, (float)obj.n);
+					}
+					else
+					{
+						PlayerPrefs.DeleteKey(skey);
+						print("DELETING KEY: " + skey);
+					}
+					print("updating key " + skey + " for float " + vf);
+				}
+				break;
+			case JSONObject.Type.BOOL:
+				PlayerPrefs.SetInt(skey, obj.b ? 1 : 0);
+				break;
+			}
+		}
 	}
 
 	private bool isInteger(double d)
@@ -187,7 +107,7 @@ public class DynamicPropertyLoader : MonoBehaviour
 
 	public virtual void handleTimeout()
 	{
-		if (!RuntimeServices.EqualityOperator(timeoutRequest, null))
+		if (timeoutRequest != null)
 		{
 			timeoutRequest.Dispose();
 		}

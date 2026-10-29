@@ -1,78 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Boo.Lang;
-using Boo.Lang.Runtime;
 using UnityEngine;
 
 public class CopyProtection : MonoBehaviour
 {
-	[Serializable]
-	internal sealed class _0024doNetworkCheck_00241488 : GenericGenerator<WWW>
-	{
-		[Serializable]
-		internal sealed class _0024 : GenericGeneratorEnumerator<WWW>, IEnumerator
-		{
-			internal WWW _0024download_00241489;
-
-			internal CopyProtection _0024self__00241490;
-
-			public _0024(CopyProtection self_)
-			{
-				_0024self__00241490 = self_;
-			}
-
-			public override bool MoveNext()
-			{
-				int result;
-				switch (_state)
-				{
-				default:
-					_0024download_00241489 = new WWW(_0024self__00241490.checkURL);
-					if (GameData.LOG)
-					{
-						Debug.Log("Network check from: " + _0024self__00241490.checkURL);
-					}
-					_0024self__00241490.Invoke("handleTimeout", 30f);
-					result = Yield(2, _0024download_00241489) ? 1 : 0;
-					break;
-				case 2:
-					_0024self__00241490.CancelInvoke();
-					if (!string.IsNullOrEmpty(_0024download_00241489.error))
-					{
-						Debug.LogError("Error when doing network check: " + _0024download_00241489.error);
-					}
-					else if (_0024download_00241489.text.Contains("ok"))
-					{
-						MonoBehaviour.print("NETWORK CHECK OK");
-					}
-					else
-					{
-						_0024self__00241490.failCheck();
-					}
-					YieldDefault(1);
-					goto case 1;
-				case 1:
-					result = 0;
-					break;
-				}
-				return (byte)result != 0;
-			}
-		}
-
-		internal CopyProtection _0024self__00241491;
-
-		public _0024doNetworkCheck_00241488(CopyProtection self_)
-		{
-			_0024self__00241491 = self_;
-		}
-
-		public override IEnumerator<WWW> GetEnumerator()
-		{
-			return new _0024(_0024self__00241491);
-		}
-	}
-
 	public string checkURL;
 
 	public bool networkCheck;
@@ -115,7 +46,26 @@ public class CopyProtection : MonoBehaviour
 
 	public virtual IEnumerator doNetworkCheck()
 	{
-		return new _0024doNetworkCheck_00241488(this).GetEnumerator();
+		WWW download = new WWW(checkURL);
+		if (GameData.LOG)
+		{
+			Debug.Log("Network check from: " + checkURL);
+		}
+		Invoke("handleTimeout", 30f);
+		yield return download;
+		CancelInvoke();
+		if (!string.IsNullOrEmpty(download.error))
+		{
+			Debug.LogError("Error when doing network check: " + download.error);
+		}
+		else if (download.text.Contains("ok"))
+		{
+			print("NETWORK CHECK OK");
+		}
+		else
+		{
+			failCheck();
+		}
 	}
 
 	public virtual void setTimeoutHandler(WWW request)
@@ -125,7 +75,7 @@ public class CopyProtection : MonoBehaviour
 
 	public virtual void handleTimeout()
 	{
-		if (!RuntimeServices.EqualityOperator(timeoutRequest, null))
+		if (timeoutRequest != null)
 		{
 			timeoutRequest.Dispose();
 			failCheck();

@@ -80,58 +80,28 @@ public class LevelPack
 
 	public virtual bool hasLevel(string name)
 	{
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(levelList);
-		int result;
-		while (true)
+		foreach (LevelInfo levelInfo in levelList)
 		{
-			if (enumerator.MoveNext())
+			if (levelInfo.fileName == name)
 			{
-				object obj = enumerator.Current;
-				if (!(obj is LevelInfo))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(LevelInfo));
-				}
-				LevelInfo levelInfo = (LevelInfo)obj;
-				if (levelInfo.fileName == name)
-				{
-					result = 1;
-					break;
-				}
-				continue;
+				return true;
 			}
-			result = 0;
-			break;
 		}
-		return (byte)result != 0;
+		return false;
 	}
 
 	public virtual int getLevelIndex(string name)
 	{
 		int num = 0;
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(levelList);
-		int result;
-		while (true)
+		foreach (LevelInfo levelInfo in levelList)
 		{
-			if (enumerator.MoveNext())
+			if (levelInfo.fileName == name)
 			{
-				object obj = enumerator.Current;
-				if (!(obj is LevelInfo))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(LevelInfo));
-				}
-				LevelInfo levelInfo = (LevelInfo)obj;
-				if (levelInfo.fileName == name)
-				{
-					result = num;
-					break;
-				}
-				num++;
-				continue;
+				return num;
 			}
-			result = -1;
-			break;
+			num++;
 		}
-		return result;
+		return -1;
 	}
 
 	public virtual LevelInfo[] getLevelList()
@@ -269,27 +239,19 @@ public class LevelPack
 			refreshPacks();
 		}
 		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(levelPacks);
-		object result;
-		while (true)
+		while (enumerator.MoveNext())
 		{
-			if (enumerator.MoveNext())
+			object obj = enumerator.Current;
+			if (!(obj is LevelPack))
 			{
-				object obj = enumerator.Current;
-				if (!(obj is LevelPack))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(LevelPack));
-				}
-				LevelPack levelPack = (LevelPack)obj;
-				if (levelPack.fileName == name)
-				{
-					result = levelPack;
-					break;
-				}
-				continue;
+				obj = RuntimeServices.Coerce(obj, typeof(LevelPack));
 			}
-			result = null;
-			break;
+			LevelPack levelPack = (LevelPack)obj;
+			if (levelPack.fileName == name)
+			{
+				return levelPack;
+			}
 		}
-		return (LevelPack)result;
+		return null;
 	}
 }

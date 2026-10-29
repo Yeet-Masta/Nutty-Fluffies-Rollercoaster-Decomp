@@ -252,7 +252,7 @@ public class BaseMenuManager : MonoBehaviour
 		{
 			if (GameData.LOG)
 			{
-				MonoBehaviour.print("Playing music: " + music.name);
+				print("Playing music: " + music.name);
 			}
 			musicSource.clip = music;
 			musicSource.loop = loop;
@@ -332,7 +332,7 @@ public class BaseMenuManager : MonoBehaviour
 	{
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("onPurchaseFailed callback");
+			print("onPurchaseFailed callback");
 		}
 		showMessage(TextData.IAP_TITLE_PURCHASE_FAIL, TextData.IAP_TEXT_PURCHASE_FAIL, null);
 	}
@@ -341,7 +341,7 @@ public class BaseMenuManager : MonoBehaviour
 	{
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("onPurchaseCanceled callback");
+			print("onPurchaseCanceled callback");
 		}
 	}
 
@@ -400,7 +400,7 @@ public class BaseMenuManager : MonoBehaviour
 
 	public virtual void onVersionReceived(string versionString)
 	{
-		MonoBehaviour.print("COMPARING VERSIONS " + versionString + "  AND " + GameData.VERSION_STRING);
+		print("COMPARING VERSIONS " + versionString + "  AND " + GameData.VERSION_STRING);
 		if (versionString.CompareTo(GameData.VERSION_STRING) > 0)
 		{
 			messageBox.activate(TextData.UPDATE_TITLE, TextData.UPDATE_TEXT, coinsAndHeartsImage, true, false, gameObject, "onGetNewVersion");

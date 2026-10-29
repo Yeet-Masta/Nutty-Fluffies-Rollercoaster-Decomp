@@ -33,7 +33,7 @@ public class BackgroundShade : MonoBehaviour
 			array[num++] = num2 + 2;
 			if (num2 + 3 >= columns * 4)
 			{
-				MonoBehaviour.print("ILLEGAL INDEX");
+				print("ILLEGAL INDEX");
 			}
 		}
 		graphicMesh.triangles = array;

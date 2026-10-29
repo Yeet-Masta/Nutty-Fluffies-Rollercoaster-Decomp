@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 [Serializable]
 public class ObjectListData
@@ -64,30 +61,15 @@ public class ObjectListData
 	public virtual int getPackIndexForPackName(string packName)
 	{
 		int num = 0;
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(packList);
-		int result;
-		while (true)
+		foreach (ObjectPackData objectPackData in packList)
 		{
-			if (enumerator.MoveNext())
+			if (objectPackData.name == packName)
 			{
-				object obj = enumerator.Current;
-				if (!(obj is ObjectPackData))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(ObjectPackData));
-				}
-				ObjectPackData objectPackData = (ObjectPackData)obj;
-				if (objectPackData.name == packName)
-				{
-					result = num;
-					break;
-				}
-				num++;
-				continue;
+				return num;
 			}
-			result = -1;
-			break;
+			num++;
 		}
-		return result;
+		return -1;
 	}
 
 	public virtual int getPackIndexForObjectID(int id)
@@ -102,29 +84,14 @@ public class ObjectListData
 
 	public virtual ObjectPackData getPackForSplineTexture(string texture)
 	{
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(packList);
-		object result;
-		while (true)
+		foreach (ObjectPackData objectPackData in packList)
 		{
-			if (enumerator.MoveNext())
+			if (objectPackData.getSplineTextures().Contains(texture))
 			{
-				object obj = enumerator.Current;
-				if (!(obj is ObjectPackData))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(ObjectPackData));
-				}
-				ObjectPackData objectPackData = (ObjectPackData)obj;
-				if (objectPackData.getSplineTextures().Contains(texture))
-				{
-					result = objectPackData;
-					break;
-				}
-				continue;
+				return objectPackData;
 			}
-			result = null;
-			break;
 		}
-		return (ObjectPackData)result;
+		return null;
 	}
 
 	public virtual int getNumObjects(int catIndex, int sceneryMode)
@@ -258,58 +225,34 @@ public class ObjectListData
 		int num2 = 0;
 		ObjectData[] array = objects;
 		int length = array.Length;
-		object result;
-		while (true)
+		while (num2 < length)
 		{
-			if (num2 < length)
+			if (array[num2].matchesSceneryType(sceneryMode))
 			{
-				if (array[num2].matchesSceneryType(sceneryMode))
+				if (num == objIndexInPack)
 				{
-					if (num == objIndexInPack)
-					{
-						result = array[num2];
-						break;
-					}
-					num++;
+					return array[num2];
 				}
-				num2++;
-				continue;
+				num++;
 			}
-			result = null;
-			break;
+			num2++;
 		}
-		return (ObjectData)result;
+		return null;
 	}
 
 	public virtual ObjectData getIndObject(int globalIndex)
 	{
 		int num = 0;
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(packList);
-		object result;
-		while (true)
+		foreach (ObjectPackData objectPackData in packList)
 		{
-			if (enumerator.MoveNext())
+			int numObjects = objectPackData.getNumObjects(3);
+			if (globalIndex >= num && globalIndex < num + numObjects)
 			{
-				object obj = enumerator.Current;
-				if (!(obj is ObjectPackData))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(ObjectPackData));
-				}
-				ObjectPackData objectPackData = (ObjectPackData)obj;
-				int numObjects = objectPackData.getNumObjects(3);
-				UnityRuntimeServices.Update(enumerator, objectPackData);
-				if (globalIndex >= num && globalIndex < num + numObjects)
-				{
-					result = objectPackData.getObjectByIndex(globalIndex - num);
-					break;
-				}
-				num += numObjects;
-				continue;
+				return objectPackData.getObjectByIndex(globalIndex - num);
 			}
-			result = null;
-			break;
+			num += numObjects;
 		}
-		return (ObjectData)result;
+		return null;
 	}
 
 	public virtual ObjectData getObject(int id)

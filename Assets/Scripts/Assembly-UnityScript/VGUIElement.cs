@@ -48,23 +48,15 @@ public class VGUIElement : MonoBehaviour
 		int num = 0;
 		Component[] array = componentsInChildren;
 		int length = array.Length;
-		object result;
-		while (true)
+		while (num < length)
 		{
-			if (num < length)
+			if (array[num].name == name)
 			{
-				if (array[num].name == name)
-				{
-					result = array[num] as VGUIElement;
-					break;
-				}
-				num++;
-				continue;
+				return array[num] as VGUIElement;
 			}
-			result = null;
-			break;
+			num++;
 		}
-		return (VGUIElement)result;
+		return null;
 	}
 
 	public static bool isBlockingButtonPressed()

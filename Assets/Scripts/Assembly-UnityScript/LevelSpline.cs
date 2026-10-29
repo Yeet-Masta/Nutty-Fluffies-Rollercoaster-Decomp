@@ -395,25 +395,17 @@ public class LevelSpline : LevelEntity
 	{
 		float num = vertices[0].x;
 		int num2 = 1;
-		int result;
-		while (true)
+		while (num2 < vertices.Count)
 		{
-			if (num2 < vertices.Count)
+			float x = vertices[num2].x;
+			if (!(x >= num))
 			{
-				float x = vertices[num2].x;
-				if (!(x >= num))
-				{
-					result = 1;
-					break;
-				}
-				num = x;
-				num2++;
-				continue;
+				return true;
 			}
-			result = 0;
-			break;
+			num = x;
+			num2++;
 		}
-		return (byte)result != 0;
+		return false;
 	}
 
 	private float getAngleDiff(float a2, float a1)

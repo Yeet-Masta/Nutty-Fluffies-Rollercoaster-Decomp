@@ -23,24 +23,16 @@ public class LevelTrigger : LevelEntity, Parametrizable
 		int num2 = 0;
 		string[] tRIGGER_SCRIPT_NAMES = LevelTriggerData.TRIGGER_SCRIPT_NAMES;
 		int length = tRIGGER_SCRIPT_NAMES.Length;
-		object result;
-		while (true)
+		while (num2 < length)
 		{
-			if (num2 < length)
+			if (tRIGGER_SCRIPT_NAMES[num2] == GetType().Name)
 			{
-				if (tRIGGER_SCRIPT_NAMES[num2] == GetType().Name)
-				{
-					result = LevelTriggerData.TRIGGER_SCRIPT_PARAMS[num];
-					break;
-				}
-				num++;
-				num2++;
-				continue;
+				return LevelTriggerData.TRIGGER_SCRIPT_PARAMS[num];
 			}
-			result = null;
-			break;
+			num++;
+			num2++;
 		}
-		return (ParamList)result;
+		return null;
 	}
 
 	public virtual void prepare()

@@ -82,11 +82,11 @@ public class ButtonPressAnimator : VGUIAnimator
 			target.localScale = localScale2;
 			if (target != origScaleSource)
 			{
-				MonoBehaviour.print("RESTORING ORIG SCALE TO OBJECT " + target.name + " WHICH WAS ORIGINALLY STORED FROM " + origScaleSource.name + ", STOREPOINT: " + origScaleStorePoint);
+				print("RESTORING ORIG SCALE TO OBJECT " + target.name + " WHICH WAS ORIGINALLY STORED FROM " + origScaleSource.name + ", STOREPOINT: " + origScaleStorePoint);
 			}
 			else if (origScaleSource == null)
 			{
-				MonoBehaviour.print("TARGET WAS SETTED FROM OUTSIDE: " + target.name);
+				print("TARGET WAS SETTED FROM OUTSIDE: " + target.name);
 			}
 		}
 	}

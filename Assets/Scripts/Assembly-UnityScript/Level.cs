@@ -108,23 +108,15 @@ public class Level : MonoBehaviour
 		int num2 = 0;
 		LevelLayer[] array = getLayers();
 		int length = array.Length;
-		object result;
-		while (true)
+		while (num2 < length)
 		{
-			if (num2 < length)
+			if (array[num2].layer == num)
 			{
-				if (array[num2].layer == num)
-				{
-					result = array[num2];
-					break;
-				}
-				num2++;
-				continue;
+				return array[num2];
 			}
-			result = null;
-			break;
+			num2++;
 		}
-		return (LevelLayer)result;
+		return null;
 	}
 
 	public virtual LevelEntity findEntity(int uniqueID, GameObject customRoot)
@@ -133,25 +125,17 @@ public class Level : MonoBehaviour
 		int num = 0;
 		Component[] array = componentsInChildren;
 		int length = array.Length;
-		object result;
-		while (true)
+		while (num < length)
 		{
-			if (num < length)
+			LevelEntity levelEntity = array[num] as LevelEntity;
+			if (levelEntity.referenceId == uniqueID)
 			{
-				LevelEntity levelEntity = array[num] as LevelEntity;
-				if (levelEntity.referenceId == uniqueID)
-				{
-					result = levelEntity;
-					break;
-				}
-				num++;
-				continue;
+				return levelEntity;
 			}
-			Debug.Log("Did not find entity for ID " + uniqueID);
-			result = null;
-			break;
+			num++;
 		}
-		return (LevelEntity)result;
+		Debug.Log("Did not find entity for ID " + uniqueID);
+		return null;
 	}
 
 	public virtual LevelEntity findEntity(int uniqueID)

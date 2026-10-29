@@ -157,7 +157,7 @@ public class MenuManager : BaseMenuManager
 	{
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("Application quitting");
+			print("Application quitting");
 		}
 		menuSwitcher.activeMenu.deactivate();
 	}
@@ -281,7 +281,7 @@ public class MenuManager : BaseMenuManager
 		base.onProductListReceived();
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("PRODUDTS RECEIVED");
+			print("PRODUDTS RECEIVED");
 		}
 		(coinStoreMenu as CoinStoreMenu).onPurchasePricesReceived();
 	}

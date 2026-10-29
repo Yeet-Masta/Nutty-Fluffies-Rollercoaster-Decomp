@@ -13,7 +13,7 @@ public class LevelCoin : MonoBehaviour
 	{
 		if (handler.canTrigger(other))
 		{
-			MonoBehaviour.print("COIN TRIGGERED BY " + other.gameObject.name);
+			print("COIN TRIGGERED BY " + other.gameObject.name);
 			Cart component = other.gameObject.GetComponent<Cart>();
 			if (component != null && component.animal != null)
 			{

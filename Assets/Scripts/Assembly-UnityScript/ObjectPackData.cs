@@ -69,23 +69,15 @@ public class ObjectPackData
 	public virtual int getObjectIndexByID(int id)
 	{
 		int num = 0;
-		int result;
-		while (true)
+		while (num < objectList.Count)
 		{
-			if (num < objectList.Count)
+			if (objectList[num].id == id)
 			{
-				if (objectList[num].id == id)
-				{
-					result = num;
-					break;
-				}
-				num++;
-				continue;
+				return num;
 			}
-			result = -1;
-			break;
+			num++;
 		}
-		return result;
+		return -1;
 	}
 
 	public virtual List<string> getSplineTextures()

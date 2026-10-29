@@ -114,32 +114,16 @@ public class FileManager
 	public virtual string locateTexture(string name, TextureManager.TextureType type)
 	{
 		string text = null;
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(objectPackPaths);
-		string result;
-		while (true)
+		foreach (string text2 in objectPackPaths)
 		{
-			if (enumerator.MoveNext())
+			text = text2 + "/textures/" + CommonData.getDevicePath() + "/" + TextureManager.texturePathForType(type) + "/" + name;
+			if (loadWWWFile(text) != null)
 			{
-				object obj = enumerator.Current;
-				if (!(obj is string))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(string));
-				}
-				string text2 = (string)obj;
-				text = text2 + "/textures/" + CommonData.getDevicePath() + "/" + TextureManager.texturePathForType(type) + "/" + name;
-				UnityRuntimeServices.Update(enumerator, text2);
-				if (loadWWWFile(text) != null)
-				{
-					result = text;
-					break;
-				}
-				continue;
+				return text;
 			}
-			Debug.LogWarning("Did not find texture (" + TextureManager.texturePathForType(type) + ") '" + name + "'!");
-			result = string.Empty;
-			break;
 		}
-		return result;
+		Debug.LogWarning("Did not find texture (" + TextureManager.texturePathForType(type) + ") '" + name + "'!");
+		return string.Empty;
 	}
 
 	public virtual string locateObjectPack(string name)

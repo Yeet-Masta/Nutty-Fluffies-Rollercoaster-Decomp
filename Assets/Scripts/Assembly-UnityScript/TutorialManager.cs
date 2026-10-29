@@ -118,7 +118,7 @@ public class TutorialManager : MonoBehaviour
 						gameObject.active = true;
 						if (GameData.LOG)
 						{
-							MonoBehaviour.print("DISPLAYING TUTORIAL : " + key);
+							print("DISPLAYING TUTORIAL : " + key);
 						}
 					}
 					else
@@ -167,7 +167,7 @@ public class TutorialManager : MonoBehaviour
 		}
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("TUTORIAL - onContinue");
+			print("TUTORIAL - onContinue");
 		}
 		if (currentPage != null)
 		{

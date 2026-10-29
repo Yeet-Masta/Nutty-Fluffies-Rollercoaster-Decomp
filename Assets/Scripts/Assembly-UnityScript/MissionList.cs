@@ -66,23 +66,15 @@ public class MissionList : VGUIList
 	private bool needsAnimation()
 	{
 		int num = animatedRow;
-		int result;
-		while (true)
+		while (num < listedMissions.Count - 1)
 		{
-			if (num < listedMissions.Count - 1)
+			num++;
+			if (listedMissions[num].testFlag(1))
 			{
-				num++;
-				if (listedMissions[num].testFlag(1))
-				{
-					result = 1;
-					break;
-				}
-				continue;
+				return true;
 			}
-			result = 0;
-			break;
 		}
-		return (byte)result != 0;
+		return false;
 	}
 
 	private bool animateNextCompleted()

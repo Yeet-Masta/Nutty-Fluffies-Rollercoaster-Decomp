@@ -38,85 +38,76 @@ public class LevelLoaderBinary
 		LevelData levelData = new LevelData();
 		byte b = 0;
 		ObjectPackData objectPackData = null;
-		object result;
-		while (true)
+		while (b != 10)
 		{
-			if (b != 10)
+			b = sr.ReadByte();
+			byte b2 = b;
+			if (b2 == 13)
 			{
-				b = sr.ReadByte();
-				byte b2 = b;
-				if (b2 == 13)
+				int num = sr.ReadByte();
+				if (num < CURRENT_LEVEL_VERSION)
 				{
-					int num = sr.ReadByte();
-					if (num < CURRENT_LEVEL_VERSION)
-					{
-						Debug.LogWarning("Too old track format!");
-						result = null;
-						break;
-					}
+					Debug.LogWarning("Too old track format!");
+					return null;
 				}
-				else if (b2 == 0)
-				{
-					levelData.startPoint.x = sr.ReadSingle();
-					levelData.startPoint.y = sr.ReadSingle();
-				}
-				else if (b2 == 1)
-				{
-					levelData.topLeftLimit.x = sr.ReadSingle();
-					levelData.bottomRightLimit.x = sr.ReadSingle();
-					levelData.topLeftLimit.y = sr.ReadSingle();
-					levelData.bottomRightLimit.y = sr.ReadSingle();
-				}
-				else if (b2 == 2)
-				{
-					levelData.oldLeaderboardDoNotUse = sr.ReadString();
-				}
-				else if (b2 == 3)
-				{
-					levelData.theme = ThemeLoader.getInstance().loadTheme(sr.ReadString());
-					if (levelData.theme == null)
-					{
-						result = null;
-						break;
-					}
-				}
-				else if (b2 == 4)
-				{
-					int num2 = sr.ReadByte();
-					for (int i = 0; i < num2; i++)
-					{
-						string text = sr.ReadString();
-						ObjectListLoader.getInstance().loadObjectList(objects, text);
-						objectPackData = objects.getPackForName(text);
-						levelData.usedObjectPacks.Add(objectPackData);
-					}
-				}
-				else if (b2 == 5)
-				{
-					levelData.customSettings.loadBinary(sr);
-				}
-				else if (b2 == 6)
-				{
-					loadLayers(sr, levelData.layerData, objects);
-				}
-				continue;
 			}
-			foreach (string text2 in levelData.theme.settings.allowedObjectPacks)
+			else if (b2 == 0)
 			{
-				if (objects.getPackForName(text2) == null)
+				levelData.startPoint.x = sr.ReadSingle();
+				levelData.startPoint.y = sr.ReadSingle();
+			}
+			else if (b2 == 1)
+			{
+				levelData.topLeftLimit.x = sr.ReadSingle();
+				levelData.bottomRightLimit.x = sr.ReadSingle();
+				levelData.topLeftLimit.y = sr.ReadSingle();
+				levelData.bottomRightLimit.y = sr.ReadSingle();
+			}
+			else if (b2 == 2)
+			{
+				levelData.oldLeaderboardDoNotUse = sr.ReadString();
+			}
+			else if (b2 == 3)
+			{
+				levelData.theme = ThemeLoader.getInstance().loadTheme(sr.ReadString());
+				if (levelData.theme == null)
 				{
-					ObjectListLoader.getInstance().loadObjectList(objects, text2);
+					return null;
 				}
-				objectPackData = objects.getPackForName(text2);
-				if (!levelData.usedObjectPacks.Contains(objectPackData))
+			}
+			else if (b2 == 4)
+			{
+				int num2 = sr.ReadByte();
+				for (int i = 0; i < num2; i++)
 				{
+					string text = sr.ReadString();
+					ObjectListLoader.getInstance().loadObjectList(objects, text);
+					objectPackData = objects.getPackForName(text);
 					levelData.usedObjectPacks.Add(objectPackData);
 				}
 			}
-			result = levelData;
-			break;
+			else if (b2 == 5)
+			{
+				levelData.customSettings.loadBinary(sr);
+			}
+			else if (b2 == 6)
+			{
+				loadLayers(sr, levelData.layerData, objects);
+			}
 		}
-		return (LevelData)result;
+		foreach (string text2 in levelData.theme.settings.allowedObjectPacks)
+		{
+			if (objects.getPackForName(text2) == null)
+			{
+				ObjectListLoader.getInstance().loadObjectList(objects, text2);
+			}
+			objectPackData = objects.getPackForName(text2);
+			if (!levelData.usedObjectPacks.Contains(objectPackData))
+			{
+				levelData.usedObjectPacks.Add(objectPackData);
+			}
+		}
+		return levelData;
 	}
 
 	public virtual LevelData load(string packName, string trackName, ObjectListData objects)

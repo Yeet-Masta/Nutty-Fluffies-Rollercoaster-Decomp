@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
 	{
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("Application quitting");
+			print("Application quitting");
 		}
 	}
 
@@ -133,12 +133,12 @@ public class GameManager : MonoBehaviour
 		float realtimeSinceStartup = Time.realtimeSinceStartup;
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("ZLEVEL COMPLETE AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
+			print("ZLEVEL COMPLETE AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
 		}
 		TutorialManager.getInstance().Awake();
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("TUTORIAL COMPLETE AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
+			print("TUTORIAL COMPLETE AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
 		}
 		GameData.VehicleData vehicleData = null;
 		vehicleData = CommonData.IN_EDITOR_MODE ? GameData.VehicleData.createTestTrain(specialCartType) : GameData.TRAIN_DATA;
@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
 		trainType = vehicleData.trainType;
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("VEHICLE AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
+			print("VEHICLE AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
 		}
 		cameraRef.cameraTarget = vehicle.getFirstCart().transform;
 		cameraRef.adjustForTrainLength(vehicle.getCartCount());
@@ -157,20 +157,20 @@ public class GameManager : MonoBehaviour
 		sm.playGameMusic(level.themeSettings.musicNames);
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("AFTER MUSIC AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
+			print("AFTER MUSIC AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
 		}
 		setGameState(1);
 		collectedScore = 0;
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("AFTER STATES AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
+			print("AFTER STATES AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
 		}
 		gameUI.showSpecialActive(specialCartType, 1);
 		Time.timeScale = 1f;
 		stat.startLevel();
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("START LEVEL COMPLETE AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
+			print("START LEVEL COMPLETE AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
 		}
 		controller.reset();
 		if (!GameData.SHOW_FPS)
@@ -179,7 +179,7 @@ public class GameManager : MonoBehaviour
 		}
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("ALL COMPLETE AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
+			print("ALL COMPLETE AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
 		}
 		frameCounter = 0;
 		fading = true;
@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
 		float realtimeSinceStartup = Time.realtimeSinceStartup;
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("STARTING TO LOAD LEVEL AT " + Time.realtimeSinceStartup);
+			print("STARTING TO LOAD LEVEL AT " + Time.realtimeSinceStartup);
 		}
 		LevelData levelData = null;
 		if (CommonData.IN_EDITOR_MODE)
@@ -218,7 +218,7 @@ public class GameManager : MonoBehaviour
 		LevelFactory.getInstance().createAutoResetTrigger(level, levelData);
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("LOAD COMPLETE AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
+			print("LOAD COMPLETE AT " + Time.realtimeSinceStartup + " = (" + (Time.realtimeSinceStartup - realtimeSinceStartup) + ")");
 		}
 		ZLevel.getInstance().create(level);
 		startPoint = levelData.startPoint;

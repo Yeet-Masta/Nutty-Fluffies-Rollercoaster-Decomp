@@ -68,26 +68,18 @@ public class StoreBaseMenu : BaseMenu
 		int num = 0;
 		StoreItem[] array = items;
 		int length = array.Length;
-		object result;
-		while (true)
+		while (num < length)
 		{
-			if (num < length)
+			if (array[num].itemKey == key)
 			{
-				if (array[num].itemKey == key)
-				{
-					result = array[num];
-					break;
-				}
-				num++;
-				continue;
+				return array[num];
 			}
-			if (GameData.LOG)
-			{
-				Debug.Log("StoreBaseMenu: ITEM " + key + " WAS NULL");
-			}
-			result = null;
-			break;
+			num++;
 		}
-		return (StoreItem)result;
+		if (GameData.LOG)
+		{
+			Debug.Log("StoreBaseMenu: ITEM " + key + " WAS NULL");
+		}
+		return null;
 	}
 }

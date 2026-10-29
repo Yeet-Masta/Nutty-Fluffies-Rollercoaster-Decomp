@@ -212,7 +212,7 @@ public class GameMenuManager : BaseMenuManager
 		base.onProductListReceived();
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("PRODUDTS RECEIVED");
+			print("PRODUDTS RECEIVED");
 		}
 		(coinStoreMenu as CoinStoreMenu).onPurchasePricesReceived();
 	}

@@ -106,25 +106,17 @@ public class LevelTriggerData : LevelEntityData
 		int num2 = 0;
 		string[] tRIGGER_SCRIPT_NAMES = TRIGGER_SCRIPT_NAMES;
 		int length = tRIGGER_SCRIPT_NAMES.Length;
-		int result;
-		while (true)
+		while (num2 < length)
 		{
-			if (num2 < length)
+			if (tRIGGER_SCRIPT_NAMES[num2] == trigger.GetType().Name)
 			{
-				if (tRIGGER_SCRIPT_NAMES[num2] == trigger.GetType().Name)
-				{
-					result = num;
-					break;
-				}
-				num++;
-				num2++;
-				continue;
+				return num;
 			}
-			Debug.LogError("NO SCRIPT EXIST: " + trigger.GetType().Name);
-			result = -1;
-			break;
+			num++;
+			num2++;
 		}
-		return result;
+		Debug.LogError("NO SCRIPT EXIST: " + trigger.GetType().Name);
+		return -1;
 	}
 
 	public virtual void setAction(string script, string param)

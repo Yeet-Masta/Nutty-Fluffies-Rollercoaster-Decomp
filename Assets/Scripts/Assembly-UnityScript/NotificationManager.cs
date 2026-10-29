@@ -118,22 +118,14 @@ public class NotificationManager : MonoBehaviour
 	private float getRevenue(int days)
 	{
 		int num = GameData.NOTIFICATION_DAYS.Length - 1;
-		float result;
-		while (true)
+		while (num >= 0)
 		{
-			if (num >= 0)
+			if (days >= GameData.NOTIFICATION_DAYS[num])
 			{
-				if (days >= GameData.NOTIFICATION_DAYS[num])
-				{
-					result = Mathf.Min((num + 1) * GameData.TRACK_REVENUE, GameData.TRACK_REVENUE_MAX);
-					break;
-				}
-				num--;
-				continue;
+				return Mathf.Min((num + 1) * GameData.TRACK_REVENUE, GameData.TRACK_REVENUE_MAX);
 			}
-			result = 0f;
-			break;
+			num--;
 		}
-		return result;
+		return 0f;
 	}
 }

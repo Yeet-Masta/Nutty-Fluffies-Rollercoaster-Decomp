@@ -36,7 +36,7 @@ public class CopyProtection : MonoBehaviour
 		int year = DateTime.Now.Year;
 		if (GameData.LOG)
 		{
-			MonoBehaviour.print("DATE IS: " + day + "/" + month + "/" + year);
+			print("DATE IS: " + day + "/" + month + "/" + year);
 		}
 		if (year > expireYear || month > expireMonth)
 		{

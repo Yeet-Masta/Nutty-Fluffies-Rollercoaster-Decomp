@@ -148,7 +148,7 @@ public class CoinStoreMenu : StoreBaseMenu
 		{
 			if (GameData.LOG)
 			{
-				MonoBehaviour.print("purchasing item " + iapItems[index].productID);
+				print("purchasing item " + iapItems[index].productID);
 			}
 			StoreManager.getInstance().purchaseProduct(iapItems[index].productID);
 		}
@@ -243,14 +243,14 @@ public class CoinStoreMenu : StoreBaseMenu
 				GameData.INAPP_PURCHASE_TOKENS[productId] = result;
 				if (GameData.LOG)
 				{
-					MonoBehaviour.print("FOUND TOKEN VALUE: " + result);
+					print("FOUND TOKEN VALUE: " + result);
 				}
 			}
 			else if (array2[i] == "SALE")
 			{
 				if (GameData.LOG)
 				{
-					MonoBehaviour.print("FOUND SALE");
+					print("FOUND SALE");
 				}
 				sale = true;
 			}

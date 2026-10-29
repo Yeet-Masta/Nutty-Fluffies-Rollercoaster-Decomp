@@ -49,7 +49,7 @@ public class VGUIText : VGUIElement
 	{
 		if (textMesh == null)
 		{
-			MonoBehaviour.print("MESH NOT FOUND");
+			print("MESH NOT FOUND");
 			preAwakeSetText = to;
 			return;
 		}

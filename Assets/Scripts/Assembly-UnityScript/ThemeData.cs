@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Boo.Lang.Runtime;
-using UnityScript.Lang;
 
 [Serializable]
 public class ThemeData
@@ -15,28 +12,13 @@ public class ThemeData
 
 	public virtual LevelLayerData getLayerForNumber(int num)
 	{
-		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(layerList);
-		object result;
-		while (true)
+		foreach (LevelLayerData levelLayerData in layerList)
 		{
-			if (enumerator.MoveNext())
+			if (levelLayerData.layer == num)
 			{
-				object obj = enumerator.Current;
-				if (!(obj is LevelLayerData))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(LevelLayerData));
-				}
-				LevelLayerData levelLayerData = (LevelLayerData)obj;
-				if (levelLayerData.layer == num)
-				{
-					result = levelLayerData;
-					break;
-				}
-				continue;
+				return levelLayerData;
 			}
-			result = null;
-			break;
 		}
-		return (LevelLayerData)result;
+		return null;
 	}
 }

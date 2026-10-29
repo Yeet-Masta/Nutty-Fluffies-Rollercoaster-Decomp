@@ -7,23 +7,15 @@ public class StringTools
 	{
 		int num = 0;
 		int length = arr.Length;
-		int result;
-		while (true)
+		while (num < length)
 		{
-			if (num < length)
+			if (str.IndexOf(arr[num]) != -1)
 			{
-				if (str.IndexOf(arr[num]) != -1)
-				{
-					result = 1;
-					break;
-				}
-				num++;
-				continue;
+				return true;
 			}
-			result = 0;
-			break;
+			num++;
 		}
-		return (byte)result != 0;
+		return false;
 	}
 
 	public static UnityScript.Lang.Array getLines(string str, int lineLength)

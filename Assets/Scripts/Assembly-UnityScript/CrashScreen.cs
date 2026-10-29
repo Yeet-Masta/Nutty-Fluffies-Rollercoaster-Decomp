@@ -26,7 +26,7 @@ public class CrashScreen : VGUIElement
 
 	public virtual void onRestart()
 	{
-		MonoBehaviour.print("RESTARTING");
+		print("RESTARTING");
 		GameManager.getInstance().restart();
 	}
 

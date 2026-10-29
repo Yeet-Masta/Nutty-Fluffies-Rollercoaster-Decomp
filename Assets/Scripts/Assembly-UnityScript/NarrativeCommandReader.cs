@@ -9,28 +9,20 @@ public class NarrativeCommandReader
 	public static NarrativeCommand findCommand(UnityScript.Lang.Array commands, string name)
 	{
 		IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(commands);
-		object result;
-		while (true)
+		while (enumerator.MoveNext())
 		{
-			if (enumerator.MoveNext())
+			object obj = enumerator.Current;
+			if (!(obj is NarrativeCommand))
 			{
-				object obj = enumerator.Current;
-				if (!(obj is NarrativeCommand))
-				{
-					obj = RuntimeServices.Coerce(obj, typeof(NarrativeCommand));
-				}
-				NarrativeCommand narrativeCommand = (NarrativeCommand)obj;
-				if (narrativeCommand.name == name)
-				{
-					result = narrativeCommand;
-					break;
-				}
-				continue;
+				obj = RuntimeServices.Coerce(obj, typeof(NarrativeCommand));
 			}
-			result = null;
-			break;
+			NarrativeCommand narrativeCommand = (NarrativeCommand)obj;
+			if (narrativeCommand.name == name)
+			{
+				return narrativeCommand;
+			}
 		}
-		return (NarrativeCommand)result;
+		return null;
 	}
 
 	public static UnityScript.Lang.Array findAllCommands(string from)

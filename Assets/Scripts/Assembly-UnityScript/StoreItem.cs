@@ -56,26 +56,18 @@ public class StoreItem
 		int num = 0;
 		DefaultPrice[] dEFAULT_PRICES = DEFAULT_PRICES;
 		int length = dEFAULT_PRICES.Length;
-		int result;
-		while (true)
+		while (num < length)
 		{
-			if (num < length)
+			if (dEFAULT_PRICES[num].id == id)
 			{
-				if (dEFAULT_PRICES[num].id == id)
-				{
-					result = dEFAULT_PRICES[num].price;
-					break;
-				}
-				num++;
-				continue;
+				return dEFAULT_PRICES[num].price;
 			}
-			if (GameData.LOG)
-			{
-				Debug.Log(id + " NOT FOUND");
-			}
-			result = -1;
-			break;
+			num++;
 		}
-		return result;
+		if (GameData.LOG)
+		{
+			Debug.Log(id + " NOT FOUND");
+		}
+		return -1;
 	}
 }

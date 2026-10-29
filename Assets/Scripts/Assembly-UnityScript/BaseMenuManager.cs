@@ -405,9 +405,6 @@ public class BaseMenuManager : MonoBehaviour
 
 	public virtual void onGetNewVersion(bool dismissed)
 	{
-		if (dismissed)
-		{
-		}
 	}
 
 	public virtual void OnApplicationPause(bool pause)

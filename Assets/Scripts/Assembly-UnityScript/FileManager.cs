@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 [Serializable]
 public class FileManager
@@ -128,72 +125,36 @@ public class FileManager
 
 	public virtual string locateObjectPack(string name)
 	{
-		string result;
 		if (string.IsNullOrEmpty(name))
 		{
 			return string.Empty;
 		}
-		else
+		foreach (string path in objectPackPaths)
 		{
-			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(objectPackPaths);
-			while (true)
+			if (getFileName(path) == name)
 			{
-				if (enumerator.MoveNext())
-				{
-					object obj = enumerator.Current;
-					if (!(obj is string))
-					{
-						obj = RuntimeServices.Coerce(obj, typeof(string));
-					}
-					string path = (string)obj;
-					if (getFileName(path) == name)
-					{
-						result = path;
-						break;
-					}
-					continue;
-				}
-				Debug.LogWarning("Did not find object pack '" + name + "'!");
-				result = string.Empty;
-				break;
+				return path;
 			}
 		}
-		return result;
+		Debug.LogWarning("Did not find object pack '" + name + "'!");
+		return string.Empty;
 	}
 
 	public virtual string locateLevelPack(string name)
 	{
-		string result;
 		if (string.IsNullOrEmpty(name))
 		{
 			return string.Empty;
 		}
-		else
+		foreach (string path in levelPackPaths)
 		{
-			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(levelPackPaths);
-			while (true)
+			if (getFileName(path) == name)
 			{
-				if (enumerator.MoveNext())
-				{
-					object obj = enumerator.Current;
-					if (!(obj is string))
-					{
-						obj = RuntimeServices.Coerce(obj, typeof(string));
-					}
-					string path = (string)obj;
-					if (getFileName(path) == name)
-					{
-						result = path;
-						break;
-					}
-					continue;
-				}
-				Debug.LogWarning("Did not find level pack '" + name + "'!");
-				result = string.Empty;
-				break;
+				return path;
 			}
 		}
-		return result;
+		Debug.LogWarning("Did not find level pack '" + name + "'!");
+		return string.Empty;
 	}
 
 	public virtual string locateLevel(string pack, string name)
@@ -211,37 +172,19 @@ public class FileManager
 
 	public virtual string locateTheme(string name)
 	{
-		string result;
 		if (string.IsNullOrEmpty(name))
 		{
 			return string.Empty;
 		}
-		else
+		foreach (string path in themePackPaths)
 		{
-			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(themePackPaths);
-			while (true)
+			if (getFileName(path) == name)
 			{
-				if (enumerator.MoveNext())
-				{
-					object obj = enumerator.Current;
-					if (!(obj is string))
-					{
-						obj = RuntimeServices.Coerce(obj, typeof(string));
-					}
-					string path = (string)obj;
-					if (getFileName(path) == name)
-					{
-						result = path + "/theme.json";
-						break;
-					}
-					continue;
-				}
-				Debug.LogWarning("Did not find theme '" + name + "'!");
-				result = string.Empty;
-				break;
+				return path + "/theme.json";
 			}
 		}
-		return result;
+		Debug.LogWarning("Did not find theme '" + name + "'!");
+		return string.Empty;
 	}
 
 	public virtual string loadFileText(string path)

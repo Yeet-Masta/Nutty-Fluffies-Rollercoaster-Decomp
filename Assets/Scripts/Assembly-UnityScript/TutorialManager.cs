@@ -67,7 +67,6 @@ public class TutorialManager : MonoBehaviour
 
 	public virtual bool showPage(string key, bool always)
 	{
-		int result;
 		if (!SHOW_TUTORIAL)
 		{
 			return false;
@@ -80,54 +79,45 @@ public class TutorialManager : MonoBehaviour
 			{
 				isTutorialEnable = true;
 				currentPage = null;
-				int index = 0;
-				TutorialPage[] array = tutorialPages;
-				int length = array.Length;
-				while (true)
+				foreach (TutorialPage page in tutorialPages)
 				{
-					if (index < length)
+					if (page.key == key)
 					{
-						if (array[index].key != key)
+						currentPage = page;
+						if (page.shown)
 						{
-							index++;
-							continue;
+							return false;
 						}
-						currentPage = array[index];
-						if (array[index].shown)
-						{
-							result = 0;
-							break;
-						}
+						break;
 					}
-					if (currentPage != null)
-					{
-						currentPage.gameObject.SetActiveRecursively(true);
-						gameObject.active = true;
-						background.SetActiveRecursively(true);
-						continueButton.activate();
-						currentPage.activate();
-						if (currentPage.pauseGame)
-						{
-							Time.timeScale = 0f;
-						}
-						animator.reverse = false;
-						animator.activate();
-						bganimator.reverse = false;
-						bganimator.activate();
-						animating = true;
-						gameObject.active = true;
-						if (GameData.LOG)
-						{
-							print("DISPLAYING TUTORIAL : " + key);
-						}
-					}
-					else
-					{
-						Debug.LogError("UNKONWN TUTORIAL: " + key);
-					}
-					result = 1;
-					break;
 				}
+				if (currentPage != null)
+				{
+					currentPage.gameObject.SetActiveRecursively(true);
+					gameObject.active = true;
+					background.SetActiveRecursively(true);
+					continueButton.activate();
+					currentPage.activate();
+					if (currentPage.pauseGame)
+					{
+						Time.timeScale = 0f;
+					}
+					animator.reverse = false;
+					animator.activate();
+					bganimator.reverse = false;
+					bganimator.activate();
+					animating = true;
+					gameObject.active = true;
+					if (GameData.LOG)
+					{
+						print("DISPLAYING TUTORIAL : " + key);
+					}
+				}
+				else
+				{
+					Debug.LogError("UNKONWN TUTORIAL: " + key);
+				}
+				return true;
 			}
 			else
 			{
@@ -135,7 +125,6 @@ public class TutorialManager : MonoBehaviour
 				return false;
 			}
 		}
-		return (byte)result != 0;
 	}
 
 	public virtual bool hasAllPagesShown(string key)

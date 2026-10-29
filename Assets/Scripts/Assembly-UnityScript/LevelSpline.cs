@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using Boo.Lang.Runtime;
 using UnityEngine;
-using UnityScript.Lang;
 
 public class LevelSpline : LevelEntity
 {
@@ -75,7 +72,6 @@ public class LevelSpline : LevelEntity
 
 	public override bool equalsTo(LevelEntity other)
 	{
-		int result;
 		if (!base.equalsTo(other))
 		{
 			return false;
@@ -87,29 +83,15 @@ public class LevelSpline : LevelEntity
 		else
 		{
 			int index = 0;
-			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(spline.splineData);
-			while (true)
+			foreach (CSpline2.CSplinePoint cSplinePoint in spline.splineData)
 			{
-				if (enumerator.MoveNext())
+				if (cSplinePoint.position != (other as LevelSpline).spline.splineData[index++].position)
 				{
-					object obj = enumerator.Current;
-					if (!(obj is CSpline2.CSplinePoint))
-					{
-						obj = RuntimeServices.Coerce(obj, typeof(CSpline2.CSplinePoint));
-					}
-					CSpline2.CSplinePoint cSplinePoint = (CSpline2.CSplinePoint)obj;
-					if (cSplinePoint.position != (other as LevelSpline).spline.splineData[index++].position)
-					{
-						result = 0;
-						break;
-					}
-					continue;
+					return false;
 				}
-				result = 1;
-				break;
 			}
+			return true;
 		}
-		return (byte)result != 0;
 	}
 
 	public virtual void updatePoint(int index)

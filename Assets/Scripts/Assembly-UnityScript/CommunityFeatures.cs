@@ -114,43 +114,25 @@ public class CommunityFeatures : MonoBehaviour
 	public virtual bool isEnabled(int feature)
 	{
 		int useCount = PlayerPrefs.GetInt(FEATURE_KEY[feature] + "_COUNTER", 0);
-		int allowed;
 		if (!isAvailable(feature))
 		{
-			allowed = 0;
+			return false;
 		}
-		else if (feature == 4 && !GameData.canMakeInAppPurchases())
+		if (feature == 4 && !GameData.canMakeInAppPurchases())
 		{
-			allowed = 0;
+			return false;
 		}
-		else
-		{
-			allowed = useCount < featureUseLimits[feature] ? 1 : 0;
-			if (allowed == 0)
-			{
-				allowed = featureUseLimits[feature] == 0 ? 1 : 0;
-			}
-		}
-		return (byte)allowed != 0;
+		return useCount < featureUseLimits[feature] || featureUseLimits[feature] == 0;
 	}
 
 	private bool isEnabledForOffer(int feature)
 	{
-		int allowed;
 		if (!isEnabled(feature))
 		{
-			allowed = 0;
+			return false;
 		}
-		else
-		{
-			int showCount = PlayerPrefs.GetInt(FEATURE_KEY[feature] + "_SHOW", 0);
-			allowed = showCount < featureShowLimits[feature] ? 1 : 0;
-			if (allowed == 0)
-			{
-				allowed = featureShowLimits[feature] == 0 ? 1 : 0;
-			}
-		}
-		return (byte)allowed != 0;
+		int showCount = PlayerPrefs.GetInt(FEATURE_KEY[feature] + "_SHOW", 0);
+		return showCount < featureShowLimits[feature] || featureShowLimits[feature] == 0;
 	}
 
 	public virtual bool isAvailable(int feature)

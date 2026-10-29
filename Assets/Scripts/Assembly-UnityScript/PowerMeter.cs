@@ -189,7 +189,6 @@ public class PowerMeter : MonoBehaviour
 
 	private bool showResultEntry(string name, int value)
 	{
-		int result;
 		if (resultEntryCounter < resultEntries.Length)
 		{
 			float score = value;
@@ -202,32 +201,23 @@ public class PowerMeter : MonoBehaviour
 			{
 				Debug.Log("FACTOR OF " + name + " = " + factor);
 			}
-			int entryIndex = 0;
-			while (true)
+			for (int entryIndex = 0; entryIndex < resultEntryCounter; entryIndex++)
 			{
-				if (entryIndex < resultEntryCounter)
+				if (!(Mathf.Abs(resultEntries[entryIndex].scale - factor) >= 0.1f))
 				{
-					if (!(Mathf.Abs(resultEntries[entryIndex].scale - factor) >= 0.1f))
-					{
-						result = 0;
-						break;
-					}
-					entryIndex++;
-					continue;
+					return false;
 				}
-				resultEntries[resultEntryCounter].playerName.setText(name);
-				resultEntries[resultEntryCounter].scale = factor;
-				resultEntries[resultEntryCounter].transform.localPosition = resultScaleStart + resultScaleDelta * factor;
-				resultEntryCounter++;
-				result = 1;
-				break;
 			}
+			resultEntries[resultEntryCounter].playerName.setText(name);
+			resultEntries[resultEntryCounter].scale = factor;
+			resultEntries[resultEntryCounter].transform.localPosition = resultScaleStart + resultScaleDelta * factor;
+			resultEntryCounter++;
+			return true;
 		}
 		else
 		{
 			return false;
 		}
-		return (byte)result != 0;
 	}
 
 	public virtual void startResultEntryAnimations()

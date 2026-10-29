@@ -150,29 +150,17 @@ public class CSpline2
 	private static bool lineLineIntersection(Vector2 aStart, Vector2 aEnd, Vector2 bStart, Vector2 bEnd)
 	{
 		float denominator = (aEnd.y - aStart.y) * (bEnd.x - bStart.x) - (aEnd.x - aStart.x) * (bEnd.y - bStart.y);
-		int intersects;
 		if (!(denominator <= -1E-05f) && !(denominator >= 1E-05f))
 		{
-			intersects = 0;
+			return false;
 		}
-		else
+		float ua = ((aEnd.x - aStart.x) * (bStart.y - aStart.y) - (aEnd.y - aStart.y) * (bStart.x - aStart.x)) / denominator;
+		if (ua < 0f || !(ua <= 1f))
 		{
-			float ua = ((aEnd.x - aStart.x) * (bStart.y - aStart.y) - (aEnd.y - aStart.y) * (bStart.x - aStart.x)) / denominator;
-			if (ua < 0f || !(ua <= 1f))
-			{
-				intersects = 0;
-			}
-			else
-			{
-				float ub = ((bEnd.x - bStart.x) * (bStart.y - aStart.y) - (bEnd.y - bStart.y) * (bStart.x - aStart.x)) / denominator;
-				intersects = ub < 0f ? 0 : 1;
-				if (intersects != 0)
-				{
-					intersects = ub > 1f ? 0 : 1;
-				}
-			}
+			return false;
 		}
-		return (byte)intersects != 0;
+		float ub = ((bEnd.x - bStart.x) * (bStart.y - aStart.y) - (bEnd.y - bStart.y) * (bStart.x - aStart.x)) / denominator;
+		return !(ub < 0f) && !(ub > 1f);
 	}
 
 	public virtual bool testSelfIntersection()

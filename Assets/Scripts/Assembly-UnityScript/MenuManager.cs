@@ -295,9 +295,6 @@ public class MenuManager : BaseMenuManager
 			loadingMenu.gameObject.SetActiveRecursively(false);
 			loadingMenu.deactivate();
 		}
-		if (frameCounter != 5)
-		{
-		}
 	}
 
 	public virtual void OnGUI()

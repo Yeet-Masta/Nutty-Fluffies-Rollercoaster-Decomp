@@ -11,37 +11,24 @@ public class LinearCurve
 	{
 		Vector2 from = default(Vector2);
 		Vector2 to = default(Vector2);
-		float result;
 		if (!(controlPoints[0].x <= t))
 		{
 			return controlPoints[0].y;
 		}
-		else
+		for (int index = 0; index < controlPoints.Count; index++)
 		{
-			int index = 0;
-			while (true)
+			if (!(controlPoints[index].x >= t))
 			{
-				if (index < controlPoints.Count)
+				from = controlPoints[index];
+				if (index >= controlPoints.Count - 1)
 				{
-					if (!(controlPoints[index].x >= t))
-					{
-						from = controlPoints[index];
-						if (index >= controlPoints.Count - 1)
-						{
-							result = from.y;
-							break;
-						}
-						to = controlPoints[index + 1];
-					}
-					index++;
-					continue;
+					return from.y;
 				}
-				Vector2 delta = to - from;
-				result = from.y + delta.y * (t - from.x) / delta.x;
-				break;
+				to = controlPoints[index + 1];
 			}
 		}
-		return result;
+		Vector2 delta = to - from;
+		return from.y + delta.y * (t - from.x) / delta.x;
 	}
 
 	public virtual void addControlPoint(Vector2 pt)

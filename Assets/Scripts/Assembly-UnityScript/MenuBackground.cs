@@ -18,9 +18,8 @@ public class MenuBackground : MonoBehaviour
 		{
 			if (!(balloons[i].position.y <= 1f))
 			{
-				float y = -1f;
 				Vector3 position = balloons[i].position;
-				position.y = y;
+				position.y = -1f;
 				balloons[i].position = position;
 				float x = -0.5f + UnityEngine.Random.value;
 				Vector3 position2 = balloons[i].position;

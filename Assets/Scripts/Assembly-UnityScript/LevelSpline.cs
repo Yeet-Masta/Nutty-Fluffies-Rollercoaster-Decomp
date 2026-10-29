@@ -427,19 +427,11 @@ public class LevelSpline : LevelEntity
 		bool flag;
 		if (!(aMin <= aMax))
 		{
-			flag = !(a > aMax);
-			if (!flag)
-			{
-				flag = !(a < aMin);
-			}
+			flag = !(a > aMax) || !(a < aMin);
 		}
 		else
 		{
-			flag = !(a < aMin);
-			if (flag)
-			{
-				flag = !(a > aMax);
-			}
+			flag = !(a < aMin) && !(a > aMax);
 		}
 		return flag;
 	}

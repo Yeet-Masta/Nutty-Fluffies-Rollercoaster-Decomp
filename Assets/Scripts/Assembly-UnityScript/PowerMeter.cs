@@ -74,9 +74,8 @@ public class PowerMeter : MonoBehaviour
 		bar.GetComponent<Renderer>().enabled = false;
 		lightBarLevel = 0;
 		bellFrame = 0;
-		float y = 0.01f;
 		Vector3 localScale = bar.localScale;
-		localScale.y = y;
+		localScale.y = 0.01f;
 		bar.localScale = localScale;
 		foreach (VGUIImagesTK2D leftBarLight in leftBarLights)
 		{

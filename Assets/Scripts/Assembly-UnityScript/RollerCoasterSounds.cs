@@ -315,11 +315,7 @@ public class RollerCoasterSounds : SoundManager
 
 	public virtual bool isPlayingResultMusic()
 	{
-		bool flag = musicSource.clip == resultMusic;
-		if (!flag)
-		{
-			flag = musicSource.clip == resultMusicEpic;
-		}
+		bool flag = musicSource.clip == resultMusic || musicSource.clip == resultMusicEpic;
 		return flag;
 	}
 

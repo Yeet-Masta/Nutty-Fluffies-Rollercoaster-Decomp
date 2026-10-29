@@ -71,23 +71,7 @@ public class ObjectData
 	public virtual bool matchesSceneryType(int sceneryType)
 	{
 		bool flag = checkFlag(FLAG_IS_SCENERY);
-		bool flag2 = sceneryType == 3;
-		if (!flag2)
-		{
-			flag2 = sceneryType == 2;
-			if (flag2)
-			{
-				flag2 = flag;
-			}
-		}
-		if (!flag2)
-		{
-			flag2 = sceneryType == 1;
-			if (flag2)
-			{
-				flag2 = !flag;
-			}
-		}
+		bool flag2 = sceneryType == 3 || (sceneryType == 2 && flag) || (sceneryType == 1 && !flag);
 		return flag2;
 	}
 

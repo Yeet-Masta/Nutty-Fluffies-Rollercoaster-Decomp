@@ -21,13 +21,11 @@ public class PauseMenu : VGUIElement
 		pauseButton.gameObject.SetActiveRecursively(false);
 		// No Tapjoy offer wall: hide its button and close the gap.
 		transform.Find("TapjoyButton").gameObject.SetActive(false);
-		float x = -0.1536663f;
 		Vector3 position = transform.Find("MissionButton").gameObject.transform.position;
-		position.x = x;
+		position.x = -0.1536663f;
 		transform.Find("MissionButton").gameObject.transform.position = position;
-		float x2 = 0.1463337f;
 		Vector3 position2 = transform.Find("HelpButton").gameObject.transform.position;
-		position2.x = x2;
+		position2.x = 0.1463337f;
 		transform.Find("HelpButton").gameObject.transform.position = position2;
 	}
 

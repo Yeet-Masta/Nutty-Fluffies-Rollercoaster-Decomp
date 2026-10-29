@@ -125,13 +125,11 @@ public class LevelObjectFactory
 		else if (triggerData.triggerType == 1)
 		{
 			BoxCollider boxCollider = gameObject.gameObject.AddComponent<BoxCollider>();
-			int num = 1;
 			Vector3 size = boxCollider.size;
-			size.x = num;
+			size.x = 1;
 			boxCollider.size = size;
-			int num3 = 1;
 			Vector3 size2 = boxCollider.size;
-			size2.y = num3;
+			size2.y = 1;
 			boxCollider.size = size2;
 			boxCollider.isTrigger = true;
 		}
@@ -208,9 +206,8 @@ public class LevelObjectFactory
 					else
 					{
 						levelObject.name += " (KEEP ME)";
-						int num = 0;
 						Vector3 localPosition = levelObject.transform.localPosition;
-						localPosition.z = num;
+						localPosition.z = 0;
 						levelObject.transform.localPosition = localPosition;
 						float x = Mathf.Abs(levelObject.transform.localScale.x);
 						Vector3 localScale = levelObject.transform.localScale;
@@ -304,15 +301,7 @@ public class LevelObjectFactory
 		bool flag = (objectData.flags & ObjectData.FLAG_IS_OPTIMIZED) != 0;
 		bool flag2 = (data.flags & 0x20000) != 0;
 		float num = 0f;
-		bool flag3 = (data.flags & 0x10000) != 0;
-		if (!flag3)
-		{
-			flag3 = (data.flags & 0x800000) != 0;
-		}
-		if (!flag3)
-		{
-			flag3 = CommonData.EDITOR_ACTIVE;
-		}
+		bool flag3 = (data.flags & 0x10000) != 0 || (data.flags & 0x800000) != 0 || CommonData.EDITOR_ACTIVE;
 		bool flag4 = flag3;
 		foreach (ObjectPartData objectPartData in objectData.getParts())
 		{
@@ -672,9 +661,8 @@ public class LevelObjectFactory
 		Vector3 localPosition2 = gameObject.transform.localPosition;
 		localPosition2.y = y2;
 		gameObject.transform.localPosition = localPosition2;
-		float z = 0f;
 		Vector3 localPosition3 = gameObject.transform.localPosition;
-		localPosition3.z = z;
+		localPosition3.z = 0f;
 		gameObject.transform.localPosition = localPosition3;
 		LevelTrigger levelTrigger = gameObject.AddComponentByName(trig.script) as LevelTrigger;
 		levelTrigger.sourceParams = trig.@params;
@@ -737,9 +725,8 @@ public class LevelObjectFactory
 			Vector3 localPosition2 = gameObject.transform.localPosition;
 			localPosition2.y = y2;
 			gameObject.transform.localPosition = localPosition2;
-			float z2 = 0f;
 			Vector3 localPosition3 = gameObject.transform.localPosition;
-			localPosition3.z = z2;
+			localPosition3.z = 0f;
 			gameObject.transform.localPosition = localPosition3;
 		}
 		else
@@ -787,9 +774,8 @@ public class LevelObjectFactory
 			Vector3 localPosition2 = gameObject.transform.localPosition;
 			localPosition2.y = y;
 			gameObject.transform.localPosition = localPosition2;
-			float z2 = 0f;
 			Vector3 localPosition3 = gameObject.transform.localPosition;
-			localPosition3.z = z2;
+			localPosition3.z = 0f;
 			gameObject.transform.localPosition = localPosition3;
 		}
 		else
@@ -845,9 +831,8 @@ public class LevelObjectFactory
 			Vector3 localPosition2 = gameObject.transform.localPosition;
 			localPosition2.y = y;
 			gameObject.transform.localPosition = localPosition2;
-			float z2 = 0f;
 			Vector3 localPosition3 = gameObject.transform.localPosition;
-			localPosition3.z = z2;
+			localPosition3.z = 0f;
 			gameObject.transform.localPosition = localPosition3;
 		}
 		else
@@ -915,9 +900,8 @@ public class LevelObjectFactory
 			Vector3 localScale2 = transform2.localScale;
 			localScale2.y = y;
 			transform2.localScale = localScale2;
-			float z = 1f;
 			Vector3 localScale3 = transform2.localScale;
-			localScale3.z = z;
+			localScale3.z = 1f;
 			transform2.localScale = localScale3;
 		}
 		Component[] components = @object.GetComponents(typeof(Collider));

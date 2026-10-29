@@ -139,19 +139,7 @@ public class WebNewsManager : MonoBehaviour
 
 	private bool isWhiteSpace(char c)
 	{
-		bool flag = c == " "[0];
-		if (!flag)
-		{
-			flag = c == "\r"[0];
-		}
-		if (!flag)
-		{
-			flag = c == "\n"[0];
-		}
-		if (!flag)
-		{
-			flag = c == "\t"[0];
-		}
+		bool flag = c == " "[0] || c == "\r"[0] || c == "\n"[0] || c == "\t"[0];
 		return flag;
 	}
 

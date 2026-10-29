@@ -223,13 +223,11 @@ public class LevelFactory
 		Vector3 size = boxCollider.size;
 		size.x = x;
 		boxCollider.size = size;
-		float y = 15f;
 		Vector3 size2 = boxCollider.size;
-		size2.y = y;
+		size2.y = 15f;
 		boxCollider.size = size2;
-		float z = 200f;
 		Vector3 size3 = boxCollider.size;
-		size3.z = z;
+		size3.z = 200f;
 		boxCollider.size = size3;
 		boxCollider.isTrigger = true;
 		gameObject.AddComponentByName(LevelTriggerData.TRIGGER_SCRIPT_NAMES[4]);

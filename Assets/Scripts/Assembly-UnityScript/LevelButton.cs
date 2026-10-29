@@ -60,24 +60,12 @@ public class LevelButton : MenuButton
 		@lock.GetComponent<Renderer>().enabled = !flag;
 		setLocked(!flag);
 		GameObject gameObject = buyGraphic;
-		bool flag4 = flag;
-		if (flag4)
-		{
-			flag4 = !flag2;
-		}
-		if (flag4)
-		{
-			flag4 = flag3;
-		}
+		bool flag4 = flag && !flag2 && flag3;
 		gameObject.SetActiveRecursively(flag4);
 		cartImage.gameObject.SetActiveRecursively(flag2);
 		int activeLevelPackIndex = GameData.getActiveLevelPackIndex();
 		GameObject gameObject2 = priceData;
-		bool flag5 = flag2;
-		if (!flag5)
-		{
-			flag5 = !flag;
-		}
+		bool flag5 = flag2 || !flag;
 		gameObject2.SetActiveRecursively(!flag5);
 		priceText.setText(string.Empty + price);
 		namePadge.SetActiveRecursively(false);
@@ -119,15 +107,7 @@ public class LevelButton : MenuButton
 		levelImage.GetComponent<Renderer>().material.mainTexture = TextureManager.getInstance().loadFileWithOutMipmap(fileName);
 		getCoins.SetActiveRecursively(false);
 		GameObject gameObject3 = needMoreCoins;
-		bool flag6 = !flag3;
-		if (flag6)
-		{
-			flag6 = flag;
-		}
-		if (flag6)
-		{
-			flag6 = !flag2;
-		}
+		bool flag6 = !flag3 && flag && !flag2;
 		gameObject3.SetActiveRecursively(flag6);
 		if (!flag2)
 		{
@@ -204,21 +184,17 @@ public class LevelButton : MenuButton
 				Vector3 localPosition = gameObject.transform.localPosition;
 				localPosition.y = y;
 				gameObject.transform.localPosition = localPosition;
-				float x = -0.18f;
 				Vector3 localPosition2 = gameObject.transform.localPosition;
-				localPosition2.x = x;
+				localPosition2.x = -0.18f;
 				gameObject.transform.localPosition = localPosition2;
-				float z = -0.5f;
 				Vector3 localPosition3 = gameObject.transform.localPosition;
-				localPosition3.z = z;
+				localPosition3.z = -0.5f;
 				gameObject.transform.localPosition = localPosition3;
-				float x2 = 0.7f;
 				Vector3 localScale = gameObject.transform.localScale;
-				localScale.x = x2;
+				localScale.x = 0.7f;
 				gameObject.transform.localScale = localScale;
-				float y2 = 0.7f;
 				Vector3 localScale2 = gameObject.transform.localScale;
-				localScale2.y = y2;
+				localScale2.y = 0.7f;
 				gameObject.transform.localScale = localScale2;
 			}
 		}

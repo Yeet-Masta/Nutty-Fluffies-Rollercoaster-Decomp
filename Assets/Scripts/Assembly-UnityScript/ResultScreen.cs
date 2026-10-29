@@ -124,11 +124,7 @@ public class ResultScreen : VGUIElement
 		RollerCoasterMissions.getInstance().checkMissions(GameData.MAX_ACTIVE_MISSIONS);
 		bool roundDidFinish = RollerCoasterStatistics.getInstance().roundDidFinish;
 		RollerCoasterSounds instance = RollerCoasterSounds.getInstance();
-		bool flag = scorePercent > 0.9f;
-		if (flag)
-		{
-			flag = roundDidFinish;
-		}
+		bool flag = scorePercent > 0.9f && roundDidFinish;
 		instance.playResultMusic(flag);
 		if (roundDidFinish)
 		{
@@ -156,15 +152,7 @@ public class ResultScreen : VGUIElement
 		}
 		if (!CommonData.IN_EDITOR_MODE)
 		{
-			bool flag2 = GameData.hasInternet();
-			if (flag2)
-			{
-				flag2 = CommunityFeatures.getInstance().isAvailable(0);
-			}
-			if (flag2)
-			{
-				flag2 = CommunityFeatures.getInstance().isAvailable(1);
-			}
+			bool flag2 = GameData.hasInternet() && CommunityFeatures.getInstance().isAvailable(0) && CommunityFeatures.getInstance().isAvailable(1);
 			bool activeRecursively = flag2;
 			twitterButton.gameObject.SetActiveRecursively(activeRecursively);
 			facebookButton.gameObject.SetActiveRecursively(activeRecursively);
@@ -608,15 +596,13 @@ public class ResultScreen : VGUIElement
 	{
 		if (!visible)
 		{
-			int num = -5;
 			Vector3 localPosition = transform.localPosition;
-			localPosition.x = num;
+			localPosition.x = -5;
 			transform.localPosition = localPosition;
 			return;
 		}
-		int num3 = 0;
 		Vector3 localPosition2 = transform.localPosition;
-		localPosition2.x = num3;
+		localPosition2.x = 0;
 		transform.localPosition = localPosition2;
 		if ((bool)BaseMenuManager.getInstance())
 		{

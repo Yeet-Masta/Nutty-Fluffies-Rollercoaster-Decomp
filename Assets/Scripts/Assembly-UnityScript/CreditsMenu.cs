@@ -73,18 +73,16 @@ public class CreditsMenu : BaseMenu
 	{
 		Texts = (tk2dTextMesh)GameObject.Find("Text").GetComponent(typeof(tk2dTextMesh));
 		Texts2 = (tk2dTextMesh)UnityEngine.Object.Instantiate(Texts, Texts.transform.position, Quaternion.identity);
-		float x = -0.23f;
 		Vector3 position = Texts2.transform.position;
-		position.x = x;
+		position.x = -0.23f;
 		Texts2.transform.position = position;
 		currentY -= 0.1f;
 		float y = currentY;
 		Vector3 position2 = Texts2.transform.position;
 		position2.y = y;
 		Texts2.transform.position = position2;
-		float z = 0f;
 		Vector3 position3 = Texts2.transform.position;
-		position3.z = z;
+		position3.z = 0f;
 		Texts2.transform.position = position3;
 		Texts2.setText(name);
 		Texts2.transform.parent = scroller.transform;
@@ -106,18 +104,16 @@ public class CreditsMenu : BaseMenu
 	{
 		Texts = (tk2dTextMesh)GameObject.Find("TextT").GetComponent(typeof(tk2dTextMesh));
 		Texts2 = (tk2dTextMesh)UnityEngine.Object.Instantiate(Texts, Texts.transform.position, Quaternion.identity);
-		float x = -0.23f;
 		Vector3 position = Texts2.transform.position;
-		position.x = x;
+		position.x = -0.23f;
 		Texts2.transform.position = position;
 		currentY -= 0.15f;
 		float y = currentY;
 		Vector3 position2 = Texts2.transform.position;
 		position2.y = y;
 		Texts2.transform.position = position2;
-		float z = 0f;
 		Vector3 position3 = Texts2.transform.position;
-		position3.z = z;
+		position3.z = 0f;
 		Texts2.transform.position = position3;
 		Texts2.setText(title);
 		Texts2.transform.parent = scroller.transform;

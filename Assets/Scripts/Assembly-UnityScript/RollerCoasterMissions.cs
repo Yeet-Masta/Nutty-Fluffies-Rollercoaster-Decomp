@@ -112,11 +112,7 @@ public class RollerCoasterMissions : MissionManager
 			}
 		}
 		bool flag2 = checkHighPriorityMissions();
-		bool flag3 = flag;
-		if (!flag3)
-		{
-			flag3 = flag2;
-		}
+		bool flag3 = flag || flag2;
 		return flag3;
 	}
 
@@ -198,31 +194,19 @@ public class RollerCoasterMissions : MissionManager
 					break;
 				case 2:
 				{
-					bool flag20 = passengerCartCount >= num;
-					if (flag20)
-					{
-						flag20 = specialCartType == 1;
-					}
+					bool flag20 = passengerCartCount >= num && specialCartType == 1;
 					flag = flag20;
 					break;
 				}
 				case 3:
 				{
-					bool flag12 = passengerCartCount >= num;
-					if (flag12)
-					{
-						flag12 = specialCartType == 0;
-					}
+					bool flag12 = passengerCartCount >= num && specialCartType == 0;
 					flag = flag12;
 					break;
 				}
 				case 4:
 				{
-					bool flag18 = passengerCartCount >= num;
-					if (flag18)
-					{
-						flag18 = specialCartType == 2;
-					}
+					bool flag18 = passengerCartCount >= num && specialCartType == 2;
 					flag = flag18;
 					break;
 				}
@@ -240,11 +224,7 @@ public class RollerCoasterMissions : MissionManager
 					break;
 				case 9:
 				{
-					bool flag4 = specialCartType == 0;
-					if (flag4)
-					{
-						flag4 = rollerCoasterStatistics.roundSpecialUseCount >= num;
-					}
+					bool flag4 = specialCartType == 0 && rollerCoasterStatistics.roundSpecialUseCount >= num;
 					flag = flag4;
 					break;
 				}
@@ -259,193 +239,97 @@ public class RollerCoasterMissions : MissionManager
 					break;
 				case 13:
 				{
-					bool flag15 = activeLevelPackIndex == 0;
-					if (flag15)
-					{
-						flag15 = passengerCartCount >= num;
-					}
+					bool flag15 = activeLevelPackIndex == 0 && passengerCartCount >= num;
 					flag = flag15;
 					break;
 				}
 				case 14:
 				{
-					bool flag14 = activeLevelPackIndex == 1;
-					if (flag14)
-					{
-						flag14 = passengerCartCount >= num;
-					}
+					bool flag14 = activeLevelPackIndex == 1 && passengerCartCount >= num;
 					flag = flag14;
 					break;
 				}
 				case 15:
 				{
-					bool flag8 = activeLevelPackIndex == 2;
-					if (flag8)
-					{
-						flag8 = passengerCartCount >= num;
-					}
+					bool flag8 = activeLevelPackIndex == 2 && passengerCartCount >= num;
 					flag = flag8;
 					break;
 				}
 				case 16:
 				{
-					bool flag9 = activeLevelPackIndex == 3;
-					if (flag9)
-					{
-						flag9 = passengerCartCount >= num;
-					}
+					bool flag9 = activeLevelPackIndex == 3 && passengerCartCount >= num;
 					flag = flag9;
 					break;
 				}
 				case 17:
 				{
-					bool flag19 = activeLevelPackIndex == 0;
-					if (flag19)
-					{
-						flag19 = passengerCartCount >= num;
-					}
-					if (flag19)
-					{
-						flag19 = isLastTrack();
-					}
+					bool flag19 = activeLevelPackIndex == 0 && passengerCartCount >= num && isLastTrack();
 					flag = flag19;
 					break;
 				}
 				case 18:
 				{
-					bool flag16 = activeLevelPackIndex == 1;
-					if (flag16)
-					{
-						flag16 = passengerCartCount >= num;
-					}
-					if (flag16)
-					{
-						flag16 = isLastTrack();
-					}
+					bool flag16 = activeLevelPackIndex == 1 && passengerCartCount >= num && isLastTrack();
 					flag = flag16;
 					break;
 				}
 				case 19:
 				{
-					bool flag11 = activeLevelPackIndex == 2;
-					if (flag11)
-					{
-						flag11 = passengerCartCount >= num;
-					}
-					if (flag11)
-					{
-						flag11 = isLastTrack();
-					}
+					bool flag11 = activeLevelPackIndex == 2 && passengerCartCount >= num && isLastTrack();
 					flag = flag11;
 					break;
 				}
 				case 20:
 				{
-					bool flag6 = activeLevelPackIndex == 3;
-					if (flag6)
-					{
-						flag6 = passengerCartCount >= num;
-					}
-					if (flag6)
-					{
-						flag6 = isLastTrack();
-					}
+					bool flag6 = activeLevelPackIndex == 3 && passengerCartCount >= num && isLastTrack();
 					flag = flag6;
 					break;
 				}
 				case 21:
 				{
-					bool flag21 = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL;
-					if (flag21)
-					{
-						flag21 = activeLevelPackIndex == 0;
-					}
-					if (flag21)
-					{
-						flag21 = GameData.SELECTED_LEVEL_INDEX + 2 == num;
-					}
+					bool flag21 = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 0 && GameData.SELECTED_LEVEL_INDEX + 2 == num;
 					flag = flag21;
 					break;
 				}
 				case 22:
 				{
-					bool flag17 = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL;
-					if (flag17)
-					{
-						flag17 = activeLevelPackIndex == 1;
-					}
-					if (flag17)
-					{
-						flag17 = GameData.SELECTED_LEVEL_INDEX + 2 == num;
-					}
+					bool flag17 = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 1 && GameData.SELECTED_LEVEL_INDEX + 2 == num;
 					flag = flag17;
 					break;
 				}
 				case 23:
 				{
-					bool flag13 = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL;
-					if (flag13)
-					{
-						flag13 = activeLevelPackIndex == 2;
-					}
-					if (flag13)
-					{
-						flag13 = GameData.SELECTED_LEVEL_INDEX + 2 == num;
-					}
+					bool flag13 = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 2 && GameData.SELECTED_LEVEL_INDEX + 2 == num;
 					flag = flag13;
 					break;
 				}
 				case 24:
 				{
-					bool flag10 = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL;
-					if (flag10)
-					{
-						flag10 = activeLevelPackIndex == 3;
-					}
-					if (flag10)
-					{
-						flag10 = GameData.SELECTED_LEVEL_INDEX + 2 == num;
-					}
+					bool flag10 = passengerCartCount >= GameData.CARTS_TO_UNLOCK_NEXT_LEVEL && activeLevelPackIndex == 3 && GameData.SELECTED_LEVEL_INDEX + 2 == num;
 					flag = flag10;
 					break;
 				}
 				case 25:
 				{
-					bool flag7 = activeLevelPackIndex == 0;
-					if (flag7)
-					{
-						flag7 = GameData.SELECTED_LEVEL_INDEX + 1 == num;
-					}
+					bool flag7 = activeLevelPackIndex == 0 && GameData.SELECTED_LEVEL_INDEX + 1 == num;
 					flag = flag7;
 					break;
 				}
 				case 26:
 				{
-					bool flag5 = activeLevelPackIndex == 1;
-					if (flag5)
-					{
-						flag5 = GameData.SELECTED_LEVEL_INDEX + 1 == num;
-					}
+					bool flag5 = activeLevelPackIndex == 1 && GameData.SELECTED_LEVEL_INDEX + 1 == num;
 					flag = flag5;
 					break;
 				}
 				case 27:
 				{
-					bool flag3 = activeLevelPackIndex == 2;
-					if (flag3)
-					{
-						flag3 = GameData.SELECTED_LEVEL_INDEX + 1 == num;
-					}
+					bool flag3 = activeLevelPackIndex == 2 && GameData.SELECTED_LEVEL_INDEX + 1 == num;
 					flag = flag3;
 					break;
 				}
 				case 28:
 				{
-					bool flag2 = activeLevelPackIndex == 3;
-					if (flag2)
-					{
-						flag2 = GameData.SELECTED_LEVEL_INDEX + 1 == num;
-					}
+					bool flag2 = activeLevelPackIndex == 3 && GameData.SELECTED_LEVEL_INDEX + 1 == num;
 					flag = flag2;
 					break;
 				}

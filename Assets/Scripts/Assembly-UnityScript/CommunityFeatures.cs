@@ -161,23 +161,7 @@ public class CommunityFeatures : MonoBehaviour
 
 	public virtual bool hasSupport()
 	{
-		bool flag = isAvailable(0);
-		if (!flag)
-		{
-			flag = isAvailable(1);
-		}
-		if (!flag)
-		{
-			flag = isAvailable(2);
-		}
-		if (!flag)
-		{
-			flag = isAvailable(3);
-		}
-		if (!flag)
-		{
-			flag = isAvailable(5);
-		}
+		bool flag = isAvailable(0) || isAvailable(1) || isAvailable(2) || isAvailable(3) || isAvailable(5);
 		return flag;
 	}
 

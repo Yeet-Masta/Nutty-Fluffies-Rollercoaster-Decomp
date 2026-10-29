@@ -76,11 +76,7 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 	public virtual void Start()
 	{
 		valueType = VGUIImageInvokerValueType.integer;
-		bool flag = !invokeOnStart;
-		if (!flag)
-		{
-			flag = startAmount == 0;
-		}
+		bool flag = !invokeOnStart || startAmount == 0;
 		bool silent = flag;
 		if (saveCurrentStepToPrefs)
 		{
@@ -226,11 +222,7 @@ public class VGUIScrollingContainer : VGUIImageInvoker
 		}
 		for (int i = 0; i < pages.Length; i++)
 		{
-			bool flag = i == currentStep;
-			if (!flag)
-			{
-				flag = i == lastStep;
-			}
+			bool flag = i == currentStep || i == lastStep;
 			bool flag2 = flag;
 			if (flag2 && !pages[i].active)
 			{

@@ -44,9 +44,8 @@ public class LevelPackMenu : BaseMenu
 			{
 				packContainer.pages[k] = createLevelPackButton(k, zero);
 				packContainer.pages[k].transform.parent = packContainer.transform;
-				float z = 0f;
 				Vector3 localPosition = packContainer.pages[k].transform.localPosition;
-				localPosition.z = z;
+				localPosition.z = 0f;
 				packContainer.pages[k].transform.localPosition = localPosition;
 				float x = zero.x;
 				Vector3 localPosition2 = packContainer.pages[k].transform.localPosition;
@@ -59,38 +58,31 @@ public class LevelPackMenu : BaseMenu
 		{
 			GameObject gameObject2 = createLevelPackButton(4, new Vector3(0.5f, -0.35f, 0f));
 			gameObject2.transform.parent = transform;
-			float x2 = 0.2695867f;
 			Vector3 localPosition3 = gameObject2.transform.localPosition;
-			localPosition3.x = x2;
+			localPosition3.x = 0.2695867f;
 			gameObject2.transform.localPosition = localPosition3;
-			float y = -0.3547182f;
 			Vector3 localPosition4 = gameObject2.transform.localPosition;
-			localPosition4.y = y;
+			localPosition4.y = -0.3547182f;
 			gameObject2.transform.localPosition = localPosition4;
-			float z2 = 0f;
 			Vector3 localPosition5 = gameObject2.transform.localPosition;
-			localPosition5.z = z2;
+			localPosition5.z = 0f;
 			gameObject2.transform.localPosition = localPosition5;
-			float x3 = 0.6669993f;
 			Vector3 localScale = gameObject2.transform.localScale;
-			localScale.x = x3;
+			localScale.x = 0.6669993f;
 			gameObject2.transform.localScale = localScale;
-			float y2 = 0.6669993f;
 			Vector3 localScale2 = gameObject2.transform.localScale;
-			localScale2.y = y2;
+			localScale2.y = 0.6669993f;
 			gameObject2.transform.localScale = localScale2;
 			LevelPackButton component = gameObject2.GetComponent<LevelPackButton>();
 			component.extraPack = true;
 			if (GameData.isFeatureUnlocked(2))
 			{
 				component.setLocked(false);
-				float x4 = -0.009937096f;
 				Vector3 localPosition6 = component.progress.transform.localPosition;
-				localPosition6.x = x4;
+				localPosition6.x = -0.009937096f;
 				component.progress.transform.localPosition = localPosition6;
-				float y3 = -0.1313739f;
 				Vector3 localPosition7 = component.progress.transform.localPosition;
-				localPosition7.y = y3;
+				localPosition7.y = -0.1313739f;
 				component.progress.transform.localPosition = localPosition7;
 				component.progress.transform.rotation = Quaternion.Euler(0f, 0f, 346f);
 				component.progress.gameObject.SetActiveRecursively(true);
@@ -98,9 +90,8 @@ public class LevelPackMenu : BaseMenu
 			else
 			{
 				component.setLocked(true);
-				float y4 = -0.1079767f;
 				Vector3 localPosition8 = component.@lock.transform.localPosition;
-				localPosition8.y = y4;
+				localPosition8.y = -0.1079767f;
 				component.@lock.transform.localPosition = localPosition8;
 			}
 			component.levelName.gameObject.SetActiveRecursively(false);

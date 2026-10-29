@@ -180,13 +180,11 @@ public class LevelMenu : StoreBaseMenu
 		{
 			packContainer.pages[i] = (GameObject)UnityEngine.Object.Instantiate(levelGrid.gameObject, zero, Quaternion.identity);
 			packContainer.pages[i].transform.parent = packContainer.transform;
-			int num3 = 0;
 			Vector3 localPosition = packContainer.pages[i].transform.localPosition;
-			localPosition.y = num3;
+			localPosition.y = 0;
 			packContainer.pages[i].transform.localPosition = localPosition;
-			float z = 0f;
 			Vector3 localPosition2 = packContainer.pages[i].transform.localPosition;
-			localPosition2.z = z;
+			localPosition2.z = 0f;
 			packContainer.pages[i].transform.localPosition = localPosition2;
 			float x = zero.x;
 			Vector3 localPosition3 = packContainer.pages[i].transform.localPosition;

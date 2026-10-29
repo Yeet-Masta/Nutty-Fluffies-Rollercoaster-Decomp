@@ -91,11 +91,7 @@ public class BaseMenuManager : MonoBehaviour
 
 	public virtual void setStoreButtonVisible(bool visible)
 	{
-		bool flag = visible;
-		if (flag)
-		{
-			flag = GameData.canMakeInAppPurchases();
-		}
+		bool flag = visible && GameData.canMakeInAppPurchases();
 		bool flag2 = flag;
 		storeButton.gameObject.SetActiveRecursively(flag2);
 		if (GameData.LOG)

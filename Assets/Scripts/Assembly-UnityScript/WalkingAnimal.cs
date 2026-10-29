@@ -75,18 +75,16 @@ public class WalkingAnimal : MonoBehaviour
 			}
 			if (!(UnityEngine.Random.value >= 0.01f))
 			{
-				float x = -1f;
 				Vector3 localScale = tr.localScale;
-				localScale.x = x;
+				localScale.x = -1f;
 				tr.localScale = localScale;
 				speed = 0f - speed;
 				localPosition.x = 0.9f;
 			}
 			else
 			{
-				float x2 = 1f;
 				Vector3 localScale2 = tr.localScale;
-				localScale2.x = x2;
+				localScale2.x = 1f;
 				tr.localScale = localScale2;
 				localPosition.x = -1.3f + UnityEngine.Random.value * 0.4f;
 			}

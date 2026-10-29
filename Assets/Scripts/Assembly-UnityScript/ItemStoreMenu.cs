@@ -227,11 +227,7 @@ public class ItemStoreMenu : StoreBaseMenu
 		for (int i = 0; i < items.Length; i++)
 		{
 			MenuButton purchaseButton = items[i].button.purchaseButton;
-			bool flag = !GameData.canBuy(items[i].price);
-			if (!flag)
-			{
-				flag = purchasedItems >= cartNum;
-			}
+			bool flag = !GameData.canBuy(items[i].price) || purchasedItems >= cartNum;
 			purchaseButton.setDimmed(flag);
 		}
 		if (storeButtonBlink != null)
@@ -246,18 +242,10 @@ public class ItemStoreMenu : StoreBaseMenu
 			}
 		}
 		MenuButton purchaseButton2 = items[5].button.purchaseButton;
-		bool flag2 = cartNum >= GameData.CART_LIMIT;
-		if (!flag2)
-		{
-			flag2 = !GameData.canBuy(items[5].price);
-		}
+		bool flag2 = cartNum >= GameData.CART_LIMIT || !GameData.canBuy(items[5].price);
 		purchaseButton2.setLocked(flag2);
 		MenuButton purchaseButton3 = items[5].button.purchaseButton;
-		bool flag3 = cartNum >= GameData.CART_LIMIT;
-		if (!flag3)
-		{
-			flag3 = !GameData.canBuy(items[5].price);
-		}
+		bool flag3 = cartNum >= GameData.CART_LIMIT || !GameData.canBuy(items[5].price);
 		purchaseButton3.setDimmed(flag3);
 		GameObject cart = trainPreview.getCart(cartNum - 1);
 		if (paperEmitterCart != null)

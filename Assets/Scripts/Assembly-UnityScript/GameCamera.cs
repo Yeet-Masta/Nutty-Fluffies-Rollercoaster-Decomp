@@ -172,9 +172,8 @@ public class GameCamera : Camera2D
 		}
 		if (cameraTarget != null && !GameManager.getInstance().isPlaying() && !vehicle.hasCrashed)
 		{
-			float num11 = 12f;
 			float num12 = 0.01f;
-			cameraRef.orthographicSize = cameraRef.orthographicSize * (1f - num12) + num11 * num12;
+			cameraRef.orthographicSize = cameraRef.orthographicSize * (1f - num12) + 12f * num12;
 			tr.position = tr.position * (1f - num12) + num12 * cameraTarget.position;
 			float y4 = tr.position.y + 0.05f;
 			Vector3 position = tr.position;

@@ -134,9 +134,8 @@ public class Animal : MonoBehaviour
 		setExpression(1, true);
 		headInitialPosition = head.localPosition;
 		startArmPosition = armTransform.localPosition;
-		int num = 90;
 		Vector3 localEulerAngles = armTransform.localEulerAngles;
-		localEulerAngles.z = num;
+		localEulerAngles.z = 90;
 		armTransform.localEulerAngles = localEulerAngles;
 		lastVelocity = rb.velocity.magnitude;
 		droppedTime = 0f;
@@ -152,17 +151,9 @@ public class Animal : MonoBehaviour
 		startBreakForce = joint.breakForce * 100f * GetComponent<Rigidbody>().mass;
 		joint.breakForce = 100000f;
 		Invoke("returnBreakForce", 4f);
-		bool flag = typeIndex == 1;
-		if (!flag)
-		{
-			flag = typeIndex == 4;
-		}
+		bool flag = typeIndex == 1 || typeIndex == 4;
 		givesExtraHeartsWhenSpeeding = flag;
-		bool flag2 = typeIndex == 2;
-		if (!flag2)
-		{
-			flag2 = typeIndex == 4;
-		}
+		bool flag2 = typeIndex == 2 || typeIndex == 4;
 		givesExtraHeartsWhenInAir = flag2;
 		givesExtraHeartsFromBumps = typeIndex == 3;
 	}
@@ -237,9 +228,8 @@ public class Animal : MonoBehaviour
 		if (sphereCollider == null)
 		{
 			sphereCollider = (SphereCollider)gameObject.AddComponent(typeof(SphereCollider));
-			float y = 1f;
 			Vector3 center = sphereCollider.center;
-			center.y = y;
+			center.y = 1f;
 			sphereCollider.center = center;
 			sphereCollider.radius = colliderSize;
 			collisionTrigger = sphereCollider;
@@ -287,21 +277,18 @@ public class Animal : MonoBehaviour
 		Vector3 localPosition = head.localPosition;
 		localPosition.y = y;
 		head.localPosition = localPosition;
-		int num2 = 180;
 		Vector3 localEulerAngles = armTransform.localEulerAngles;
-		localEulerAngles.z = num2;
+		localEulerAngles.z = 180;
 		armTransform.localEulerAngles = localEulerAngles;
 		float y2 = startArmPosition.y;
 		Vector3 localPosition2 = armTransform.localPosition;
 		localPosition2.y = y2;
 		armTransform.localPosition = localPosition2;
-		int num5 = 0;
 		Vector3 localEulerAngles2 = head.localEulerAngles;
-		localEulerAngles2.z = num5;
+		localEulerAngles2.z = 0;
 		head.localEulerAngles = localEulerAngles2;
-		int num7 = 0;
 		Vector3 localEulerAngles3 = body.localEulerAngles;
-		localEulerAngles3.z = num7;
+		localEulerAngles3.z = 0;
 		body.localEulerAngles = localEulerAngles3;
 		rb.angularDrag = 0.5f;
 		if (GameManager.getInstance().isPlaying())
@@ -311,8 +298,7 @@ public class Animal : MonoBehaviour
 			EffectManager.getInstance().emitStars(tr.position, 6);
 			if (givesExtraHeartsWhenDropped && !(Time.timeScale <= 0f))
 			{
-				int amount = 3;
-				giveSpecialHearts(amount);
+				giveSpecialHearts(3);
 			}
 		}
 		else
@@ -346,13 +332,11 @@ public class Animal : MonoBehaviour
 			UnityEngine.Object.Destroy(collisionTrigger);
 			tr.parent = cart.animalRoot;
 			tr.localPosition = Vector3.zero;
-			float z = 0f;
 			Vector3 localEulerAngles = tr.localEulerAngles;
-			localEulerAngles.z = z;
+			localEulerAngles.z = 0f;
 			tr.localEulerAngles = localEulerAngles;
-			float x = 1f;
 			Vector3 localScale = tr.localScale;
-			localScale.x = x;
+			localScale.x = 1f;
 			tr.localScale = localScale;
 			rb.freezeRotation = false;
 			rb.constraints = (RigidbodyConstraints)56;
@@ -373,9 +357,8 @@ public class Animal : MonoBehaviour
 			extraHeartsGiven += cartRef.heartValue;
 			RollerCoasterSounds.getInstance().playScreamSpecial(typeIndex);
 			setExpression(2, true);
-			int num3 = 180;
 			Vector3 localEulerAngles2 = armTransform.localEulerAngles;
-			localEulerAngles2.z = num3;
+			localEulerAngles2.z = 180;
 			armTransform.localEulerAngles = localEulerAngles2;
 			canBePickedUp = false;
 			jumpEnabled = false;
@@ -389,9 +372,8 @@ public class Animal : MonoBehaviour
 			return;
 		}
 		rb.freezeRotation = true;
-		float z = 0f;
 		Vector3 localEulerAngles = tr.localEulerAngles;
-		localEulerAngles.z = z;
+		localEulerAngles.z = 0f;
 		tr.localEulerAngles = localEulerAngles;
 		if (cartRef.animalIndex != -1)
 		{
@@ -405,17 +387,15 @@ public class Animal : MonoBehaviour
 		float num2 = 0f;
 		if (!(cartRef.tr.position.x <= head.transform.position.x))
 		{
-			float x = 1f;
 			Vector3 localScale = tr.localScale;
-			localScale.x = x;
+			localScale.x = 1f;
 			tr.localScale = localScale;
 			num2 = forwardForce;
 		}
 		else
 		{
-			float x2 = -1f;
 			Vector3 localScale2 = tr.localScale;
-			localScale2.x = x2;
+			localScale2.x = -1f;
 			tr.localScale = localScale2;
 			num2 = 0f - forwardForce;
 		}
@@ -430,9 +410,8 @@ public class Animal : MonoBehaviour
 		if (jumpEnabled)
 		{
 			raycastTrack();
-			float z = 0f;
 			Vector3 localEulerAngles = armTransform.localEulerAngles;
-			localEulerAngles.z = z;
+			localEulerAngles.z = 0f;
 			armTransform.localEulerAngles = localEulerAngles;
 			float y = startArmPosition.y;
 			Vector3 localPosition = armTransform.localPosition;

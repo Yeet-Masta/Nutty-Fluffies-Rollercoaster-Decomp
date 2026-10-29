@@ -76,25 +76,16 @@ public class ThemeLoader
 	public virtual ThemeData loadTheme(string name)
 	{
 		string text = null;
-		ThemeData themeData;
 		try
 		{
 			string path = FileManager.getInstance().locateTheme(name);
 			text = FileManager.getInstance().loadFileText(path);
 		}
-		catch (Exception rhs)
+		catch (Exception ex)
 		{
-			Debug.LogWarning("Could not open theme '" + name + "': " + rhs);
-			themeData = null;
-			goto IL_0059;
+			Debug.LogWarning("Could not open theme '" + name + "': " + ex);
+			return null;
 		}
-		ThemeData themeData2 = loadThemeFromString(text, name);
-		ThemeData result = themeData2;
-		goto IL_005b;
-		IL_005b:
-		return result;
-		IL_0059:
-		result = themeData;
-		goto IL_005b;
+		return loadThemeFromString(text, name);
 	}
 }

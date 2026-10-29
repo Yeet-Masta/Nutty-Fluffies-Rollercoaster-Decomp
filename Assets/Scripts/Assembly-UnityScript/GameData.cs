@@ -609,32 +609,17 @@ public class GameData
 
 	public static StoreKitProduct getInAppPurchaseProduct(string id)
 	{
-		StoreKitProduct storeKitProduct;
 		if (INAPP_PURCHASE_LIST != null)
 		{
-			IEnumerator enumerator = UnityRuntimeServices.GetEnumerator(INAPP_PURCHASE_LIST);
-			while (enumerator.MoveNext())
+			foreach (StoreKitProduct storeKitProduct in INAPP_PURCHASE_LIST)
 			{
-				object obj = enumerator.Current;
-				if (!(obj is StoreKitProduct))
+				if (storeKitProduct.productIdentifier == id)
 				{
-					obj = RuntimeServices.Coerce(obj, typeof(StoreKitProduct));
+					return storeKitProduct;
 				}
-				storeKitProduct = (StoreKitProduct)obj;
-				if (storeKitProduct.productIdentifier != id)
-				{
-					continue;
-				}
-				goto IL_0057;
 			}
 		}
-		object result = null;
-		goto IL_0069;
-		IL_0069:
-		return (StoreKitProduct)result;
-		IL_0057:
-		result = storeKitProduct;
-		goto IL_0069;
+		return null;
 	}
 
 	public static int getInAppPurchaseProductCount()
@@ -775,25 +760,20 @@ public class GameData
 	public static int getNextTrackPrice()
 	{
 		LevelPack levelPack = getActiveLevelPack();
-		int num = SELECTED_LEVEL_INDEX + 1;
-		int num2 = ACTIVE_LEVEL_PACK;
-		int result;
-		if (num >= levelPack.levelList.Count)
+		int levelIndex = SELECTED_LEVEL_INDEX + 1;
+		int packIndex = ACTIVE_LEVEL_PACK;
+		if (levelIndex >= levelPack.levelList.Count)
 		{
-			num = 0;
-			num2++;
-			if (num2 >= LEVEL_PACKS.Count)
+			levelIndex = 0;
+			packIndex++;
+			if (packIndex >= LEVEL_PACKS.Count)
 			{
-				result = -1;
-				goto IL_0073;
+				return -1;
 			}
-			levelPack = LEVEL_PACKS[num2];
+			levelPack = LEVEL_PACKS[packIndex];
 		}
-		LevelPack.LevelInfo levelInfo = levelPack.getLevelInfo(num);
-		result = levelInfo.testFlag(LEVEL_FLAG_BUILT) ? 0 : getTrackPrice(num2, num);
-		goto IL_0073;
-		IL_0073:
-		return result;
+		LevelPack.LevelInfo levelInfo = levelPack.getLevelInfo(levelIndex);
+		return levelInfo.testFlag(LEVEL_FLAG_BUILT) ? 0 : getTrackPrice(packIndex, levelIndex);
 	}
 
 	public static int getTrackPrice(int levelPack, int level)

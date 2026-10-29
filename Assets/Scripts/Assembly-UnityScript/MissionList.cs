@@ -87,42 +87,31 @@ public class MissionList : VGUIList
 
 	private bool animateNextCompleted()
 	{
-		int result;
 		if (animatingEntry)
 		{
-			result = 1;
+			return true;
 		}
-		else
+		if (listedMissions != null)
 		{
-			if (listedMissions != null)
+			while (animatedRow < listedMissions.Count - 1)
 			{
-				while (animatedRow < listedMissions.Count - 1)
+				animatedRow++;
+				if (listedMissions[animatedRow].testFlag(1))
 				{
-					animatedRow++;
-					if (!listedMissions[animatedRow].testFlag(1))
-					{
-						continue;
-					}
-					goto IL_0053;
+					MissionListEntry missionListEntry = entryRefs[animatedRow].GetComponent<MissionListEntry>() as MissionListEntry;
+					appearAnimator.activate(missionListEntry.completed.transform);
+					missionListEntry.completed.SetActiveRecursively(true);
+					listedMissions[animatedRow].flags = listedMissions[animatedRow].flags | 2;
+					animatingMission = listedMissions[animatedRow];
+					continueButton.SetActiveRecursively(false);
+					MissionManager.getInstance().saveMissionStatus(listedMissions[animatedRow]);
+					animatingEntry = true;
+					return true;
 				}
 			}
-			continueButton.SetActiveRecursively(true);
-			result = 0;
 		}
-		goto IL_012f;
-		IL_0053:
-		MissionListEntry missionListEntry = entryRefs[animatedRow].GetComponent<MissionListEntry>() as MissionListEntry;
-		appearAnimator.activate(missionListEntry.completed.transform);
-		missionListEntry.completed.SetActiveRecursively(true);
-		listedMissions[animatedRow].flags = listedMissions[animatedRow].flags | 2;
-		animatingMission = listedMissions[animatedRow];
-		continueButton.SetActiveRecursively(false);
-		MissionManager.getInstance().saveMissionStatus(listedMissions[animatedRow]);
-		animatingEntry = true;
-		result = 1;
-		goto IL_012f;
-		IL_012f:
-		return (byte)result != 0;
+		continueButton.SetActiveRecursively(true);
+		return false;
 	}
 
 	public override void deactivate()

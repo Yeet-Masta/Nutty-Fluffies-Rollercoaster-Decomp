@@ -177,31 +177,16 @@ public class CSpline2
 
 	public virtual bool testSelfIntersection()
 	{
-		int num = 0;
-		int result;
-		while (true)
+		for (int i = 0; i < splineData.Count - 2; i++)
 		{
-			if (num < splineData.Count - 2)
+			for (int j = i + 1; j < splineData.Count - 2; j++)
 			{
-				int num2 = num + 1;
-				while (num2 < splineData.Count - 2)
+				if (lineLineIntersection(splineData[i].position, splineData[i + 1].position, splineData[j].position, splineData[j + 1].position))
 				{
-					if (!lineLineIntersection(splineData[num].position, splineData[num + 1].position, splineData[num2].position, splineData[num2 + 1].position))
-					{
-						num2++;
-						continue;
-					}
-					goto IL_0063;
+					return true;
 				}
-				num++;
-				continue;
 			}
-			result = 0;
-			break;
-			IL_0063:
-			result = 1;
-			break;
 		}
-		return (byte)result != 0;
+		return false;
 	}
 }

@@ -183,36 +183,31 @@ public class CommunityFeatures : MonoBehaviour
 
 	public virtual bool offerIfNeeded()
 	{
-		int result;
 		if (GameData.hasInternet())
 		{
 			incrementCounter("COMMUNITY_OFFER");
-			int num = PlayerPrefs.GetInt("COMMUNITY_OFFER", 0);
-			int num2 = PlayerPrefs.GetInt("DP_COMMUNITY_LOTS_OF_MONEY_LIMIT", 250);
+			int offerCounter = PlayerPrefs.GetInt("COMMUNITY_OFFER", 0);
+			int lotsOfMoneyLimit = PlayerPrefs.GetInt("DP_COMMUNITY_LOTS_OF_MONEY_LIMIT", 250);
 			int cash = MissionManager.getInstance().getActiveCompletedMissionScore() + GameData.getTokenAmount();
-			bool flag = GameData.hasEnoughMoneyToUnlockNextTrack(cash);
-			bool flag2 = GameData.getNumberOfCarts(GameData.getActiveLevelPack(), GameData.getSelectedLevelIndex()) < 6;
-			bool flag3 = GameData.getTokenAmount() > num2;
-			if (!flag || (flag2 && !flag3))
+			bool canUnlockNextTrack = GameData.hasEnoughMoneyToUnlockNextTrack(cash);
+			bool fewCarts = GameData.getNumberOfCarts(GameData.getActiveLevelPack(), GameData.getSelectedLevelIndex()) < 6;
+			bool lotsOfMoney = GameData.getTokenAmount() > lotsOfMoneyLimit;
+			if (!canUnlockNextTrack || (fewCarts && !lotsOfMoney))
 			{
-				if (!flag && num >= offerInterval && GameManager.getInstance().restarts > 3)
+				if (!canUnlockNextTrack && offerCounter >= offerInterval && GameManager.getInstance().restarts > 3)
 				{
 					incrementCounter("COMMUNITY_OFFER");
 				}
-				if (num >= internalOfferInterval)
+				if (offerCounter >= internalOfferInterval)
 				{
 					PlayerPrefs.SetInt("COMMUNITY_OFFER", 0);
 					showOffer(pickOfferMode());
 					PlayerPrefs.Save();
-					result = 1;
-					goto IL_0140;
+					return true;
 				}
 			}
 		}
-		result = 0;
-		goto IL_0140;
-		IL_0140:
-		return (byte)result != 0;
+		return false;
 	}
 
 	public virtual void showOffer(int mode)
@@ -441,35 +436,27 @@ public class CommunityFeatures : MonoBehaviour
 
 	private int pickOfferMode()
 	{
-		int num = PlayerPrefs.GetInt("COMMUNITY_OFFER_INDEX", 0);
-		int num2 = 0;
-		int num3 = 0;
-		while (!isEnabledForOffer(FEATURE_OFFER_ORDER[num]))
+		int index = PlayerPrefs.GetInt("COMMUNITY_OFFER_INDEX", 0);
+		int tries = 0;
+		while (!isEnabledForOffer(FEATURE_OFFER_ORDER[index]))
 		{
-			num++;
-			if (num >= FEATURE_OFFER_ORDER.Length)
+			index++;
+			if (index >= FEATURE_OFFER_ORDER.Length)
 			{
-				num = 0;
+				index = 0;
 			}
-			num2++;
-			if (num2 < FEATURE_OFFER_ORDER.Length)
+			tries++;
+			if (tries >= FEATURE_OFFER_ORDER.Length)
 			{
-				continue;
+				return -1;
 			}
-			goto IL_006c;
 		}
-		num3 = num + 1;
-		if (num3 >= FEATURE_OFFER_ORDER.Length)
+		int nextIndex = index + 1;
+		if (nextIndex >= FEATURE_OFFER_ORDER.Length)
 		{
-			num3 = 0;
+			nextIndex = 0;
 		}
-		PlayerPrefs.SetInt("COMMUNITY_OFFER_INDEX", num3);
-		int result = FEATURE_OFFER_ORDER[num];
-		goto IL_00ac;
-		IL_006c:
-		result = -1;
-		goto IL_00ac;
-		IL_00ac:
-		return result;
+		PlayerPrefs.SetInt("COMMUNITY_OFFER_INDEX", nextIndex);
+		return FEATURE_OFFER_ORDER[index];
 	}
 }

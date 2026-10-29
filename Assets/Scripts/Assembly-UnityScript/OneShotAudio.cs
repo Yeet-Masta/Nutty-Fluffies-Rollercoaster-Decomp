@@ -53,7 +53,6 @@ public class OneShotAudio : MonoBehaviour
 
 	public static AudioSource Play(AudioClip clip, Vector3 position, float volume, float falloff, float pitch, int priority)
 	{
-		object result;
 		if (sources == null)
 		{
 			Debug.Log("OneShot Audio Objects are not created you need to create them!");
@@ -73,13 +72,9 @@ public class OneShotAudio : MonoBehaviour
 			audioSource.pitch = pitch;
 			audioSource.Play();
 			setNext();
-			result = audioSource;
-			goto IL_00e2;
+			return audioSource;
 		}
-		result = null;
-		goto IL_00e2;
-		IL_00e2:
-		return (AudioSource)result;
+		return null;
 	}
 
 	public static bool isPlaying(AudioClip clip)

@@ -128,30 +128,22 @@ public class LevelLoaderBinary
 		}
 		CustomProfiler.begin("LevelLoaderBinary::load");
 		BinaryReader binaryReader = null;
-		LevelData levelData;
 		try
 		{
 			string path = FileManager.getInstance().locateLevel(packName, trackName).Replace("json", "bin");
 			byte[] buffer = FileManager.getInstance().loadFileBytes(path);
 			binaryReader = new BinaryReader(new MemoryStream(buffer));
 		}
-		catch (Exception rhs)
+		catch (Exception ex)
 		{
-			Debug.LogWarning("Could not open track '" + trackName + "': " + rhs);
-			levelData = null;
-			goto IL_00c8;
+			Debug.LogWarning("Could not open track '" + trackName + "': " + ex);
+			return null;
 		}
-		LevelData levelData2 = loadFromStream(binaryReader, objects);
-		levelData2.fileName = trackName;
+		LevelData levelData = loadFromStream(binaryReader, objects);
+		levelData.fileName = trackName;
 		CustomProfiler.end("LevelLoaderBinary::load");
 		CustomProfiler.report();
-		LevelData result = levelData2;
-		goto IL_00ca;
-		IL_00c8:
-		result = levelData;
-		goto IL_00ca;
-		IL_00ca:
-		return result;
+		return levelData;
 	}
 
 	public virtual void loadLayers(BinaryReader sr, List<LevelLayerData> layerData, ObjectListData objectList)

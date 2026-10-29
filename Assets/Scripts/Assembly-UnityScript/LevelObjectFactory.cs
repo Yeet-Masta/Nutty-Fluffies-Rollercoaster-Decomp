@@ -141,41 +141,23 @@ public class LevelObjectFactory
 		{
 			Debug.LogError("UNKNOWN TRIGGER TYPE");
 		}
-		object result;
 		if (NFPortLegacyDevice.generation == NFPortLegacyDeviceGeneration.iPhone3GS)
 		{
-			if (triggerData.triggerScript == "TriggerParticles")
+			if (triggerData.triggerScript == "TriggerParticles" || triggerData.triggerScript == "TriggerActivateObject")
 			{
-				result = null;
-			}
-			else
-			{
-				if (triggerData.triggerScript != "TriggerActivateObject")
-				{
-					goto IL_017d;
-				}
-				result = null;
+				return null;
 			}
 		}
-		else
+		else if ((NFPortLegacyDevice.generation == NFPortLegacyDeviceGeneration.iPhone4 || NFPortLegacyDevice.generation == NFPortLegacyDeviceGeneration.iPodTouch4Gen) && triggerData.triggerScript == "TriggerParticles" && GameData.getActiveLevelPackIndex() == 4)
 		{
-			if ((NFPortLegacyDevice.generation != NFPortLegacyDeviceGeneration.iPhone4 && NFPortLegacyDevice.generation != NFPortLegacyDeviceGeneration.iPodTouch4Gen) || triggerData.triggerScript != "TriggerParticles" || GameData.getActiveLevelPackIndex() != 4)
-			{
-				goto IL_017d;
-			}
-			result = null;
+			return null;
 		}
-		goto IL_01e2;
-		IL_01e2:
-		return (LevelTrigger)result;
-		IL_017d:
 		gameObject.transform.localScale = new Vector3(triggerData.size.x, triggerData.size.y, 100f);
 		LevelTrigger levelTrigger = gameObject.AddComponentByName(triggerData.triggerScript) as LevelTrigger;
 		levelTrigger.sourceParams = triggerData.triggerParam;
 		levelTrigger.gameObject.active = true;
 		gameObject.transform.parent = parent.transform;
-		result = gameObject.GetComponent<LevelTrigger>();
-		goto IL_01e2;
+		return gameObject.GetComponent<LevelTrigger>();
 	}
 
 	public virtual LevelObject createObject(LevelObjectData data, GameObject parent, ObjectListData objects)

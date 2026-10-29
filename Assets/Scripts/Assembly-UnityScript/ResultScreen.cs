@@ -129,12 +129,10 @@ public class ResultScreen : VGUIElement
 		{
 			OnlineServiceManager.getInstance().submitLeaderboardScore(GameData.genLeaderboard(GameData.getActiveLevelPackIndex(), GameData.getSelectedLevelIndex()), scoreAmount);
 		}
-		int i = 0;
-		ParticleEmitter[] array = paperEmitters;
-		for (int length = array.Length; i < length; i++)
+		foreach (ParticleEmitter paperEmitter in paperEmitters)
 		{
-			array[i].emit = false;
-			array[i].ClearParticles();
+			paperEmitter.emit = false;
+			paperEmitter.ClearParticles();
 		}
 		totalTokenEmitter.ClearParticles();
 		powerMeter.activate();
@@ -349,11 +347,9 @@ public class ResultScreen : VGUIElement
 		{
 			powerMeter.playBell();
 			powerMeter.animateLights();
-			int i = 0;
-			ParticleEmitter[] array = paperEmitters;
-			for (int length = array.Length; i < length; i++)
+			foreach (ParticleEmitter paperEmitter in paperEmitters)
 			{
-				array[i].emit = true;
+				paperEmitter.emit = true;
 			}
 			Invoke("disablePaperEmitters", 25f);
 			RollerCoasterSounds.getInstance().playFireworks();
@@ -372,11 +368,9 @@ public class ResultScreen : VGUIElement
 
 	public virtual void disablePaperEmitters()
 	{
-		int i = 0;
-		ParticleEmitter[] array = paperEmitters;
-		for (int length = array.Length; i < length; i++)
+		foreach (ParticleEmitter paperEmitter in paperEmitters)
 		{
-			array[i].emit = false;
+			paperEmitter.emit = false;
 		}
 	}
 

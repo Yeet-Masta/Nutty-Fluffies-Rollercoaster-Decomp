@@ -140,11 +140,9 @@ public class MissionList : VGUIList
 	{
 		listEntryAnimator.activate(getEntry(animatedRow).transform);
 		GameData.addTokens(animatingMission.score);
-		int i = 0;
-		ParticleEmitter[] array = paperEmitters;
-		for (int length = array.Length; i < length; i++)
+		foreach (ParticleEmitter paperEmitter in paperEmitters)
 		{
-			array[i].emit = true;
+			paperEmitter.emit = true;
 		}
 		GeneralSoundEffects.playSound(BaseMenuManager.getInstance().fireworksSound);
 		CancelInvoke("disablePaperEmitters");
@@ -153,11 +151,9 @@ public class MissionList : VGUIList
 
 	private void disablePaperEmitters()
 	{
-		int i = 0;
-		ParticleEmitter[] array = paperEmitters;
-		for (int length = array.Length; i < length; i++)
+		foreach (ParticleEmitter paperEmitter in paperEmitters)
 		{
-			array[i].emit = false;
+			paperEmitter.emit = false;
 		}
 	}
 

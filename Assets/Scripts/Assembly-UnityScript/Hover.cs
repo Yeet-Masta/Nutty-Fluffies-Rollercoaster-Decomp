@@ -55,11 +55,9 @@ public class Hover : Special
 	{
 		base.activateSpecial();
 		phase = 0f;
-		int i = 0;
-		Renderer[] array = flameRenderers;
-		for (int length = array.Length; i < length; i++)
+		foreach (Renderer flameRenderer in flameRenderers)
 		{
-			array[i].enabled = true;
+			flameRenderer.enabled = true;
 		}
 		trainRef.applySeparatePowerToCarts = true;
 	}
@@ -123,11 +121,9 @@ public class Hover : Special
 	public override void deactivateSpecial()
 	{
 		base.deactivateSpecial();
-		int i = 0;
-		Renderer[] array = flameRenderers;
-		for (int length = array.Length; i < length; i++)
+		foreach (Renderer flameRenderer in flameRenderers)
 		{
-			array[i].enabled = false;
+			flameRenderer.enabled = false;
 		}
 		trainRef.applySeparatePowerToCarts = false;
 	}

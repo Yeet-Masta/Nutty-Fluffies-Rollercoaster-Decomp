@@ -44,11 +44,9 @@ public class Magnet : Special
 	public override void activateSpecial()
 	{
 		base.activateSpecial();
-		int i = 0;
-		Renderer[] array = effectRenderers;
-		for (int length = array.Length; i < length; i++)
+		foreach (Renderer effectRenderer in effectRenderers)
 		{
-			array[i].enabled = true;
+			effectRenderer.enabled = true;
 		}
 		tick = 0;
 	}
@@ -101,11 +99,9 @@ public class Magnet : Special
 	public override void deactivateSpecial()
 	{
 		base.deactivateSpecial();
-		int i = 0;
-		Renderer[] array = effectRenderers;
-		for (int length = array.Length; i < length; i++)
+		foreach (Renderer effectRenderer in effectRenderers)
 		{
-			array[i].enabled = false;
+			effectRenderer.enabled = false;
 		}
 	}
 }

@@ -233,18 +233,16 @@ public class PowerMeter : MonoBehaviour
 	public virtual void startResultEntryAnimations()
 	{
 		int index = 0;
-		int i = 0;
-		ResultEntry[] array = resultEntries;
-		for (int length = array.Length; i < length; i++)
+		foreach (ResultEntry resultEntry in resultEntries)
 		{
 			if (index < resultEntryCounter)
 			{
-				array[i].gameObject.SetActiveRecursively(true);
-				array[i].animator.activate();
+				resultEntry.gameObject.SetActiveRecursively(true);
+				resultEntry.animator.activate();
 			}
 			else
 			{
-				array[i].gameObject.SetActiveRecursively(false);
+				resultEntry.gameObject.SetActiveRecursively(false);
 			}
 			index++;
 		}

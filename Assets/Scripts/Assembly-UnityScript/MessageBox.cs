@@ -117,11 +117,9 @@ public class MessageBox : BaseMenu
 		activated = true;
 		if (runEmitters)
 		{
-			int k = 0;
-			ParticleEmitter[] array2 = paperEmitters;
-			for (int length = array2.Length; k < length; k++)
+			foreach (ParticleEmitter paperEmitter in paperEmitters)
 			{
-				array2[k].emit = true;
+				paperEmitter.emit = true;
 			}
 			CancelInvoke("disablePaperEmitters");
 			Invoke("disablePaperEmitters", 2f);
@@ -208,11 +206,9 @@ public class MessageBox : BaseMenu
 
 	public virtual void disablePaperEmitters()
 	{
-		int i = 0;
-		ParticleEmitter[] array = paperEmitters;
-		for (int length = array.Length; i < length; i++)
+		foreach (ParticleEmitter paperEmitter in paperEmitters)
 		{
-			array[i].emit = false;
+			paperEmitter.emit = false;
 		}
 	}
 

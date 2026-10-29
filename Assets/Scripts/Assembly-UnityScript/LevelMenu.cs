@@ -132,12 +132,10 @@ public class LevelMenu : StoreBaseMenu
 			PlayerPrefs.Save();
 			wasActive = false;
 		}
-		int i = 0;
-		ParticleEmitter[] array = paperEmitters;
-		for (int length = array.Length; i < length; i++)
+		foreach (ParticleEmitter paperEmitter in paperEmitters)
 		{
-			array[i].emit = false;
-			array[i].ClearParticles();
+			paperEmitter.emit = false;
+			paperEmitter.ClearParticles();
 		}
 		CancelInvoke("reSelectLastLevel");
 		createdButtons.Clear();
@@ -279,16 +277,14 @@ public class LevelMenu : StoreBaseMenu
 				if (gameObject != null && !informingNewFeature)
 				{
 					cancelButton.SetActiveRecursively(false);
-					int i = 0;
-					ParticleEmitter[] array = paperEmitters;
-					for (int length = array.Length; i < length; i++)
+					foreach (ParticleEmitter paperEmitter in paperEmitters)
 					{
-						array[i].emit = true;
-						array[i].transform.position = gameObject.transform.position;
-						float z = array[i].transform.position.z - 0.5f;
-						Vector3 position = array[i].transform.position;
+						paperEmitter.emit = true;
+						paperEmitter.transform.position = gameObject.transform.position;
+						float z = paperEmitter.transform.position.z - 0.5f;
+						Vector3 position = paperEmitter.transform.position;
 						position.z = z;
-						array[i].transform.position = position;
+						paperEmitter.transform.position = position;
 					}
 					CancelInvoke("disablePaperEmitters");
 					Invoke("disablePaperEmitters", 1.5f);
@@ -320,11 +316,9 @@ public class LevelMenu : StoreBaseMenu
 
 	public virtual void disablePaperEmitters()
 	{
-		int i = 0;
-		ParticleEmitter[] array = paperEmitters;
-		for (int length = array.Length; i < length; i++)
+		foreach (ParticleEmitter paperEmitter in paperEmitters)
 		{
-			array[i].emit = false;
+			paperEmitter.emit = false;
 		}
 	}
 

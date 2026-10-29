@@ -10,13 +10,11 @@ public class VGUIImagesTK2D : VGUIImage
 		{
 			return;
 		}
-		int i = 0;
-		GameObject[] array = images;
-		for (int length = array.Length; i < length; i++)
+		foreach (GameObject image in images)
 		{
-			if (array[i] != null)
+			if (image != null)
 			{
-				array[i].SetActiveRecursively(false);
+				image.SetActiveRecursively(false);
 			}
 		}
 		if (images[index] != null)
